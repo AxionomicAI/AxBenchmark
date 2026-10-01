@@ -4,6 +4,18 @@ A simple inventory manager built with HTML5 and vanilla JavaScript (no
 frameworks or libraries). All data is persisted in the browser's
 `localStorage`.
 
+## Screenshots
+
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/).
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/"><img src="../quality-review/anthropic-cloud-sonnet-5.5-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/"><img src="../quality-review/anthropic-cloud-sonnet-5.5-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/"><img src="../quality-review/anthropic-cloud-sonnet-5.5-medium-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/"><img src="../quality-review/anthropic-cloud-sonnet-5.5-medium-form.png" alt="form" title="form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/"><img src="../quality-review/anthropic-cloud-sonnet-5.5-medium-orders.png" alt="orders" title="orders" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-sonnet-5.5-medium/"><img src="../quality-review/anthropic-cloud-sonnet-5.5-medium-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
+
 ## Run
 
 Open `index.html` in a browser. No build step or server is needed.

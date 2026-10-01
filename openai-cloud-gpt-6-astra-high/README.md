@@ -3,6 +3,20 @@
 A browser-based inventory website built with HTML5, CSS, and vanilla JavaScript.
 No frameworks, libraries, backend, package installation, or build step are required.
 
+## Screenshots
+
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/).
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-desktop-cart.png" alt="desktop cart" title="desktop cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-desktop-form.png" alt="desktop form" title="desktop form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-desktop-history.png" alt="desktop history" title="desktop history" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-astra-high/"><img src="../quality-review/openai-cloud-gpt-6-astra-high-mobile-history.png" alt="mobile history" title="mobile history" width="200"></a>
+
 ## Run locally
 
 Open `index.html` directly in a browser with JavaScript and localStorage enabled.

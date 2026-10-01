@@ -2,6 +2,16 @@
 
 A lightweight inventory management website built with **HTML5**, **CSS**, and **vanilla JavaScript**. All data is persisted in the browser's **localStorage** — no server or database required. Simply open `index.html` in any modern browser to start using it.
 
+## Screenshots
+
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/4x-rtxpro6000-deepseek-v4-flash-q8kxl/).
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/4x-rtxpro6000-deepseek-v4-flash-q8kxl/"><img src="../quality-review/4x-rtxpro6000-deepseek-v4-flash-q8kxl-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/4x-rtxpro6000-deepseek-v4-flash-q8kxl/"><img src="../quality-review/4x-rtxpro6000-deepseek-v4-flash-q8kxl-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/4x-rtxpro6000-deepseek-v4-flash-q8kxl/"><img src="../quality-review/4x-rtxpro6000-deepseek-v4-flash-q8kxl-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/4x-rtxpro6000-deepseek-v4-flash-q8kxl/"><img src="../quality-review/4x-rtxpro6000-deepseek-v4-flash-q8kxl-order.png" alt="order" title="order" width="420"></a>
+
 ## Features
 
 - **Add, Edit, Delete** inventory items

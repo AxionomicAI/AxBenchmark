@@ -4,6 +4,18 @@ A lightweight inventory website built with HTML5, CSS, and vanilla JavaScript. I
 
 Users can view stock totals, search by product name, SKU, or category, and add, edit, or delete products from the inventory. Products can also be added to a shopping cart, where quantities can be changed, items removed, and the order total reviewed. Completing a purchase deducts the bought quantities from stock, clears the cart, and adds a permanent snapshot to the on-page order history. All changes are saved in the current browser.
 
+## Screenshots
+
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/).
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-form.png" alt="form" title="form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-history.png" alt="history" title="history" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+
 ## Run locally
 
 No build step or local server is required. Open `index.html` in a modern web browser.

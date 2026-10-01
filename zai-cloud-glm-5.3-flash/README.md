@@ -4,6 +4,19 @@ A simple inventory website built with **HTML5 and vanilla JavaScript** — no
 frameworks, no libraries, no server. All data is persisted in the browser's
 `localStorage`.
 
+## Screenshots
+
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/).
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-checkout.png" alt="checkout" title="checkout" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-form.png" alt="form" title="form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-history.png" alt="history" title="history" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/zai-cloud-glm-5.3-flash/"><img src="../quality-review/zai-cloud-glm-5.3-flash-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
+
 ## Running
 
 Open `index.html` in any modern browser. That's it — there is no build step
