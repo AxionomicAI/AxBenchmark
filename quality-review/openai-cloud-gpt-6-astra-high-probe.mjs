@@ -1,0 +1,90 @@
+import puppeteer from '/Users/mike-axionomic/.npm/_npx/668c188756b835f3/node_modules/puppeteer/lib/esm/puppeteer/puppeteer.js';
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+
+const prefix = '/Users/mike-axionomic/Downloads/comparison/quality-review/openai-cloud-gpt-6-astra-high';
+const url = 'file:///Users/mike-axionomic/Downloads/comparison/openai-cloud-gpt-6-astra-high/index.html';
+const userDataDir = await mkdtemp(join(tmpdir(), 'quality-astra-'));
+const results = {url, viewportDesktop:{width:1440,height:1000}, viewportMobile:{width:390,height:844}, method:'Actual Puppeteer click/type/keyboard workflow. DOM reads assert state; direct storage manipulation only for explicit edge cases.', checks:[], errors:[]};
+let browser;
+try {
+  browser = await puppeteer.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,userDataDir});
+  results.browser = await browser.version();
+  const page = await browser.newPage();
+  page.on('pageerror',e=>results.errors.push(e.message));
+  await page.setViewport(results.viewportDesktop);
+  await page.goto(url);
+  const check = (name, details) => results.checks.push({name,...details});
+  const state = () => page.evaluate(() => ({items:InventoryStorage.loadItems(),cart:InventoryStorage.loadCart(),orders:InventoryStorage.loadOrders()}));
+  const raw = () => page.evaluate(() => Object.fromEntries(Object.keys(localStorage).map(k=>[k,localStorage.getItem(k)])));
+  const fill = async (selector,value) => {await page.click(selector,{clickCount:3});await page.keyboard.press('Backspace');await page.type(selector,String(value));};
+  const shot = async (name,selector) => {if(selector) await page.$eval(selector,e=>e.scrollIntoView({block:'start'}));await page.screenshot({path:`${prefix}-${name}.png`,fullPage:!selector});};
+  const inv = (id,action) => `#inventory-rows button[data-id="${id}"][data-action="${action}"]`;
+  const edit = async (id, fields) => {await page.click(inv(id,'Edit'));for (const [k,v] of Object.entries(fields)) await fill(`#product-${k}`,v);await page.click('#save-product');assert.equal(await page.$eval('#product-dialog',e=>e.open),false);};
+  const quantity = id => `#cart-rows input[data-id="${id}"]`;
+  const remove = id => `#cart-rows button[data-id="${id}"]`;
+  const initial = await state(); assert.equal(initial.items.length,4);
+  check('First-run seed', {passed:true,products:initial.items,zeroStockDisabled:await page.$eval(inv('sample-tape','Add to cart'), e=>e.disabled)});
+  await shot('desktop');
+  await page.setViewport(results.viewportMobile);await shot('mobile');
+  check('Mobile landing geometry',await page.evaluate(()=>({pageWidth:document.documentElement.scrollWidth,viewport:innerWidth,inventoryScrollWidth:document.querySelector('#inventory-table').parentElement.scrollWidth,inventoryClientWidth:document.querySelector('#inventory-table').parentElement.clientWidth,firstActionRect:(()=>{const r=document.querySelector('#inventory-rows button').getBoundingClientRect();return {left:r.left,right:r.right,top:r.top};})()})));
+  await page.click('#add-product');await shot('mobile-form');await page.keyboard.press('Escape');
+  await page.setViewport(results.viewportDesktop);
+  await page.click('#add-product');
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'product-name');
+  await page.keyboard.type('Audit lamp');await page.keyboard.press('Tab');await page.keyboard.type('AUD-LAMP');await page.keyboard.press('Tab');await page.keyboard.press('Backspace');await page.keyboard.type('8');await page.keyboard.press('Tab');await page.keyboard.down('Meta');await page.keyboard.press('A');await page.keyboard.up('Meta');await page.keyboard.type('2.50');
+  await shot('desktop-form');
+  await page.keyboard.press('Tab');await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement.id),'save-product');await page.keyboard.press('Enter');
+  let lamp = (await state()).items.find(p=>p.sku==='AUD-LAMP');assert.equal(lamp.stock,8);assert.equal(lamp.priceCents,250);
+  check('Keyboard-only create after clicking Add; dialog focus and tab order', {passed:true,focusAfterSave:await page.evaluate(()=>document.activeElement.getAttribute('aria-label'))});
+  await edit(lamp.id,{name:'Audit desk lamp',price:'3.25'});
+  await fill('#inventory-search','  aUd-DeSk  ');assert.equal(await page.$$eval('#inventory-rows tr',e=>e.length),0);
+  await fill('#inventory-search','  dEsK  ');assert.equal(await page.$$eval('#inventory-rows tr',e=>e.length),1);
+  await page.click(inv(lamp.id,'Add to cart'));
+  await page.click('#clear-search');await page.click(inv('sample-notebook','Add to cart'));await page.click(remove('sample-notebook'));
+  await fill(quantity(lamp.id),'3');await page.keyboard.press('Enter');
+  assert.equal((await state()).cart[0].quantity,3);assert.equal(await page.$eval('#cart-total',e=>e.textContent),'Total (USD): $9.75');
+  check('CRUD edit/search and cart add/update/remove', {passed:true,state:await state(),quantityFocus:await page.evaluate(()=>document.activeElement.getAttribute('aria-label'))});
+  await shot('desktop-cart','#cart-heading');
+  await page.setViewport(results.viewportMobile);await shot('mobile-cart','#cart-heading');
+  await page.setViewport(results.viewportDesktop);
+  for (const value of ['0','1.5','9']) {const before=await raw();await fill(quantity(lamp.id),value);await page.keyboard.press('Enter');assert.deepEqual(await raw(),before);check(`Invalid cart quantity ${value}`, {passed:true,message:await page.$eval(quantity(lamp.id),e=>e.validationMessage)});}
+  await fill(quantity(lamp.id),'4');await page.click('#checkout');assert.equal((await state()).orders.length,0);
+  check('Unapplied quantity blocks checkout', {passed:true,message:await page.$eval('#cart-error',e=>e.textContent),focus:await page.evaluate(()=>document.activeElement.getAttribute('aria-label'))});
+  await page.keyboard.press('Enter');assert.equal((await state()).cart[0].quantity,4);
+  await page.reload();assert.equal((await state()).cart[0].quantity,4);
+  const beforeFailure=await raw();
+  await page.evaluate(()=>{window.auditOriginalSet=Storage.prototype.setItem;Storage.prototype.setItem=()=>{throw new DOMException('Audit quota full','QuotaExceededError');};});
+  await page.click('#checkout');assert.deepEqual(await raw(),beforeFailure);
+  check('Failed checkout preserves inventory/cart/history', {passed:true,message:await page.$eval('#cart-error',e=>e.textContent)});
+  await page.evaluate(()=>Storage.prototype.setItem=window.auditOriginalSet);
+  await page.click('#checkout');
+  let purchased=await state();assert.equal(purchased.items.find(p=>p.id===lamp.id).stock,4);assert.equal(purchased.orders[0].totalCents,'1300');assert.equal(purchased.cart.length,0);
+  check('Checkout atomic state and receipt focus', {passed:true,state:purchased,active:await page.evaluate(()=>document.activeElement.tagName)});
+  await shot('desktop-history','#orders-heading');
+  await page.keyboard.press('Enter');assert.equal(await page.$eval('#orders-list details',e=>e.open),false);await page.keyboard.press('Space');assert.equal(await page.$eval('#orders-list details',e=>e.open),true);
+  await page.setViewport(results.viewportMobile);await shot('mobile-history','#orders-heading');
+  await page.setViewport(results.viewportDesktop);await page.reload();assert.deepEqual(await state(),purchased);
+  await page.click(inv(lamp.id,'Add to cart'));await fill(quantity(lamp.id),'3');await page.keyboard.press('Enter');await edit(lamp.id,{stock:'1',price:'9.99'});assert.equal(await page.$eval('#checkout',e=>e.disabled),true);
+  check('Reduced stock and repricing reconcile cart', {passed:true,text:await page.$eval('#cart-rows',e=>e.textContent),total:await page.$eval('#cart-total',e=>e.textContent)});
+  await page.click(inv(lamp.id,'Delete'));assert.equal(await page.evaluate(()=>document.activeElement.id),'cancel-delete');await page.keyboard.press('Escape');assert.equal((await state()).items.some(p=>p.id===lamp.id),true);
+  await page.click(inv(lamp.id,'Delete'));await page.click('#confirm-delete');assert.equal(await page.$eval('#checkout',e=>e.disabled),true);assert.deepEqual((await state()).orders,purchased.orders);
+  check('Delete retains unavailable cart warning and immutable receipt', {passed:true,text:await page.$eval('#cart-rows',e=>e.textContent),total:await page.$eval('#cart-total',e=>e.textContent)});
+  await page.click(remove(lamp.id));
+  // Deliberate two-page stale-state probe, not simultaneous-write contention.
+  const other=await browser.newPage();await other.goto(url);await other.evaluate(()=>{const items=InventoryStorage.loadItems();items[0].stock=100;InventoryStorage.saveItems(items);});await other.close();
+  const staleBefore=await raw();await page.click(inv('sample-notebook','Add to cart'));assert.deepEqual(await raw(),staleBefore);
+  check('Earlier other-page edit rejects stale cart write', {passed:true,message:await page.$eval('#cart-error',e=>e.textContent)});
+  await page.reload();
+  // Valid markup remains text through normal form entry.
+  await page.click('#add-product');for (const [k,v] of Object.entries({name:'<img src=x onerror=alert(1)>',sku:'SAFE-HTML',stock:1,price:1})) await fill(`#product-${k}`,v);await page.click('#save-product');assert.equal(await page.$$eval('#inventory-rows img',e=>e.length),0);
+  check('Markup product name is rendered as text', {passed:true});
+  // Deliberate corrupt authoritative storage; preserve raw data and disable unsafe changes.
+  await page.evaluate(()=>localStorage.setItem('inventory.state.v2','{broken'));await page.reload();assert.equal(await page.evaluate(()=>localStorage.getItem('inventory.state.v2')),'{broken');assert.equal(await page.$eval('#add-product',e=>e.disabled),true);assert.equal(await page.$eval('#checkout',e=>e.disabled),true);
+  check('Corrupt authoritative storage preserved', {passed:true,inventory:await page.$eval('#inventory-status',e=>e.textContent),orders:await page.$eval('#orders-status',e=>e.textContent)});
+  results.completed=true;
+} catch(error) {results.failure={message:error.message,stack:error.stack};throw error;}
+finally {await writeFile(`${prefix}-probe-results.json`,JSON.stringify(results,null,2));await browser?.close();await rm(userDataDir,{recursive:true,force:true});}
+console.log(JSON.stringify({completed:results.completed,checks:results.checks.length,errors:results.errors}));

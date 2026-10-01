@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <h1>Inventory</h1>
+        <p class="tagline">Track your stock — all data stays in your browser.</p>
+      </div>
+      <button id="cart-indicator" class="cart-indicator" type="button"
+              aria-label="Show shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="20" r="1.6"></circle>
+          <circle cx="17.5" cy="20" r="1.6"></circle>
+          <path d="M3 3h2.2l2.5 11.2a1.6 1.6 0 0 0 1.56 1.25h7.9a1.6 1.6 0 0 0 1.56-1.26L20.5 7H6.1"></path>
+        </svg>
+        <span>Cart</span>
+        <span id="cart-indicator-count" class="cart-badge" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="app" class="container">
+    <noscript>
+      <p class="notice">This application requires JavaScript to run.
+      Please enable JavaScript and reload the page.</p>
+    </noscript>
+
+    <section id="inventory-section" aria-label="Inventory">
+      <p id="inventory-summary" class="summary">Loading inventory&hellip;</p>
+
+      <div class="toolbar">
+        <div class="toolbar-left" role="search">
+          <div class="search-box" id="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="search" id="search-input" autocomplete="off"
+                   placeholder="Search name, SKU, category, location&hellip;"
+                   aria-label="Search products">
+            <button type="button" id="clear-search-btn" class="clear-btn"
+                    hidden aria-label="Clear search">&times;</button>
+            <kbd class="search-kbd" aria-hidden="true">/</kbd>
+          </div>
+          <select id="category-filter" aria-label="Filter by category">
+            <option value="">All categories</option>
+          </select>
+        </div>
+        <button id="add-product-btn" type="button" class="btn btn--primary">+ Add product</button>
+      </div>
+
+      <div id="table-wrap" class="table-wrap" hidden>
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">SKU</th>
+              <th scope="col">Category</th>
+              <th scope="col" class="num">Stock</th>
+              <th scope="col" class="num">Unit price</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="row-actions"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="product-tbody"></tbody>
+        </table>
+      </div>
+
+      <p id="no-results" class="notice" hidden>
+        No products match your search or filter.
+        <button id="clear-filters-btn" type="button" class="btn btn--small">Clear search &amp; filters</button>
+      </p>
+
+      <p id="empty-state" class="notice" hidden>
+        No products in inventory yet. Click &ldquo;+ Add product&rdquo; to create one.
+      </p>
+    </section>
+
+    <section id="cart-section" class="cart-section" aria-label="Shopping cart">
+      <div class="cart-head">
+        <h2>Shopping cart
+          <span id="cart-count-badge" class="cart-count-badge" hidden>0</span>
+        </h2>
+        <div class="cart-head-actions">
+          <button id="clear-cart-btn" type="button" class="btn btn--small btn--danger-ghost"
+                  hidden>Clear cart</button>
+          <button id="checkout-btn" type="button" class="btn btn--small btn--primary"
+                  disabled>Checkout</button>
+        </div>
+      </div>
+
+      <div id="cart-table-wrap" class="table-wrap cart-table-wrap" hidden>
+        <table class="inventory-table cart-table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col" class="num">Unit price</th>
+              <th scope="col" class="num">Quantity</th>
+              <th scope="col" class="num">Total</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="cart-tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">Total</td>
+              <td class="num" id="cart-total-units">0</td>
+              <td class="num" id="cart-total-price">0.00</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <p id="cart-empty" class="notice">
+        Your cart is empty. Add products from the inventory above.
+      </p>
+    </section>
+
+    <section id="orders-section" class="cart-section orders-section" aria-label="Order history">
+      <div class="cart-head">
+        <h2>Order history
+          <span id="orders-count" class="orders-count"></span>
+        </h2>
+        <button id="clear-orders-btn" type="button" class="btn btn--small btn--danger-ghost"
+                hidden>Clear history</button>
+      </div>
+
+      <div id="orders-list" class="orders-list"></div>
+
+      <p id="orders-empty" class="notice">
+        No orders yet. Complete a purchase to see it here.
+      </p>
+    </section>
+  </main>
+
+  <!-- Add / edit product modal -->
+  <div id="product-modal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
+      <h2 id="product-modal-title">Add product</h2>
+      <div id="form-errors" class="form-errors" hidden></div>
+      <form id="product-form" novalidate>
+        <input type="hidden" id="f-id" name="id">
+        <div class="field">
+          <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="f-name" name="name" required autocomplete="off"
+                 placeholder="e.g. Wireless Mouse">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-sku">SKU <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="f-sku" name="sku" required autocomplete="off"
+                   placeholder="e.g. ELEC-0004">
+          </div>
+          <div class="field">
+            <label for="f-category">Category <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="f-category" name="category" required list="category-list"
+                   autocomplete="off" placeholder="e.g. Electronics">
+            <datalist id="category-list"></datalist>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-quantity">Stock quantity <span class="req" aria-hidden="true">*</span></label>
+            <input type="number" id="f-quantity" name="quantity" min="0" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="f-unitPrice">Unit price</label>
+            <input type="number" id="f-unitPrice" name="unitPrice" min="0" step="0.01"
+                   placeholder="0.00">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-reorderLevel">Reorder level</label>
+            <input type="number" id="f-reorderLevel" name="reorderLevel" min="0" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="f-location">Location</label>
+            <input type="text" id="f-location" name="location" autocomplete="off"
+                   placeholder="e.g. Shelf A1">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn" data-close>Cancel</button>
+          <button type="submit" class="btn btn--primary" id="save-btn">Add product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete confirmation modal -->
+  <div id="confirm-modal" class="modal-backdrop" hidden>
+    <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title"
+         aria-describedby="confirm-text">
+      <h2 id="confirm-title">Delete product</h2>
+      <p id="confirm-text">Delete this product? This cannot be undone.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="button" class="btn btn--danger" id="confirm-delete-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>Inventory &middot; HTML5 + vanilla JS &middot; data stored in localStorage</p>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

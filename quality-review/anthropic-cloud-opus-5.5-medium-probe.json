@@ -1,0 +1,251 @@
+{
+  "checks": [
+    {
+      "name": "initial seed",
+      "result": {
+        "products": 8,
+        "persisted": 8
+      }
+    },
+    {
+      "name": "keyboard shortcut",
+      "result": "lookup-query"
+    },
+    {
+      "name": "dialog focus",
+      "result": "field-sku"
+    },
+    {
+      "name": "required validation",
+      "result": {
+        "focus": "field-sku",
+        "errors": [
+          "SKU is required.",
+          "Name is required.",
+          "Price must be a number of 0 or more."
+        ]
+      }
+    },
+    {
+      "name": "search and safe rendering",
+      "result": {
+        "rows": 1,
+        "htmlElements": 0,
+        "text": "SKU\tName\tCategory\tIn stock\tReorder at\tUnit price\tActions\nQA-001\tReview <b>Product</b>\tReview\t5\t1\t$12.34\tAdd to cartEditDelete"
+      }
+    },
+    {
+      "name": "cart quantity total",
+      "result": {
+        "lineCount": 1,
+        "unitCount": 2,
+        "total": 20.5,
+        "overStockCount": 0
+      }
+    },
+    {
+      "name": "cart/product reload",
+      "result": {
+        "cart": {
+          "lineCount": 1,
+          "unitCount": 2,
+          "total": 20.5,
+          "overStockCount": 0
+        },
+        "product": {
+          "id": "fe277700-8fd1-47c6-b8a0-6dc8bc20be94",
+          "sku": "QA-001",
+          "name": "Review Product Edited",
+          "category": "Review",
+          "quantity": 5,
+          "reorderLevel": 1,
+          "price": 10.25,
+          "createdAt": "2026-10-01T14:16:42.792Z",
+          "updatedAt": "2026-10-01T14:16:42.827Z"
+        }
+      }
+    },
+    {
+      "name": "quantity 1.5",
+      "result": {
+        "totals": {
+          "lineCount": 1,
+          "unitCount": 2,
+          "total": 20.5,
+          "overStockCount": 0
+        },
+        "feedback": "Quantity must be a whole number of 0 or more."
+      }
+    },
+    {
+      "name": "quantity 999",
+      "result": {
+        "totals": {
+          "lineCount": 1,
+          "unitCount": 2,
+          "total": 20.5,
+          "overStockCount": 0
+        },
+        "feedback": "Only 5 of Review Product Edited in stock."
+      }
+    },
+    {
+      "name": "quantity 0",
+      "result": {
+        "totals": {
+          "lineCount": 0,
+          "unitCount": 0,
+          "total": 0,
+          "overStockCount": 0
+        },
+        "feedback": "Removed Review Product Edited from the cart."
+      }
+    },
+    {
+      "name": "stock reduction blocks checkout",
+      "result": {
+        "disabled": true,
+        "warning": "2 items · $20.50 · 1 over available stock (lower the flagged quantities to check out)"
+      }
+    },
+    {
+      "name": "checkout",
+      "result": {
+        "cart": {
+          "lineCount": 0,
+          "unitCount": 0,
+          "total": 0,
+          "overStockCount": 0
+        },
+        "orders": [
+          {
+            "id": "f9f481df-b326-4f19-a32e-17f7c72f5a46",
+            "number": 1,
+            "createdAt": "2026-10-01T14:16:43.043Z",
+            "note": "QA purchase",
+            "lines": [
+              {
+                "productId": "fe277700-8fd1-47c6-b8a0-6dc8bc20be94",
+                "sku": "QA-001",
+                "name": "Review Product Edited",
+                "price": 10.25,
+                "quantity": 1,
+                "lineTotal": 10.25
+              }
+            ],
+            "unitCount": 1,
+            "total": 10.25
+          }
+        ],
+        "product": {
+          "sku": "QA-001",
+          "name": "Review Product Edited",
+          "category": "Review",
+          "quantity": 0,
+          "reorderLevel": 1,
+          "price": 10.25,
+          "id": "fe277700-8fd1-47c6-b8a0-6dc8bc20be94",
+          "createdAt": "2026-10-01T14:16:42.792Z",
+          "updatedAt": "2026-10-01T14:16:43.043Z"
+        }
+      }
+    },
+    {
+      "name": "checkout persisted",
+      "result": {
+        "cart": {
+          "lineCount": 0,
+          "unitCount": 0,
+          "total": 0,
+          "overStockCount": 0
+        },
+        "orders": 1,
+        "stock": 0
+      }
+    },
+    {
+      "name": "safe delete focus",
+      "result": "delete-cancel"
+    },
+    {
+      "name": "deleted and order retained",
+      "result": {
+        "product": null,
+        "orders": [
+          {
+            "id": "f9f481df-b326-4f19-a32e-17f7c72f5a46",
+            "number": 1,
+            "createdAt": "2026-10-01T14:16:43.043Z",
+            "note": "QA purchase",
+            "lines": [
+              {
+                "productId": "fe277700-8fd1-47c6-b8a0-6dc8bc20be94",
+                "sku": "QA-001",
+                "name": "Review Product Edited",
+                "price": 10.25,
+                "quantity": 1,
+                "lineTotal": 10.25
+              }
+            ],
+            "unitCount": 1,
+            "total": 10.25
+          }
+        ]
+      }
+    },
+    {
+      "name": "mobile layout",
+      "result": {
+        "width": 390,
+        "documentWidth": 390,
+        "tableWidth": 747,
+        "containerWidth": 308,
+        "actionsX": 548.734375
+      }
+    },
+    {
+      "name": "escape closes modal",
+      "result": {
+        "open": false,
+        "focus": "add-product"
+      }
+    },
+    {
+      "name": "reserved category",
+      "result": {
+        "created": true,
+        "categories": [
+          "Cables",
+          "Gadgets",
+          "Tools",
+          "Widgets"
+        ]
+      }
+    },
+    {
+      "name": "persistent checkout rollback failure injection",
+      "result": {
+        "result": {
+          "ok": false,
+          "errors": {
+            "storage": "Could not save the order to browser storage. It may be full or disabled. Nothing was changed."
+          }
+        },
+        "writes": 5,
+        "stock": 118,
+        "cart": 2,
+        "memoryOrders": 1,
+        "persistedOrders": 2,
+        "persistedStock": 118
+      }
+    },
+    {
+      "name": "corrupt products backup",
+      "result": {
+        "products": 0,
+        "backup": "{broken"
+      }
+    }
+  ],
+  "errors": []
+}

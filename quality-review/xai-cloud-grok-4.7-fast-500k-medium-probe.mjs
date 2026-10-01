@@ -1,0 +1,44 @@
+import puppeteer from '/Users/mike-axionomic/.npm/_npx/668c188756b835f3/node_modules/puppeteer/lib/esm/puppeteer/puppeteer.js';
+import fs from 'node:fs/promises';
+const folder='xai-cloud-grok-4.7-fast-500k-medium';
+const prefix=`/Users/mike-axionomic/Downloads/comparison/quality-review/${folder}`;
+const browser=await puppeteer.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,userDataDir:`/tmp/quality-grok-${Date.now()}`});
+const out={};
+try {
+ const p=await browser.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.setViewport({width:1440,height:1000});await p.goto(`file:///Users/mike-axionomic/Downloads/comparison/${folder}/index.html`);
+ const state=()=>p.evaluate(()=>({products:Inventory.list(),cart:Cart.list(),orders:Orders.list(),focus:document.activeElement.outerHTML.slice(0,300),message:document.querySelector('#cart-error').textContent}));
+ const fill=async(sel,v)=>p.$eval(sel,(el,v)=>{el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));},v);
+ const qty=async(v)=>{await fill('#cart-rows input',v);await p.$eval('#cart-rows input',el=>el.dispatchEvent(new Event('change',{bubbles:true})));await new Promise(r=>setTimeout(r,50));};
+ out.seed=await state();await p.screenshot({path:prefix+'-desktop.png'});
+ await p.setViewport({width:390,height:844});await p.screenshot({path:prefix+'-mobile.png',fullPage:true});out.mobile=await p.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,table:document.querySelector('#product-table').getBoundingClientRect().width,wrap:document.querySelector('.table-wrap').clientWidth}));
+ await p.setViewport({width:1440,height:1000});
+ await fill('#product-name','Audit <img src=x onerror=alert(1)>');await fill('#product-sku','AUD-1');await fill('#product-stock','5');await p.click('#product-submit');
+ out.created=await state();const id=out.created.products.at(-1).id;const row=`#product-rows [data-product-id="${id}"]`;
+ await p.click(row+' [data-product-action="edit"]');out.editFocus=await p.evaluate(()=>document.activeElement.id);await fill('#product-name','Audit Product');await p.click('#product-submit');
+ await fill('#product-search','  auD   1  ');out.search=await p.$eval('#product-rows',e=>e.innerText);await fill('#product-search','');
+ await p.focus(row+' [data-product-action="add"]');await p.keyboard.press('Enter');out.afterKeyboardAdd=await state();
+ await qty('2');out.quantity=await state();await p.reload();out.reloadCart=await state();
+ await qty('1.5');out.fraction=await state();await qty('99');out.excess=await state();await qty('0');out.zero=await state();
+ await p.click(row+' [data-product-action="add"]');await p.click('#cart-rows [data-cart-part="remove"]');out.remove=await state();
+ await p.click(row+' [data-product-action="add"]');await qty('2');await p.click('#checkout-open');out.dialogFocus=await p.evaluate(()=>document.activeElement.id);await p.screenshot({path:prefix+'-checkout.png'});await p.keyboard.press('Escape');out.escape=await p.$eval('#checkout-dialog',e=>e.open);
+ await p.click('#checkout-open');await p.click('#checkout-confirm');out.checkout=await state();await p.reload();out.reloadOrder=await state();
+ await p.click(row+' [data-product-action="add"]');await qty('3');await p.click(row+' [data-product-action="edit"]');await fill('#product-stock','1');await p.click('#product-submit');out.loweredStock=await state();
+ await p.click(row+' [data-product-action="delete"]');await p.click('#delete-confirm');out.deleted=await state();
+ out.duplicate=await p.evaluate(()=>Inventory.add({name:'duplicate',sku:'wid-001',stock:'2'}));
+ out.stockValidation=await p.evaluate(()=>['-1','1.5','1000000'].map(stock=>Inventory.add({name:'invalid',stock})));
+ out.safeRendering=out.created.products.at(-1).name;
+ out.safeDOM=await p.evaluate(()=>{Inventory.add({name:'<img src=x onerror=alert(1)>',stock:1});document.querySelector('#product-search').dispatchEvent(new Event('input'));return {injectedImages:document.querySelectorAll('#product-rows img').length,renderedLiteral:document.querySelector('#product-rows').innerText.includes('<img src=x onerror=alert(1)>')}});
+ await p.click('#product-rows [data-product-action="add"]');await p.click('#product-rows tr:nth-child(2) [data-product-action="add"]');
+ out.multiTotal=await p.$eval('#cart-total',e=>e.textContent);
+ await p.setViewport({width:390,height:844});await p.$eval('#cart',el=>el.scrollIntoView());await p.screenshot({path:prefix+'-mobile-cart.png'});out.mobileCart=await p.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,table:document.querySelector('#cart-table').getBoundingClientRect().width,wrap:document.querySelector('#cart .table-wrap').clientWidth}));await p.setViewport({width:1440,height:1000});
+ await p.click('#cart-rows [data-cart-part="up"]');out.up=await p.evaluate(()=>Cart.contents());await p.click('#cart-rows [data-cart-part="down"]');out.down=await p.evaluate(()=>Cart.contents());
+ out.emptyCheckout=await p.evaluate(()=>{Cart.clear();return Orders.checkout()});
+ out.staleCheckout=await p.evaluate(()=>{Cart.add('p-widget-std');Cart.setQuantity('p-widget-std',4);Inventory.setStock('p-widget-std',1);const r=Orders.checkout();Inventory.setStock('p-widget-std',42);Cart.clear();return r;});
+ // Storage failure: preserve full storage and replace only setItem in this isolated page.
+ out.failures=await p.evaluate(()=>{const original=Storage.prototype.setItem;const before=localStorage.getItem('inventory.items');Storage.prototype.setItem=function(){throw new DOMException('quota','QuotaExceededError')};const result=Inventory.add({name:'unsaved',stock:2});Storage.prototype.setItem=original;return {result,unchanged:before===localStorage.getItem('inventory.items')}});
+ out.checkoutFailure=await p.evaluate(()=>{Cart.add('p-widget-std');const before=localStorage.getItem('inventory.items');const original=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='inventory.orders')throw new DOMException('quota','QuotaExceededError');return original.call(this,k,v)};const result=Orders.checkout();Storage.prototype.setItem=original;return {result,stockRestored:before===localStorage.getItem('inventory.items'),cart:Cart.contents(),orders:Orders.list()}});
+ out.rollbackFailure=await p.evaluate(()=>{const before=Inventory.get('p-widget-std').stock;const original=Storage.prototype.setItem;let n=0;Storage.prototype.setItem=function(k,v){n++;if(n>=2)throw new DOMException('quota','QuotaExceededError');return original.call(this,k,v)};const result=Orders.checkout();Storage.prototype.setItem=original;return {result,before,after:Inventory.get('p-widget-std').stock,cart:Cart.contents()}});
+ out.errors=errors;
+ console.log(JSON.stringify(out,null,2));await fs.writeFile(prefix+'-results.json',JSON.stringify(out,null,2));
+} finally {await browser.close();}

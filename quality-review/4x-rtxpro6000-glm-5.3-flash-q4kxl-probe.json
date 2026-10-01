@@ -1,0 +1,108 @@
+{
+  "initial": {
+    "count": 10,
+    "rows": 10,
+    "summary": "10 products · 554 units in stock · stock value 3,653.68 · 2 low, 1 out of stock."
+  },
+  "mobile": {
+    "viewport": 390,
+    "page": 637,
+    "table": 811,
+    "tableVisible": 340
+  },
+  "modalFocus": "f-name",
+  "modalShiftTab": {
+    "id": "",
+    "tag": "BUTTON",
+    "inModal": false
+  },
+  "invalid": {
+    "text": "Please fix the following:Name is required.SKU is required.Category is required.",
+    "role": null,
+    "live": null
+  },
+  "search": 1,
+  "cart": {
+    "count": 2,
+    "total": 30
+  },
+  "persistedCart": {
+    "count": 2,
+    "total": 30,
+    "name": "Audit Widget Edited"
+  },
+  "removed": 0,
+  "checkout": {
+    "stock": 3,
+    "cart": 0,
+    "orders": [
+      {
+        "id": "o_muplwzbj_07863n",
+        "number": 1001,
+        "date": "2026-10-01T14:05:45.295Z",
+        "items": [
+          {
+            "productId": "p_muplwz4a_pk0wqj",
+            "sku": "QA-ONE",
+            "name": "Audit Widget Edited",
+            "unitPrice": 15,
+            "quantity": 2,
+            "lineTotal": 30
+          }
+        ],
+        "totalUnits": 2,
+        "total": 30
+      }
+    ],
+    "toast": "Order #1001 placed · 2 units · 30.00"
+  },
+  "persistedCheckout": {
+    "stock": 3,
+    "cart": 0,
+    "orders": 1
+  },
+  "edgeCounts": {
+    "zero": {
+      "ok": false,
+      "errors": [
+        "Quantity must be a whole number ≥ 1."
+      ]
+    },
+    "fraction": {
+      "ok": false,
+      "errors": [
+        "Quantity must be a whole number ≥ 1."
+      ]
+    },
+    "excess": {
+      "ok": false,
+      "errors": [
+        "Only 3 unit(s) of “Audit Widget Edited” in stock."
+      ]
+    }
+  },
+  "stockZeroSync": 0,
+  "deleted": {
+    "missing": true,
+    "oldOrder": "Audit Widget Edited"
+  },
+  "afterEscapeFocus": {
+    "id": "f-name",
+    "tag": "INPUT"
+  },
+  "slashFocus": "f-name",
+  "noResults": true,
+  "failedWrite": {
+    "stock": 41,
+    "orders": 2,
+    "toast": "Order #1002 placed · 1 unit · 19.99",
+    "warnings": []
+  },
+  "failedWriteReload": {
+    "stock": 41,
+    "orders": 1,
+    "cart": 0
+  },
+  "failedWriteBeforeStock": 42,
+  "pageErrors": []
+}

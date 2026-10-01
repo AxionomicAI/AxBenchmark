@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Inventory Manager</h1>
+    <p class="subtitle">Track and manage your items</p>
+  </header>
+
+  <main>
+    <!-- Add / Edit Item Form -->
+    <section id="item-form-section" aria-labelledby="form-title">
+      <h2 id="form-title">Add New Item</h2>
+      <form id="item-form" novalidate>
+        <input type="hidden" id="item-id" value="">
+        <div class="form-group">
+          <label for="item-name">Item Name</label>
+          <input type="text" id="item-name" required placeholder="e.g. Office Chair">
+        </div>
+        <div class="form-group">
+          <label for="item-quantity">Quantity</label>
+          <input type="number" id="item-quantity" required min="0" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label for="item-price">Price ($)</label>
+          <input type="number" id="item-price" required min="0" step="0.01" placeholder="0.00">
+        </div>
+        <div class="form-group">
+          <label for="item-category">Category</label>
+          <select id="item-category">
+            <option value="">-- Select --</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Office Supplies">Office Supplies</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Food">Food</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label for="item-description">Description</label>
+          <textarea id="item-description" rows="3" placeholder="Optional notes..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="form-submit-btn" class="btn btn-primary">Add Item</button>
+          <button type="button" id="form-cancel-btn" class="btn btn-secondary" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Search & Filter -->
+    <section id="search-section" aria-labelledby="search-title">
+      <h2 id="search-title" class="visually-hidden">Search and Filter</h2>
+      <div class="search-bar">
+        <input type="search" id="search-input" placeholder="Search items... (press / to focus)" aria-label="Search items">
+        <button id="clear-search-btn" class="btn btn-small" title="Clear search and filters" hidden>Clear</button>
+        <select id="filter-category" aria-label="Filter by category">
+          <option value="">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Office Supplies">Office Supplies</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Food">Food</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Inventory Table -->
+    <section id="inventory-section" aria-labelledby="inventory-title">
+      <h2 id="inventory-title">Inventory</h2>
+      <div class="table-controls">
+        <span id="item-count">0 items</span>
+        <button id="export-btn" class="btn btn-small" title="Export as JSON">Export</button>
+      </div>
+      <div class="table-wrapper">
+        <table id="inventory-table">
+          <thead>
+            <tr>
+              <th data-sort="name">Name <span class="sort-indicator"></span></th>
+              <th data-sort="category">Category <span class="sort-indicator"></span></th>
+              <th data-sort="quantity">Qty <span class="sort-indicator"></span></th>
+              <th data-sort="price">Price <span class="sort-indicator"></span></th>
+              <th data-sort="value">Value <span class="sort-indicator"></span></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-body">
+            <!-- Rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+      <p id="empty-state" class="empty-state">No items yet. Add one above!</p>
+    </section>
+
+    <!-- Item Detail Panel -->
+    <section id="detail-section" aria-labelledby="detail-title" hidden>
+      <div class="detail-header">
+        <h2 id="detail-title">Item Details</h2>
+        <button id="detail-close-btn" class="btn btn-small" aria-label="Close detail panel">✕ Close</button>
+      </div>
+      <div id="detail-content">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- Shopping Cart -->
+    <section id="cart-section" aria-labelledby="cart-title">
+      <h2 id="cart-title">Shopping Cart</h2>
+      <div class="table-controls">
+        <span id="cart-count">0 items</span>
+        <div class="table-actions">
+          <button id="checkout-btn" class="btn btn-small btn-primary" title="Complete purchase">Checkout</button>
+          <button id="clear-cart-btn" class="btn btn-small btn-danger" title="Clear all items from cart">Clear Cart</button>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table id="cart-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cart-body">
+            <!-- Rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+      <div id="cart-total-row">
+        <span id="cart-total-label">Total:</span>
+        <span id="cart-total-value">$0.00</span>
+      </div>
+      <p id="cart-empty-state" class="empty-state">Your cart is empty. Add items from the inventory above!</p>
+    </section>
+
+    <!-- Order History -->
+    <section id="order-section" aria-labelledby="order-title">
+      <h2 id="order-title">Order History</h2>
+      <div class="table-controls">
+        <span id="order-count">0 orders</span>
+      </div>
+      <div id="order-list">
+        <!-- Orders rendered by JS -->
+      </div>
+      <p id="order-empty-state" class="empty-state">No orders yet. Complete a checkout to see orders here!</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Inventory Manager &mdash; Data stored in your browser's local storage.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

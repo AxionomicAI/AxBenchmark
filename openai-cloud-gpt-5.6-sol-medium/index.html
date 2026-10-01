@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple browser-based inventory manager.">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <p class="eyebrow">Stock overview</p>
+        <h1>Inventory</h1>
+        <p class="subtitle">Keep track of the items you have on hand.</p>
+      </div>
+    </header>
+
+    <main class="container app-layout">
+      <section class="panel" aria-labelledby="inventory-heading">
+        <div class="panel-heading">
+          <div>
+            <h2 id="inventory-heading">Items</h2>
+            <p id="inventory-summary" class="muted" aria-live="polite"></p>
+          </div>
+          <button id="add-product-button" class="button button-primary" type="button">
+            <span aria-hidden="true">+</span> Add product
+          </button>
+        </div>
+
+        <div class="inventory-toolbar" role="search">
+          <label for="inventory-search">Find a product</label>
+          <div class="search-control">
+            <input
+              id="inventory-search"
+              type="search"
+              autocomplete="off"
+              placeholder="Search by name, SKU, or category"
+              aria-controls="inventory-list"
+            >
+            <button id="clear-search-button" class="clear-search-button" type="button" hidden>
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div id="inventory-list" class="empty-state">
+          <p>No inventory items yet.</p>
+          <p class="muted">Your items will appear here.</p>
+        </div>
+      </section>
+
+      <aside class="panel cart-panel" aria-labelledby="cart-heading">
+        <div class="panel-heading cart-heading">
+          <div>
+            <p class="eyebrow cart-eyebrow">Current order</p>
+            <h2 id="cart-heading">Shopping cart</h2>
+          </div>
+          <span id="cart-count" class="cart-count" aria-live="polite">0 items</span>
+        </div>
+
+        <div id="cart-list" class="empty-state cart-empty">
+          <p>Your cart is empty.</p>
+          <p class="muted">Add an in-stock product to get started.</p>
+        </div>
+
+        <div class="cart-footer">
+          <div class="cart-summary">
+            <span>Total</span>
+            <strong id="cart-total">$0.00</strong>
+          </div>
+          <button id="checkout-button" class="button button-primary checkout-button" type="button" disabled>
+            Complete purchase
+          </button>
+          <p id="checkout-error" class="checkout-error" role="alert" hidden></p>
+        </div>
+      </aside>
+
+      <section class="panel order-history-panel" aria-labelledby="order-history-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow order-eyebrow">Past purchases</p>
+            <h2 id="order-history-heading">Order history</h2>
+            <p id="order-summary" class="muted" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div id="order-list" class="empty-state">
+          <p>No completed orders yet.</p>
+          <p class="muted">Completed purchases will appear here.</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="product-dialog" class="product-dialog" aria-labelledby="product-dialog-title">
+      <form id="product-form" method="dialog" novalidate>
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow dialog-eyebrow">Inventory item</p>
+            <h2 id="product-dialog-title">Add product</h2>
+          </div>
+          <button id="close-dialog-button" class="icon-button" type="button" aria-label="Close">&times;</button>
+        </div>
+
+        <input id="product-id" name="id" type="hidden">
+
+        <div class="form-grid">
+          <div class="field field-full">
+            <label for="product-name">Product name</label>
+            <input id="product-name" name="name" type="text" maxlength="100" autocomplete="off" required>
+          </div>
+
+          <div class="field">
+            <label for="product-sku">SKU</label>
+            <input id="product-sku" name="sku" type="text" maxlength="50" autocomplete="off" placeholder="e.g. ELEC-006">
+          </div>
+
+          <div class="field">
+            <label for="product-category">Category</label>
+            <input id="product-category" name="category" type="text" maxlength="50" autocomplete="off" placeholder="Uncategorized">
+          </div>
+
+          <div class="field">
+            <label for="product-price">Unit price</label>
+            <input id="product-price" name="price" type="number" min="0" step="0.01" inputmode="decimal" required>
+          </div>
+
+          <div class="field">
+            <label for="product-stock">Quantity in stock</label>
+            <input id="product-stock" name="stock" type="number" min="0" step="1" inputmode="numeric" required>
+          </div>
+        </div>
+
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+
+        <div class="dialog-actions">
+          <button id="cancel-product-button" class="button button-secondary" type="button">Cancel</button>
+          <button class="button button-primary" type="submit">Save product</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="app-status" class="visually-hidden" role="status" aria-live="polite"></div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>Inventory data is stored in this browser.</small>
+      </div>
+    </footer>
+  </body>
+</html>

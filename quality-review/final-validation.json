@@ -1,0 +1,24 @@
+{
+  "application_grade_rows": 15,
+  "original_folder_reports": 17,
+  "png_evidence_files": 77,
+  "missing_reports": [],
+  "missing_desktop_mobile_evidence": [],
+  "broken_markdown_links": [],
+  "grades_all_within_1_to_5": true,
+  "overall_calculations_verified": true,
+  "table_row_counts": {
+    "Category grades \u2014 all 15 applications": 15,
+    "Comments by codebase": 15,
+    "Browser verification and supplied tests": 15,
+    "Visual assessment": 15
+  },
+  "preexisting_13_score_entries_unchanged": true,
+  "preexisting_comparison_table_rows_unchanged": true,
+  "application_source_hash_mismatches": [],
+  "new_review_order": [
+    "anthropic-cloud-fable-5.1-high",
+    "openai-cloud-gpt-6-astra-high"
+  ],
+  "fresh_subagents_completed_sequentially": true
+}

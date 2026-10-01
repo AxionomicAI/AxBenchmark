@@ -1,0 +1,162 @@
+{
+  "errors": [],
+  "initial": {
+    "items": 8,
+    "overflow": false
+  },
+  "shortcut": "search-input",
+  "search": [
+    "USB-C Cable (2 m)"
+  ],
+  "formFocus": "field-name",
+  "created": "7d13fc4f-ffea-4855-a78b-55d800e715fa",
+  "edit": {
+    "id": "7d13fc4f-ffea-4855-a78b-55d800e715fa",
+    "name": "Audit Widget Revised",
+    "category": "Audit",
+    "quantity": 5,
+    "price": 3.25,
+    "notes": "",
+    "createdAt": "2026-10-01T14:26:06.647Z",
+    "updatedAt": "2026-10-01T14:26:06.687Z"
+  },
+  "quantity": {
+    "itemId": "7d13fc4f-ffea-4855-a78b-55d800e715fa",
+    "quantity": 3
+  },
+  "cartReload": {
+    "itemId": "7d13fc4f-ffea-4855-a78b-55d800e715fa",
+    "quantity": 3
+  },
+  "removed": 0,
+  "confirm": "Take 2 items out of your inventory and record the order? Total $6.50.",
+  "checkout": {
+    "stock": 3,
+    "orders": [
+      {
+        "id": "517207db-775c-44e8-ab24-8dfd1a2a8990",
+        "at": "2026-10-01T14:26:06.930Z",
+        "entries": [
+          {
+            "itemId": "7d13fc4f-ffea-4855-a78b-55d800e715fa",
+            "name": "Audit Widget Revised",
+            "price": 3.25,
+            "quantity": 2,
+            "subtotal": 6.5
+          }
+        ]
+      }
+    ],
+    "cart": [],
+    "note": "Checked out 2 items for $6.50."
+  },
+  "persist": {
+    "stock": 3,
+    "orders": 1,
+    "cart": []
+  },
+  "delete": {
+    "item": null,
+    "receipt": {
+      "id": "517207db-775c-44e8-ab24-8dfd1a2a8990",
+      "at": "2026-10-01T14:26:06.930Z",
+      "entries": [
+        {
+          "itemId": "7d13fc4f-ffea-4855-a78b-55d800e715fa",
+          "name": "Audit Widget Revised",
+          "price": 3.25,
+          "quantity": 2,
+          "subtotal": 6.5
+        }
+      ]
+    }
+  },
+  "mobileOverflow": {
+    "width": 390,
+    "scroll": 390
+  },
+  "mobileForm": {
+    "dialog": {
+      "x": 19,
+      "y": 188.546875,
+      "width": 352,
+      "height": 466.890625,
+      "top": 188.546875,
+      "right": 371,
+      "bottom": 655.4375,
+      "left": 19
+    },
+    "price": {
+      "x": 248.1875,
+      "y": 430.6875,
+      "width": 196.1875,
+      "height": 40.375,
+      "top": 430.6875,
+      "right": 444.375,
+      "bottom": 471.0625,
+      "left": 248.1875
+    },
+    "scroll": 424
+  },
+  "escape": false,
+  "limitFocus": {
+    "tag": "INPUT",
+    "cls": "cart-quantity",
+    "id": ""
+  },
+  "fraction": {
+    "lines": [
+      {
+        "itemId": "sample-headphones",
+        "quantity": 1
+      }
+    ],
+    "field": "1",
+    "note": ""
+  },
+  "excess": {
+    "lines": [
+      {
+        "itemId": "sample-headphones",
+        "quantity": 2
+      }
+    ],
+    "note": "Only 2 of \"Noise-Cancelling Headphones\" in stock."
+  },
+  "zero": {
+    "lines": [
+      {
+        "itemId": "sample-headphones",
+        "quantity": 2
+      }
+    ],
+    "field": "2"
+  },
+  "reducedStock": {
+    "open": false,
+    "note": "Only 1 of \"Noise-Cancelling Headphones\" in stock. Lower the quantity to check out.",
+    "orders": 1
+  },
+  "deletedCart": {
+    "open": false,
+    "note": "A line in your cart is no longer in your inventory. Remove it to check out."
+  },
+  "partialWrite": {
+    "result": false,
+    "before": 24,
+    "memory": 22,
+    "persisted": 24,
+    "warningAfterCheckout": true,
+    "warningAfterCart": false
+  },
+  "partialReload": {
+    "stock": 24,
+    "orders": 2,
+    "warning": false
+  },
+  "corrupt": {
+    "items": 0,
+    "raw": "{oops",
+    "warning": false
+  }
+}

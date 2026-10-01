@@ -1,0 +1,561 @@
+[
+  {
+    "folder": "openai-cloud-gpt-6-astra-high",
+    "scores": {
+      "ux": 4,
+      "visual": 3.5,
+      "code": 4.5,
+      "spec": 5,
+      "robustness": 4.5,
+      "accessibility": 4.5
+    },
+    "overall_5": 4.35,
+    "overall_100": 87,
+    "tasks": {
+      "T1": "application pass; Git unverified",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass",
+      "T7": "31 supplied tests passed currently; historical execution unverified"
+    },
+    "supplied_tests": "31 passed: 17 storage + 14 browser; 0 failed; 0 skipped",
+    "browser_probe": "completed 15 observations/check groups; no page errors; normal flow and storage/focus probes passed; mobile table friction confirmed",
+    "screenshots_viewed": true,
+    "computed_overall": 87,
+    "comments": {
+      "code": "Validated storage API, exact cents/BigInt totals, safe rendering and a single-write checkout preserve data integrity. A large imperative UI module and full-list rebuilding add maintenance cost.",
+      "ux": "Clear dialogs, validation, draft retention and focus recovery make desktop flows efficient. Mobile tables hide inventory actions and cart controls; tall rows and no cart shortcut add scrolling.",
+      "business": "All required normal workflows pass. Failed checkout writes leave stock, cart and history unchanged, and receipts survive later product edits/deletion. Stale-save guards are useful but do not lock simultaneous tabs."
+    },
+    "browser": {
+      "directFile": true,
+      "desktop": "1440x1000",
+      "mobile": "390x844",
+      "screenshotsViewed": 8,
+      "normalWorkflowPassed": true,
+      "pageErrors": 0
+    }
+  },
+  {
+    "folder": "anthropic-cloud-fable-5.1-high",
+    "scores": {
+      "ux": 4.5,
+      "visual": 4,
+      "code": 4.5,
+      "spec": 4.5,
+      "robustness": 3.5,
+      "accessibility": 4.5
+    },
+    "weightedScore": 86.5,
+    "tasks": {
+      "T1": "scaffold_readme_pass_git_unverified",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass_with_storage_failure_caveat",
+      "T7": "historical_unverified_current_chrome_review_pass"
+    },
+    "tests": {
+      "passed": 118,
+      "total": 118,
+      "browserAssertions": 25,
+      "pageErrors": 0
+    },
+    "computed_overall": 86.5,
+    "comments": {
+      "code": "Cohesive domain APIs, isolated persistence, exact cent conversion, safe rendering and meaningful tests; multi-key checkout recovery remains incomplete.",
+      "ux": "Clear validation and careful focus restoration support complete flows. Mobile actions remain visible, but tall product cards and compact row controls reduce efficiency.",
+      "business": "All ordinary direct-file inventory/cart/checkout/history requirements pass, with current cart prices and durable historical snapshots. A compound write failure can leave an order recorded without stock deduction; startup write failure hides still-readable saved data."
+    },
+    "browser": {
+      "directFile": true,
+      "desktop": "1440x1000",
+      "mobile": "390x844",
+      "screenshotsViewed": 9,
+      "normalWorkflowPassed": true,
+      "pageErrors": 0
+    }
+  },
+  {
+    "folder": "anthropic-cloud-opus-5.5-medium",
+    "scores": {
+      "ux": 4,
+      "visual": 3.5,
+      "code": 4.5,
+      "spec": 4.5,
+      "robustness": 3.5,
+      "accessibility": 4
+    },
+    "overall100": 82,
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass_with_storage_integrity_caveat",
+      "T7": "historical_commit_plus_current_browser_review"
+    },
+    "tests": {
+      "passed": 48,
+      "failed": 0,
+      "kind": "Node VM data-layer tests"
+    },
+    "browser": {
+      "directFile": true,
+      "desktop": "1440x1000",
+      "mobile": "390x844",
+      "screenshotsViewed": 5,
+      "normalWorkflowPassed": true,
+      "pageErrors": 0
+    },
+    "comments": {
+      "code": "Cohesive modules, explicit invariants, safe rendering and meaningful tests; checkout rollback and object-as-set edges need hardening.",
+      "ux": "Efficient desktop flows and feedback; mobile users must scroll sideways to reach row actions.",
+      "businessRules": "Full ordinary T1\u2013T6 flow verified; sustained storage failure can leave deducted stock and a recorded order with an uncleared cart."
+    },
+    "topDefects": [
+      "Persistent checkout failure can defeat rollback while claiming nothing changed",
+      "Mobile table hides stock and actions horizontally",
+      "Prototype-named categories omitted",
+      "Corrected inputs retain stale validation errors"
+    ],
+    "limitations": [
+      "Single Chromium browser",
+      "No actual cross-tab race test",
+      "Storage failure injected, not natural quota exhaustion",
+      "Accessibility spot check only"
+    ],
+    "computed_overall": 82.0
+  },
+  {
+    "folder": "openai-cloud-gpt-5.6-sol-medium",
+    "scores": {
+      "ux": 3.5,
+      "visual": 4,
+      "code": 4,
+      "spec": 4.5,
+      "robustness": 3.5,
+      "accessibility": 4
+    },
+    "overall100": 79,
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass",
+      "T7": "historical_claim_and_fix_commit_only"
+    },
+    "supplied_tests": "none",
+    "browser_probe": "completed; core flows and ordinary failed-write rollback passed; focus, hidden-feedback and malformed-stock defects confirmed",
+    "comments": {
+      "code": "Clear store boundaries, explicit normalization and safe `textContent` rendering make this maintainable for a small vanilla application. The main weaknesses are inconsistent validation on persisted reads and full cart replacement that disrupts focus.",
+      "ux": "Efficient desktop inventory/cart layout and a clear modal support all normal tasks. Error feedback should also be visible, keyboard focus should survive quantity edits, and mobile users need a direct way to reach their cart.",
+      "business": "Meets the stated framework-free, direct-file, localStorage, inventory management, lookup, cart and checkout requirements. Stock, price and order history remained consistent through the exercised normal workflows and failed checkout save."
+    },
+    "computed_overall": 79.0
+  },
+  {
+    "folder": "deepseek-cloud-deepseek-flash",
+    "scores": {
+      "ux": 3.5,
+      "visual": 3.5,
+      "code": 4.5,
+      "spec": 4.5,
+      "robustness": 3,
+      "accessibility": 4
+    },
+    "overall100": 78.5,
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass_with_reliability_caveat",
+      "T7": "evidence_present_historical_browser_execution_unverified"
+    },
+    "tests": {
+      "command": "node deepseek-cloud-deepseek-flash/test/smoke.mjs",
+      "passed": 708,
+      "failed": 0,
+      "sections": 72,
+      "kind": "node_vm_dom_stub"
+    },
+    "browser": {
+      "directFile": true,
+      "normalFlow": "passed",
+      "desktop": "1440x1000",
+      "mobile": "390x844",
+      "screenshotsViewed": true,
+      "pageErrors": 0
+    },
+    "comments": {
+      "code": "Cohesive modules, pure domain functions, safe rendering and substantive regression coverage; persistence coordination remains imperfect.",
+      "ux": "Clear inventory actions and feedback; mobile price clipping and long scroll to cart weaken usability.",
+      "business": "Required direct-file CRUD/search/cart/checkout/history flows pass; rejected writes can leave receipt and stock inconsistent."
+    },
+    "computed_overall": 78.5
+  },
+  {
+    "folder": "openai-cloud-gpt-6-sol-medium",
+    "scores": {
+      "ux": 3.5,
+      "visual": 4,
+      "code": 4,
+      "spec": 4.5,
+      "robustness": 3.5,
+      "accessibility": 3.5
+    },
+    "overall_5": 3.925,
+    "overall_100": 78.5,
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass",
+      "T7": "historical claim unverified"
+    },
+    "supplied_tests": "none found",
+    "browser_probe": "passed normal flow; confirmed focus/recovery gaps",
+    "screenshots_viewed": true,
+    "comments": {
+      "code": "A compact, understandable data/UI split with sound cents-based calculations and safe rendering. Error handling is uneven, and list rebuilding trades simplicity for focus loss and unnecessary repeated storage reads.",
+      "ux": "Easy to understand and operate on desktop or phone, with clear labels and totals. Add-to-cart and edit cancellation should retain useful focus; deletion needs an undo or confirmation, and failed saves need an actionable visible explanation.",
+      "business": "All requested workflows function, persist and agree with stock and pricing in the tested normal flow. Cart quantities clamp to edited stock, product deletion removes related cart entries, and orders retain purchased names/prices after product deletion."
+    },
+    "computed_overall": 78.5
+  },
+  {
+    "folder": "xai-cloud-grok-4.7-fast-500k-medium",
+    "scores": {
+      "ux": 3.5,
+      "visual": 3.5,
+      "code": 4,
+      "spec": 4.5,
+      "robustness": 3.5,
+      "accessibility": 3.5
+    },
+    "overall100": 77,
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass_units_only_total_disclosed",
+      "T6": "pass_with_failed_rollback_caveat",
+      "T7": "historical_git_and_results_evidence_current_browser_verified"
+    },
+    "comments": {
+      "code": "Clear domain modules, safe rendering and defensive normalization; large redraw-heavy UI and non-atomic checkout rollback.",
+      "ux": "Good CRUD/search/validation; distant cart feedback, keyboard focus loss and clipped mobile Remove control.",
+      "business": "Literal stock/cart/order requirements verified. Total means units; no prices. Continuing storage failure can deduct stock without saving an order."
+    },
+    "evidence": {
+      "browser": "actual file URL, isolated Chrome profile, two successful probe runs",
+      "screenshotsViewed": 4,
+      "suppliedTests": "none",
+      "git": "own repository, seven task commits",
+      "topLines": [
+        "js/orders.js:199",
+        "js/orders.js:228",
+        "js/app.js:525",
+        "css/styles.css:383"
+      ]
+    },
+    "limitations": [
+      "No monetary pricing model; not expressly required",
+      "DOM-assigned fields with real clicks and selected keyboard interactions",
+      "No screen reader, light mode, cross-tab or malformed-storage runtime test",
+      "Persistent failure reproduced via fault injection"
+    ],
+    "computed_overall": 77.0
+  },
+  {
+    "folder": "anthropic-cloud-sonnet-5.5-medium",
+    "scores": {
+      "ux": 3.5,
+      "visual": 3.5,
+      "code": 3.5,
+      "spec": 4.5,
+      "robustness": 2.5,
+      "accessibility": 3.5
+    },
+    "overall_100": 73,
+    "tasks": {
+      "T1": "pass, including scaffold Git commit",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "normal-flow pass; storage-failure integrity defect",
+      "T7": "historical claim unverified; independent browser review executed"
+    },
+    "tests": "No supplied automated tests; isolated file:// Puppeteer probe passed normal flow and reproduced documented faults",
+    "comments": {
+      "code_quality": "Readable module separation and safe DOM construction; duplicated persistence fallback and weak record validation need work.",
+      "ux": "Efficient desktop search and CRUD, but mobile tables hide stock/actions and cart total until panned.",
+      "business_rules": "All normal required flows pass; failed stock writes can still produce successful orders without stock deduction."
+    },
+    "computed_overall": 73.0
+  },
+  {
+    "folder": "4x-rtxpro6000-glm-5.3-flash-q4kxl",
+    "scores": {
+      "ux": 3.5,
+      "visual": 3,
+      "code": 4,
+      "spec": 4.5,
+      "robustness": 2.5,
+      "accessibility": 2.5
+    },
+    "overall_100": 72.5,
+    "tasks": {
+      "T1": "scaffold/readme verified; git unverified",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "pass normal flow; failed-write integrity defect",
+      "T7": "not applicable"
+    },
+    "tests": {
+      "data": 41,
+      "cart": 61,
+      "orders": 44,
+      "failed": 0,
+      "ui": "skipped: jsdom absent"
+    },
+    "browser_verified": true,
+    "screenshots_viewed": 5,
+    "top_defects": [
+      "failed order write consumes stock and clears cart while reporting success",
+      "mobile whitespace and document overflow",
+      "modal focus escape and missing restoration"
+    ],
+    "computed_overall": 72.5
+  },
+  {
+    "folder": "zai-cloud-glm-5.3-flash",
+    "scores": {
+      "ux": 3,
+      "visual": 3,
+      "code": 3.5,
+      "spec": 4,
+      "robustness": 2.5,
+      "accessibility": 3.5
+    },
+    "overall100": 66.5,
+    "comments": {
+      "code": "Clear store/UI separation, safe rendering and 71 passing tests; ignored persistence outcomes and incomplete render dependencies cause defects.",
+      "ux": "Straightforward desktop flows, but stale disabled cart actions, lost keyboard focus and mobile horizontal scrolling hinder use.",
+      "business": "All requested features work normally; stock/cart reconciliation is sound, but failed history writes can consume stock without retaining the order."
+    },
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass_with_persistence_failure_caveat",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass_with_stale_button_defect",
+      "T6": "pass_with_write_failure_integrity_caveat",
+      "T7": "historical_evidence_and_current_browser_check"
+    },
+    "tests": {
+      "store": {
+        "passed": 44,
+        "failed": 0
+      },
+      "app": {
+        "passed": 27,
+        "failed": 0
+      },
+      "browser": "normal_flow_and_targeted_failure_probes_executed",
+      "screenshotsViewed": true
+    },
+    "limits": [
+      "No screen reader or exhaustive contrast audit",
+      "No cross-tab concurrency or large-data benchmark",
+      "Single Chromium browser",
+      "Corrupt storage covered by supplied tests, not browser injection"
+    ],
+    "computed_overall": 66.5
+  },
+  {
+    "folder": "4x-rtxpro6000-deepseek-v4-flash-q8kxl",
+    "scores": {
+      "ux": 3,
+      "visual": 3,
+      "code": 2.5,
+      "spec": 4.5,
+      "robustness": 1.5,
+      "accessibility": 2.5
+    },
+    "overall100": 62,
+    "tasks": {
+      "T1": "scaffold_readme_pass_git_unverified",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass_with_caveats",
+      "T6": "pass_with_caveats",
+      "T7": "not_required_local"
+    },
+    "tests": {
+      "supplied": "none",
+      "syntax": "node --check app.js: pass",
+      "browser": "direct_file_isolated_chrome_normal_flow_pass"
+    },
+    "topDefects": [
+      "Product-name attribute injection",
+      "Partial checkout storage write loses stock without order",
+      "Cart-add also opens detail view",
+      "Mobile actions off-screen",
+      "Stale cart price after edit",
+      "Click-only sorting and order expansion"
+    ],
+    "computed_overall": 62.0
+  },
+  {
+    "folder": "ryzen7-8745hs-qwen38-27b-iq3",
+    "scores": {
+      "ux": 2.5,
+      "visual": 2.5,
+      "code": 3,
+      "spec": 2.5,
+      "robustness": 2,
+      "accessibility": 3
+    },
+    "overall_100": 51.5,
+    "tasks": {
+      "T1": "pass",
+      "T2": "pass",
+      "T3": "pass",
+      "T4": "pass",
+      "T5": "pass",
+      "T6": "fail",
+      "T7": "not_required"
+    },
+    "comments": {
+      "code": "Readable data/UI functions and safe text rendering, but missing checkout visibility, weak storage validation and partial checkout writes.",
+      "ux": "CRUD/search/cart are straightforward; checkout is inaccessible and the mobile cart overflows.",
+      "business": "Direct-file vanilla/localStorage and T1\u2013T5 work; hidden Checkout prevents ordinary T6 completion despite working internal order logic."
+    },
+    "supplied_tests": "none",
+    "browser_verified": true,
+    "screenshots_viewed": true,
+    "computed_overall": 51.5
+  },
+  {
+    "folder": "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl",
+    "scores": {
+      "ux": 2.5,
+      "visual": 2,
+      "code": 2.5,
+      "spec": 3,
+      "robustness": 1,
+      "accessibility": 2
+    },
+    "overall_100": 47.5,
+    "tasks": {
+      "base": "pass",
+      "T1": "artifact_pass_git_unverified",
+      "T2": "partial",
+      "T3": "pass_with_caveats",
+      "T4": "partial",
+      "T5": "pass_with_caveats",
+      "T6": "partial",
+      "T7": "not_applicable"
+    },
+    "comments": {
+      "ux": "Discoverable desktop actions, but inaccessible reloaded history, stale search and scrolling burden harm everyday use.",
+      "code": "Readable named functions and simple structure; inline executable handlers, duplicated mutable data and missing storage boundaries cause serious defects.",
+      "business_rules": "Core flows exist; empty inventory persistence, history retrieval and consistent order pricing fail."
+    },
+    "supplied_tests": "none",
+    "browser_probe": "executed_exit_0",
+    "screenshots_viewed": true,
+    "source_modified": false,
+    "computed_overall": 47.5
+  },
+  {
+    "folder": "ryzen7-8745hs-gemma4-26b",
+    "scores": {
+      "ux": 2.5,
+      "visual": 2.5,
+      "code": 2,
+      "spec": 2.5,
+      "robustness": 1,
+      "accessibility": 2.5
+    },
+    "weighted_overall_100": 45,
+    "tasks": {
+      "T1": "pass",
+      "T2": "partial",
+      "T3": "partial",
+      "T4": "pass",
+      "T5": "partial",
+      "T6": "partial",
+      "T7": "not_required"
+    },
+    "comments": {
+      "code": "Readable small stores, but unsafe HTML rendering, destructive full rerenders, and stock mutations before checkout validation.",
+      "ux": "Normal flows are discoverable; draft loss, distant cart feedback, lost keyboard focus, and invisible stale cart items impede recovery.",
+      "business_rules": "Happy-path stock/history persistence works; rejected checkout consumes stock, empty inventory reseeds, and deleting products leaves cart state inconsistent."
+    },
+    "evidence": {
+      "probe": "quality-review/ryzen7-8745hs-gemma4-26b-probe.json",
+      "screenshots_viewed": [
+        "desktop",
+        "mobile",
+        "cart"
+      ],
+      "supplied_tests": "none",
+      "git": "initial scaffold commit only; implementation files modified"
+    },
+    "limitations": [
+      "Chrome only",
+      "mixed DOM and click/keyboard interaction",
+      "storage write failure simulated",
+      "no cross-tab or large-data testing",
+      "accessibility spot check"
+    ],
+    "computed_overall": 45.0
+  },
+  {
+    "folder": "ryzen7-8745hs-qwen36-35b",
+    "scores": {
+      "ux": 2,
+      "visual": 2.5,
+      "code": 2,
+      "spec": 2.5,
+      "robustness": 1.5,
+      "accessibility": 2.5
+    },
+    "weighted_overall_100": 43.5,
+    "tasks": {
+      "T1": "pass",
+      "T2": "partial",
+      "T3": "pass_functionality",
+      "T4": "pass_functionality",
+      "T5": "fail",
+      "T6": "fail",
+      "T7": "not_applicable"
+    },
+    "comments": {
+      "code": "Readable inventory functions, but DOM/argument/return-value mismatches leave major features unintegrated; no supplied tests.",
+      "ux": "CRUD and live search work; cart silently does nothing, Orders opens the wrong form, and mobile actions are clipped.",
+      "business": "Direct-file vanilla/localStorage inventory is usable, but required cart, checkout and history are broken and empty inventory reseeds."
+    },
+    "supplied_tests": "none",
+    "browser_verified": true,
+    "screenshots_viewed": true,
+    "computed_overall": 43.5
+  }
+]

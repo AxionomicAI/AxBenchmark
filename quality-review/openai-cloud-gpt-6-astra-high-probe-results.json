@@ -1,0 +1,224 @@
+{
+  "url": "file:///Users/mike-axionomic/Downloads/comparison/openai-cloud-gpt-6-astra-high/index.html",
+  "viewportDesktop": {
+    "width": 1440,
+    "height": 1000
+  },
+  "viewportMobile": {
+    "width": 390,
+    "height": 844
+  },
+  "method": "Actual Puppeteer click/type/keyboard workflow. DOM reads assert state; direct storage manipulation only for explicit edge cases.",
+  "checks": [
+    {
+      "name": "First-run seed",
+      "passed": true,
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "sku": "NB-001",
+          "stock": 24
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "sku": "PN-001",
+          "stock": 60
+        },
+        {
+          "id": "sample-folder",
+          "name": "Document folder",
+          "sku": "FL-001",
+          "stock": 8
+        },
+        {
+          "id": "sample-tape",
+          "name": "Packing tape",
+          "sku": "TP-001",
+          "stock": 0
+        }
+      ],
+      "zeroStockDisabled": true
+    },
+    {
+      "name": "Mobile landing geometry",
+      "pageWidth": 390,
+      "viewport": 390,
+      "inventoryScrollWidth": 672,
+      "inventoryClientWidth": 324,
+      "firstActionRect": {
+        "left": 540.234375,
+        "right": 698.609375,
+        "top": 616.65625
+      }
+    },
+    {
+      "name": "Keyboard-only create after clicking Add; dialog focus and tab order",
+      "passed": true,
+      "focusAfterSave": "Edit Audit lamp (AUD-LAMP)"
+    },
+    {
+      "name": "CRUD edit/search and cart add/update/remove",
+      "passed": true,
+      "state": {
+        "items": [
+          {
+            "id": "sample-notebook",
+            "name": "Notebook",
+            "sku": "NB-001",
+            "stock": 24
+          },
+          {
+            "id": "sample-pen",
+            "name": "Ballpoint pen",
+            "sku": "PN-001",
+            "stock": 60
+          },
+          {
+            "id": "sample-folder",
+            "name": "Document folder",
+            "sku": "FL-001",
+            "stock": 8
+          },
+          {
+            "id": "sample-tape",
+            "name": "Packing tape",
+            "sku": "TP-001",
+            "stock": 0
+          },
+          {
+            "id": "product-mupuxhtx-vz2411po4di",
+            "name": "Audit desk lamp",
+            "sku": "AUD-LAMP",
+            "stock": 8,
+            "priceCents": 325
+          }
+        ],
+        "cart": [
+          {
+            "productId": "product-mupuxhtx-vz2411po4di",
+            "quantity": 3
+          }
+        ],
+        "orders": []
+      },
+      "quantityFocus": "Quantity for Audit desk lamp (AUD-LAMP)"
+    },
+    {
+      "name": "Invalid cart quantity 0",
+      "passed": true,
+      "message": "Value must be greater than or equal to 1."
+    },
+    {
+      "name": "Invalid cart quantity 1.5",
+      "passed": true,
+      "message": "Please enter a valid value. The two nearest valid values are 1 and 2."
+    },
+    {
+      "name": "Invalid cart quantity 9",
+      "passed": true,
+      "message": "Value must be less than or equal to 8."
+    },
+    {
+      "name": "Unapplied quantity blocks checkout",
+      "passed": true,
+      "message": "Select Update for your changed quantity before completing the purchase.",
+      "focus": "Quantity for Audit desk lamp (AUD-LAMP)"
+    },
+    {
+      "name": "Failed checkout preserves inventory/cart/history",
+      "passed": true,
+      "message": "Purchase could not be completed. Audit quota full No purchase was saved. If browser storage is unavailable or full, restore it and try again."
+    },
+    {
+      "name": "Checkout atomic state and receipt focus",
+      "passed": true,
+      "state": {
+        "items": [
+          {
+            "id": "sample-notebook",
+            "name": "Notebook",
+            "sku": "NB-001",
+            "stock": 24
+          },
+          {
+            "id": "sample-pen",
+            "name": "Ballpoint pen",
+            "sku": "PN-001",
+            "stock": 60
+          },
+          {
+            "id": "sample-folder",
+            "name": "Document folder",
+            "sku": "FL-001",
+            "stock": 8
+          },
+          {
+            "id": "sample-tape",
+            "name": "Packing tape",
+            "sku": "TP-001",
+            "stock": 0
+          },
+          {
+            "id": "product-mupuxhtx-vz2411po4di",
+            "name": "Audit desk lamp",
+            "sku": "AUD-LAMP",
+            "stock": 4,
+            "priceCents": 325
+          }
+        ],
+        "cart": [],
+        "orders": [
+          {
+            "id": "order-mupuxi58-cfnyljv3ghk",
+            "createdAt": "2026-10-01T18:18:06.236Z",
+            "currency": "USD",
+            "lines": [
+              {
+                "productId": "product-mupuxhtx-vz2411po4di",
+                "name": "Audit desk lamp",
+                "sku": "AUD-LAMP",
+                "quantity": 4,
+                "unitPriceCents": 325,
+                "subtotalCents": "1300"
+              }
+            ],
+            "totalCents": "1300"
+          }
+        ]
+      },
+      "active": "SUMMARY"
+    },
+    {
+      "name": "Reduced stock and repricing reconcile cart",
+      "passed": true,
+      "text": "Audit desk lamp (AUD-LAMP)Only 1 in stock. Reduce the quantity or remove this item.$9.99Update$29.97Remove",
+      "total": "Total (USD): $29.97"
+    },
+    {
+      "name": "Delete retains unavailable cart warning and immutable receipt",
+      "passed": true,
+      "text": "Deleted product (product-mupuxhtx-vz2411po4di)No longer in inventory. Remove this item; it is excluded from the total.UnavailableUpdate—Remove",
+      "total": "Total (USD): $0.00"
+    },
+    {
+      "name": "Earlier other-page edit rejects stale cart write",
+      "passed": true,
+      "message": "Cart changes could not be saved. Inventory or cart changed in another window. Reload and review before saving. Your saved cart has not changed. Restore browser storage or reload and review before retrying."
+    },
+    {
+      "name": "Markup product name is rendered as text",
+      "passed": true
+    },
+    {
+      "name": "Corrupt authoritative storage preserved",
+      "passed": true,
+      "inventory": "Inventory could not be loaded or initialized. Browser storage may be unavailable or full, or the saved data may be invalid. Existing saved data has not been replaced.",
+      "orders": "Order history could not be loaded. Saved data has not been replaced. Checkout is unavailable; check browser storage and reload."
+    }
+  ],
+  "errors": [],
+  "browser": "Chrome/154.0.8037.58",
+  "completed": true
+}

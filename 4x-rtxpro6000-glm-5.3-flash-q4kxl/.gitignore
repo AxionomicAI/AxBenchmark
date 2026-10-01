@@ -1,0 +1,17 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Editor folders
+.vscode/
+.idea/
+
+# Local backups
+*.bak
+
+# Dev-only test dependency (jsdom), installed with:
+#   npm install --no-save jsdom@24
+node_modules/
+package-lock.json

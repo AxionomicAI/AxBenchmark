@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <h1 class="site-title">Inventory</h1>
+    <p class="site-tagline">Track what you own, stored in your browser.</p>
+  </header>
+
+  <main id="main" class="site-main">
+    <section class="toolbar" aria-label="Actions">
+      <button id="add-item" type="button" class="btn btn-primary">Add item</button>
+      <output id="item-count" class="item-count" aria-live="polite">0 items</output>
+    </section>
+
+    <!-- Lookup. Both controls narrow what is on screen; neither changes what
+         is stored, so an empty list below means "nothing matched", not
+         "nothing left". The category picker is filled in from the products on
+         the page; the placeholder option is what shows before that. -->
+    <section class="filters" aria-label="Find items">
+      <div class="field field-search">
+        <label class="field-label" for="search-input">
+          Search <kbd class="key-hint" aria-hidden="true">/</kbd>
+        </label>
+        <input class="field-input" id="search-input" type="search"
+               placeholder="Name, category or notes" autocomplete="off">
+      </div>
+
+      <div class="field field-category">
+        <label class="field-label" for="category-filter">Category</label>
+        <select class="field-input" id="category-filter">
+          <option value="">All categories</option>
+        </select>
+      </div>
+
+      <button id="clear-filters" type="button" class="btn" hidden>Clear</button>
+    </section>
+
+    <!-- How much of the list a lookup is showing. An <output> is already a
+         polite live region, so the result is read out as it changes. Empty
+         when there is no lookup on, and an empty <output> takes no space. -->
+    <output id="search-summary" class="search-summary"></output>
+
+    <!-- Shown when a change could not be written to localStorage. Announced
+         when it appears, since the user would otherwise believe the edit was
+         saved. -->
+    <p id="save-warning" class="notice" role="alert" hidden></p>
+
+    <section id="inventory" class="panel" aria-label="Inventory">
+      <p id="empty-state" class="empty-state">
+        No items yet. Use <strong>Add item</strong> to record your first product.
+      </p>
+      <!-- The other empty page: there are products, none of them match. -->
+      <p id="no-matches" class="empty-state" hidden></p>
+      <ul id="item-list" class="item-list"></ul>
+    </section>
+
+    <!-- The cart. Its lines point at the products above rather than copying
+         them, so the names and prices here are always the current ones: editing
+         a price moves the total, and a product that has been deleted leaves a
+         line that says so instead of vanishing unannounced. -->
+    <section id="cart" class="panel cart" aria-labelledby="cart-title">
+      <div class="cart-head">
+        <h2 id="cart-title" class="cart-title">Cart</h2>
+        <!-- Counts what would be taken out of the inventory, so two of one
+             product and one of another reads as "3 items". -->
+        <output id="cart-count" class="cart-count" aria-live="polite">0 items</output>
+        <!-- Both act on the whole cart rather than on the line under the
+             pointer, so they sit together at the far end of the header. -->
+        <div class="cart-actions">
+          <button id="cart-checkout" type="button" class="btn btn-small btn-primary"
+                  hidden>Check out</button>
+          <button id="cart-clear" type="button" class="btn btn-small" hidden>Clear cart</button>
+        </div>
+      </div>
+
+      <p id="cart-empty" class="empty-state">
+        Your cart is empty. Use <strong>Add to cart</strong> on a product.
+      </p>
+
+      <!-- Two kinds of message, both usually absent. The first is a standing
+           fact about the cart; the second is a reply to the last thing the user
+           did, which the controls cannot show on their own. -->
+      <p id="cart-stale" class="cart-note" role="status" hidden></p>
+      <p id="cart-note" class="cart-note" role="status" hidden></p>
+
+      <ul id="cart-list" class="cart-list"></ul>
+
+      <p id="cart-total-row" class="cart-total-row" hidden>
+        <span class="cart-total-label">Total</span>
+        <output id="cart-total" class="cart-total">$0.00</output>
+      </p>
+    </section>
+
+    <!-- The order history: one entry per completed sale, drawn newest first.
+         Its lines are copies taken at the time rather than references into the
+         list above, so renaming a product, repricing it, or deleting it does
+         not rewrite what was sold. -->
+    <section id="orders" class="panel orders" aria-labelledby="orders-title">
+      <div class="orders-head">
+        <h2 id="orders-title" class="orders-title">Order history</h2>
+        <output id="orders-count" class="orders-count" aria-live="polite">0 orders</output>
+      </div>
+
+      <p id="orders-empty" class="empty-state">
+        No orders yet. Checking out your cart records the sale here.
+      </p>
+
+      <ul id="order-list" class="order-list"></ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data is saved in this browser's localStorage. Nothing leaves your device.</p>
+  </footer>
+
+  <noscript>
+    <p class="noscript">This app needs JavaScript enabled.</p>
+  </noscript>
+
+  <!-- One dialog serves both "Add item" and "Edit item"; app.js fills it from
+       the product being edited, or blanks it when adding. The form submits
+       through script rather than method="dialog", so the handler decides
+       whether the dialog is allowed to close. -->
+  <dialog id="item-dialog" class="dialog" aria-labelledby="item-dialog-title">
+    <form id="item-form" class="form">
+      <h2 id="item-dialog-title" class="dialog-title">Add item</h2>
+
+      <p id="form-error" class="form-error" role="alert" hidden></p>
+
+      <div class="field">
+        <label class="field-label" for="field-name">Name</label>
+        <input class="field-input" id="field-name" name="name" type="text"
+               autocomplete="off" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="field-category">Category</label>
+        <input class="field-input" id="field-category" name="category" type="text"
+               autocomplete="off" placeholder="e.g. Cables">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="field-quantity">Quantity</label>
+          <input class="field-input" id="field-quantity" name="quantity" type="number"
+                 min="0" step="1" value="0">
+        </div>
+        <div class="field">
+          <label class="field-label" for="field-price">Unit price</label>
+          <input class="field-input" id="field-price" name="price" type="number"
+                 min="0" step="0.01" value="0">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="field-notes">Notes</label>
+        <textarea class="field-input" id="field-notes" name="notes" rows="2"></textarea>
+      </div>
+
+      <div class="dialog-actions">
+        <button id="form-cancel" type="button" class="btn">Cancel</button>
+        <button id="form-submit" type="submit" class="btn btn-primary">Add item</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Deleting a product, emptying the cart, and checking out are the actions
+       worth a second look, so they ask first. One dialog asks all three; app.js
+       fills in the wording, the button label, and whether the button is the red
+       one — the id is left over from when deleting was all it did. -->
+  <dialog id="confirm-dialog" class="dialog" aria-labelledby="confirm-dialog-title">
+    <h2 id="confirm-dialog-title" class="dialog-title">Delete item</h2>
+    <p id="confirm-message" class="dialog-text"></p>
+    <div class="dialog-actions">
+      <button id="confirm-cancel" type="button" class="btn">Cancel</button>
+      <button id="confirm-delete" type="button" class="btn btn-danger">Delete</button>
+    </div>
+  </dialog>
+
+  <!-- Classic scripts, not ES modules: `type="module"` is blocked over file://.
+       Order matters: storage, then the data layers that sit on it, then the app.
+       The cart reads the inventory, and checking out touches all three, so
+       orders comes last of the data layers. -->
+  <script src="js/storage.js"></script>
+  <script src="js/items.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

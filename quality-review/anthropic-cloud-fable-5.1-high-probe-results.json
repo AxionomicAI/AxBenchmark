@@ -1,0 +1,133 @@
+{
+  "url": "file:///Users/mike-axionomic/Downloads/comparison/anthropic-cloud-fable-5.1-high/index.html",
+  "reviewedAt": "2026-10-01T18:11:19.859Z",
+  "observations": {
+    "mobileGeometry": {
+      "viewport": 390,
+      "scrollWidth": 390,
+      "productCardHeight": 260.5,
+      "cartTop": 3750,
+      "buttonHeight": 31
+    },
+    "dialogReverseTab": "",
+    "requiredValidation": {
+      "focus": "product-name",
+      "errors": [
+        "Name is required.",
+        "SKU is required.",
+        "Price is required."
+      ]
+    },
+    "quantityEnter": {
+      "units": 3,
+      "input": "3"
+    },
+    "invalidQuantity_0": {
+      "units": 3,
+      "input": "3",
+      "status": "Quantity must be a whole number, 1 or more."
+    },
+    "invalidQuantity_1.5": {
+      "units": 3,
+      "input": "3",
+      "status": "Quantity must be a whole number, 1 or more."
+    },
+    "invalidQuantity_99": {
+      "units": 3,
+      "input": "3",
+      "status": "Only 5 in stock."
+    },
+    "stockReducedInCart": {
+      "warning": "Only 1 in stock",
+      "disabled": "true",
+      "total": 2000,
+      "orderTotal": 3702
+    },
+    "deleteConfirmation": "“Café Review Widget” (QA-FABLE) will be removed from the inventory and from the cart. This cannot be undone.",
+    "safeRendering": {
+      "ok": true,
+      "rendered": true,
+      "injectedImages": 0,
+      "xss": 0
+    },
+    "malformedProductRecovery": {
+      "products": 0,
+      "backup": "{broken",
+      "warning": true,
+      "orders": 1
+    },
+    "singleWriteFailure": {
+      "result": {
+        "ok": false,
+        "errors": {
+          "storage": "Could not save. Browser storage may be full or disabled."
+        }
+      },
+      "unchanged": true
+    },
+    "readableButUnwritableStartup": {
+      "storedProducts": 13,
+      "visibleProducts": 12,
+      "storedOrders": 1,
+      "visibleOrders": 0,
+      "hasStoredXssProduct": false,
+      "warning": true,
+      "sampleNotice": true
+    },
+    "rollbackFailure": {
+      "result": {
+        "ok": false,
+        "errors": {
+          "storage": "Could not save. Browser storage may be full or disabled."
+        }
+      },
+      "before": {
+        "stock": 140,
+        "orders": 1
+      },
+      "after": {
+        "stock": 140,
+        "orders": 2,
+        "cartUnits": 1
+      }
+    },
+    "rollbackFailureReload": {
+      "orders": 2
+    }
+  },
+  "checks": [
+    "12 seeded products from file URL",
+    "dialog initially focuses name",
+    "Escape returns focus to opener",
+    "create persists exact 1999 cents",
+    "accent/punctuation multi-field search",
+    "edit updates cents",
+    "stepper increments and decrements",
+    "typed quantity committed on blur",
+    "invalid 0 leaves cart unchanged",
+    "invalid 1.5 leaves cart unchanged",
+    "invalid 99 leaves cart unchanged",
+    "invalid input prevents immediate checkout confirmation",
+    "cart survives reload",
+    "cancel does not purchase",
+    "checkout stock 5 minus 3 equals 2",
+    "checkout total exact",
+    "checkout empties cart",
+    "checkout focuses order summary",
+    "order persists after reload",
+    "reduced stock blocks checkout",
+    "remove leaves empty cart",
+    "empty-cart focus moves to heading",
+    "delete removes product and its cart line",
+    "deleted product preserved in order",
+    "delete persists"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    "Could not save inventory.products. QuotaExceededError: injected failure",
+    "Could not save inventory.products. QuotaExceededError: injected late failure",
+    "Could not save inventory.orders. QuotaExceededError: injected late failure",
+    "Could not take back order 2, which was not completed."
+  ],
+  "browser": "Chrome/154.0.8037.58"
+}

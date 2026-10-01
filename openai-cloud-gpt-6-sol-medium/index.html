@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7f5">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="inventory-data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1>Inventory</h1>
+        <p>Keep track of what you have on hand.</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel" aria-labelledby="add-heading">
+        <h2 id="add-heading">Add a product</h2>
+        <form id="item-form">
+          <div class="form-field">
+            <label for="item-name">Name</label>
+            <input id="item-name" name="name" type="text" maxlength="100" required autocomplete="off">
+          </div>
+          <div class="form-field quantity-field">
+            <label for="item-quantity">Stock</label>
+            <input id="item-quantity" name="quantity" type="number" min="0" step="1" value="1" required>
+          </div>
+          <div class="form-field price-field">
+            <label for="item-price">Price (USD)</label>
+            <input id="item-price" name="price" type="number" min="0" step="0.01" value="0.00" required>
+          </div>
+          <button type="submit">Add product</button>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="items-heading">
+        <div class="section-heading">
+          <h2 id="items-heading">Products</h2>
+          <span id="item-count" aria-live="polite">0 products</span>
+        </div>
+        <div class="lookup-field">
+          <label for="product-search">Find a product</label>
+          <div class="lookup-controls">
+            <input id="product-search" type="search" placeholder="Search by name" autocomplete="off" aria-controls="item-list">
+            <button id="clear-search" class="secondary-button" type="button" hidden>Clear</button>
+          </div>
+        </div>
+        <p id="empty-state">No products yet. Add one above to get started.</p>
+        <p id="no-results" hidden>No products match your search.</p>
+        <ul id="item-list" aria-label="Inventory products"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="cart-heading">
+        <div class="section-heading">
+          <h2 id="cart-heading">Shopping cart</h2>
+          <span id="cart-count" aria-live="polite">0 items</span>
+        </div>
+        <p id="cart-empty">Your cart is empty. Add a product above to get started.</p>
+        <ul id="cart-list" aria-label="Cart products"></ul>
+        <p id="cart-total" class="cart-total" aria-live="polite">Total: $0.00</p>
+        <div class="checkout-actions">
+          <button id="checkout-button" type="button" disabled>Complete purchase</button>
+        </div>
+        <p id="checkout-message" class="checkout-message" role="status" hidden></p>
+      </section>
+
+      <section class="panel" aria-labelledby="orders-heading">
+        <div class="section-heading">
+          <h2 id="orders-heading">Order history</h2>
+          <span id="order-count" aria-live="polite">0 orders</span>
+        </div>
+        <p id="orders-empty">No purchases yet.</p>
+        <ol id="order-list" aria-label="Past orders"></ol>
+      </section>
+    </main>
+  </body>
+</html>

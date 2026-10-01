@@ -1,0 +1,637 @@
+{
+  "errors": [
+    "Uncaught QuotaExceededError: Audit write failed"
+  ],
+  "checks": {
+    "seed": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        }
+      ],
+      "cart": [],
+      "orders": [],
+      "message": "",
+      "total": "Total: $0.00",
+      "focus": "<body>\n    <header class=\"site-header\">\n      <div class=\"container\">\n        <h1>Inventory</h1>\n        <p>Keep track of what you have on hand.</p>\n      </div>\n    </header>\n\n    <main class=\"container\">\n      <section class=\"panel\" aria-labelledby"
+    },
+    "firstTab": "item-name",
+    "search": "Audit Widget\nIn stock: 5 · $2.50 each\nAdd to cart\nEdit\nDelete",
+    "editFocus": "name",
+    "cartReload": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        },
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "name": "Audit Widget Edited",
+          "stock": 6,
+          "priceCents": 325
+        }
+      ],
+      "cart": [
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "quantity": 3
+        }
+      ],
+      "orders": [],
+      "message": "",
+      "total": "Total: $9.75",
+      "focus": "<body>\n    <header class=\"site-header\">\n      <div class=\"container\">\n        <h1>Inventory</h1>\n        <p>Keep track of what you have on hand.</p>\n      </div>\n    </header>\n\n    <main class=\"container\">\n      <section class=\"panel\" aria-labelledby"
+    },
+    "stockAndReprice": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        },
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "name": "Audit Widget Edited",
+          "stock": 2,
+          "priceCents": 400
+        }
+      ],
+      "cart": [
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "quantity": 2
+        }
+      ],
+      "orders": [],
+      "message": "",
+      "total": "Total: $8.00",
+      "focus": "<body>\n    <header class=\"site-header\">\n      <div class=\"container\">\n        <h1>Inventory</h1>\n        <p>Keep track of what you have on hand.</p>\n      </div>\n    </header>\n\n    <main class=\"container\">\n      <section class=\"panel\" aria-labelledby"
+    },
+    "invalidQty": [
+      {
+        "value": "0",
+        "state": {
+          "products": [
+            {
+              "id": "sample-notebook",
+              "name": "Notebook",
+              "stock": 24,
+              "priceCents": 350
+            },
+            {
+              "id": "sample-pen",
+              "name": "Ballpoint pen",
+              "stock": 48,
+              "priceCents": 125
+            },
+            {
+              "id": "sample-folder",
+              "name": "File folder",
+              "stock": 12,
+              "priceCents": 500
+            },
+            {
+              "id": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "stock": 2,
+              "priceCents": 400
+            }
+          ],
+          "cart": [
+            {
+              "id": "1790865528485-0.9177384793348266",
+              "quantity": 2
+            }
+          ],
+          "orders": [],
+          "message": "",
+          "total": "Total: $8.00",
+          "focus": "<input type=\"number\" min=\"1\" max=\"2\" step=\"1\" required=\"\" aria-label=\"Quantity for Audit Widget Edited\">"
+        }
+      },
+      {
+        "value": "1.5",
+        "state": {
+          "products": [
+            {
+              "id": "sample-notebook",
+              "name": "Notebook",
+              "stock": 24,
+              "priceCents": 350
+            },
+            {
+              "id": "sample-pen",
+              "name": "Ballpoint pen",
+              "stock": 48,
+              "priceCents": 125
+            },
+            {
+              "id": "sample-folder",
+              "name": "File folder",
+              "stock": 12,
+              "priceCents": 500
+            },
+            {
+              "id": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "stock": 2,
+              "priceCents": 400
+            }
+          ],
+          "cart": [
+            {
+              "id": "1790865528485-0.9177384793348266",
+              "quantity": 2
+            }
+          ],
+          "orders": [],
+          "message": "",
+          "total": "Total: $8.00",
+          "focus": "<input type=\"number\" min=\"1\" max=\"2\" step=\"1\" required=\"\" aria-label=\"Quantity for Audit Widget Edited\">"
+        }
+      },
+      {
+        "value": "99",
+        "state": {
+          "products": [
+            {
+              "id": "sample-notebook",
+              "name": "Notebook",
+              "stock": 24,
+              "priceCents": 350
+            },
+            {
+              "id": "sample-pen",
+              "name": "Ballpoint pen",
+              "stock": 48,
+              "priceCents": 125
+            },
+            {
+              "id": "sample-folder",
+              "name": "File folder",
+              "stock": 12,
+              "priceCents": 500
+            },
+            {
+              "id": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "stock": 2,
+              "priceCents": 400
+            }
+          ],
+          "cart": [
+            {
+              "id": "1790865528485-0.9177384793348266",
+              "quantity": 2
+            }
+          ],
+          "orders": [],
+          "message": "",
+          "total": "Total: $8.00",
+          "focus": "<input type=\"number\" min=\"1\" max=\"2\" step=\"1\" required=\"\" aria-label=\"Quantity for Audit Widget Edited\">"
+        }
+      }
+    ],
+    "remove": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        },
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "name": "Audit Widget Edited",
+          "stock": 2,
+          "priceCents": 400
+        }
+      ],
+      "cart": [],
+      "orders": [],
+      "message": "",
+      "total": "Total: $0.00",
+      "focus": "<body>\n    <header class=\"site-header\">\n      <div class=\"container\">\n        <h1>Inventory</h1>\n        <p>Keep track of what you have on hand.</p>\n      </div>\n    </header>\n\n    <main class=\"container\">\n      <section class=\"panel\" aria-labelledby"
+    },
+    "keyboardAddFocus": {
+      "tag": "BODY",
+      "id": ""
+    },
+    "checkout": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        },
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "name": "Audit Widget Edited",
+          "stock": 0,
+          "priceCents": 400
+        }
+      ],
+      "cart": [],
+      "orders": [
+        {
+          "id": "1790865528581-0.028163962539691223",
+          "placedAt": "2026-10-01T14:38:48.581Z",
+          "items": [
+            {
+              "productId": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "quantity": 2,
+              "priceCents": 400,
+              "subtotalCents": 800
+            }
+          ],
+          "totalCents": 800
+        }
+      ],
+      "message": "Purchase complete. Order total: $8.00.",
+      "total": "Total: $0.00",
+      "focus": "<button id=\"checkout-button\" type=\"button\" disabled=\"\">Complete purchase</button>"
+    },
+    "checkoutReload": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        },
+        {
+          "id": "1790865528485-0.9177384793348266",
+          "name": "Audit Widget Edited",
+          "stock": 0,
+          "priceCents": 400
+        }
+      ],
+      "cart": [],
+      "orders": [
+        {
+          "id": "1790865528581-0.028163962539691223",
+          "placedAt": "2026-10-01T14:38:48.581Z",
+          "items": [
+            {
+              "productId": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "quantity": 2,
+              "priceCents": 400,
+              "subtotalCents": 800
+            }
+          ],
+          "totalCents": 800
+        }
+      ],
+      "message": "",
+      "total": "Total: $0.00",
+      "focus": "<body>\n    <header class=\"site-header\">\n      <div class=\"container\">\n        <h1>Inventory</h1>\n        <p>Keep track of what you have on hand.</p>\n      </div>\n    </header>\n\n    <main class=\"container\">\n      <section class=\"panel\" aria-labelledby"
+    },
+    "deleted": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        }
+      ],
+      "cart": [],
+      "orders": [
+        {
+          "id": "1790865528581-0.028163962539691223",
+          "placedAt": "2026-10-01T14:38:48.581Z",
+          "items": [
+            {
+              "productId": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "quantity": 2,
+              "priceCents": 400,
+              "subtotalCents": 800
+            }
+          ],
+          "totalCents": 800
+        }
+      ],
+      "message": "",
+      "total": "Total: $0.00",
+      "focus": "<input id=\"product-search\" type=\"search\" placeholder=\"Search by name\" autocomplete=\"off\" aria-controls=\"item-list\">"
+    },
+    "safeText": {
+      "images": 0,
+      "text": "Notebook\nIn stock: 24 · $3.50 each\nAdd to cart\nEdit\nDelete\nBallpoint pen\nIn stock: 48 · $1.25 each\nAdd to cart\nEdit\nDelete\nFile folder\nIn stock: 12 · $5.00 each\nAdd to cart\nEdit\nDelete\n<img src=x onerror=alert(1)>\nIn stock: 3 · $1.00 each\nAdd to cart\nEdit\nDelete"
+    },
+    "deletedCart": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        }
+      ],
+      "cart": [],
+      "orders": [
+        {
+          "id": "1790865528581-0.028163962539691223",
+          "placedAt": "2026-10-01T14:38:48.581Z",
+          "items": [
+            {
+              "productId": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "quantity": 2,
+              "priceCents": 400,
+              "subtotalCents": 800
+            }
+          ],
+          "totalCents": 800
+        }
+      ],
+      "message": "",
+      "total": "Total: $0.00",
+      "focus": "<input id=\"product-search\" type=\"search\" placeholder=\"Search by name\" autocomplete=\"off\" aria-controls=\"item-list\">"
+    },
+    "mobile": {
+      "width": 390,
+      "scrollWidth": 390
+    },
+    "failedCrudWrite": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        }
+      ],
+      "input": "Failed write product",
+      "message": "",
+      "body": "Inventory\n\nKeep track of what you have on hand.\n\nAdd a product\nName\nStock\nPrice (USD)\nAdd product\nProducts\n3 products\nFind a product\nNotebook\nIn stock: 24 · $3.50 each\nAdd to cart\nEdit\nDelete\nBallpoint pen\nIn stock: 48 · $1.25 each\nAdd to cart\nEdit\nDelete\nFile folder\nIn stock: 12 · $5.00 each\nAdd to cart\nEdit\nDelete\nShopping cart\n0 items\n\nYour cart is empty. Add a product above to get started.\n\nTotal: $0.00\n\nComplete purchase\nOrder history\n1 order\n10/1/2026, 9:38:48 AM\n$8.00\nAudit Widget Edited × 2 · $4.00 each · $8.00"
+    },
+    "failedCheckoutWrite": {
+      "before": {
+        "products": [
+          {
+            "id": "sample-notebook",
+            "name": "Notebook",
+            "stock": 24,
+            "priceCents": 350
+          },
+          {
+            "id": "sample-pen",
+            "name": "Ballpoint pen",
+            "stock": 48,
+            "priceCents": 125
+          },
+          {
+            "id": "sample-folder",
+            "name": "File folder",
+            "stock": 12,
+            "priceCents": 500
+          }
+        ],
+        "cart": [
+          {
+            "id": "sample-notebook",
+            "quantity": 1
+          }
+        ],
+        "orders": [
+          {
+            "id": "1790865528581-0.028163962539691223",
+            "placedAt": "2026-10-01T14:38:48.581Z",
+            "items": [
+              {
+                "productId": "1790865528485-0.9177384793348266",
+                "name": "Audit Widget Edited",
+                "quantity": 2,
+                "priceCents": 400,
+                "subtotalCents": 800
+              }
+            ],
+            "totalCents": 800
+          }
+        ],
+        "message": "",
+        "total": "Total: $3.50",
+        "focus": "<input id=\"product-search\" type=\"search\" placeholder=\"Search by name\" autocomplete=\"off\" aria-controls=\"item-list\">"
+      },
+      "after": {
+        "products": [
+          {
+            "id": "sample-notebook",
+            "name": "Notebook",
+            "stock": 24,
+            "priceCents": 350
+          },
+          {
+            "id": "sample-pen",
+            "name": "Ballpoint pen",
+            "stock": 48,
+            "priceCents": 125
+          },
+          {
+            "id": "sample-folder",
+            "name": "File folder",
+            "stock": 12,
+            "priceCents": 500
+          }
+        ],
+        "cart": [
+          {
+            "id": "sample-notebook",
+            "quantity": 1
+          }
+        ],
+        "orders": [
+          {
+            "id": "1790865528581-0.028163962539691223",
+            "placedAt": "2026-10-01T14:38:48.581Z",
+            "items": [
+              {
+                "productId": "1790865528485-0.9177384793348266",
+                "name": "Audit Widget Edited",
+                "quantity": 2,
+                "priceCents": 400,
+                "subtotalCents": 800
+              }
+            ],
+            "totalCents": 800
+          }
+        ],
+        "message": "Audit cart write failed",
+        "total": "Total: $3.50",
+        "focus": "<button id=\"checkout-button\" type=\"button\">Complete purchase</button>"
+      }
+    },
+    "failedCheckoutReload": {
+      "products": [
+        {
+          "id": "sample-notebook",
+          "name": "Notebook",
+          "stock": 24,
+          "priceCents": 350
+        },
+        {
+          "id": "sample-pen",
+          "name": "Ballpoint pen",
+          "stock": 48,
+          "priceCents": 125
+        },
+        {
+          "id": "sample-folder",
+          "name": "File folder",
+          "stock": 12,
+          "priceCents": 500
+        }
+      ],
+      "cart": [
+        {
+          "id": "sample-notebook",
+          "quantity": 1
+        }
+      ],
+      "orders": [
+        {
+          "id": "1790865528581-0.028163962539691223",
+          "placedAt": "2026-10-01T14:38:48.581Z",
+          "items": [
+            {
+              "productId": "1790865528485-0.9177384793348266",
+              "name": "Audit Widget Edited",
+              "quantity": 2,
+              "priceCents": 400,
+              "subtotalCents": 800
+            }
+          ],
+          "totalCents": 800
+        }
+      ],
+      "message": "",
+      "total": "Total: $3.50",
+      "focus": "<body>\n    <header class=\"site-header\">\n      <div class=\"container\">\n        <h1>Inventory</h1>\n        <p>Keep track of what you have on hand.</p>\n      </div>\n    </header>\n\n    <main class=\"container\">\n      <section class=\"panel\" aria-labelledby"
+    },
+    "mobileEdit": {
+      "width": 390,
+      "scrollWidth": 390
+    },
+    "cancelFocusBefore": "Cancel",
+    "cancelFocusAfter": "BODY"
+  }
+}

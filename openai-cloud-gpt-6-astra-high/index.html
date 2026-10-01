@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple inventory website that stores data in your browser.">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/storage.js" defer></script>
+    <script src="js/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <p class="eyebrow">Your workspace</p>
+        <h1>Inventory</h1>
+        <p>A simple place to keep track of your stock.</p>
+      </div>
+    </header>
+    <main class="container">
+      <section class="panel" aria-labelledby="overview-heading">
+        <div class="panel-heading">
+          <h2 id="overview-heading">Inventory overview</h2>
+          <button id="add-product" type="button" disabled>Add product</button>
+        </div>
+        <div role="search" aria-label="Inventory lookup">
+          <label for="inventory-search">Find products</label>
+          <div class="search-controls">
+            <input id="inventory-search" type="search" placeholder="Search by product name or SKU" aria-describedby="search-hint" aria-controls="inventory-table" autocomplete="off" disabled>
+            <button id="clear-search" class="secondary" type="button" disabled>Clear search</button>
+          </div>
+          <p id="search-hint" class="field-hint">Results update as you type. Matches any part of a name or SKU, ignoring letter case.</p>
+        </div>
+        <p id="inventory-status" role="status" aria-atomic="true">Loading inventory…</p>
+        <div class="table-scroll">
+          <table id="inventory-table" hidden>
+            <caption>Products and stock on hand</caption>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">SKU</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Unit price (USD)</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-rows"></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel cart-panel" aria-labelledby="cart-heading">
+        <h2 id="cart-heading" tabindex="-1">Shopping cart</h2>
+        <p class="field-hint">Prices are in USD. Adding to your cart does not reserve or reduce stock.</p>
+        <p id="cart-status" role="status" aria-atomic="true">Loading cart…</p>
+        <p id="cart-error" class="error" role="alert"></p>
+        <div class="table-scroll">
+          <table id="cart-table" hidden>
+            <caption>Products in your cart</caption>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Unit price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="cart-rows"></tbody>
+          </table>
+        </div>
+        <p id="cart-total" class="cart-total" role="status" aria-atomic="true">Total (USD): $0.00</p>
+        <p id="checkout-hint" class="field-hint">Complete your purchase to deduct stock and save a receipt in this browser. No payment is collected.</p>
+        <div class="form-actions">
+          <button id="checkout" type="button" aria-describedby="checkout-hint" disabled>Complete purchase</button>
+        </div>
+      </section>
+      <section class="panel orders-panel" aria-labelledby="orders-heading">
+        <h2 id="orders-heading" tabindex="-1">Order history</h2>
+        <p id="orders-status" role="status" aria-atomic="true">Loading order history…</p>
+        <div id="orders-list"></div>
+      </section>
+      <dialog id="product-dialog" aria-labelledby="product-heading">
+        <form id="product-form">
+          <h2 id="product-heading">Add product</h2>
+          <p>All fields are required.</p>
+          <label for="product-name">Product name</label>
+          <input id="product-name" name="name" type="text" required autofocus>
+          <label for="product-sku">SKU</label>
+          <input id="product-sku" name="sku" type="text" required aria-describedby="sku-hint">
+          <p class="field-hint" id="sku-hint">Use a unique SKU for each product (ignoring letter case).</p>
+          <label for="product-stock">Stock on hand</label>
+          <input id="product-stock" name="stock" type="number" min="0" max="9007199254740991" step="1" value="0" required aria-describedby="stock-hint">
+          <p class="field-hint" id="stock-hint">Enter a whole number of zero or more.</p>
+          <label for="product-price">Unit price (USD)</label>
+          <input id="product-price" name="price" type="number" min="0" max="9999999.99" step="0.01" value="0.00" required aria-describedby="price-hint">
+          <p class="field-hint" id="price-hint">Enter a price from $0.00 to $9,999,999.99, with at most two decimal places.</p>
+          <p id="product-error" class="error" role="alert"></p>
+          <div class="form-actions">
+            <button id="cancel-product" class="secondary" type="button">Cancel</button>
+            <button id="save-product" type="submit">Add product</button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="delete-dialog" aria-labelledby="delete-heading" aria-describedby="delete-description">
+        <h2 id="delete-heading">Delete product?</h2>
+        <p id="delete-description"></p>
+        <p id="delete-error" class="error" role="alert"></p>
+        <div class="form-actions">
+          <button id="cancel-delete" class="secondary" type="button" autofocus>Cancel</button>
+          <button id="confirm-delete" class="danger" type="button">Delete product</button>
+        </div>
+      </dialog>
+      <noscript><p>Enable JavaScript to use the inventory website.</p></noscript>
+    </main>
+    <footer class="container">
+      <p>Data stays in this browser. No account or server required.</p>
+    </footer>
+  </body>
+</html>

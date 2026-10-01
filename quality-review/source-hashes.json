@@ -1,0 +1,182 @@
+{
+  "4x-rtxpro6000-deepseek-v4-flash-q8kxl": {
+    "4x-rtxpro6000-deepseek-v4-flash-q8kxl/README.md": "2fdc285bf83072b37c133e36b6ce3003123a12bbcd78196bf939629b7cfc06e7",
+    "4x-rtxpro6000-deepseek-v4-flash-q8kxl/RESULTS.md": "c825d16e17cb271e572b53740dd670a816578b829914d46032faed6fb7461bed",
+    "4x-rtxpro6000-deepseek-v4-flash-q8kxl/app.js": "cf394f0de45a11b464ba8c68a7cf0338b2180e00ce5745fdeb4387791b604178",
+    "4x-rtxpro6000-deepseek-v4-flash-q8kxl/index.html": "9edc1dc778d30514df7f5c38724412206b99e71676426f42cc898321127599c0",
+    "4x-rtxpro6000-deepseek-v4-flash-q8kxl/styles.css": "41a507c8410cc43d3c4b3d86cd36a0986844cdf049be949ac873c4b05a249b7a"
+  },
+  "4x-rtxpro6000-glm-5.3-flash-q4kxl": {
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/.gitignore": "976c115f2d2201af3c55f4be7dc4dee68a2b7d9e29690af8dd2228ad8032e83e",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/README.md": "779bd04fcf2f27ea43c2ffddb1dbb4a097e32ee1ac4232a6da3be7dc8e858e18",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/RESULTS.md": "3101af2a7ae2df0a41163140f6ff0a51115b13bb0209e5cd06c477b7fba3b22e",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/css/styles.css": "104a5f0d502e8849c368d29071d1b97bfcbadb577d65df88690d60ad5243bca5",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/glm-harness.py": "4fcda20bb83dcc633d83e0e870d1d7eb9defaa4772603d24f7062496861f5ca8",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/index.html": "492db40cbdbe5e13e926d0b0ad43050eaca9ec9769d3ec42e735a8912755e9e0",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/js/app.js": "83744854ee9f9e11c342b0587c36cc2a086f559c356fed15b49f59c7291d6048",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/js/cart.js": "5dcd290281e2b0c3bb0c449d110c8f605cf43206c65d4f618bb50c14dab1a513",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/js/data.js": "28de564dece1faf93b8a90b9dd9f1e5d1d969bd00d60c3884b61d10d358e6377",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/js/orders.js": "33bd81f9fb55510ec1150b58d4c73324e3ef02151e86d662c200d2fd6e88a47d",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/js/storage.js": "0112a568db8af4232cc05f2b5ec4472961b9104483f862d3ff1c4d8524bdfc47",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/tests/cart.test.js": "41a90aa4c70be63cc02d1a7ad50696c43eb625e35a2fd0721629bd36a3028817",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/tests/data-layer.test.js": "bef9f7c0df40df06215a9af885f201a0ec15a9b6a06fa5b49ac177a2fe3f65a9",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/tests/orders.test.js": "d7040f7bb6e99ed7c03712fd934cb09050311c50c8e669fba1c5e7e03bbbf75a",
+    "4x-rtxpro6000-glm-5.3-flash-q4kxl/tests/ui.test.js": "ef45b5e5a6a1947a30675378f6db7c8caa3fbe077ca74ff213e19ee424efe4a8"
+  },
+  "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl": {
+    "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/README.md": "8b44f94a3fc8e61ff9e3a9fde62563d2a16307f34cec7b4e02c91c62f2a71d51",
+    "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/RESULTS.md": "91177f1b259e94b6b661ef9349d752b91d1357859544d9241b3e68e632dfa295",
+    "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/css/styles.css": "f745f32c2d1e813547351027d4cb64e7fc1b625ed0d0f312efd5f3cf5e434012",
+    "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/index.html": "48ed0f183b0735185dbb8309ee48a239157612476c6ab9a259e9de71cebfd0d2",
+    "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/js/app.js": "7ecb0c1df71ecfa9bcb2349c2b14aae795dbbfe8b84b3034dac09221d9e25df6"
+  },
+  "anthropic-cloud-opus-5.5-medium": {
+    "anthropic-cloud-opus-5.5-medium/.gitignore": "707f67bf1e44bc3d724f912578ed49d02a802af10b500acb92a5a3c26f06af5a",
+    "anthropic-cloud-opus-5.5-medium/README.md": "aba399df1f8dd952dab5be0d404730484dd30de3f11c3cd068bf7bbc3a0c4173",
+    "anthropic-cloud-opus-5.5-medium/RESULTS.md": "2f78f9d5f0564834bb97d46f04240fbb768ade81ab8152149316079d638ac21d",
+    "anthropic-cloud-opus-5.5-medium/css/styles.css": "3e22e09aaf9ec493a73a6cbc72079f2d790280488c7a105a493e0c3523158af7",
+    "anthropic-cloud-opus-5.5-medium/index.html": "22f8b9b5965ce8f69b32bd1f378c5fa6a27d5f32480524ccff8095a6f4d97b95",
+    "anthropic-cloud-opus-5.5-medium/js/app.js": "8b7952aaf3f96114d01088b3bb8d940817e2587e4abdb1e9e15227b3c2ee0379",
+    "anthropic-cloud-opus-5.5-medium/js/cart.js": "e63bd7ab062d0311f9dda7f8422440487f879c77a4e0f25db93dcb666b37c759",
+    "anthropic-cloud-opus-5.5-medium/js/inventory.js": "89be66bdd54db44d0ad67135e0939b6ea878eaef035a164ee5ac2f531fc09e18",
+    "anthropic-cloud-opus-5.5-medium/js/orders.js": "d60a724b53cbd255b2ad5d250cabf668fa4dfadb87a616f7ae57b2e00c91af48",
+    "anthropic-cloud-opus-5.5-medium/js/storage.js": "c5e064d1c234655cb692333c41b24652b4b464ad56fc181656ad5ed21a3f6ffe",
+    "anthropic-cloud-opus-5.5-medium/test/cart.test.js": "c8a9a3e20c2a90e688fa5ec3b24acfa94c83cf5822f970c8fce95c0388154aee",
+    "anthropic-cloud-opus-5.5-medium/test/inventory.test.js": "9160e97abc8741a8e7288a464efc2fdac02b984e2a574edfa0c273c1c3299af4",
+    "anthropic-cloud-opus-5.5-medium/test/orders.test.js": "47544157e600f07384163a0f36776dcef25ca62255e3eb79d942456f253a99cc"
+  },
+  "anthropic-cloud-sonnet-5.5-medium": {
+    "anthropic-cloud-sonnet-5.5-medium/README.md": "eb080051b74aceb286bccd1254f8417cca0423f721d103b34840d2865b188f90",
+    "anthropic-cloud-sonnet-5.5-medium/RESULTS.md": "168b89f6d8bcfdff2fc628fe4166b94c98b7f3ba2db3d624c62f6b4af93f9349",
+    "anthropic-cloud-sonnet-5.5-medium/css/styles.css": "619619a67d2c971a00975acd0164e6c8a547e6b83c7fbebe53e396093d4b9d9a",
+    "anthropic-cloud-sonnet-5.5-medium/index.html": "9d560ba8cdebcf9621e5eea232e96ca3a589e5aa10d95a05f9f456234332ca2f",
+    "anthropic-cloud-sonnet-5.5-medium/js/app.js": "34fba08c409094300cfcbf6911e6ff4b21f3912d5df71856a751acb75f12e341",
+    "anthropic-cloud-sonnet-5.5-medium/js/cart.js": "ab2c0cf9824878aef6b57ea737a8d7f7455e5c860cf666e8e04345255d7bc6d1",
+    "anthropic-cloud-sonnet-5.5-medium/js/orders.js": "e3174f6a0570d9a5d746650966874e5def08cbdaae7f3fe2f3697f0e6478dd6d",
+    "anthropic-cloud-sonnet-5.5-medium/js/storage.js": "967db0e0244201d00fe3dcd441f6411dad396fcd494911eeafb8803eb59ff0ea"
+  },
+  "benchmark": {
+    "benchmark/RUN-BENCHMARK.md": "b31089be1cf2cddeb7ad0c729e0164edc23af4edc6febce3476626373a11e88c",
+    "benchmark/run-benchmark.sh": "2f844a90fbd125c2823059c17a0b3d7d97e4b06114055497a34682300d1498a5",
+    "benchmark/tasks/00-project.md": "42442f184429293a74f40f3e80a84026961045d1a03de41268b5a2baae003252",
+    "benchmark/tasks/T1-scaffold.md": "7dd60dcc5416bb286a1504c4809a9a2e72434aba7eb655ab871d02d5a805b1c4",
+    "benchmark/tasks/T2-data.md": "2ad217e19d7037e60bebf3a46b22894a8eecf0dc4124c851076918a31398d4eb",
+    "benchmark/tasks/T3-management.md": "0266bcaab7b888e2a3d9f60846c20c4635ac5c72b8a4f12998a4139ccc094529",
+    "benchmark/tasks/T4-lookup.md": "7ee8557014c45b63b351feb33e7ef6ab348d52e95b2c741287ae417339b73c8e",
+    "benchmark/tasks/T5-cart.md": "8a1c2f2a1edb98c039a786f100825852b95ea31ed5b228393925bfa0b1513346",
+    "benchmark/tasks/T6-checkout.md": "5088a60fa202f23f1ebfdf42694b8fc0787114872936c31c1df056f68dab41e2",
+    "benchmark/tasks/T7-qa.md": "4841a0977eea10d054c5ac03fa765b13e21d58304ebd74a10bcfcec28c29c79e"
+  },
+  "deepseek-cloud-deepseek-flash": {
+    "deepseek-cloud-deepseek-flash/.gitignore": "c616e08f82ff7a68c45fb833256fa4864c53f1dddf654217f1c921257b5abfdd",
+    "deepseek-cloud-deepseek-flash/README.md": "b0175ab99c3a2ea50bfd9ef2688fef8cbd05e4899c4e40b7074ebb543ffc00d1",
+    "deepseek-cloud-deepseek-flash/RESULTS.md": "c685f9d7a3a6329f95c0856e04f6f1721d33bfd5ce85a9ccd4a182405740b9b4",
+    "deepseek-cloud-deepseek-flash/css/styles.css": "09a5eb82a112145182ffefc9ed44674de7948cb07dba185323fe5fad505bfcb2",
+    "deepseek-cloud-deepseek-flash/index.html": "f53378f86cf4b6062d6db50f46b0599b40dc7f2b0992d1b4546cf4071483d9ab",
+    "deepseek-cloud-deepseek-flash/js/app.js": "2c07824a58466e5c7a496084d6276d93a8055c389e7d4706c4846359f4a15051",
+    "deepseek-cloud-deepseek-flash/js/cart.js": "7058570f3df8cb7b1f3b8b4ed87842fe4b0267007850f243496bf2e65b65e9ca",
+    "deepseek-cloud-deepseek-flash/js/items.js": "dc59a37f5f4d36e0b52a888ad260b83ff8cce3e47857e1c9dd17515c1a99cf1f",
+    "deepseek-cloud-deepseek-flash/js/orders.js": "b377fdbd5a0ba922c81ae8b0cb8e04c7d4d3761e8f4e804c8d9baefe43c9af4c",
+    "deepseek-cloud-deepseek-flash/js/storage.js": "d627ae77ee48e965476061c5ee0768f9d660dbe0d8bff6188df2c81c742cd43f",
+    "deepseek-cloud-deepseek-flash/test/smoke.mjs": "a1fc0028ffa910b0bc0b3110ee6a41a1c0ad4a7f7c6008e55fa8437a1daab1c1"
+  },
+  "glm-harness": {
+    "glm-harness/glm-harness.py": "4fcda20bb83dcc633d83e0e870d1d7eb9defaa4772603d24f7062496861f5ca8",
+    "glm-harness/watch-agent.py": "841695f86438cde405e41c59deec6d3a13a08d11d0495fa071d57221b1f041c2"
+  },
+  "openai-cloud-gpt-5.6-sol-medium": {
+    "openai-cloud-gpt-5.6-sol-medium/.gitignore": "2bdfdb216230559f36faf46907142b8afd478401150f810e1ddaf9a4fdcc656c",
+    "openai-cloud-gpt-5.6-sol-medium/README.md": "3e91bf25a18ed6b1a4b28b7bdfac4019b5ade0cb59ca6c9b6fd32e9878adf33f",
+    "openai-cloud-gpt-5.6-sol-medium/RESULTS.md": "9de5272e6b7e13b05cf8ac06d5db8331339a5b371305f61ab9d36b95f1009f81",
+    "openai-cloud-gpt-5.6-sol-medium/css/styles.css": "59fe95ca05bb1b696e6ff1de0e5b39db4bb824f992339ec98bbf534557d540c2",
+    "openai-cloud-gpt-5.6-sol-medium/index.html": "516612095d1e31e0c9516f492b2b048f7114c8622a1fae3295f1df748d425adc",
+    "openai-cloud-gpt-5.6-sol-medium/js/app.js": "ef45565d96f0bb74bcec91afe612266cbc5bf4ce3097a3eab608d2e3986f48a7"
+  },
+  "openai-cloud-gpt-6-sol-medium": {
+    "openai-cloud-gpt-6-sol-medium/README.md": "5e4781bc65bb54795aea1fbb2bc20c5d7997c66b51c8c24d647c3c1af7fef1d8",
+    "openai-cloud-gpt-6-sol-medium/RESULTS.md": "6bc49e8f88a1b0101a6d1a716913b0a4fe380d75d36f4a056a1c4a1e3e937a19",
+    "openai-cloud-gpt-6-sol-medium/app.js": "433e843ead9378e49ceb5b250a276634cbfb11ec3de3c992568e9aaa64215c1a",
+    "openai-cloud-gpt-6-sol-medium/index.html": "dca58d204d2d6258bddae60353014baba2770a351b03cb920a2c486e4a5f40ad",
+    "openai-cloud-gpt-6-sol-medium/inventory-data.js": "4a226327f9638746553cadd9d68e5072afba592cd74751dc0028f81e19e5dffa",
+    "openai-cloud-gpt-6-sol-medium/styles.css": "c8127a101705a07557be1deb9282a6e06b8765a503cf573fb97c9ccd5a65dc32"
+  },
+  "ryzen7-8745hs-gemma4-26b": {
+    "ryzen7-8745hs-gemma4-26b/.gitignore": "e09f9a37c893e1e73066a4f87e6f071f852ce4f48f3245343fa7ae4fd1bb65fe",
+    "ryzen7-8745hs-gemma4-26b/README.md": "4f105af2d6c4c42b5ae89464bc34949e72ce3f3fb30e238c6bc57c49a9103810",
+    "ryzen7-8745hs-gemma4-26b/RESULTS.md": "724e2560a89325fc720dcecc5fdaa1405ba525212d594b10052187f9409c11ae",
+    "ryzen7-8745hs-gemma4-26b/css/style.css": "a94ae2cd488019b0ebe26d3bd38c315c6cd6c41953a21b1d3647bd3ba3ccc747",
+    "ryzen7-8745hs-gemma4-26b/index.html": "0ae97e753a12f97e7cb86c46a68578c23dccc0439356d7c2bf140b80f0c57a31",
+    "ryzen7-8745hs-gemma4-26b/js/app.js": "5609d57152a69fb04da791b2a1d84eb1aace1b84b884d80fcbec94fc73aa1c53"
+  },
+  "ryzen7-8745hs-qwen36-35b": {
+    "ryzen7-8745hs-qwen36-35b/README.md": "80c3edd0501faf14e54cb18eb8c73610742b77a8dc9a24712fddd8c7a96f253b",
+    "ryzen7-8745hs-qwen36-35b/RESULTS.md": "e053b7af715fc77f50eea38352b7ba87c445ec95d3b1d8c044d463068507c25e",
+    "ryzen7-8745hs-qwen36-35b/css/styles.css": "3d0962da1e5f2f3a9fbfd8f8c15cd18290c147f45a7a2a2ab8e00548ba5f77ba",
+    "ryzen7-8745hs-qwen36-35b/index.html": "74c63f6bc089dea0a318047cb5c23538b07cffb6da19372d1010ab1fa3c2809f",
+    "ryzen7-8745hs-qwen36-35b/js/app.js": "f08a65e705a14d8a4302e856f0c37b2a08072810fb4f15e2c4e2a19049268d7e"
+  },
+  "ryzen7-8745hs-qwen38-27b-iq3": {
+    "ryzen7-8745hs-qwen38-27b-iq3/.gitignore": "c7a2334bd6e4a891b0567ce620620034f6d64d7c582df1e45ed94ed33505efe1",
+    "ryzen7-8745hs-qwen38-27b-iq3/README.md": "676db35a82b1ea7b61fe06827a7f71de8a1bee319f11129e01b9471b0e073fd0",
+    "ryzen7-8745hs-qwen38-27b-iq3/RESULTS.md": "92ccb05dab77884101974dcffea07f21af4d30730b4c5a9ca20c5ad4526b0099",
+    "ryzen7-8745hs-qwen38-27b-iq3/css/styles.css": "77878d17ca9ccb54f06bfea3cae184832876448d5d88ac050c6841a13b6e7541",
+    "ryzen7-8745hs-qwen38-27b-iq3/index.html": "13a609353535c0db3927f1a91dc8fce774f0d855da1169ea85d17896b1beed2c",
+    "ryzen7-8745hs-qwen38-27b-iq3/js/app.js": "d9cf33a8c4c79a8ab3f095dababfbbd0233d1b701277c1c7f9c98285d35e2ebb"
+  },
+  "xai-cloud-grok-4.7-fast-500k-medium": {
+    "xai-cloud-grok-4.7-fast-500k-medium/.gitignore": "51bc9658d75a135fa3844e3353f27f7ed178cee8802e21d5d6fc6db61e6e773f",
+    "xai-cloud-grok-4.7-fast-500k-medium/README.md": "999857549d9d7f6357477bbcbd380a1bb78b4767e36e6237dde33eadabdd8c1e",
+    "xai-cloud-grok-4.7-fast-500k-medium/RESULTS.md": "3878ee63a4bc5b5b3138b815fd5fc8b8640e73b1c2bdd9f0ae72af7954fa87e1",
+    "xai-cloud-grok-4.7-fast-500k-medium/css/styles.css": "102cfeb4b128b6701b9c15f0a449e5d4e90019b2ccb330d3603e0360ff29ae4e",
+    "xai-cloud-grok-4.7-fast-500k-medium/index.html": "36c0e8c73140ef8ffe96ef6372cbfa320baa4cc99805be62c0e894c56bba8891",
+    "xai-cloud-grok-4.7-fast-500k-medium/js/app.js": "db71782590508ee633e84956b44952f4e30659a84dec5c24c55ff2170b1e8114",
+    "xai-cloud-grok-4.7-fast-500k-medium/js/cart.js": "21a45bd5d0bd3faf5352104d017a4e90ba8ff0788fdba08489fdcadd5bdf956a",
+    "xai-cloud-grok-4.7-fast-500k-medium/js/inventory.js": "3e202d97fa40b9cf0958f4f15d25b4c45943a07631fbef220496c168e872e354",
+    "xai-cloud-grok-4.7-fast-500k-medium/js/orders.js": "14d2dece9e811ebb71bc06ec9df39f0820bf9e3dcd80a35a2f064ad40e83e408",
+    "xai-cloud-grok-4.7-fast-500k-medium/js/storage.js": "68a8c891328e3180ea137bbad5b3b6a4fc3239bb0f6c10650cedbd66b39bd605"
+  },
+  "zai-cloud-glm-5.3-flash": {
+    "zai-cloud-glm-5.3-flash/.gitignore": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+    "zai-cloud-glm-5.3-flash/README.md": "1e591953faf6afa16b97badf66644731d5c7d63a6a425b5d8f465bb6b344e21c",
+    "zai-cloud-glm-5.3-flash/RESULTS.md": "55b41b799d0cd7ac0a502e997e230e735b323583485f5aa5de3c0107285a6051",
+    "zai-cloud-glm-5.3-flash/css/styles.css": "873d03676ae069a8a77ba0245d10ca2da9f0e56949cc1519b4c129d498c1a69f",
+    "zai-cloud-glm-5.3-flash/index.html": "116aebb83560e692310148cecba052f0939deb78557a88190009c645c003a2d4",
+    "zai-cloud-glm-5.3-flash/js/app.js": "36f1a145938295aa21eaeafd60aa6f99d57ed9c4f1ce1a04a38313c3bf5df77d",
+    "zai-cloud-glm-5.3-flash/js/store.js": "89d76262c85c2ab8e619028e84359b6b42873273c6e2ad423ae798461beadf8f",
+    "zai-cloud-glm-5.3-flash/test/app.test.js": "5ae163dec23c6daa2f784977a1e901bcdf695f53e10080f92ce3324f731fbb38",
+    "zai-cloud-glm-5.3-flash/test/store.test.js": "b5f222c14a00e7a779b57852bb2985200cbedc5cf9c09145500cdf20d8aeaa7e"
+  },
+  "anthropic-cloud-fable-5.1-high": {
+    "anthropic-cloud-fable-5.1-high/.gitignore": "5d531f00422471a7add904bd0796d55e615a940ca8f9d343dbe02b106f40fae6",
+    "anthropic-cloud-fable-5.1-high/README.md": "c4ea7de966356bff47388ba1c2ba374895baa090117d5929866566a14f1b2fd3",
+    "anthropic-cloud-fable-5.1-high/RESULTS.md": "c370e09aa8fd60439d40a2c5883386e3d4d7a1190e6d61aa5d2a41ea6346a3bc",
+    "anthropic-cloud-fable-5.1-high/css/styles.css": "a68543fbc17fc82e82367df44fecacf1f088bb88a5684de45e9e5678f9ec38f9",
+    "anthropic-cloud-fable-5.1-high/index.html": "2d0d026e90372984a45aeeab6d096d414a3875a2178e15a2b3ef237c6b782bb5",
+    "anthropic-cloud-fable-5.1-high/js/app.js": "38a1976ae0df483058a68f8be77139e8e93b0aceafff0c9029101ea44362c245",
+    "anthropic-cloud-fable-5.1-high/js/cart.js": "2c868c08f460e8f5bfb4e6f0e47fb2fc46d3d1f9463e5fa9337af5aeb51fa331",
+    "anthropic-cloud-fable-5.1-high/js/format.js": "584e2106e5116deb31c0b5f5795d7c95289357a323e31a434161e73c503eb425",
+    "anthropic-cloud-fable-5.1-high/js/inventory.js": "95a1372c42acd6ffeaecd576bc25ed5dbcbca03a61f48008c937838acf924a87",
+    "anthropic-cloud-fable-5.1-high/js/orders.js": "77ad3ef104c8b31c4a6f5e3a70b8e03dd9811dd3061ee23c335123806cef5580",
+    "anthropic-cloud-fable-5.1-high/js/sample-data.js": "067cbabe40e12c8f212f6388564da3ea357025c5ebf52f175e5a363dfa707db1",
+    "anthropic-cloud-fable-5.1-high/js/search.js": "96cae4639810fceea0f2c5e9433f34188d31ab83376b058d90ba2d0128e2c3c4",
+    "anthropic-cloud-fable-5.1-high/js/storage.js": "4a3166b99c50255d57c251d40a209bcf93c25e19418894e2fcf6beca1d1d00b8",
+    "anthropic-cloud-fable-5.1-high/tests/cart.test.js": "9c99d8b565d290f690cf932c7b703299835085fd593fbbeb87dc23aff1594df9",
+    "anthropic-cloud-fable-5.1-high/tests/format.test.js": "2098b0d1716763140257149ffc0e625e416a616e0eb9a1f2008ec780fcef4fb9",
+    "anthropic-cloud-fable-5.1-high/tests/harness.js": "cf7c3d31cdab2b4ac63edca97a4b77593427567d30a9f9550a44c6e5d069df3a",
+    "anthropic-cloud-fable-5.1-high/tests/inventory.test.js": "0bc932d68d75c0a1ce477f294e15ec5f9ba636805b2b18e9286eae364a832898",
+    "anthropic-cloud-fable-5.1-high/tests/orders.test.js": "16036b3f826c4f4219a44e5eb7a943318a8e8b62170000777434e554853be34e",
+    "anthropic-cloud-fable-5.1-high/tests/search.test.js": "ab85be4f40f4af75d3780e125337967b4686e6eb0bd02f954ca975d3e7394f6e"
+  },
+  "openai-cloud-gpt-6-astra-high": {
+    "openai-cloud-gpt-6-astra-high/.gitignore": "51bc9658d75a135fa3844e3353f27f7ed178cee8802e21d5d6fc6db61e6e773f",
+    "openai-cloud-gpt-6-astra-high/README.md": "73621671255bbeadde89e6306945bfe33d95145aadd2b1f36a4e78bad37916b0",
+    "openai-cloud-gpt-6-astra-high/RESULTS.md": "a1f70e565881c98d878f8a5ec8df33c9e6e44bc1a593f8c96fa736b2f4c60657",
+    "openai-cloud-gpt-6-astra-high/css/styles.css": "599e85ed1227f531267ba8a6a9088832963933c08c642d5e495eea2474be2b8f",
+    "openai-cloud-gpt-6-astra-high/index.html": "58e038b43e9bf6e11f38be32a544b25e8128977232e5ea7e0895a052f50a7d15",
+    "openai-cloud-gpt-6-astra-high/js/app.js": "89f98dd6cd131d33ffd0dd31079cf4380891fe7b8c4c246090f35acec9e0ea61",
+    "openai-cloud-gpt-6-astra-high/js/storage.js": "8be89431a273cbcf9934905591b135a833976b2c5628eb3fe83a869e24e0af74",
+    "openai-cloud-gpt-6-astra-high/tests/TEST_REPORT.md": "a9e810d1827160346a321f171c28bdd2552bfebc47e7dc29e6092bd0aecb7e2e",
+    "openai-cloud-gpt-6-astra-high/tests/browser.test.cjs": "fc3f24b80c7d0b1e83160bad6b7ed90ce07e22937f5fc90d1d99234f54e62cfe",
+    "openai-cloud-gpt-6-astra-high/tests/storage.test.cjs": "0e34912a956404a48faae3361cc659c3012ff2025924cc92e79a9b0ef92a3182"
+  }
+}

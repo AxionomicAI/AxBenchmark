@@ -1,0 +1,728 @@
+{
+  "seed": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      }
+    ],
+    "cart": [],
+    "orders": [],
+    "total": "$0.00",
+    "status": ""
+  },
+  "dialogFocus": "product-name",
+  "escapeFocus": {
+    "open": false,
+    "focus": "add-product-button"
+  },
+  "create": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      },
+      {
+        "id": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "name": "Review Product",
+        "sku": "REV-01",
+        "category": "Review",
+        "stock": 5,
+        "price": 10.25
+      }
+    ],
+    "cart": [],
+    "orders": [],
+    "total": "$0.00",
+    "status": "Review Product was added."
+  },
+  "search": [
+    "Review Edited\n\nREV-01 · Review\n\n$10.25\n\n5 units\n\nAdd to cart\nEdit\nDelete"
+  ],
+  "cart": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      },
+      {
+        "id": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "name": "Review Edited",
+        "sku": "REV-01",
+        "category": "Review",
+        "stock": 5,
+        "price": 10.25
+      }
+    ],
+    "cart": [
+      {
+        "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "quantity": 3
+      }
+    ],
+    "orders": [],
+    "total": "$30.75",
+    "status": ""
+  },
+  "cartReload": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      },
+      {
+        "id": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "name": "Review Edited",
+        "sku": "REV-01",
+        "category": "Review",
+        "stock": 5,
+        "price": 10.25
+      }
+    ],
+    "cart": [
+      {
+        "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "quantity": 3
+      }
+    ],
+    "orders": [],
+    "total": "$30.75",
+    "status": ""
+  },
+  "quantity0": {
+    "cart": [
+      {
+        "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "quantity": 3
+      }
+    ],
+    "focus": "BODY",
+    "status": "Choose a quantity between 1 and 5 for Review Edited.",
+    "hidden": "rect(0px, 0px, 0px, 0px)"
+  },
+  "quantity99": {
+    "cart": [
+      {
+        "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "quantity": 3
+      }
+    ],
+    "focus": "BODY",
+    "status": "Choose a quantity between 1 and 5 for Review Edited.",
+    "hidden": "rect(0px, 0px, 0px, 0px)"
+  },
+  "quantity1.5": {
+    "cart": [
+      {
+        "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "quantity": 3
+      }
+    ],
+    "focus": "BODY",
+    "status": "Choose a quantity between 1 and 5 for Review Edited.",
+    "hidden": "rect(0px, 0px, 0px, 0px)"
+  },
+  "cartAfterEdit": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      },
+      {
+        "id": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "name": "Review Edited",
+        "sku": "REV-01",
+        "category": "Review",
+        "stock": 2,
+        "price": 12
+      }
+    ],
+    "cart": [
+      {
+        "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "quantity": 2
+      }
+    ],
+    "orders": [],
+    "total": "$24.00",
+    "status": ""
+  },
+  "checkout": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      },
+      {
+        "id": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "name": "Review Edited",
+        "sku": "REV-01",
+        "category": "Review",
+        "stock": 0,
+        "price": 12
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": "order-8beb5297-482d-4830-aef5-db6f41b905ed",
+        "completedAt": "2026-10-01T14:31:31.699Z",
+        "items": [
+          {
+            "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+            "name": "Review Edited",
+            "sku": "REV-01",
+            "price": 12,
+            "quantity": 2,
+            "lineTotal": 24
+          }
+        ],
+        "total": 24
+      }
+    ],
+    "total": "$0.00",
+    "status": ""
+  },
+  "checkoutReload": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      },
+      {
+        "id": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+        "name": "Review Edited",
+        "sku": "REV-01",
+        "category": "Review",
+        "stock": 0,
+        "price": 12
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": "order-8beb5297-482d-4830-aef5-db6f41b905ed",
+        "completedAt": "2026-10-01T14:31:31.699Z",
+        "items": [
+          {
+            "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+            "name": "Review Edited",
+            "sku": "REV-01",
+            "price": 12,
+            "quantity": 2,
+            "lineTotal": 24
+          }
+        ],
+        "total": 24
+      }
+    ],
+    "total": "$0.00",
+    "status": ""
+  },
+  "deleteCartAndHistory": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": "order-8beb5297-482d-4830-aef5-db6f41b905ed",
+        "completedAt": "2026-10-01T14:31:31.699Z",
+        "items": [
+          {
+            "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+            "name": "Review Edited",
+            "sku": "REV-01",
+            "price": 12,
+            "quantity": 2,
+            "lineTotal": 24
+          }
+        ],
+        "total": 24
+      }
+    ],
+    "total": "$0.00",
+    "status": ""
+  },
+  "mobile": {
+    "width": 390,
+    "scroll": 390,
+    "cartY": 1341.375
+  },
+  "keyboardAfterArrow": {
+    "focus": "BODY",
+    "id": "",
+    "cart": [
+      {
+        "productId": "product-001",
+        "quantity": 2
+      }
+    ]
+  },
+  "keyboardQuantity": {
+    "focus": "INPUT",
+    "id": "cart-quantity-product-001",
+    "cart": [
+      {
+        "productId": "product-001",
+        "quantity": 2
+      }
+    ]
+  },
+  "failureBefore": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      }
+    ],
+    "cart": [
+      {
+        "productId": "product-001",
+        "quantity": 2
+      }
+    ],
+    "orders": [
+      {
+        "id": "order-8beb5297-482d-4830-aef5-db6f41b905ed",
+        "completedAt": "2026-10-01T14:31:31.699Z",
+        "items": [
+          {
+            "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+            "name": "Review Edited",
+            "sku": "REV-01",
+            "price": 12,
+            "quantity": 2,
+            "lineTotal": 24
+          }
+        ],
+        "total": 24
+      }
+    ],
+    "total": "$39.98",
+    "status": ""
+  },
+  "failedWrite": {
+    "items": [
+      {
+        "id": "product-001",
+        "name": "Wireless Mouse",
+        "sku": "ELEC-001",
+        "category": "Electronics",
+        "stock": 24,
+        "price": 19.99
+      },
+      {
+        "id": "product-002",
+        "name": "Mechanical Keyboard",
+        "sku": "ELEC-002",
+        "category": "Electronics",
+        "stock": 12,
+        "price": 79.99
+      },
+      {
+        "id": "product-003",
+        "name": "USB-C Cable",
+        "sku": "ELEC-003",
+        "category": "Accessories",
+        "stock": 48,
+        "price": 9.99
+      },
+      {
+        "id": "product-004",
+        "name": "Notebook",
+        "sku": "STAT-001",
+        "category": "Stationery",
+        "stock": 35,
+        "price": 4.5
+      },
+      {
+        "id": "product-005",
+        "name": "Desk Lamp",
+        "sku": "HOME-001",
+        "category": "Office",
+        "stock": 9,
+        "price": 34.99
+      }
+    ],
+    "cart": [
+      {
+        "productId": "product-001",
+        "quantity": 2
+      }
+    ],
+    "orders": [
+      {
+        "id": "order-8beb5297-482d-4830-aef5-db6f41b905ed",
+        "completedAt": "2026-10-01T14:31:31.699Z",
+        "items": [
+          {
+            "productId": "007b9a9e-812f-44f1-8a8a-491ab0592ce8",
+            "name": "Review Edited",
+            "sku": "REV-01",
+            "price": 12,
+            "quantity": 2,
+            "lineTotal": 24
+          }
+        ],
+        "total": 24
+      }
+    ],
+    "total": "$39.98",
+    "status": "Wireless Mouse quantity changed to 2.",
+    "error": {
+      "hidden": false,
+      "text": "The purchase could not be saved. No stock was changed."
+    }
+  },
+  "safeRendering": {
+    "executed": false,
+    "images": 0,
+    "text": true
+  },
+  "malformed": {
+    "summary": "2 products · 056 units in stock",
+    "items": [
+      {
+        "id": "bad",
+        "name": "Bad item",
+        "stock": "5",
+        "price": 1
+      },
+      {
+        "id": "bad2",
+        "name": "Bad item 2",
+        "stock": "6",
+        "price": 2
+      }
+    ]
+  },
+  "pageErrors": []
+}

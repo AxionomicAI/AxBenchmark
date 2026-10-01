@@ -1,0 +1,47 @@
+Testing file:// in Chrome 154.0.8037.58
+✔ first run, offline assets, search, empty results and reload (740.779ms)
+✔ create, edit, trim, cancel, Escape, delete and preserve empty inventory (932.763041ms)
+✔ required fields, unique SKUs and numeric boundaries prevent invalid saves (1603.455459ms)
+✔ search stays active through create/edit/delete and preserves hidden products (533.941292ms)
+✔ cart totals, Enter updates, quantity validation, stock limits, remove and reload (527.771542ms)
+✔ quantity drafts survive unrelated actions and failed saves until explicitly updated (395.825416ms)
+✔ inventory changes update the cart and block checkout for unavailable stock (404.285084ms)
+✔ checkout, receipt snapshots, history order and persistence (595.266083ms)
+✔ double-clicking checkout saves one purchase and deducts stock once (186.593292ms)
+✔ storage write failures preserve data, forms and cart; retries save once (726.71775ms)
+✔ corrupt saved data and unavailable storage are preserved and clearly reported (280.759791ms)
+✔ stale tabs cannot overwrite newer product/cart changes or completed purchases (613.541083ms)
+✔ markup is plain text; large exact totals and narrow layouts remain usable (546.0755ms)
+✔ keyboard-only product creation, dialog navigation and mobile table access (182.407834ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8604.350833
+
+Storage suite executed separately before the browser suite:
+Command (from openai-cloud-gpt-6-astra-high): node --test tests/storage.test.cjs
+Exit code: 0
+Captured terminal summary:
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.2175
+
+Browser command (from openai-cloud-gpt-6-astra-high):
+NODE_PATH=/tmp/claude-501/-Users-mike-axionomic-AiSandbox/1c01ddfd-bbb0-4ae2-ac1d-bf9bec6d9924/scratchpad/verify/node_modules node --test tests/browser.test.cjs
+Exit code: 0
+The existing external Playwright installation was used. Application source and test files were unchanged.
+
+Independent probe:
+node quality-review/openai-cloud-gpt-6-astra-high-probe.mjs
+Final exit code: 0; completed: true; 15 recorded observations/check groups; page errors: []
+The first probe attempt stopped on a harness-only unsupported Puppeteer key string "Meta+A".
+The probe was corrected to separate key-down/key-press/key-up, then completed in a fresh isolated profile.

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Inventory</h1>
+    <p>Products, stock, the cart, and orders are stored in this browser.</p>
+  </header>
+  <main id="app" class="site-main">
+    <section id="product-editor" aria-labelledby="editor-heading">
+      <h2 id="editor-heading">Add product</h2>
+      <form id="product-form" novalidate>
+        <p id="product-form-error" class="form-error" role="alert" hidden></p>
+        <div class="field-row">
+          <div class="field">
+            <label for="product-name">Name</label>
+            <input id="product-name" name="name" type="text" maxlength="120" required autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="product-sku">SKU</label>
+            <input id="product-sku" name="sku" type="text" maxlength="40" autocomplete="off" aria-describedby="sku-hint">
+          </div>
+          <div class="field">
+            <label for="product-stock">Stock</label>
+            <input id="product-stock" name="stock" type="number" min="0" max="999999" step="1" required inputmode="numeric">
+          </div>
+        </div>
+        <p id="sku-hint" class="field-hint">SKU is optional. When set, it must be unique.</p>
+        <div class="form-actions">
+          <button type="submit" id="product-submit">Add product</button>
+          <button type="button" id="product-cancel" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
+    <section id="inventory" aria-labelledby="inventory-heading">
+      <h2 id="inventory-heading">Products</h2>
+      <div class="lookup" role="search">
+        <div class="field">
+          <label for="product-search">Search</label>
+          <input id="product-search" type="search" placeholder="Search by name or SKU" autocomplete="off" spellcheck="false" aria-controls="product-table">
+        </div>
+        <div class="field">
+          <label for="stock-filter">Stock</label>
+          <select id="stock-filter">
+            <option value="all">All</option>
+            <option value="in">In stock</option>
+            <option value="out">Out of stock</option>
+          </select>
+        </div>
+      </div>
+      <p id="inventory-status" aria-live="polite">Loading inventory…</p>
+      <div class="table-wrap">
+        <table id="product-table" class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">SKU</th>
+              <th scope="col" class="num">Stock</th>
+              <th scope="col" class="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="product-rows"></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="cart" aria-labelledby="cart-heading">
+      <h2 id="cart-heading">Cart</h2>
+      <p id="cart-error" class="form-error" role="alert" hidden></p>
+      <p id="cart-status" aria-live="polite">Loading cart…</p>
+      <div class="table-wrap">
+        <table id="cart-table" class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">SKU</th>
+              <th scope="col" class="num">Quantity</th>
+              <th scope="col" class="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cart-rows"></tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" colspan="2">Total</th>
+              <td id="cart-total" class="num">0</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="form-actions">
+        <button type="button" id="checkout-open" disabled>Checkout</button>
+      </div>
+      <p id="checkout-note" class="checkout-note" role="status" hidden></p>
+    </section>
+    <section id="orders" aria-labelledby="orders-heading">
+      <h2 id="orders-heading">Order history</h2>
+      <p id="orders-status" aria-live="polite">Loading orders…</p>
+      <div class="table-wrap">
+        <table id="orders-table" class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Placed</th>
+              <th scope="col">Items</th>
+              <th scope="col" class="num">Units</th>
+            </tr>
+          </thead>
+          <tbody id="order-rows"></tbody>
+        </table>
+      </div>
+    </section>
+    <dialog id="delete-dialog" aria-labelledby="delete-title">
+      <h2 id="delete-title">Delete product</h2>
+      <p id="delete-copy"></p>
+      <div class="form-actions">
+        <button type="button" id="delete-cancel">Cancel</button>
+        <button type="button" id="delete-confirm" class="danger">Delete</button>
+      </div>
+    </dialog>
+    <dialog id="checkout-dialog" aria-labelledby="checkout-title">
+      <h2 id="checkout-title">Checkout</h2>
+      <p id="checkout-copy"></p>
+      <ul id="checkout-lines"></ul>
+      <div class="form-actions">
+        <button type="button" id="checkout-cancel">Cancel</button>
+        <button type="button" id="checkout-confirm">Place order</button>
+      </div>
+    </dialog>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

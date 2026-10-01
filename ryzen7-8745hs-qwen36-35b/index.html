@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Inventory Manager</h1>
+            <div class="header-actions">
+                <button id="cartToggleBtn" class="cart-toggle-btn" aria-label="Open shopping cart" title="Shopping Cart">
+                    🛒 Cart
+                    <span id="cartBadge" class="cart-badge" style="display: none;">0</span>
+                </button>
+                <button id="orderHistoryBtn" class="order-history-btn" aria-label="View order history" title="Order History">
+                    📋 Orders
+                    <span id="orderHistoryBadge" class="order-badge" style="display: none;">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="controls">
+            <div class="controls-row">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search inventory..." aria-label="Search inventory">
+                    <button id="clearSearchBtn" class="clear-search-btn" aria-label="Clear search" title="Clear search" style="display: none;">×</button>
+                    <div id="searchSuggestions" class="search-suggestions" style="display: none;"></div>
+                </div>
+                <select id="categoryFilter" aria-label="Filter by category">
+                    <option value="">All Categories</option>
+                </select>
+                <select id="stockStatusFilter" aria-label="Filter by stock status">
+                    <option value="">All Stock Status</option>
+                    <option value="in-stock">In Stock</option>
+                    <option value="low-stock">Low Stock</option>
+                    <option value="out-of-stock">Out of Stock</option>
+                </select>
+                <select id="sortSelect" aria-label="Sort by">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="name-asc">Name A-Z</option>
+                    <option value="name-desc">Name Z-A</option>
+                    <option value="qty-asc">Quantity ↑</option>
+                    <option value="qty-desc">Quantity ↓</option>
+                </select>
+            </div>
+            <div class="controls-row controls-bottom">
+                <span id="itemCount" class="item-count">0 items</span>
+                <div class="controls-actions">
+                    <button id="addItemBtn" class="btn btn-primary">+ Add Item</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="inventory-list" id="inventoryList">
+            <!-- Inventory items will be rendered here -->
+        </section>
+
+        <section class="empty-state" id="emptyState" style="display: none;">
+            <p>No items in inventory. Click "+ Add Item" to get started.</p>
+        </section>
+    </main>
+
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="quickViewTitle">
+        <div class="modal-content quick-view-modal">
+            <div class="modal-header">
+                <h2 id="quickViewTitle">Item Details</h2>
+                <button class="close-btn" id="closeQuickViewBtn" aria-label="Close modal">&times;</button>
+            </div>
+            <div id="quickViewContent" class="quick-view-body">
+                <!-- Content populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing items -->
+    <div id="itemModal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Item</h2>
+                <button class="close-btn" id="closeModalBtn" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="itemForm">
+                <input type="hidden" id="itemId">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" required placeholder="Enter item name">
+                </div>
+                <div class="form-group">
+                    <label for="itemCategory">Category</label>
+                    <input type="text" id="itemCategory" placeholder="Enter category">
+                </div>
+                <div class="form-group">
+                    <label for="itemQuantity">Quantity</label>
+                    <input type="number" id="itemQuantity" required min="0" placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label for="itemDescription">Description</label>
+                    <textarea id="itemDescription" rows="3" placeholder="Enter description"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h2 id="cartTitle">Shopping Cart</h2>
+                <button class="close-btn" id="closeCartBtn" aria-label="Close cart">&times;</button>
+            </div>
+            <div id="cartContent" class="cart-body">
+                <!-- Cart items populated by JavaScript -->
+            </div>
+            <div id="cartFooter" class="cart-footer" style="display: none;">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+                <div class="cart-actions">
+                    <button id="clearCartBtn" class="btn btn-secondary">Clear Cart</button>
+                    <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price Edit Modal -->
+    <div id="priceModal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+        <div class="modal-content price-modal">
+            <div class="modal-header">
+                <h2 id="priceModalTitle">Set Item Price</h2>
+                <button class="close-btn" id="closePriceModalBtn" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="priceForm">
+                <input type="hidden" id="priceItemId">
+                <div class="form-group">
+                    <label for="itemPrice">Price ($)</label>
+                    <input type="number" id="itemPrice" required min="0" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelPriceBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitPriceBtn">Set Price</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order History Modal -->
+    <div id="orderHistoryModal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="orderHistoryTitle">
+        <div class="modal-content order-history-modal">
+            <div class="modal-header">
+                <h2 id="orderHistoryTitle">Order History</h2>
+                <button class="close-btn" id="closeOrderHistoryBtn" aria-label="Close order history">&times;</button>
+            </div>
+            <div id="orderHistoryList" class="order-history-list">
+                <!-- Order history populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="orderConfirmationModal" class="modal" style="display: none;" role="dialog" aria-modal="true">
+        <div class="modal-content confirmation-modal">
+            <!-- Confirmation content populated by JavaScript -->
+        </div>
+    </div>
+
+    <footer>
+        <p>Inventory Manager &copy; 2025</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

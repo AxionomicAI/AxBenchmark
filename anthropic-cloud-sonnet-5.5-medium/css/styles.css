@@ -1,0 +1,60 @@
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  color: #222;
+  background: #f5f6f8;
+}
+header {
+  background: #24405f;
+  color: #fff;
+  padding: 1rem 1.5rem;
+}
+header { display: flex; align-items: center; justify-content: space-between; }
+header h1 { margin: 0; font-size: 1.4rem; }
+.header-actions { display: flex; gap: 0.5rem; }
+.order { margin-top: 0.75rem; }
+.order h3 { margin: 0 0 0.3rem; font-size: 0.95rem; display: flex; justify-content: space-between; }
+.order-lines { font-size: 0.9rem; }
+.cart-btn { color: #24405f; font-weight: 600; }
+main { padding: 1.5rem; max-width: 960px; margin: 0 auto; }
+.toolbar { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+.toolbar { align-items: center; flex-wrap: wrap; }
+.toolbar input[type=search] { flex: 1; min-width: 12rem; }
+.toolbar .check { display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; white-space: nowrap; }
+select { font: inherit; padding: 0.4rem 0.5rem; border: 1px solid #b8bec7; border-radius: 4px; background: #fff; }
+mark { background: #ffe58a; color: inherit; border-radius: 2px; }
+.result-count { margin: 0 0 0.5rem; font-size: 0.85rem; color: #555; }
+input { font: inherit; padding: 0.4rem 0.5rem; border: 1px solid #b8bec7; border-radius: 4px; }
+button { font: inherit; padding: 0.4rem 0.8rem; border: 1px solid #b8bec7; border-radius: 4px; background: #fff; cursor: pointer; }
+button:hover { background: #eef1f5; }
+button.primary { background: #24405f; border-color: #24405f; color: #fff; }
+button.primary:hover { background: #1b3049; }
+button.danger { color: #a51d1d; border-color: #d9a3a3; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 4px; overflow: hidden; }
+th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid #e3e6ea; }
+th { background: #e9edf2; font-size: 0.85rem; }
+.num { text-align: right; }
+td.actions { white-space: nowrap; text-align: right; }
+td.actions button { padding: 0.2rem 0.55rem; font-size: 0.85rem; }
+tr.low td.qty { color: #a51d1d; font-weight: 600; }
+.empty { text-align: center; color: #666; padding: 1.5rem; }
+.message { background: #e2f3e5; border: 1px solid #a9d5b1; padding: 0.5rem 0.75rem; border-radius: 4px; }
+.error { color: #a51d1d; background: #fbeaea; border: 1px solid #e3b5b5; padding: 0.5rem 0.75rem; border-radius: 4px; margin: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+dialog { border: none; border-radius: 6px; padding: 1.25rem; width: min(420px, 92vw); box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+dialog::backdrop { background: rgba(0,0,0,.4); }
+dialog h2 { margin: 0 0 0.75rem; font-size: 1.15rem; }
+dialog label { display: block; margin-top: 0.75rem; font-size: 0.9rem; }
+dialog label input { display: block; width: 100%; margin-top: 0.2rem; }
+dialog .actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
+.cart-dialog { width: min(680px, 94vw); }
+.cart-dialog table { margin-top: 0.75rem; }
+.cart-dialog tfoot th { background: #fff; font-size: 1rem; }
+.cart-qty { width: 5rem; text-align: right; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+[hidden] { display: none !important; }
+@media (max-width: 640px) {
+  main { padding: 1rem; }
+  #table, #cart-table, .order-lines { display: block; overflow-x: auto; position: relative; }
+}

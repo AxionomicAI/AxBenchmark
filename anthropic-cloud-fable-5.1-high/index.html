@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Inventory</h1>
+    <a id="cart-link" class="button" href="#cart">Cart</a>
+  </header>
+
+  <main class="site-main">
+    <p id="storage-warning" class="notice notice-warning" role="alert" hidden>
+      Browser storage is unavailable, so changes will not be saved.
+    </p>
+    <p id="recovery-warning" class="notice notice-warning" role="alert" hidden>
+      Some saved data was damaged and could not be loaded. A copy of it has
+      been kept in this browser's storage.
+    </p>
+    <p id="sample-notice" class="notice" hidden>
+      Sample products have been added to get you started. Edit or delete them
+      as you like.
+    </p>
+
+    <section aria-labelledby="products-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="products-heading">Products</h2>
+          <p id="inventory-summary" class="inventory-summary"></p>
+        </div>
+        <button type="button" id="add-product" class="button button-primary">Add product</button>
+      </div>
+
+      <div id="lookup" class="lookup" role="search" aria-label="Products" hidden>
+        <div class="field lookup-text">
+          <label for="lookup-text">Search</label>
+          <input type="search" id="lookup-text" placeholder="Name, SKU or category" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="lookup-category">Category</label>
+          <select id="lookup-category" autocomplete="off"></select>
+        </div>
+        <div class="field">
+          <label for="lookup-status">Status</label>
+          <select id="lookup-status" autocomplete="off"></select>
+        </div>
+      </div>
+      <div class="lookup-results">
+        <p id="lookup-count" role="status"></p>
+        <button type="button" id="lookup-clear" class="button button-small" hidden>Show all products</button>
+      </div>
+
+      <div id="products-table-wrap" class="table-scroll" hidden>
+        <table class="data-table" aria-labelledby="products-heading">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">SKU</th>
+              <th scope="col">Category</th>
+              <th scope="col" class="numeric">Price</th>
+              <th scope="col" class="numeric">Quantity</th>
+              <th scope="col" class="numeric">Reorder level</th>
+              <th scope="col">Status</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="products-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="cart" aria-labelledby="cart-heading">
+      <h2 id="cart-heading" tabindex="-1">Cart</h2>
+      <p id="cart-summary" class="inventory-summary" role="status"></p>
+
+      <div id="cart-table-wrap" class="table-scroll" hidden>
+        <table class="data-table cart-table" aria-labelledby="cart-heading">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">SKU</th>
+              <th scope="col" class="numeric">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col" class="numeric">Subtotal</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="cart-body"></tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" colspan="4">Total</th>
+              <td id="cart-total" class="numeric cart-total"></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div id="cart-actions" class="cart-actions" hidden>
+        <button type="button" id="checkout" class="button button-primary">Check out</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="orders-heading">
+      <h2 id="orders-heading">Order history</h2>
+      <p id="orders-summary" class="inventory-summary"></p>
+      <ol id="orders-list" class="orders" aria-labelledby="orders-heading" hidden></ol>
+    </section>
+
+    <noscript>
+      <p class="notice notice-warning">This site needs JavaScript to work.</p>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data is stored in this browser only.</p>
+  </footer>
+
+  <p id="status-message" class="status-message" role="status"></p>
+
+  <dialog id="product-dialog" class="dialog" aria-labelledby="product-dialog-title">
+    <form id="product-form" method="dialog" autocomplete="off" novalidate>
+      <h2 id="product-dialog-title">Add product</h2>
+      <p id="product-form-error" class="notice notice-error" role="alert" hidden></p>
+
+      <div class="field">
+        <label for="product-name">Name</label>
+        <input type="text" id="product-name" required autofocus aria-describedby="product-name-error">
+        <p id="product-name-error" class="field-error" hidden></p>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="product-sku">SKU</label>
+          <input type="text" id="product-sku" required aria-describedby="product-sku-error">
+          <p id="product-sku-error" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="product-category">Category <span class="optional">(optional)</span></label>
+          <input type="text" id="product-category" list="category-options" aria-describedby="product-category-error">
+          <datalist id="category-options"></datalist>
+          <p id="product-category-error" class="field-error" hidden></p>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="product-price">Price ($)</label>
+          <input type="text" id="product-price" inputmode="decimal" required aria-describedby="product-price-error">
+          <p id="product-price-error" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="product-quantity">Quantity</label>
+          <input type="text" id="product-quantity" inputmode="numeric" value="0" required aria-describedby="product-quantity-error">
+          <p id="product-quantity-error" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="product-reorder-level">Reorder level</label>
+          <input type="text" id="product-reorder-level" inputmode="numeric" value="0" required aria-describedby="product-reorder-level-error product-reorder-level-hint">
+          <p id="product-reorder-level-error" class="field-error" hidden></p>
+        </div>
+      </div>
+      <p id="product-reorder-level-hint" class="field-hint">
+        Stock is marked as low when the quantity is at or below the reorder level.
+      </p>
+
+      <div class="dialog-actions">
+        <button type="button" id="product-cancel" class="button">Cancel</button>
+        <button type="submit" id="product-submit" class="button button-primary">Add product</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="delete-dialog" class="dialog dialog-small" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-text">
+    <form id="delete-form" method="dialog">
+      <h2 id="delete-dialog-title">Delete product?</h2>
+      <p id="delete-dialog-text"></p>
+      <p id="delete-error" class="notice notice-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" id="delete-cancel" class="button" autofocus>Cancel</button>
+        <button type="submit" class="button button-danger-solid">Delete</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="checkout-dialog" class="dialog dialog-small" aria-labelledby="checkout-dialog-title" aria-describedby="checkout-dialog-text">
+    <form id="checkout-form" method="dialog">
+      <h2 id="checkout-dialog-title">Check out?</h2>
+      <p id="checkout-dialog-text"></p>
+      <p id="checkout-error" class="notice notice-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" id="checkout-cancel" class="button">Cancel</button>
+        <button type="submit" class="button button-primary" autofocus>Place order</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Classic scripts (not ES modules) so the site works from file://. Order matters. -->
+  <script src="js/storage.js"></script>
+  <script src="js/sample-data.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/format.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

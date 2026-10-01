@@ -1,0 +1,204 @@
+{
+  "errors": [
+    "Uncaught QuotaExceededError: Review forced quota failure",
+    "Uncaught SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)"
+  ],
+  "dialogs": [
+    "Complete this purchase? This will update inventory quantities.",
+    "Order ORD-MUPM5AX69H7D completed successfully!",
+    "Order: ORD-MUPM5AX69H7D\nDate: October 1, 2026 at 09:12:13 AM\nItems: 2\n\n1. Review Widget Edited\n   Qty: 2 × $2.50 = $5.00\n\nTotal: $5.00",
+    "Complete this purchase? This will update inventory quantities.",
+    "Order ORD-MUPM5B5DRKOQ completed successfully!",
+    "Complete this purchase? This will update inventory quantities.",
+    "Insufficient stock for \"Review Widget Edited\". Available: 7, Requested: 999",
+    "Are you sure you want to delete this item?",
+    "Complete this purchase? This will update inventory quantities.",
+    "Item \"Review Widget Edited\" is no longer in inventory.",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Are you sure you want to delete this item?",
+    "Complete this purchase? This will update inventory quantities."
+  ],
+  "initial": {
+    "items": 8,
+    "rows": 8,
+    "scrollWidth": 1440
+  },
+  "mobile": {
+    "width": 390,
+    "scrollWidth": 789,
+    "table": {
+      "x": 70,
+      "y": 826.53125,
+      "width": 719.453125,
+      "height": 873.375,
+      "top": 826.53125,
+      "right": 789.453125,
+      "bottom": 1699.90625,
+      "left": 70
+    },
+    "cart": {
+      "x": 70,
+      "y": 1874.296875,
+      "width": 389.5625,
+      "height": 142.78125,
+      "top": 1874.296875,
+      "right": 459.5625,
+      "bottom": 2017.078125,
+      "left": 70
+    }
+  },
+  "keyboardNext": "item-quantity",
+  "created": {
+    "id": "mupm5arf6xbq2ecm19i",
+    "name": "Review Widget",
+    "quantity": 10,
+    "price": 2.5,
+    "category": "Audit",
+    "createdAt": "2026-10-01T14:12:13.371Z"
+  },
+  "search": "Review Widget\t10\t$2.50\tAudit\t$25.00\t\nAdd to Cart\nEdit\nDelete",
+  "editFocus": "<button class=\"btn-edit\" onclick=\"startEditItem('mupm5arf6xbq2ecm19i')\">Edit</button>",
+  "afterEdit": {
+    "rows": 9,
+    "search": "  review WIDGET  ",
+    "item": {
+      "id": "mupm5arf6xbq2ecm19i",
+      "name": "Review Widget Edited",
+      "quantity": 10,
+      "price": 2.5,
+      "category": "Audit",
+      "createdAt": "2026-10-01T14:12:13.371Z"
+    }
+  },
+  "cartQty": {
+    "focus": "BODY",
+    "cart": [
+      {
+        "cartItemId": "mupm5arf6xbq2ecm19i_mupm5arf6xbq2ecm19i",
+        "inventoryItemId": "mupm5arf6xbq2ecm19i",
+        "name": "Review Widget Edited",
+        "price": 2.5,
+        "quantity": 2
+      }
+    ],
+    "total": "$5.00"
+  },
+  "cartReload": {
+    "cart": [
+      {
+        "cartItemId": "mupm5arf6xbq2ecm19i_mupm5arf6xbq2ecm19i",
+        "inventoryItemId": "mupm5arf6xbq2ecm19i",
+        "name": "Review Widget Edited",
+        "price": 2.5,
+        "quantity": 2
+      }
+    ],
+    "visible": "Review Widget Edited\t$2.50\t\n-\n+\n\t$5.00\t\nRemove"
+  },
+  "removed": "Your cart is empty. Add items from the inventory below!",
+  "checkout": {
+    "item": {
+      "id": "mupm5arf6xbq2ecm19i",
+      "name": "Review Widget Edited",
+      "quantity": 8,
+      "price": 2.5,
+      "category": "Audit",
+      "createdAt": "2026-10-01T14:12:13.371Z"
+    },
+    "cart": [],
+    "orders": [
+      {
+        "orderId": "ORD-MUPM5AX69H7D",
+        "orderDate": "2026-10-01T14:12:13.578Z",
+        "items": [
+          {
+            "inventoryItemId": "mupm5arf6xbq2ecm19i",
+            "name": "Review Widget Edited",
+            "quantity": 2,
+            "price": 2.5,
+            "subtotal": 5
+          }
+        ],
+        "itemCount": 2,
+        "total": 5
+      }
+    ],
+    "history": "ORD-MUPM5AX69H7D\tOct 1, 2026, 09:12 AM\t2 item(s)\t$5.00\t\nView"
+  },
+  "historyReload": {
+    "stored": 1,
+    "rows": 0,
+    "message": "No orders yet. Complete a purchase to see it here."
+  },
+  "historyClick": "",
+  "cartAfterReprice": "$2.50",
+  "repricedOrder": {
+    "orderId": "ORD-MUPM5B5DRKOQ",
+    "orderDate": "2026-10-01T14:12:13.873Z",
+    "items": [
+      {
+        "inventoryItemId": "mupm5arf6xbq2ecm19i",
+        "name": "Review Widget Edited",
+        "quantity": 1,
+        "price": 7,
+        "subtotal": 7
+      }
+    ],
+    "itemCount": 1,
+    "total": 2.5
+  },
+  "zeroQuantity": {
+    "shown": "0",
+    "saved": 1,
+    "total": "$7.00"
+  },
+  "fractionQuantity": {
+    "shown": "1",
+    "saved": 1
+  },
+  "excess": {
+    "stock": 7,
+    "orders": 2
+  },
+  "deleted": {
+    "exists": false,
+    "cart": [
+      {
+        "cartItemId": "mupm5arf6xbq2ecm19i_mupm5arf6xbq2ecm19i",
+        "inventoryItemId": "mupm5arf6xbq2ecm19i",
+        "name": "Review Widget Edited",
+        "price": 7,
+        "quantity": 1
+      }
+    ]
+  },
+  "emptyBefore": 0,
+  "emptyAfter": 8,
+  "attributeInjection": {
+    "marker": 1,
+    "lastHandler": "addToCart({\"id\":\"mupm5bhcexnrndbsvd6\",\"name\":\"\"+(window.__reviewMarker=1)+\"\",\"quantity\":1,\"price\":1,\"category\":\"Audit\",\"createdAt\":\"2026-10-01T14:12:14.304Z\"})"
+  },
+  "failedOrderWrite": {
+    "stock": 44,
+    "cart": [
+      {
+        "cartItemId": "mupm5bi78tisye5qrqt_mupm5bi78tisye5qrqt",
+        "inventoryItemId": "mupm5bi78tisye5qrqt",
+        "name": "Wireless Mouse",
+        "price": 29.99,
+        "quantity": 1
+      }
+    ],
+    "orders": null
+  },
+  "corrupt": {
+    "inventory": "",
+    "cart": ""
+  }
+}

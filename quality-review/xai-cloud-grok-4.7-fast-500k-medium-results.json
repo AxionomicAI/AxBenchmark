@@ -1,0 +1,867 @@
+{
+  "seed": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      }
+    ],
+    "cart": [],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "mobile": {
+    "width": 390,
+    "scroll": 390,
+    "table": 316,
+    "wrap": 316
+  },
+  "created": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit <img src=x onerror=alert(1)>",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [],
+    "orders": [],
+    "focus": "<input id=\"product-name\" name=\"name\" type=\"text\" maxlength=\"120\" required=\"\" autocomplete=\"off\">",
+    "message": ""
+  },
+  "editFocus": "product-name",
+  "search": "Audit Product\tAUD-1\t5\t\nAdd to cart\nEdit\nDelete",
+  "afterKeyboardAdd": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [
+      {
+        "productId": "p-mupnrai9-mfvjn0",
+        "quantity": 1,
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "quantity": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [
+      {
+        "productId": "p-mupnrai9-mfvjn0",
+        "quantity": 2,
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "reloadCart": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [
+      {
+        "productId": "p-mupnrai9-mfvjn0",
+        "quantity": 2,
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "fraction": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [
+      {
+        "productId": "p-mupnrai9-mfvjn0",
+        "quantity": 2,
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": "Enter a whole number of units."
+  },
+  "excess": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [
+      {
+        "productId": "p-mupnrai9-mfvjn0",
+        "quantity": 5,
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": "Only 5 Audit Product in stock."
+  },
+  "zero": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "remove": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 5
+      }
+    ],
+    "cart": [],
+    "orders": [],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "dialogFocus": "checkout-cancel",
+  "escape": false,
+  "checkout": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 3
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": "o-mupnraus-csutnz",
+        "number": 1,
+        "placedAt": "2026-10-01T14:57:19.540Z",
+        "lines": [
+          {
+            "productId": "p-mupnrai9-mfvjn0",
+            "name": "Audit Product",
+            "sku": "AUD-1",
+            "quantity": 2
+          }
+        ],
+        "units": 2
+      }
+    ],
+    "focus": "<button type=\"button\" id=\"checkout-open\" disabled=\"\">Checkout</button>",
+    "message": ""
+  },
+  "reloadOrder": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 3
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": "o-mupnraus-csutnz",
+        "number": 1,
+        "placedAt": "2026-10-01T14:57:19.540Z",
+        "lines": [
+          {
+            "productId": "p-mupnrai9-mfvjn0",
+            "name": "Audit Product",
+            "sku": "AUD-1",
+            "quantity": 2
+          }
+        ],
+        "units": 2
+      }
+    ],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "loweredStock": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      },
+      {
+        "id": "p-mupnrai9-mfvjn0",
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 1
+      }
+    ],
+    "cart": [
+      {
+        "productId": "p-mupnrai9-mfvjn0",
+        "quantity": 1,
+        "name": "Audit Product",
+        "sku": "AUD-1",
+        "stock": 1
+      }
+    ],
+    "orders": [
+      {
+        "id": "o-mupnraus-csutnz",
+        "number": 1,
+        "placedAt": "2026-10-01T14:57:19.540Z",
+        "lines": [
+          {
+            "productId": "p-mupnrai9-mfvjn0",
+            "name": "Audit Product",
+            "sku": "AUD-1",
+            "quantity": 2
+          }
+        ],
+        "units": 2
+      }
+    ],
+    "focus": "<input id=\"product-name\" name=\"name\" type=\"text\" maxlength=\"120\" required=\"\" autocomplete=\"off\">",
+    "message": ""
+  },
+  "deleted": {
+    "products": [
+      {
+        "id": "p-widget-std",
+        "name": "Standard Widget",
+        "sku": "WID-001",
+        "stock": 42
+      },
+      {
+        "id": "p-widget-dlx",
+        "name": "Deluxe Widget",
+        "sku": "WID-002",
+        "stock": 18
+      },
+      {
+        "id": "p-usb-cable",
+        "name": "USB Cable",
+        "sku": "CBL-010",
+        "stock": 75
+      },
+      {
+        "id": "p-mouse",
+        "name": "Wireless Mouse",
+        "sku": "MSE-220",
+        "stock": 15
+      },
+      {
+        "id": "p-notebook",
+        "name": "Notebook",
+        "sku": "NB-014",
+        "stock": 60
+      },
+      {
+        "id": "p-tape",
+        "name": "Packing Tape",
+        "sku": "PKG-003",
+        "stock": 0
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": "o-mupnraus-csutnz",
+        "number": 1,
+        "placedAt": "2026-10-01T14:57:19.540Z",
+        "lines": [
+          {
+            "productId": "p-mupnrai9-mfvjn0",
+            "name": "Audit Product",
+            "sku": "AUD-1",
+            "quantity": 2
+          }
+        ],
+        "units": 2
+      }
+    ],
+    "focus": "<body>\n  <header class=\"site-header\">\n    <h1>Inventory</h1>\n    <p>Products, stock, the cart, and orders are stored in this browser.</p>\n  </header>\n  <main id=\"app\" class=\"site-main\">\n    <section id=\"product-editor\" aria-labelledby=\"editor-heading\">\n      <h2 id=\"editor-heading\">Add product</h2>\n",
+    "message": ""
+  },
+  "duplicate": {
+    "ok": false,
+    "error": "That SKU is already used."
+  },
+  "stockValidation": [
+    {
+      "ok": false,
+      "error": "Stock must be a whole number from 0 to 999999."
+    },
+    {
+      "ok": false,
+      "error": "Stock must be a whole number from 0 to 999999."
+    },
+    {
+      "ok": false,
+      "error": "Stock must be a whole number from 0 to 999999."
+    }
+  ],
+  "safeRendering": "Audit <img src=x onerror=alert(1)>",
+  "safeDOM": {
+    "injectedImages": 0,
+    "renderedLiteral": true
+  },
+  "multiTotal": "2",
+  "mobileCart": {
+    "width": 390,
+    "scroll": 390,
+    "table": 330.828125,
+    "wrap": 316
+  },
+  "up": [
+    {
+      "productId": "p-widget-std",
+      "quantity": 2
+    },
+    {
+      "productId": "p-widget-dlx",
+      "quantity": 1
+    }
+  ],
+  "down": [
+    {
+      "productId": "p-widget-std",
+      "quantity": 1
+    },
+    {
+      "productId": "p-widget-dlx",
+      "quantity": 1
+    }
+  ],
+  "emptyCheckout": {
+    "ok": false,
+    "error": "Your cart is empty."
+  },
+  "staleCheckout": {
+    "ok": false,
+    "error": "Only 1 Standard Widget in stock."
+  },
+  "failures": {
+    "result": {
+      "ok": false,
+      "error": "Could not save inventory in this browser."
+    },
+    "unchanged": true
+  },
+  "checkoutFailure": {
+    "result": {
+      "ok": false,
+      "error": "Could not save orders in this browser."
+    },
+    "stockRestored": true,
+    "cart": [
+      {
+        "productId": "p-widget-std",
+        "quantity": 1
+      }
+    ],
+    "orders": [
+      {
+        "id": "o-mupnraus-csutnz",
+        "number": 1,
+        "placedAt": "2026-10-01T14:57:19.540Z",
+        "lines": [
+          {
+            "productId": "p-mupnrai9-mfvjn0",
+            "name": "Audit Product",
+            "sku": "AUD-1",
+            "quantity": 2
+          }
+        ],
+        "units": 2
+      }
+    ]
+  },
+  "rollbackFailure": {
+    "result": {
+      "ok": false,
+      "error": "Could not save orders in this browser."
+    },
+    "before": 42,
+    "after": 41,
+    "cart": [
+      {
+        "productId": "p-widget-std",
+        "quantity": 1
+      }
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Inventory</h1>
+    <nav class="header-links" aria-label="Sections">
+      <a href="#orders" class="cart-link">Orders</a>
+      <a href="#cart" id="cart-link" class="cart-link">Cart <span id="cart-count" class="cart-count">0</span></a>
+    </nav>
+  </header>
+
+  <main id="app">
+    <section class="panel" aria-labelledby="items-heading">
+      <div class="panel-header">
+        <h2 id="items-heading">Products</h2>
+        <button type="button" id="add-product" class="btn btn-primary">Add product</button>
+      </div>
+      <p id="item-count" class="muted"></p>
+
+      <form id="lookup" class="lookup" role="search" aria-label="Find products">
+        <div class="lookup-field lookup-query">
+          <label for="lookup-query">Search</label>
+          <input id="lookup-query" type="search" autocomplete="off" spellcheck="false"
+                 placeholder="SKU, name or category" aria-describedby="lookup-hint"
+                 aria-keyshortcuts="/">
+        </div>
+        <div class="lookup-field">
+          <label for="lookup-category">Category</label>
+          <select id="lookup-category">
+            <option value="">All categories</option>
+          </select>
+        </div>
+        <div class="lookup-field">
+          <label for="lookup-stock">Stock</label>
+          <select id="lookup-stock">
+            <option value="">Any stock level</option>
+            <option value="low">Low or out of stock</option>
+            <option value="out">Out of stock</option>
+            <option value="in">In stock (above reorder level)</option>
+          </select>
+        </div>
+        <button type="reset" id="lookup-clear" class="btn">Clear</button>
+      </form>
+      <p id="lookup-hint" class="muted lookup-hint">
+        Press <kbd>/</kbd> to search. <kbd>Enter</kbd> opens the product when exactly
+        one matches (or the SKU matches exactly); <kbd>Esc</kbd> clears.
+      </p>
+      <p id="result-count" class="muted" aria-live="polite"></p>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <div id="item-list"></div>
+    </section>
+
+    <section id="cart" class="panel" aria-labelledby="cart-heading">
+      <div class="panel-header">
+        <h2 id="cart-heading">Cart</h2>
+        <div class="panel-actions">
+          <button type="button" id="cart-clear" class="btn">Empty cart</button>
+          <button type="button" id="checkout" class="btn btn-primary">Checkout</button>
+        </div>
+      </div>
+      <p id="cart-summary" class="muted"></p>
+      <p id="cart-status" class="status" role="status" aria-live="polite"></p>
+      <div id="cart-list"></div>
+    </section>
+
+    <section id="orders" class="panel" aria-labelledby="orders-heading">
+      <div class="panel-header">
+        <h2 id="orders-heading">Order history</h2>
+      </div>
+      <p id="orders-summary" class="muted"></p>
+      <div id="orders-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="muted">Data is stored locally in this browser.</p>
+  </footer>
+
+  <dialog id="product-dialog" aria-labelledby="product-dialog-title">
+    <form id="product-form" novalidate>
+      <h2 id="product-dialog-title">Add product</h2>
+      <p id="form-error" class="field-error form-error" role="alert" hidden></p>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="field-sku">SKU</label>
+          <input id="field-sku" name="sku" type="text" required autocomplete="off"
+                 aria-describedby="error-sku">
+          <p id="error-sku" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="field-name">Name</label>
+          <input id="field-name" name="name" type="text" required autocomplete="off"
+                 aria-describedby="error-name">
+          <p id="error-name" class="field-error" hidden></p>
+        </div>
+        <div class="field field-wide">
+          <label for="field-category">Category <span class="muted">(optional)</span></label>
+          <input id="field-category" name="category" type="text" list="category-options"
+                 autocomplete="off" aria-describedby="error-category">
+          <datalist id="category-options"></datalist>
+          <p id="error-category" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="field-quantity">In stock</label>
+          <input id="field-quantity" name="quantity" type="number" min="0" step="1"
+                 inputmode="numeric" required aria-describedby="error-quantity">
+          <p id="error-quantity" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="field-reorderLevel">Reorder at</label>
+          <input id="field-reorderLevel" name="reorderLevel" type="number" min="0" step="1"
+                 inputmode="numeric" required aria-describedby="error-reorderLevel">
+          <p id="error-reorderLevel" class="field-error" hidden></p>
+        </div>
+        <div class="field">
+          <label for="field-price">Unit price ($)</label>
+          <input id="field-price" name="price" type="number" min="0" step="0.01"
+                 inputmode="decimal" required aria-describedby="error-price">
+          <p id="error-price" class="field-error" hidden></p>
+        </div>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" id="product-cancel" class="btn">Cancel</button>
+        <button type="submit" id="product-save" class="btn btn-primary">Add product</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="delete-dialog" aria-labelledby="delete-dialog-title">
+    <form id="delete-form">
+      <h2 id="delete-dialog-title">Delete product?</h2>
+      <p id="delete-message"></p>
+      <p id="delete-error" class="field-error form-error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" id="delete-cancel" class="btn">Cancel</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="checkout-dialog" aria-labelledby="checkout-dialog-title">
+    <form id="checkout-form" novalidate>
+      <h2 id="checkout-dialog-title">Checkout</h2>
+      <p id="checkout-error" class="field-error form-error" role="alert" hidden></p>
+      <div id="checkout-lines"></div>
+      <div class="field checkout-note">
+        <label for="checkout-note">Note <span class="muted">(optional, e.g. customer or reference)</span></label>
+        <input id="checkout-note" name="note" type="text" maxlength="200" autocomplete="off"
+               aria-describedby="error-note">
+        <p id="error-note" class="field-error" hidden></p>
+      </div>
+      <p class="muted checkout-hint">Placing the order removes these units from stock and empties the cart.</p>
+      <div class="dialog-actions">
+        <button type="button" id="checkout-cancel" class="btn">Cancel</button>
+        <button type="submit" id="checkout-submit" class="btn btn-primary">Place order</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Classic scripts (not ES modules) so the site works from file:// -->
+  <script src="js/storage.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

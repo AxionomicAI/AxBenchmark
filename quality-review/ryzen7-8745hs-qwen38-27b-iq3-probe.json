@@ -1,0 +1,754 @@
+{
+  "errors": [
+    "Uncaught QuotaExceededError: review quota failure",
+    "Uncaught TypeError: Cannot read properties of null (reading 'price')"
+  ],
+  "dialogs": [
+    "Order #1 placed! Total $15.50.",
+    "Not enough stock to complete the order: Review Widget Edited (only 4 left). The cart has been adjusted to the available quantities.",
+    "Delete \"Review Widget Edited\"?"
+  ],
+  "seed": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      }
+    ],
+    "cart": null,
+    "orders": null,
+    "checkoutHidden": true,
+    "visibleRows": 5
+  },
+  "firstFocus": "<input name=\"name\" type=\"text\" required=\"\" maxlength=\"100\" placeholder=\"e.g. Wireless Mouse\">",
+  "search": "Review Widget\t5\t$12.34\tAdd to cartEditDelete",
+  "editFocus": "name",
+  "cartThree": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 5,
+        "price": 15.5
+      }
+    ],
+    "cart": [
+      {
+        "id": 6,
+        "quantity": 3
+      }
+    ],
+    "orders": null,
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "total": "$46.50",
+  "reloadCart": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 5,
+        "price": 15.5
+      }
+    ],
+    "cart": [
+      {
+        "id": 6,
+        "quantity": 3
+      }
+    ],
+    "orders": null,
+    "checkoutHidden": true,
+    "visibleRows": 6
+  },
+  "remove": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 5,
+        "price": 15.5
+      }
+    ],
+    "cart": [],
+    "orders": null,
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "checkoutVisibility": {
+    "hidden": true,
+    "display": "none",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  "mobile": {
+    "innerWidth": 390,
+    "scrollWidth": 429,
+    "cartRight": 428.90625
+  },
+  "syntheticCheckout": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 4,
+        "price": 15.5
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 6
+  },
+  "syntheticCheckoutReload": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 4,
+        "price": 15.5
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 6
+  },
+  "fractionalStockValidity": {
+    "valid": false,
+    "stepMismatch": true
+  },
+  "excessCart": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 4,
+        "price": 15.5
+      }
+    ],
+    "cart": [
+      {
+        "id": 6,
+        "quantity": 999
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "syntheticExcessCheckout": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 4,
+        "price": 15.5
+      }
+    ],
+    "cart": [
+      {
+        "id": 6,
+        "quantity": 4
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "fractionalQuantity": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 4,
+        "price": 15.5
+      }
+    ],
+    "cart": [
+      {
+        "id": 6,
+        "quantity": 2
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "keyboardQuantityFocus": {
+    "tag": "BODY",
+    "name": null,
+    "quantity": 3
+  },
+  "zeroQuantity": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      },
+      {
+        "id": 6,
+        "name": "Review Widget Edited",
+        "stock": 4,
+        "price": 15.5
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "cartPriceAfterEdit": "$20.00",
+  "deleteInCart": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      }
+    ],
+    "cart": [],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 0
+  },
+  "zeroStockAdded": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 42,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      }
+    ],
+    "cart": [
+      {
+        "id": 5,
+        "quantity": 1
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "failedOrderWrite": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Wireless Mouse",
+        "stock": 41,
+        "price": 24.99
+      },
+      {
+        "id": 2,
+        "name": "Mechanical Keyboard",
+        "stock": 17,
+        "price": 89.99
+      },
+      {
+        "id": 3,
+        "name": "USB-C Cable (2 m)",
+        "stock": 120,
+        "price": 9.99
+      },
+      {
+        "id": 4,
+        "name": "Laptop Stand",
+        "stock": 8,
+        "price": 34.5
+      },
+      {
+        "id": 5,
+        "name": "HDMI Adapter",
+        "stock": 0,
+        "price": 12
+      }
+    ],
+    "cart": [
+      {
+        "id": 1,
+        "quantity": 1
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "date": "2026-10-01T14:52:55.543Z",
+        "items": [
+          {
+            "id": 6,
+            "name": "Review Widget Edited",
+            "price": 15.5,
+            "quantity": 1
+          }
+        ],
+        "total": 15.5
+      }
+    ],
+    "checkoutHidden": true,
+    "visibleRows": 1
+  },
+  "corruptProductsText": "Inventory\nAdd product\nName\nStock\nPrice (USD)\nAdd product\nItems\n\nNo items yet.\n\nCart \n\nYour cart is empty. Add products from the inventory list.\n\nOrder history\n\nNo orders yet. Complete a checkout to place your first order."
+}

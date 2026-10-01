@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Inventory</h1>
+  </header>
+
+  <main>
+    <section id="product-form-section">
+      <h2 id="form-heading">Add product</h2>
+      <form id="product-form">
+        <label>
+          Name
+          <input name="name" type="text" required maxlength="100"
+                 placeholder="e.g. Wireless Mouse">
+        </label>
+        <label>
+          Stock
+          <input name="stock" type="number" min="0" step="1" required value="0">
+        </label>
+        <label>
+          Price (USD)
+          <input name="price" type="number" min="0" step="0.01" required value="0">
+        </label>
+        <div class="form-actions">
+          <button type="submit" id="form-submit">Add product</button>
+          <button type="button" id="form-cancel" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="inventory-list">
+      <h2>Items</h2>
+      <div class="search-bar">
+        <input id="search-input" type="search" placeholder="Search by name…"
+               aria-label="Search products by name">
+        <button type="button" id="search-clear" hidden>Clear</button>
+      </div>
+      <p id="empty-message">No items yet.</p>
+      <p id="no-results-message" hidden>No products match your search.</p>
+      <table id="items-table" hidden>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="cart-section" aria-labelledby="cart-heading">
+      <h2 id="cart-heading">Cart <span id="cart-count" aria-live="polite"></span></h2>
+      <p id="cart-empty-message">Your cart is empty. Add products from the inventory list.</p>
+      <table id="cart-table" hidden>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr>
+            <th colspan="3" scope="row">Total</th>
+            <td id="cart-total">$0.00</td>
+            <td>
+              <div class="cart-actions">
+                <button id="cart-clear" type="button" hidden>Clear cart</button>
+                <button id="checkout-button" type="button" hidden>Checkout</button>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <section id="orders-section" aria-labelledby="orders-heading">
+      <h2 id="orders-heading">Order history</h2>
+      <p id="orders-empty-message">No orders yet. Complete a checkout to place your first order.</p>
+      <table id="orders-table" hidden>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

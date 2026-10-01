@@ -1,0 +1,327 @@
+{
+  "review_date": "2026-10-01",
+  "sources": [
+    "COMPARISON.md",
+    "quality-review/scores.json"
+  ],
+  "eligibility_min_spec_grade": 4,
+  "weights": {
+    "cost": 50,
+    "time": 30,
+    "quality": 20
+  },
+  "exchange_rate_cop_per_usd": 3341.23,
+  "minimum_eligible_cost_cop": 1504.0,
+  "minimum_eligible_cost_usd_unrounded": 0.4501336334224223,
+  "minimum_eligible_seconds": 425,
+  "top_three": {
+    "cost": [
+      "deepseek-cloud-deepseek-flash",
+      "zai-cloud-glm-5.3-flash",
+      "openai-cloud-gpt-6-sol-medium"
+    ],
+    "time": [
+      "anthropic-cloud-sonnet-5.5-medium",
+      "anthropic-cloud-opus-5.5-medium",
+      "openai-cloud-gpt-6-sol-medium"
+    ],
+    "quality": [
+      "openai-cloud-gpt-6-astra-high",
+      "anthropic-cloud-fable-5.1-high",
+      "anthropic-cloud-opus-5.5-medium"
+    ]
+  },
+  "applications": [
+    {
+      "folder": "anthropic-cloud-fable-5.1-high",
+      "model": "Claude Fable 5.1 (high)",
+      "label": "Fable 5.1",
+      "where": "Anthropic cloud",
+      "cost_cop": 148551.0,
+      "cost_usd_unrounded": 44.45997432083394,
+      "cost_usd_display": "44.46",
+      "cost_display": "**$44.46** (COP 148,551)",
+      "seconds": 5700,
+      "time_display": "1 h 35 min",
+      "quality": 4.325,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 0.5062234518784794,
+        "time": 2.236842105263158,
+        "quality": 17.3
+      },
+      "weighted_score": 20.043065557141638
+    },
+    {
+      "folder": "openai-cloud-gpt-6-astra-high",
+      "model": "Codex GPT-6 Astra (high)",
+      "label": "GPT-6 Astra",
+      "where": "OpenAI cloud",
+      "cost_cop": 34756.0,
+      "cost_usd_unrounded": 10.402157289381455,
+      "cost_usd_display": "10.40",
+      "cost_display": "**$10.40** (COP 34,756)",
+      "seconds": 3079,
+      "time_display": "51 min 19 s",
+      "quality": 4.35,
+      "spec": 5,
+      "eligible": true,
+      "contributions": {
+        "cost": 2.163655196225112,
+        "time": 4.140954855472556,
+        "quality": 17.4
+      },
+      "weighted_score": 23.704610051697667
+    },
+    {
+      "folder": "anthropic-cloud-opus-5.5-medium",
+      "model": "Claude Opus 5.5 (medium)",
+      "label": "Opus 5.5",
+      "where": "Anthropic cloud",
+      "cost_cop": 21718.0,
+      "cost_usd_unrounded": 6.500001496454899,
+      "cost_usd_display": "6.50",
+      "cost_display": "**$6.50** (COP 21,718)",
+      "seconds": 1202,
+      "time_display": "20 min 02 s",
+      "quality": 4.1,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 3.462565613776591,
+        "time": 10.607321131447588,
+        "quality": 16.4
+      },
+      "weighted_score": 30.469886745224176
+    },
+    {
+      "folder": "xai-cloud-grok-4.7-fast-500k-medium",
+      "model": "Grok 4.7 Fast, 500k context (medium)",
+      "label": "Grok 4.7 Fast",
+      "where": "xAI cloud",
+      "cost_cop": 21083.0,
+      "cost_usd_unrounded": 6.309951724364979,
+      "cost_usd_display": "6.31",
+      "cost_display": "**$6.31** (COP 21,083)",
+      "seconds": 2320,
+      "time_display": "38 min 40 s",
+      "quality": 3.85,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 3.5668548119337857,
+        "time": 5.495689655172414,
+        "quality": 15.4
+      },
+      "weighted_score": 24.4625444671062
+    },
+    {
+      "folder": "4x-rtxpro6000-glm-5.3-flash-q4kxl",
+      "model": "GLM-5.3-Flash UD-Q4_K_XL, 1M context, own minimal harness, one conversation for all tasks",
+      "label": "GLM Flash \u00b7 GPU",
+      "where": "4\u00d7 RTX PRO 6000 Blackwell, GPU",
+      "cost_cop": 14723.0,
+      "cost_usd_unrounded": 4.4064610936690976,
+      "cost_usd_display": "4.41",
+      "cost_display": "**$4.41** (COP 14,723; rental; 542.1 Wh GPU)",
+      "seconds": 3225,
+      "time_display": "53 min 45 s",
+      "quality": 3.625,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 5.107654689940909,
+        "time": 3.953488372093023,
+        "quality": 14.5
+      },
+      "weighted_score": 23.56114306203393
+    },
+    {
+      "folder": "4x-rtxpro6000-deepseek-v4-flash-q8kxl",
+      "model": "DeepSeek-V4-Flash UD-Q8_K_XL, 1M context, via Claude Code",
+      "label": "DeepSeek V4 \u00b7 GPU",
+      "where": "4\u00d7 RTX PRO 6000 Blackwell, GPU",
+      "cost_cop": 11678.0,
+      "cost_usd_unrounded": 3.495120060576494,
+      "cost_usd_display": "3.50",
+      "cost_display": "**$3.50** (COP 11,678; rental; 552.3 Wh GPU)",
+      "seconds": 2558,
+      "time_display": "42 min 38 s",
+      "quality": 3.1,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 6.439458811440315,
+        "time": 4.98436278342455,
+        "quality": 12.4
+      },
+      "weighted_score": 23.823821594864867
+    },
+    {
+      "folder": "openai-cloud-gpt-5.6-sol-medium",
+      "model": "Codex GPT-5.6 Sol (medium)",
+      "label": "GPT-5.6 Sol",
+      "where": "OpenAI cloud",
+      "cost_cop": 9255.0,
+      "cost_usd_unrounded": 2.7699380168381107,
+      "cost_usd_display": "2.77",
+      "cost_display": "**$2.77** (COP 9,255)",
+      "seconds": 2772,
+      "time_display": "46 min 12 s",
+      "quality": 3.95,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 8.125337655321449,
+        "time": 4.5995670995671,
+        "quality": 15.8
+      },
+      "weighted_score": 28.52490475488855
+    },
+    {
+      "folder": "anthropic-cloud-sonnet-5.5-medium",
+      "model": "Claude Sonnet 5.5 (medium)",
+      "label": "Sonnet 5.5",
+      "where": "Anthropic cloud",
+      "cost_cop": 5513.0,
+      "cost_usd_unrounded": 1.6499911709160997,
+      "cost_usd_display": "1.65",
+      "cost_display": "**$1.65** (COP 5,513)",
+      "seconds": 425,
+      "time_display": "7 min 05 s",
+      "quality": 3.65,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 13.6404861237076,
+        "time": 30.0,
+        "quality": 14.6
+      },
+      "weighted_score": 58.2404861237076
+    },
+    {
+      "folder": "openai-cloud-gpt-6-sol-medium",
+      "model": "Codex GPT-6 Sol (medium)",
+      "label": "GPT-6 Sol",
+      "where": "OpenAI cloud",
+      "cost_cop": 3542.0,
+      "cost_usd_unrounded": 1.060088649988178,
+      "cost_usd_display": "1.06",
+      "cost_display": "**$1.06** (COP 3,542)",
+      "seconds": 1954,
+      "time_display": "32 min 34 s",
+      "quality": 3.925,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 21.230942970073404,
+        "time": 6.525076765609007,
+        "quality": 15.7
+      },
+      "weighted_score": 43.45601973568241
+    },
+    {
+      "folder": "zai-cloud-glm-5.3-flash",
+      "model": "GLM-5.3 Flash via Claude Code (claudeg)",
+      "label": "GLM Flash \u00b7 cloud",
+      "where": "z.ai cloud",
+      "cost_cop": 1704.0,
+      "cost_usd_unrounded": 0.509991829356255,
+      "cost_usd_display": "0.51",
+      "cost_display": "**$0.51** (COP 1,704)",
+      "seconds": 4200,
+      "time_display": "1 h 10 min",
+      "quality": 3.325,
+      "spec": 4,
+      "eligible": true,
+      "contributions": {
+        "cost": 44.13145539906103,
+        "time": 3.0357142857142856,
+        "quality": 13.3
+      },
+      "weighted_score": 60.46716968477532
+    },
+    {
+      "folder": "deepseek-cloud-deepseek-flash",
+      "model": "DeepSeek flash via Claude Code (clauded)",
+      "label": "DeepSeek Flash \u00b7 cloud",
+      "where": "DeepSeek cloud",
+      "cost_cop": 1504.0,
+      "cost_usd_unrounded": 0.4501336334224223,
+      "cost_usd_display": "0.45",
+      "cost_display": "**$0.45** (COP 1,504)",
+      "seconds": 3080,
+      "time_display": "51 min 20 s",
+      "quality": 3.925,
+      "spec": 4.5,
+      "eligible": true,
+      "contributions": {
+        "cost": 50.0,
+        "time": 4.1396103896103895,
+        "quality": 15.7
+      },
+      "weighted_score": 69.83961038961039
+    },
+    {
+      "folder": "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl",
+      "model": "Qwen3.5-35B-A3B UD-Q5_K_XL, 262k context, via Claude Code",
+      "label": "Qwen3.5-35B-A3B UD-Q5_K_XL, 262k context, via Claude Code",
+      "where": "4\u00d7 RTX PRO 6000 Blackwell, GPU",
+      "cost_cop": 685.0,
+      "cost_usd_unrounded": 0.20501432107337716,
+      "cost_usd_display": "0.20",
+      "cost_display": "**$0.20** (COP 685; rental; 25.7 Wh GPU)",
+      "seconds": 150,
+      "time_display": "2 min 30 s",
+      "quality": 2.375,
+      "spec": 3,
+      "eligible": false
+    },
+    {
+      "folder": "ryzen7-8745hs-qwen38-27b-iq3",
+      "model": "Qwen3.8-27B GSQ-RCO IQ3_S (+ MTP draft)",
+      "label": "Qwen3.8-27B GSQ-RCO IQ3_S (+ MTP draft)",
+      "where": "Ryzen 7 8745HS, CPU",
+      "cost_cop": 344.6,
+      "cost_usd_unrounded": 0.10313567159399384,
+      "cost_usd_display": "0.1031",
+      "cost_display": "**$0.1031** (COP 344.6; 423.0 Wh)",
+      "seconds": 31560,
+      "time_display": "8 h 46 min",
+      "quality": 2.575,
+      "spec": 2.5,
+      "eligible": false
+    },
+    {
+      "folder": "ryzen7-8745hs-qwen36-35b",
+      "model": "Qwen3.6-35B-A3B Q4_K_S",
+      "label": "Qwen3.6-35B-A3B Q4_K_S",
+      "where": "Ryzen 7 8745HS, CPU",
+      "cost_cop": 128.0,
+      "cost_usd_unrounded": 0.03830924539765296,
+      "cost_usd_display": "0.0383",
+      "cost_display": "**$0.0383** (COP 128.0; 157.1 Wh)",
+      "seconds": 13140,
+      "time_display": "3 h 39 min",
+      "quality": 2.175,
+      "spec": 2.5,
+      "eligible": false
+    },
+    {
+      "folder": "ryzen7-8745hs-gemma4-26b",
+      "model": "Gemma 4 26B-A4B QAT Q4_K_XL",
+      "label": "Gemma 4 26B-A4B QAT Q4_K_XL",
+      "where": "Ryzen 7 8745HS, CPU",
+      "cost_cop": 58.9,
+      "cost_usd_unrounded": 0.017628238702513746,
+      "cost_usd_display": "0.0176",
+      "cost_display": "**$0.0176** (COP 58.9; 72.3 Wh)",
+      "seconds": 5400,
+      "time_display": "1 h 30 min",
+      "quality": 2.25,
+      "spec": 2.5,
+      "eligible": false
+    }
+  ]
+}

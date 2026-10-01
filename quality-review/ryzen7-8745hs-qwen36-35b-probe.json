@@ -1,0 +1,777 @@
+{
+  "errors": [
+    "Uncaught TypeError: Cannot read properties of null (reading 'style')",
+    "Uncaught TypeError: Cannot read properties of null (reading 'style')",
+    "Uncaught TypeError: Cannot read properties of null (reading 'style')",
+    "Uncaught TypeError: Cannot read properties of undefined (reading 'findIndex')",
+    "Uncaught TypeError: Cannot read properties of null (reading 'style')"
+  ],
+  "dialogs": [
+    "Are you sure you want to delete this item?"
+  ],
+  "initial": {
+    "items": [
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "quantity": 42,
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with USB receiver",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy5h2r6ia1n",
+        "name": "USB-C Cable",
+        "category": "Electronics",
+        "quantity": 150,
+        "price": 12.99,
+        "description": "6ft braided USB-C to USB-C cable",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersytwm2h6hwo",
+        "name": "Notebook A5",
+        "category": "Stationery",
+        "quantity": 3,
+        "price": 8.49,
+        "description": "Ruled A5 notebook, 200 pages",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy0a17b85v9",
+        "name": "Desk Lamp",
+        "category": "Furniture",
+        "quantity": 0,
+        "price": 45.99,
+        "description": "LED desk lamp with adjustable brightness",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyf19n4uuf7",
+        "name": "Sticky Notes",
+        "category": "Stationery",
+        "quantity": 75,
+        "price": 5.99,
+        "description": "3x3 inch yellow sticky notes, 100 sheets per pad",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy4kgpbrxxy",
+        "name": "Monitor Stand",
+        "category": "Furniture",
+        "quantity": 8,
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage drawer",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersygtxfpf089",
+        "name": "Keyboard Mechanical",
+        "category": "Electronics",
+        "quantity": 5,
+        "price": 89.99,
+        "description": "Mechanical keyboard with Cherry MX switches",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersypvmxfa3o3",
+        "name": "Paper Clips",
+        "category": "Stationery",
+        "quantity": 200,
+        "price": 3.49,
+        "description": "Box of 100 standard paper clips",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy8jum7rtcr",
+        "name": "Whiteboard Markers",
+        "category": "Stationery",
+        "quantity": 12,
+        "price": 11.99,
+        "description": "Assorted colors, pack of 8",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyw1oib24bu",
+        "name": "Webcam HD",
+        "category": "Electronics",
+        "quantity": 1,
+        "price": 59.99,
+        "description": "1080p HD webcam with built-in microphone",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      }
+    ],
+    "cart": null,
+    "orders": null
+  },
+  "created": {
+    "id": "mupnes0yrbi1t2gae",
+    "name": "Review Widget",
+    "category": "Review",
+    "quantity": 4,
+    "description": "Audit description",
+    "createdAt": 1790866055266,
+    "updatedAt": 1790866055266
+  },
+  "edited": {
+    "id": "mupnes0yrbi1t2gae",
+    "name": "Review Edited",
+    "category": "Review",
+    "quantity": 3,
+    "description": "Audit description",
+    "createdAt": 1790866055266,
+    "updatedAt": 1790866055368
+  },
+  "search": [
+    "Review Edited\nCategory: Review\nLow Stock\nAdded: Oct 1, 2026, 09:47 AM\nUpdated: Oct 1, 2026, 09:47 AM\n\nAudit description\n\n−\n3\n+\n$0.00\nView\nEdit\n🛒\nDelete"
+  ],
+  "afterAdd": {
+    "items": [
+      {
+        "id": "mupnes0yrbi1t2gae",
+        "name": "Review Edited",
+        "category": "Review",
+        "quantity": 3,
+        "description": "Audit description",
+        "createdAt": 1790866055266,
+        "updatedAt": 1790866055368
+      },
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "quantity": 42,
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with USB receiver",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy5h2r6ia1n",
+        "name": "USB-C Cable",
+        "category": "Electronics",
+        "quantity": 150,
+        "price": 12.99,
+        "description": "6ft braided USB-C to USB-C cable",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersytwm2h6hwo",
+        "name": "Notebook A5",
+        "category": "Stationery",
+        "quantity": 3,
+        "price": 8.49,
+        "description": "Ruled A5 notebook, 200 pages",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy0a17b85v9",
+        "name": "Desk Lamp",
+        "category": "Furniture",
+        "quantity": 0,
+        "price": 45.99,
+        "description": "LED desk lamp with adjustable brightness",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyf19n4uuf7",
+        "name": "Sticky Notes",
+        "category": "Stationery",
+        "quantity": 75,
+        "price": 5.99,
+        "description": "3x3 inch yellow sticky notes, 100 sheets per pad",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy4kgpbrxxy",
+        "name": "Monitor Stand",
+        "category": "Furniture",
+        "quantity": 8,
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage drawer",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersygtxfpf089",
+        "name": "Keyboard Mechanical",
+        "category": "Electronics",
+        "quantity": 5,
+        "price": 89.99,
+        "description": "Mechanical keyboard with Cherry MX switches",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersypvmxfa3o3",
+        "name": "Paper Clips",
+        "category": "Stationery",
+        "quantity": 200,
+        "price": 3.49,
+        "description": "Box of 100 standard paper clips",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy8jum7rtcr",
+        "name": "Whiteboard Markers",
+        "category": "Stationery",
+        "quantity": 12,
+        "price": 11.99,
+        "description": "Assorted colors, pack of 8",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyw1oib24bu",
+        "name": "Webcam HD",
+        "category": "Electronics",
+        "quantity": 1,
+        "price": 59.99,
+        "description": "1080p HD webcam with built-in microphone",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      }
+    ],
+    "cart": null,
+    "orders": null
+  },
+  "afterQuickAdd": {
+    "items": [
+      {
+        "id": "mupnes0yrbi1t2gae",
+        "name": "Review Edited",
+        "category": "Review",
+        "quantity": 3,
+        "description": "Audit description",
+        "createdAt": 1790866055266,
+        "updatedAt": 1790866055368
+      },
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "quantity": 42,
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with USB receiver",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy5h2r6ia1n",
+        "name": "USB-C Cable",
+        "category": "Electronics",
+        "quantity": 150,
+        "price": 12.99,
+        "description": "6ft braided USB-C to USB-C cable",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersytwm2h6hwo",
+        "name": "Notebook A5",
+        "category": "Stationery",
+        "quantity": 3,
+        "price": 8.49,
+        "description": "Ruled A5 notebook, 200 pages",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy0a17b85v9",
+        "name": "Desk Lamp",
+        "category": "Furniture",
+        "quantity": 0,
+        "price": 45.99,
+        "description": "LED desk lamp with adjustable brightness",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyf19n4uuf7",
+        "name": "Sticky Notes",
+        "category": "Stationery",
+        "quantity": 75,
+        "price": 5.99,
+        "description": "3x3 inch yellow sticky notes, 100 sheets per pad",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy4kgpbrxxy",
+        "name": "Monitor Stand",
+        "category": "Furniture",
+        "quantity": 8,
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage drawer",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersygtxfpf089",
+        "name": "Keyboard Mechanical",
+        "category": "Electronics",
+        "quantity": 5,
+        "price": 89.99,
+        "description": "Mechanical keyboard with Cherry MX switches",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersypvmxfa3o3",
+        "name": "Paper Clips",
+        "category": "Stationery",
+        "quantity": 200,
+        "price": 3.49,
+        "description": "Box of 100 standard paper clips",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy8jum7rtcr",
+        "name": "Whiteboard Markers",
+        "category": "Stationery",
+        "quantity": 12,
+        "price": 11.99,
+        "description": "Assorted colors, pack of 8",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyw1oib24bu",
+        "name": "Webcam HD",
+        "category": "Electronics",
+        "quantity": 1,
+        "price": 59.99,
+        "description": "1080p HD webcam with built-in microphone",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      }
+    ],
+    "cart": null,
+    "orders": null
+  },
+  "cartVisible": "Shopping Cart\n×",
+  "cartEscapeDisplay": "flex",
+  "ordersClick": {
+    "itemModal": "flex",
+    "title": "Edit Item",
+    "name": "undefined",
+    "ordersModal": "none"
+  },
+  "reload": {
+    "items": [
+      {
+        "id": "mupnes0yrbi1t2gae",
+        "name": "Review Edited",
+        "category": "Review",
+        "quantity": 3,
+        "description": "Audit description",
+        "createdAt": 1790866055266,
+        "updatedAt": 1790866055368
+      },
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "quantity": 42,
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with USB receiver",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy5h2r6ia1n",
+        "name": "USB-C Cable",
+        "category": "Electronics",
+        "quantity": 150,
+        "price": 12.99,
+        "description": "6ft braided USB-C to USB-C cable",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersytwm2h6hwo",
+        "name": "Notebook A5",
+        "category": "Stationery",
+        "quantity": 3,
+        "price": 8.49,
+        "description": "Ruled A5 notebook, 200 pages",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy0a17b85v9",
+        "name": "Desk Lamp",
+        "category": "Furniture",
+        "quantity": 0,
+        "price": 45.99,
+        "description": "LED desk lamp with adjustable brightness",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyf19n4uuf7",
+        "name": "Sticky Notes",
+        "category": "Stationery",
+        "quantity": 75,
+        "price": 5.99,
+        "description": "3x3 inch yellow sticky notes, 100 sheets per pad",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy4kgpbrxxy",
+        "name": "Monitor Stand",
+        "category": "Furniture",
+        "quantity": 8,
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage drawer",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersygtxfpf089",
+        "name": "Keyboard Mechanical",
+        "category": "Electronics",
+        "quantity": 5,
+        "price": 89.99,
+        "description": "Mechanical keyboard with Cherry MX switches",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersypvmxfa3o3",
+        "name": "Paper Clips",
+        "category": "Stationery",
+        "quantity": 200,
+        "price": 3.49,
+        "description": "Box of 100 standard paper clips",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy8jum7rtcr",
+        "name": "Whiteboard Markers",
+        "category": "Stationery",
+        "quantity": 12,
+        "price": 11.99,
+        "description": "Assorted colors, pack of 8",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyw1oib24bu",
+        "name": "Webcam HD",
+        "category": "Electronics",
+        "quantity": 1,
+        "price": 59.99,
+        "description": "1080p HD webcam with built-in microphone",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      }
+    ],
+    "cart": null,
+    "orders": null
+  },
+  "focusOpened": "itemName",
+  "focusEscaped": {
+    "id": "",
+    "inside": false
+  },
+  "fraction": {
+    "stepMismatch": true,
+    "valid": false
+  },
+  "deleted": true,
+  "emptyCount": {
+    "count": "1 item",
+    "empty": "No items match \"Review Edited\"."
+  },
+  "mobile": {
+    "width": 390,
+    "scrollWidth": 490,
+    "overflow": [
+      {
+        "text": "−\n42\n+\n$29.99\nView\nEdit\n🛒\nDelete",
+        "right": 469.515625
+      },
+      {
+        "text": "🛒",
+        "right": 395.453125
+      },
+      {
+        "text": "Delete",
+        "right": 469.515625
+      },
+      {
+        "text": "−\n150\n+\n$12.99\nView\nEdit\n🛒\nDelete",
+        "right": 469.515625
+      },
+      {
+        "text": "🛒",
+        "right": 395.453125
+      },
+      {
+        "text": "Delete",
+        "right": 469.515625
+      },
+      {
+        "text": "−\n3\n+\n$8.49\nView\nEdit\n🛒\nDelete",
+        "right": 469.515625
+      },
+      {
+        "text": "🛒",
+        "right": 395.453125
+      }
+    ]
+  },
+  "injectedBefore": {
+    "items": [
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "quantity": 42,
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with USB receiver",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy5h2r6ia1n",
+        "name": "USB-C Cable",
+        "category": "Electronics",
+        "quantity": 150,
+        "price": 12.99,
+        "description": "6ft braided USB-C to USB-C cable",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersytwm2h6hwo",
+        "name": "Notebook A5",
+        "category": "Stationery",
+        "quantity": 3,
+        "price": 8.49,
+        "description": "Ruled A5 notebook, 200 pages",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy0a17b85v9",
+        "name": "Desk Lamp",
+        "category": "Furniture",
+        "quantity": 0,
+        "price": 45.99,
+        "description": "LED desk lamp with adjustable brightness",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyf19n4uuf7",
+        "name": "Sticky Notes",
+        "category": "Stationery",
+        "quantity": 75,
+        "price": 5.99,
+        "description": "3x3 inch yellow sticky notes, 100 sheets per pad",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy4kgpbrxxy",
+        "name": "Monitor Stand",
+        "category": "Furniture",
+        "quantity": 8,
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage drawer",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersygtxfpf089",
+        "name": "Keyboard Mechanical",
+        "category": "Electronics",
+        "quantity": 5,
+        "price": 89.99,
+        "description": "Mechanical keyboard with Cherry MX switches",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersypvmxfa3o3",
+        "name": "Paper Clips",
+        "category": "Stationery",
+        "quantity": 200,
+        "price": 3.49,
+        "description": "Box of 100 standard paper clips",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy8jum7rtcr",
+        "name": "Whiteboard Markers",
+        "category": "Stationery",
+        "quantity": 12,
+        "price": 11.99,
+        "description": "Assorted colors, pack of 8",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyw1oib24bu",
+        "name": "Webcam HD",
+        "category": "Electronics",
+        "quantity": 1,
+        "price": 59.99,
+        "description": "1080p HD webcam with built-in microphone",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      }
+    ],
+    "cart": [
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "price": 29.99,
+        "quantity": 1
+      }
+    ],
+    "orders": null
+  },
+  "injectedCart": {
+    "body": "",
+    "qtyControls": 0,
+    "checkoutDisplay": "block",
+    "footerDisplay": "none"
+  },
+  "injectedAfterCheckout": {
+    "items": [
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "category": "Electronics",
+        "quantity": 42,
+        "price": 29.99,
+        "description": "Ergonomic wireless mouse with USB receiver",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy5h2r6ia1n",
+        "name": "USB-C Cable",
+        "category": "Electronics",
+        "quantity": 150,
+        "price": 12.99,
+        "description": "6ft braided USB-C to USB-C cable",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersytwm2h6hwo",
+        "name": "Notebook A5",
+        "category": "Stationery",
+        "quantity": 3,
+        "price": 8.49,
+        "description": "Ruled A5 notebook, 200 pages",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy0a17b85v9",
+        "name": "Desk Lamp",
+        "category": "Furniture",
+        "quantity": 0,
+        "price": 45.99,
+        "description": "LED desk lamp with adjustable brightness",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyf19n4uuf7",
+        "name": "Sticky Notes",
+        "category": "Stationery",
+        "quantity": 75,
+        "price": 5.99,
+        "description": "3x3 inch yellow sticky notes, 100 sheets per pad",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy4kgpbrxxy",
+        "name": "Monitor Stand",
+        "category": "Furniture",
+        "quantity": 8,
+        "price": 39.99,
+        "description": "Adjustable monitor stand with storage drawer",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersygtxfpf089",
+        "name": "Keyboard Mechanical",
+        "category": "Electronics",
+        "quantity": 5,
+        "price": 89.99,
+        "description": "Mechanical keyboard with Cherry MX switches",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersypvmxfa3o3",
+        "name": "Paper Clips",
+        "category": "Stationery",
+        "quantity": 200,
+        "price": 3.49,
+        "description": "Box of 100 standard paper clips",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersy8jum7rtcr",
+        "name": "Whiteboard Markers",
+        "category": "Stationery",
+        "quantity": 12,
+        "price": 11.99,
+        "description": "Assorted colors, pack of 8",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      },
+      {
+        "id": "mupnersyw1oib24bu",
+        "name": "Webcam HD",
+        "category": "Electronics",
+        "quantity": 1,
+        "price": 59.99,
+        "description": "1080p HD webcam with built-in microphone",
+        "createdAt": 1790866054978,
+        "updatedAt": 1790866054978
+      }
+    ],
+    "cart": [
+      {
+        "id": "mupnersy4q98t4auw",
+        "name": "Wireless Mouse",
+        "price": 29.99,
+        "quantity": 1
+      }
+    ],
+    "orders": null
+  },
+  "emptyInventoryReload": 10
+}

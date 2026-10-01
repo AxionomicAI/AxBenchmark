@@ -1,0 +1,143 @@
+Command: node tests/inventory.test.js
+Exit: 0
+ok   - first run creates the sample products and saves them
+ok   - later runs load what was saved instead of the samples
+ok   - an inventory emptied by the user stays empty
+ok   - stored records missing optional fields get defaults
+ok   - unreadable stored data is set aside, not overwritten or replaced by samples
+ok   - stored data that is not an array is treated as unreadable
+ok   - invalid stored records are dropped, with the original kept as a backup
+ok   - damaged data is left in place when it cannot be backed up
+ok   - addProduct stores a product with defaults, trimmed text and timestamps
+ok   - addProduct keeps the given stock, price and reorder level
+ok   - addProduct rejects invalid input and stores nothing
+ok   - addProduct accepts values at the limits
+ok   - MAX_INTEGER is the largest number a numeric field accepts
+ok   - getProduct returns null for an unknown id
+ok   - returned products are copies; changing them does not change the inventory
+ok   - updateProduct changes only the given fields
+ok   - updateProduct can clear the category
+ok   - updateProduct validates the result and keeps SKUs unique
+ok   - updateProduct keeps the order of products
+ok   - adjustStock adds and removes units
+ok   - adjustStock refuses to go below zero or take a bad amount
+ok   - removeStock takes units of several products in one change
+ok   - removeStock counts a product that is listed twice both times
+ok   - removeStock takes nothing when any of it cannot be taken
+ok   - isLowStock is true at or below the reorder level
+ok   - stockStatus is out at zero, low at or below the reorder level, ok above it
+ok   - removeProduct deletes the product and frees its SKU
+ok   - subscribers are told about successful changes only
+ok   - subscribers see the change that triggered them
+ok   - subscribers are told about changes made in another tab
+ok   - a tab never overwrites changes made in another tab
+ok   - a product removed in another tab cannot be changed
+ok   - with storage unavailable the inventory works in memory
+ok   - a failed save reports an error and changes nothing
+ok   - sample products stay put when the first save fails
+ok   - storage cleared while the page is open is restored by the next change
+
+36 of 36 tests passed.
+
+Command: node tests/cart.test.js
+Exit: 0
+ok   - the cart starts empty
+ok   - getCart gives each line its product and subtotal, and adds them up
+ok   - the cart follows changes to its products
+ok   - returned lines are copies; changing them does not change the cart
+ok   - add puts one unit in the cart unless told how many
+ok   - adding a product that is already in the cart raises its quantity
+ok   - add refuses more than is in stock
+ok   - add rejects a bad quantity and an unknown product
+ok   - setQuantity replaces the quantity and keeps the order of the lines
+ok   - setQuantity rejects bad quantities and products that are not in the cart
+ok   - a cart that holds more than the stock can be lowered but not raised
+ok   - remove takes a product out of the cart
+ok   - clear takes everything out of the cart
+ok   - a deleted product leaves the cart
+ok   - the cart is still there when the page is opened again
+ok   - stored lines that are not valid are ignored
+ok   - a stored cart that cannot be read is an empty cart
+ok   - a failed save reports an error and changes nothing
+ok   - with storage unavailable the cart works in memory
+ok   - subscribers are told about successful changes only
+ok   - subscribers see the change that triggered them
+ok   - subscribers are told about changes made in another tab
+ok   - a tab never overwrites changes made in another tab
+ok   - a cart cleared from storage while the page is open is empty
+
+24 of 24 tests passed.
+
+Command: node tests/orders.test.js
+Exit: 0
+ok   - the order history starts empty
+ok   - checkout records the order, takes it out of the stock and empties the cart
+ok   - checkout marks the products it took from as changed, and no others
+ok   - orders are numbered from 1 and returned in the order they were placed
+ok   - an order keeps its products as they were at checkout
+ok   - checkout buys at the current price, not the one when the product was put in the cart
+ok   - a product deleted while it was in the cart is not bought
+ok   - checkout can take the last of the stock
+ok   - returned orders are copies; changing them does not change the history
+ok   - checkCart accepts a cart that the stock covers
+ok   - an empty cart cannot be checked out
+ok   - a cart that holds more than is in stock cannot be checked out
+ok   - a cart whose total is too large to be exact cannot be checked out
+ok   - the order history is still there when the page is opened again
+ok   - stored orders are loaded with their totals worked out
+ok   - the next order number follows the highest one stored
+ok   - invalid stored orders are dropped, with the original kept as a backup
+ok   - an order history that cannot be read is set aside, not overwritten
+ok   - a damaged order history is left in place when it cannot be backed up
+ok   - a checkout whose order cannot be saved changes nothing
+ok   - a checkout whose stock change cannot be saved takes the order back
+ok   - a checkout takes the order back when another tab has just taken the stock
+ok   - a checkout that cannot empty the cart is still complete, and says so
+ok   - with storage unavailable checkout and the history work in memory
+ok   - subscribers are told about each order once, when it is complete
+ok   - checkout tells the subscribers of the inventory and of the cart once each
+ok   - subscribers are told about orders placed in another tab
+ok   - a tab never overwrites orders placed in another tab
+ok   - an order history cleared from storage while the page is open is empty
+
+29 of 29 tests passed.
+
+Command: node tests/search.test.js
+Exit: 0
+ok   - empty criteria match every product, in the order given
+ok   - text is looked for in the name, the SKU and the category
+ok   - text matches part of a word, ignoring case and surrounding space
+ok   - every word has to match, in any order and in any field
+ok   - a word does not match across two fields
+ok   - accents are ignored in both directions
+ok   - punctuation is optional
+ok   - a word of punctuation only is looked for as typed
+ok   - text is never treated as a pattern
+ok   - text in other scripts can be found
+ok   - category keeps the products in that category, ignoring case
+ok   - an empty category keeps the products without one
+ok   - status keeps the products with that stock status
+ok   - a product has to match every part of the criteria
+ok   - filter returns the products themselves and leaves the list alone
+ok   - the sample products can be looked up
+ok   - categories lists each category once, in alphabetical order
+ok   - categories that differ only in case are one, spelled as first seen
+
+18 of 18 tests passed.
+
+Command: node tests/format.test.js
+Exit: 0
+ok   - formatNumber groups thousands
+ok   - formatPrice shows cents as dollars
+ok   - formatPrice is exact for the largest totals
+ok   - priceToInput writes a plain decimal
+ok   - parseWholeNumber reads whole numbers
+ok   - parseWholeNumber rejects everything else
+ok   - parsePrice reads prices into cents
+ok   - formatDate shows a timestamp as a date and time in the local time zone
+ok   - parsePrice is exact where multiplying by 100 is not
+ok   - parsePrice rejects everything else
+ok   - every price survives being written to a form input and read back
+
+11 of 11 tests passed.
+

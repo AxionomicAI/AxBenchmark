@@ -1,0 +1,204 @@
+{
+  "checks": [
+    {
+      "name": "initial",
+      "data": {
+        "count": 10,
+        "rows": 10,
+        "cart": 0
+      }
+    },
+    {
+      "name": "mobile widths",
+      "data": {
+        "viewport": 390,
+        "document": 390,
+        "table": 358,
+        "tableScroll": 725
+      }
+    },
+    {
+      "name": "keyboard slash search",
+      "data": "search"
+    },
+    {
+      "name": "search AND",
+      "data": "USB-064\tUSB-C Cable 2m\tAccessories\t$9.99\t60\t20\tAdd to cart Edit Delete"
+    },
+    {
+      "name": "search escape",
+      "data": ""
+    },
+    {
+      "name": "form focus",
+      "data": {
+        "name": "sku",
+        "dialogName": null
+      }
+    },
+    {
+      "name": "create safe text",
+      "data": {
+        "product": {
+          "id": "p11",
+          "sku": "AUDIT",
+          "name": "Audit <img src=x onerror=alert(1)>",
+          "category": "Review",
+          "price": 10.15,
+          "quantity": 5,
+          "reorderLevel": 1,
+          "createdAt": "2026-10-01T14:22:07.596Z",
+          "updatedAt": "2026-10-01T14:22:07.596Z"
+        },
+        "images": 0
+      }
+    },
+    {
+      "name": "quantity2",
+      "data": {
+        "total": 24.5,
+        "quantity": 2
+      }
+    },
+    {
+      "name": "excess rejected",
+      "data": {
+        "total": 24.5,
+        "error": "Only 5 of Audit product in stock."
+      }
+    },
+    {
+      "name": "fraction accepted rounding",
+      "data": {
+        "total": 12.25,
+        "quantity": 1,
+        "error": ""
+      }
+    },
+    {
+      "name": "zero removes",
+      "data": 0
+    },
+    {
+      "name": "remove button",
+      "data": 0
+    },
+    {
+      "name": "reload cart persists",
+      "data": {
+        "quantity": 2,
+        "total": 24.5
+      }
+    },
+    {
+      "name": "checkout",
+      "data": {
+        "stock": 3,
+        "cart": 0,
+        "order": {
+          "id": "o1",
+          "createdAt": "2026-10-01T14:22:07.846Z",
+          "total": 24.5,
+          "lines": [
+            {
+              "productId": "p11",
+              "sku": "AUDIT",
+              "name": "Audit product",
+              "price": 12.25,
+              "quantity": 2,
+              "subtotal": 24.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "reload stock history",
+      "data": {
+        "stock": 3,
+        "orders": 1
+      }
+    },
+    {
+      "name": "cart uses edited price",
+      "data": {
+        "total": 15,
+        "quantity": 1
+      }
+    },
+    {
+      "name": "delete cascades cart preserves history",
+      "data": {
+        "product": null,
+        "cart": 0,
+        "history": {
+          "id": "o1",
+          "createdAt": "2026-10-01T14:22:07.846Z",
+          "total": 24.5,
+          "lines": [
+            {
+              "productId": "p11",
+              "sku": "AUDIT",
+              "name": "Audit product",
+              "price": 12.25,
+              "quantity": 2,
+              "subtotal": 24.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "escape focus returns",
+      "data": "add-btn"
+    },
+    {
+      "name": "blank form rejected",
+      "data": "SKU is required"
+    },
+    {
+      "name": "duplicate case-insensitive rejected",
+      "data": "SKU \"lap-001\" already exists"
+    },
+    {
+      "name": "fractional stock rejected",
+      "data": "quantity must be a whole number"
+    },
+    {
+      "name": "quantity keyboard focus after change",
+      "data": {
+        "count": 2,
+        "focusTag": "INPUT",
+        "focusId": "",
+        "dialogOpen": true
+      }
+    },
+    {
+      "name": "failed stock write checkout",
+      "data": {
+        "stock": 12,
+        "orders": 2,
+        "cart": 0,
+        "message": "Order o2 placed: $899.00."
+      }
+    },
+    {
+      "name": "malformed product",
+      "data": {
+        "rows": 1,
+        "body": "Inventory\nOrders\nCart (0)\nAll categories\nLow stock only\nAdd product\n\n1 products\n\nSKU\tName\tCategory\tPrice\tQty\tReorder at\t\nActions\n\n\t\t\t$NaN\t\t\tAdd to cart Edit Delete"
+      }
+    },
+    {
+      "name": "malformed search",
+      "data": "0 of 1 products"
+    },
+    {
+      "name": "malformed null record",
+      "data": ""
+    }
+  ],
+  "errors": [
+    "Uncaught TypeError: Cannot read properties of null (reading 'category')"
+  ]
+}
