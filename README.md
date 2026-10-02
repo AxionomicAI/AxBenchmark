@@ -1,4 +1,4 @@
-# AxBenchmark — Inventory website benchmark · Oct 1, 2026
+# AxBenchmark · Oct 1, 2026
 
 At **Axionomic AI**, we believe technology decisions should rest on real, measurable evidence. Agentic coding is a vital part of how we operate, so the models and agent harnesses we choose for it matter.
 
