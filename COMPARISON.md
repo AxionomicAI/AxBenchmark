@@ -33,7 +33,7 @@ Cloud agents also ran T7 (test in a real browser and fix). Context sizes and the
 
 ## Cost vs time vs quality — equal-weight top 5
 
-**More is better:** cost, time and quality each contribute up to **33.3 points**, so a higher score ranks higher. The three factors carry **equal weight**; these percentages are an explicit choice and can be adjusted. Quality grades remain those in [QUALITY_COMPARISON.md](QUALITY_COMPARISON.md).
+**More is better:** cost, time and quality each contribute up to **33.3 points**, so a higher score ranks higher. The weights are **33% cost, 33% time and 33% quality**; these percentages are an explicit choice and can be adjusted. Quality grades remain those in [QUALITY_COMPARISON.md](QUALITY_COMPARISON.md).
 
 Eligibility requires a business rules/spec grade of at least **4/5**, used here as the minimum for a usable result. This includes 11 applications and excludes the four with major required-workflow defects: CPU Gemma, CPU Qwen 3.6, CPU Qwen 3.8 and GPU Qwen 3.5. Among eligible applications, DeepSeek cloud has the lowest recorded cost at **$0.45** (COP 1,504), and Sonnet has the shortest time at **425 seconds**.
 

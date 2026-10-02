@@ -24,6 +24,8 @@ Lower and farther left means a faster, cheaper run. Color represents the quality
 
 ## Equal-weight top five
 
+The working priority is **33% cost, 33% time and 33% quality**.
+
 **More is better:** every run earns up to **33.3 points each for cost, time and quality**, so higher scores rank higher. Cheaper and faster runs earn more points, using the cheapest and fastest eligible runs as references; higher quality grades earn more quality points. The three factors carry **equal weight**. These weights are assumptions for a decision aid, not additional quality grades.
 
 **Score /100 = 33.3 × (minimum eligible cost / run cost) + 33.3 × (425 / elapsed seconds) + 33.3 × (unrounded quality / 5).**
