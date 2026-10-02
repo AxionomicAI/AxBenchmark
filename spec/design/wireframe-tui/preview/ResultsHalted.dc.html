@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Results · run halted by a template change · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1920px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Results · run halted by a template change</b> · ResultsScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Results · Inventory web app r1</span><span class="B2">                                      </span></div>
+<div class="r"><span class="B1"> ★ Inventory web app · r1 · sha256 3f9c2e710640fa4d…1229ff49 · 12 comparable results · 4 interrupted, not comparable    </span></div>
+<div class="r"><span class="B0"> </span><a class="B0 bd k" href="Results.dc.html"> Results </a><span class="B0"> </span><a class="B0 mu k" href="Rankings.dc.html"> Rankings </a><span class="B0">                                                                                </span><span class="B0 mu">● original weights</span><span class="B0"> </span></div>
+<div class="r"><span class="B0 ln">─</span><span class="B0 ac bd">─────────</span><span class="B0 ln">──────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Machine</span><span class="B0"> </span><span class="B1"> all · 2     </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Config</span><span class="B0"> </span><span class="B1"> Four harnesses · … </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Env</span><span class="B0"> </span><span class="B1"> all     </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Jobs</span><span class="B0"> </span><span class="B1"> all </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Judge</span><span class="B0"> </span><span class="B1"> all · 2 groups </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">        </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Results · Four harnesses · defaults · 8 </span><span class="B0 ac">────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Result      Machine          Harness     Model · effort           Env     Jdg Status         Checks      Cost    Time</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   A   ✓ complete     21✓        $4.82   38:12</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-2     mike-mbp-m4    Codex       gpt-6-sol medium         clean   A   ✓ complete     21✓        $3.10   44:05</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-3     mike-mbp-m4    Grok CLI    grok-4.7-fast default    clean   A   ✓ complete     20✓ 1?     $0.92   51:30</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-4     mike-mbp-m4    Pi          qwen3.5-35b-a3b default  clean   A   ✓ complete     18✓ 3✗   unknown 1:32:10</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">── run 2026-10-01-a · halted 21:44 · template identity invalidated · not comparable ──                              </span><span class="B0"> </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-1001a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   —  </a><a class="B0 bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="B0 k" href="ResultOrigin.dc.html"> 13✓ 8○ </a><a class="B0 bd k" href="ResultOrigin.dc.html">  ▲ $2.71 ▲ 41:12</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="BA on k" href="ResultOrigin.dc.html"> R-1001a-2     mike-mbp-m4    Codex       gpt-6-sol medium         clean   —  </a><a class="BA on bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="BA on k" href="ResultOrigin.dc.html"> 13✓ 8○ </a><a class="BA on bd k" href="ResultOrigin.dc.html">  ▲ $1.64 ▲ 41:12</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-1001a-3     mike-mbp-m4    Grok CLI    grok-4.7-fast default    clean   —  </a><a class="B0 bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="B0 k" href="ResultOrigin.dc.html"> 11✓ 10○</a><a class="B0 bd k" href="ResultOrigin.dc.html">  ▲ $0.48 ▲ 41:12</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-1001a-4     mike-mbp-m4    Pi          qwen3.5-35b-a3b default  clean   —  </a><a class="B0 bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="B0 k" href="ResultOrigin.dc.html"> 6✓ 15○   unknown</a><a class="B0 bd k" href="ResultOrigin.dc.html"> ▲ 41:12</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> comparable first · interrupted last </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Selected · R-1001a-2 · interrupted </span><span class="B0 ln">─────────────────────┐┌─</span><span class="B0 bd"> Why these results are excluded </span><span class="B0 ln">─────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Status      </span><span class="B0 bd">✗ interrupted · identity invalidated        </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Template identity invalidated                         </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Detected    </span><span class="B0">21:44:09 · first identity check after T4     </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">r1’s files changed on disk while run 2026-10-01-a was</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Approved    </span><span class="B0">3f9c2e710640fa4dc37ee9e73ea2376b             </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">running, so the whole run stopped at the first</span><span class="B0">         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             6deb29e142b7706aa1380bc01229ff49             </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">detection. Its 4 results are recorded as interrupted,</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Computed    </span><span class="B0 bd">24481ee7b6a8bed3408473b5a62083b1            </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">are never compared or ranked, and are never relabelled</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 bd">1fbb2bf3250463698b84c5331c0242c7            </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">with another identity.</span><span class="B0">                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Changed     </span><span class="B0">tasks/T2-data.md                             </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Halted      </span><span class="B0">whole run · explicit-stop cleanup            </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Approved revisions are written read-only; a changed file</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Comparable  </span><span class="B0 bd">✗ never · not rebound to any revision       </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">means something outside AxBenchmark edited it. Save the</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Evidence    </span><span class="B0">kept · snapshots T1–T4, logs, checks         </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">edit as a new revision (e on the template) and run</span><span class="B0">       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">again.</span><span class="B0">                                                   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                    </span><a class="BS k" href="ResultOrigin.dc.html"> Open result </a><span class="B0">  </span><a class="BS k" href="EvidenceViewer.dc.html"> Open evidence </a><span class="B0">  </span><a class="BS k" href="ExportResult.dc.html"> Export result ZIP </a><span class="B0"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="TemplateResults.dc.html">esc</a><a class="B2 k" href="TemplateResults.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">1-2</span><span class="B2"> Tab  </span><span class="B2 ac bd">f</span><span class="B2"> Filter  </span><a class="B2 ac bd k" href="ResultOrigin.dc.html">o</a><a class="B2 k" href="ResultOrigin.dc.html"> Open</a><span class="B2">  </span><a class="B2 ac bd k" href="Rejudge.dc.html">j</a><a class="B2 k" href="Rejudge.dc.html"> Rejudge</a><span class="B2">  </span><a class="B2 ac bd k" href="ResultImport.dc.html">i</a><a class="B2 k" href="ResultImport.dc.html"> Import</a><span class="B2">  </span><a class="B2 ac bd k" href="ExportResult.dc.html">x</a><a class="B2 k" href="ExportResult.dc.html"> Export</a><span class="B2">  </span><a class="B2 ac bd k" href="ReportGenerate.dc.html">h</a><a class="B2 k" href="ReportGenerate.dc.html"> Report</a><span class="B2">  </span><a class="B2 ac bd k" href="WeightsEditor.dc.html">w</a><a class="B2 k" href="WeightsEditor.dc.html"> Weights</a><span class="B2">  </span><a class="B2 ac bd k" href="TariffAnalysis.dc.html">e</a><a class="B2 k" href="TariffAnalysis.dc.html"> Tariff</a><span class="B2">           </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Results · Inventory web app r1</span><span class="B2">                                      </span></div>
+<div class="r"><span class="B1"> ★ Inventory web app · r1 · sha256 3f9c2e710640fa4d…1229ff49 · 12 comparable results · 4 interrupted, not comparable    </span></div>
+<div class="r"><span class="B0"> </span><a class="B0 bd k" href="Results.dc.html"> Results </a><span class="B0"> </span><a class="B0 mu k" href="Rankings.dc.html"> Rankings </a><span class="B0">                                                                                </span><span class="B0 mu">● original weights</span><span class="B0"> </span></div>
+<div class="r"><span class="B0 ln">─</span><span class="B0 ac bd">─────────</span><span class="B0 ln">──────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Machine</span><span class="B0"> </span><span class="B1"> all · 2     </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Config</span><span class="B0"> </span><span class="B1"> Four harnesses · … </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Env</span><span class="B0"> </span><span class="B1"> all     </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Jobs</span><span class="B0"> </span><span class="B1"> all </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">Judge</span><span class="B0"> </span><span class="B1"> all · 2 groups </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">        </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Results · Four harnesses · defaults · 8 </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Result      Machine          Harness     Model · effort           Env     Jdg Status         Checks      Cost    Time</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   A   ✓ complete     21✓        $4.82   38:12</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-2     mike-mbp-m4    Codex       gpt-6-sol medium         clean   A   ✓ complete     21✓        $3.10   44:05</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-3     mike-mbp-m4    Grok CLI    grok-4.7-fast default    clean   A   ✓ complete     20✓ 1?     $0.92   51:30</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-0928a-4     mike-mbp-m4    Pi          qwen3.5-35b-a3b default  clean   A   ✓ complete     18✓ 3✗   unknown 1:32:10</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">── run 2026-10-01-a · halted 21:44 · template identity invalidated · not comparable ──                              </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-1001a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   —  </a><a class="B0 bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="B0 k" href="ResultOrigin.dc.html"> 13✓ 8○ </a><a class="B0 bd k" href="ResultOrigin.dc.html">  ▲ $2.71 ▲ 41:12</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="BS k" href="ResultOrigin.dc.html"> R-1001a-2     mike-mbp-m4    Codex       gpt-6-sol medium         clean   —  </a><a class="BS bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="BS k" href="ResultOrigin.dc.html"> 13✓ 8○ </a><a class="BS bd k" href="ResultOrigin.dc.html">  ▲ $1.64 ▲ 41:12</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-1001a-3     mike-mbp-m4    Grok CLI    grok-4.7-fast default    clean   —  </a><a class="B0 bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="B0 k" href="ResultOrigin.dc.html"> 11✓ 10○</a><a class="B0 bd k" href="ResultOrigin.dc.html">  ▲ $0.48 ▲ 41:12</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ResultOrigin.dc.html"> R-1001a-4     mike-mbp-m4    Pi          qwen3.5-35b-a3b default  clean   —  </a><a class="B0 bd k" href="ResultOrigin.dc.html"> ✗ interrupted </a><a class="B0 k" href="ResultOrigin.dc.html"> 6✓ 15○   unknown</a><a class="B0 bd k" href="ResultOrigin.dc.html"> ▲ 41:12</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> comparable first · interrupted last </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Selected · R-1001a-2 · interrupted </span><span class="B0 ln">─────────────────────┐┌─</span><span class="B0 bd"> Why these results are excluded </span><span class="B0 ln">─────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Status      </span><span class="B0 bd">✗ interrupted · identity invalidated        </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Template identity invalidated                         </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Detected    </span><span class="B0">21:44:09 · first identity check after T4     </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">r1’s files changed on disk while run 2026-10-01-a was</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Approved    </span><span class="B0">3f9c2e710640fa4dc37ee9e73ea2376b             </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">running, so the whole run stopped at the first</span><span class="B0">         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             6deb29e142b7706aa1380bc01229ff49             </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">detection. Its 4 results are recorded as interrupted,</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Computed    </span><span class="B0 bd">24481ee7b6a8bed3408473b5a62083b1            </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">are never compared or ranked, and are never relabelled</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 bd">1fbb2bf3250463698b84c5331c0242c7            </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0">   </span><span class="B0 mu">with another identity.</span><span class="B0">                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Changed     </span><span class="B0">tasks/T2-data.md                             </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Halted      </span><span class="B0">whole run · explicit-stop cleanup            </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Approved revisions are written read-only; a changed file</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Comparable  </span><span class="B0 bd">✗ never · not rebound to any revision       </span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">means something outside AxBenchmark edited it. Save the</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Evidence    </span><span class="B0">kept · snapshots T1–T4, logs, checks         </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">edit as a new revision (e on the template) and run</span><span class="B0">       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">again.</span><span class="B0">                                                   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                    </span><a class="BS rv bd k" href="ResultOrigin.dc.html"> Open result </a><span class="B0">  </span><a class="BS k" href="EvidenceViewer.dc.html"> Open evidence </a><span class="B0">  </span><a class="BS k" href="ExportResult.dc.html"> Export result ZIP </a><span class="B0"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="TemplateResults.dc.html">esc</a><a class="B2 k" href="TemplateResults.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">1-2</span><span class="B2"> Tab  </span><span class="B2 ac bd">f</span><span class="B2"> Filter  </span><a class="B2 ac bd k" href="ResultOrigin.dc.html">o</a><a class="B2 k" href="ResultOrigin.dc.html"> Open</a><span class="B2">  </span><a class="B2 ac bd k" href="Rejudge.dc.html">j</a><a class="B2 k" href="Rejudge.dc.html"> Rejudge</a><span class="B2">  </span><a class="B2 ac bd k" href="ResultImport.dc.html">i</a><a class="B2 k" href="ResultImport.dc.html"> Import</a><span class="B2">  </span><a class="B2 ac bd k" href="ExportResult.dc.html">x</a><a class="B2 k" href="ExportResult.dc.html"> Export</a><span class="B2">  </span><a class="B2 ac bd k" href="ReportGenerate.dc.html">h</a><a class="B2 k" href="ReportGenerate.dc.html"> Report</a><span class="B2">  </span><a class="B2 ac bd k" href="WeightsEditor.dc.html">w</a><a class="B2 k" href="WeightsEditor.dc.html"> Weights</a><span class="B2">  </span><a class="B2 ac bd k" href="TariffAnalysis.dc.html">e</a><a class="B2 k" href="TariffAnalysis.dc.html"> Tariff</a><span class="B2">           </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 120ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#identity-bar" style="left: 0ch; top: 16px; width: 120ch; height: 16px"><span>Static #identity-bar</span></div>
+<div class="ov" data-widget="TabbedContent" data-tcss="#results-tabs" style="left: 0ch; top: 32px; width: 120ch; height: 32px"><span>TabbedContent #results-tabs</span></div>
+<div class="ov" data-widget="Select" data-tcss="#filter-machine" style="left: 9ch; top: 64px; width: 15ch; height: 16px"><span>Select #filter-machine</span></div>
+<div class="ov" data-widget="Select" data-tcss="#filter-config" style="left: 33ch; top: 64px; width: 22ch; height: 16px"><span>Select #filter-config</span></div>
+<div class="ov" data-widget="Select" data-tcss="#filter-env" style="left: 61ch; top: 64px; width: 11ch; height: 16px"><span>Select #filter-env</span></div>
+<div class="ov" data-widget="Select" data-tcss="#filter-jobs" style="left: 79ch; top: 64px; width: 7ch; height: 16px"><span>Select #filter-jobs</span></div>
+<div class="ov" data-widget="Select" data-tcss="#filter-judge" style="left: 94ch; top: 64px; width: 18ch; height: 16px"><span>Select #filter-judge</span></div>
+<div class="ov" data-widget="Horizontal" data-tcss="#filters" style="left: 0ch; top: 64px; width: 120ch; height: 16px"><span>Horizontal #filters</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#results" style="left: 1ch; top: 96px; width: 118ch; height: 208px"><span>DataTable #results</span></div>
+<div class="ov" data-widget="VerticalScroll" data-tcss="#result-summary.pane" style="left: 0ch; top: 320px; width: 60ch; height: 288px"><span>VerticalScroll #result-summary.pane</span></div>
+<div class="ov" data-widget="Static" data-tcss="#retained" style="left: 60ch; top: 320px; width: 60ch; height: 288px"><span>Static #retained</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ResultsScreen</b><span class="mut">tui/screens/results.py</span></div>
+<h3>Widget tree</h3>
+<pre>ResultsScreen(Screen)          AUTO_FOCUS = &quot;#results&quot;
+├─ Header
+├─ Static #identity-bar         template + full SHA-256 scope
+├─ Static #analysis-label        weights · analysis tariff
+├─ TabbedContent #results-tabs
+│  ├─ TabPane #tab-results &quot;Results&quot;
+│  │  ├─ Horizontal #filters
+│  │  │  └─ Select × 5        machine · config · env · jobs · judge
+│  │  ├─ ContentSwitcher #results-body
+│  │  │  └─ DataTable #results .bordered   trial rows + mean / min–max
+│  │  ├─ Horizontal #result-detail
+│  │  │  ├─ VerticalScroll #result-summary .pane
+│  │  │  └─ Static #retained .pane
+│  │  └─ Horizontal .actions
+│  └─ TabPane #tab-rankings &quot;Rankings&quot;     (M06)
+├─ Static #summary             .-compact only
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#identity-bar</code></td><td>height: 1; background: $surface; padding: 0 1;</td></tr><tr><td><code>#filters</code></td><td>height: 1; margin: 0 1;</td></tr><tr><td><code>#filters Select</code></td><td>width: auto; margin-right: 2;  compact=True</td></tr><tr><td><code>#results</code></td><td>height: 15; max-height: 1fr;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#result-detail</code></td><td>height: 1fr;</td></tr><tr><td><code>#result-summary, #retained</code></td><td>width: 1fr; border: solid $foreground 30%;</td></tr><tr><td><code>Screen.-compact #result-detail</code></td><td>display: none;</td></tr><tr><td><code>Screen.-compact #summary</code></td><td>display: block; height: 6;</td></tr><tr><td><code>#results .-mean</code></td><td>text-style: bold;  mean row after the trials of a configuration</td></tr><tr><td><code>#results .-range</code></td><td>color: $foreground 60%;  min–max row</td></tr><tr><td><code>#results .-interrupted</code></td><td>text-style: bold;  not comparable, listed last</td></tr><tr><td><code>#analysis-label.-alternative</code></td><td>text-style: bold;  “▲ analysis tariff … · alternative”</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the template revision</span></td></tr><tr><td><kbd>1 · 2</kbd></td><td><code>show_tab</code><br><span class="mut">Results · Rankings</span></td></tr><tr><td><kbd>f</kbd></td><td><code>focus(&quot;#filters&quot;)</code><br><span class="mut">Edit filters (compact: opens a filter sheet)</span></td></tr><tr><td><kbd>o / enter</kbd></td><td><code>open_result</code><br><span class="mut">Push ResultScreen for the row</span></td></tr><tr><td><kbd>j</kbd></td><td><code>rejudge</code><br><span class="mut">Review again with a selected judge (explicit only)</span></td></tr><tr><td><kbd>i / x</kbd></td><td><code>import / export</code><br><span class="mut">Result ZIP import (M17) / export of a run</span></td></tr><tr><td><kbd>h</kbd></td><td><code>report</code><br><span class="mut">Write the standalone HTML report (M13)</span></td></tr><tr><td><kbd>w</kbd></td><td><code>weights</code><br><span class="mut">Push WeightsScreen (M06)</span></td></tr><tr><td><kbd>e</kbd></td><td><code>analysis_tariff</code><br><span class="mut">CurrencyEnergyScreen (M10) in analysis mode: an electricity tariff for this analysis only; records are not written</span></td></tr><tr><td><kbd>tab</kbd></td><td><code>focus_next</code><br><span class="mut">Next focus stop (not shown in the Footer)</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #results</li><li>Button #open-result</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Results.dc.html">Results</a><a href="ResultsTrials.dc.html">Trials</a><a href="ResultsHalted.dc.html">Halted run</a><a href="ResultsAnalysisTariff.dc.html">Analysis tariff</a><a href="ResultImport.dc.html">Import</a><a href="ResultImportConflict.dc.html">Id conflict</a><a href="ExportResult.dc.html">Export</a><a href="ReportReady.dc.html">Report</a><a href="Rankings.dc.html">Rankings</a></div>
+<h3>Notes</h3>
+<ul><li>D9: the first detection of a changed template halts the whole run with explicit-stop cleanup. Each configuration’s result is interrupted with reason “template identity invalidated”, approved and computed SHA-256 and the changed paths.</li><li>Interrupted rows are listed last, marked not comparable, never ranked and never rebound to another revision. Partial cost and time carry ▲ (D11).</li><li>Evidence stays: Open evidence opens EvidenceViewerScreen (M08).</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #results","Button #open-result"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

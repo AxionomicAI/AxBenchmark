@@ -1,11 +1,11 @@
 // Artboard catalogue for M02–M06: one canvas page per module, grouped into the flows of navigation.md.
 // Same legend shape as boards.mjs: Textual screen, widget tree, ids/classes with TCSS, bindings, related frames, notes.
-import { results, resultOrigin, resultOutcomes, resultReviews, rejudge, resultImport, resultImportConflict, exportResult, reportReady, rankings, scoreBreakdown, weightsEditor } from './screens-results.mjs';
-import { environment, catalog, catalogOverride, modelPicker } from './screens-readiness.mjs';
+import { results, resultsTrials, resultOrigin, resultOutcomes, resultReviews, rejudge, resultImport, resultImportConflict, exportResult, reportReady, rankings, rankingsTrials, scoreBreakdown, weightsEditor } from './screens-results.mjs';
+import { environment, catalog, catalogOverride, catalogRates, modelPicker } from './screens-readiness.mjs';
 import { runConfig, envPolicy, cleanBlocked, runIsolation } from './screens-execution.mjs';
-import { setup, judgePicker, reviewLaunch, launchRecord } from './screens-setup.mjs';
-import { taskChecks, finalRegression, checkOutcomes, screenshots, verifyProgress, judgeHandoff } from './screens-verify.mjs';
-import { inventoryAbout, inventoryPrompts, inventoryChecks, inventoryVariant } from './screens-inventory.mjs';
+import { setup, judgePicker, reviewLaunch, trialBudget, launchRecord } from './screens-setup.mjs';
+import { taskChecks, finalRegression, checkOutcomes, screenshots, verifyProgress, judgeHandoff, evidenceViewer } from './screens-verify.mjs';
+import { inventoryAbout, inventoryPrompts, inventoryChecks, inventoryVariant, inventoryUpgrade } from './screens-inventory.mjs';
 
 const S = (name, title, def) => ({ name, title, ...def });
 const modalSel = (screen, id, w) => [
@@ -20,12 +20,13 @@ const MODAL_KEYS = (extra) => [['esc', 'dismiss(None)', 'Close without changes']
 const RESULTS_TREE = `ResultsScreen(Screen)          AUTO_FOCUS = "#results"
 ├─ Header
 ├─ Static #identity-bar         template + full SHA-256 scope
+├─ Static #analysis-label        weights · analysis tariff
 ├─ TabbedContent #results-tabs
 │  ├─ TabPane #tab-results "Results"
 │  │  ├─ Horizontal #filters
 │  │  │  └─ Select × 5        machine · config · env · jobs · judge
 │  │  ├─ ContentSwitcher #results-body
-│  │  │  └─ DataTable #results .bordered
+│  │  │  └─ DataTable #results .bordered   trial rows + mean / min–max
 │  │  ├─ Horizontal #result-detail
 │  │  │  ├─ VerticalScroll #result-summary .pane
 │  │  │  └─ Static #retained .pane
@@ -42,6 +43,10 @@ const RESULTS_SEL = [
   ['#result-summary, #retained', 'width: 1fr; border: solid $foreground 30%;'],
   ['Screen.-compact #result-detail', 'display: none;'],
   ['Screen.-compact #summary', 'display: block; height: 6;'],
+  ['#results .-mean', 'text-style: bold;  mean row after the trials of a configuration'],
+  ['#results .-range', 'color: $foreground 60%;  min–max row'],
+  ['#results .-interrupted', 'text-style: bold;  not comparable, listed last'],
+  ['#analysis-label.-alternative', 'text-style: bold;  “▲ analysis tariff … · alternative”'],
 ];
 const RESULTS_KEYS = [
   ['esc', 'app.pop_screen', 'Back to the template revision'],
@@ -52,8 +57,10 @@ const RESULTS_KEYS = [
   ['i / x', 'import / export', 'Result ZIP import (M17) / export of a run'],
   ['h', 'report', 'Write the standalone HTML report (M13)'],
   ['w', 'weights', 'Push WeightsScreen (M06)'],
+  ['e', 'analysis_tariff', 'CurrencyEnergyScreen (M10) in analysis mode: an electricity tariff for this analysis only; records are not written'],
+  ['tab', 'focus_next', 'Next focus stop (not shown in the Footer)'],
 ];
-const RES_STATES = [['Results', 'Results'], ['Import', 'ResultImport'], ['Id conflict', 'ResultImportConflict'], ['Export', 'ExportResult'], ['Report', 'ReportReady'], ['Rankings', 'Rankings']];
+const RES_STATES = [['Results', 'Results'], ['Trials', 'ResultsTrials'], ['Halted run', 'ResultsHalted'], ['Analysis tariff', 'ResultsAnalysisTariff'], ['Import', 'ResultImport'], ['Id conflict', 'ResultImportConflict'], ['Export', 'ExportResult'], ['Report', 'ReportReady'], ['Rankings', 'Rankings']];
 const resLegend = (notes) => ({ screen: 'ResultsScreen', file: 'tui/screens/results.py', tree: RESULTS_TREE, sel: RESULTS_SEL, keys: RESULTS_KEYS, states: RES_STATES, notes });
 
 const RESULT_TREE = `ResultScreen(Screen)           one retained result
@@ -87,7 +94,7 @@ const RESULT_KEYS = [
   ['1 · 2 · 3', 'show_tab', 'Launch and origin · Outcomes · Reviews'],
   ['j', 'rejudge', 'Review again with a selected judge'],
   ['x', 'export', 'Export this result’s run as a ZIP'],
-  ['l', 'logs', 'Open task logs and evidence files'],
+  ['l', 'logs', 'Push EvidenceViewerScreen (M08) on the selected task’s log'],
 ];
 const R1_STATES = [['Launch and origin', 'ResultOrigin'], ['Outcomes', 'ResultOutcomes'], ['Reviews', 'ResultReviews'], ['Review again', 'Rejudge']];
 const resultLegend = (notes) => ({ screen: 'ResultScreen', file: 'tui/screens/result.py', tree: RESULT_TREE, sel: RESULT_SEL, keys: RESULT_KEYS, states: R1_STATES, notes });
@@ -133,8 +140,24 @@ const M02 = [
     S('Results', 'Results', { sizes: ['wide', 'compact'], focus: { wide: [['results', 'DataTable #results'], ['filters', 'Select #filter-machine'], ['open', 'Button #open-result']], compact: [['results', 'DataTable #results'], ['filters', 'Select #filter-machine']] }, render: (sz, f) => results(sz, f), legend: resLegend([
       'Only results whose template SHA-256 matches r1 are listed; another hash opens its own comparison and never mixes in (R122).',
       'All five comparison filters are visible (R124). Machine differences are inputs, not hash mismatches.',
-      'Measured tables default to highest known cost first, unknown last (M06 R131). Unknown cost reads “unknown”, never $0.',
+      'Measured tables default to highest known cost first, unknown last (M06 R131). Unknown cost reads “unknown”, never $0; a local endpoint in a parallel run has no cost (D4), and partial cost carries ▲ (D11).',
+      'The selected result shows its cost basis: reported, price-table estimate with source and date, or energy estimate (D4).',
       'Imported rows carry ↓ and their source machine; the summary says validated, not certified (R123).',
+      'Costs show in each run’s frozen display currency (all USD here). Rows from runs with different display currencies show in USD, and the table says so. There is no currency switch in Results; rankings compute in USD.',
+    ]) }),
+    S('ResultsTrials', 'Results · 3 trials per configuration', { sizes: ['wide'], focus: { wide: [['results', 'DataTable #results'], ['filters', 'Select #filter-machine'], ['open', 'Button #open-result']] }, render: (sz, f) => resultsTrials(sz, f), legend: resLegend([
+      'D7: every trial is its own result (trial index, own judge session). Each configuration lists its trials, then a bold mean row and a muted min–max row for cost, time and quality.',
+      'A configuration is eligible only when every trial is: one failed check in trial 2 marks the Claude Code mean “✗ trial ineligible”. Rankings use the means.',
+      'Fixture: Orders REST API r3, run 2026-09-27-t (results-data.mjs TRIAL_CONFIGS). Inventory r1 results have the default single trial.',
+    ]) }),
+    S('ResultsHalted', 'Results · run halted by a template change', { sizes: ['wide'], focus: { wide: [['results', 'DataTable #results'], ['open', 'Button #open-result']] }, render: (sz, f) => results(sz, f, { halted: true }), legend: resLegend([
+      'D9: the first detection of a changed template halts the whole run with explicit-stop cleanup. Each configuration’s result is interrupted with reason “template identity invalidated”, approved and computed SHA-256 and the changed paths.',
+      'Interrupted rows are listed last, marked not comparable, never ranked and never rebound to another revision. Partial cost and time carry ▲ (D11).',
+      'Evidence stays: Open evidence opens EvidenceViewerScreen (M08).',
+    ]) }),
+    S('ResultsAnalysisTariff', 'Results · analysis tariff', { sizes: ['wide'], focus: { wide: [['reset', 'Button #reset-tariff'], ['results', 'DataTable #results']] }, render: (sz, f) => results(sz, f, { tariff: true }), legend: resLegend([
+      'D4: e opens CurrencyEnergyScreen (M10) in analysis mode. The tariff applies to this analysis only and is labelled “analysis tariff · alternative”, like alternative weights.',
+      'Only energy estimates change (R-0919lab-1, sequential, local). The frozen tariff stays in every record; Reset returns to it.',
     ]) }),
     S('ResultImport', 'Import results · validated', { sizes: ['wide'], focus: { wide: [['add', 'Button #add-results'], ['table', 'DataTable #import-preview']] }, render: (sz, f) => resultImport(sz, f), legend: { screen: 'ImportResultsScreen', file: 'tui/screens/results.py', tree: IMPORT_RESULTS_TREE, sel: [...modalSel('ImportResultsScreen', '#import-results', 86), ['#import-preview', 'height: 4;']], keys: MODAL_KEYS([['ctrl+s', 'add', 'Add the new results; skipped rows stay skipped']]), states: RES_STATES, notes: ['Package checks belong to M17; this frame is the outcome M02 shows before records join.', 'Identical results are skipped, so re-importing is idempotent (R122).', 'Import never runs scripts or models and is never called certification (R123).'] } }),
     S('ResultImportConflict', 'Import · result id conflict', { sizes: ['wide', 'compact'], focus: { wide: [['close', 'Button #close'], ['diff', 'Button #show-differences']], compact: [['close', 'Button #close'], ['diff', 'Button #show-differences']] }, render: (sz, f) => resultImportConflict(sz, f), legend: { screen: 'ImportResultsScreen', file: 'tui/screens/results.py', tree: IMPORT_RESULTS_TREE, sel: modalSel('ImportResultsScreen', '#import-results', 86), keys: MODAL_KEYS([]), states: RES_STATES, notes: ['A different payload under an existing result id is rejected; the original is never overwritten and nothing is partially added (R122).', 'Digests stack under their labels at 80 columns so all 64 cells stay visible.'] } }),
@@ -152,6 +175,7 @@ const M02 = [
       'Unverified means the check could not run (here: browser missing). It is neither passed nor failed, and keeps the result out of default shortlists (M06 R100).',
       'Measurements show their source, coverage and limitations, which travel with exports and reports (R124).',
       'Task totals equal the result’s cost and time on Results and Rankings.',
+      'l, Open check log and Open snapshot push EvidenceViewerScreen (M08) on the selected task (W1).',
     ]) }),
     S('ResultReviews', 'Result · reviews and evidence', { sizes: ['wide'], focus: { wide: [['grades', 'DataTable #grades'], ['review', 'Static #review-meta'], ['additional', 'Button #rejudge']] }, render: (sz, f) => resultReviews(sz, f), legend: resultLegend([
       'Raw 1–5 grades are kept as the judge gave them; Q is computed by AxBenchmark from them and the original weights (M06 R096).',
@@ -167,7 +191,7 @@ const M02 = [
 const RANK_TREE = `ResultsScreen › TabPane #tab-rankings
 ├─ Horizontal #ranking-controls
 │  ├─ Select #judge-group           one judge configuration
-│  └─ Static #weights-label         original | alternative
+│  └─ Static #weights-label         original | alternative | profile defaults
 ├─ DataTable #combined .bordered    eligible only
 ├─ Horizontal #shortlists
 │  ├─ DataTable #lowest-cost .bordered
@@ -192,8 +216,9 @@ const RANK_KEYS = [
   ['w', 'weights', 'Push WeightsScreen'],
   ['r', 'reset', 'Reset to the original analysis (alternative only)'],
   ['h', 'report', 'HTML report with the current weights'],
+  ['Save preset… · Export configuration', '', 'Push the shared PromptScreen (M15) for a name or a path'],
 ];
-const RANK_STATES = [['Original', 'Rankings'], ['Breakdown', 'ScoreBreakdown'], ['Weights', 'WeightsEditor'], ['Invalid', 'WeightsInvalid'], ['Alternative', 'RankingsAlternative']];
+const RANK_STATES = [['Original', 'Rankings'], ['Profile defaults', 'RankingsProfileDefaults'], ['Trials', 'RankingsTrials'], ['Breakdown', 'ScoreBreakdown'], ['Weights', 'WeightsEditor'], ['Invalid', 'WeightsInvalid'], ['Alternative', 'RankingsAlternative']];
 const rankLegend = (notes) => ({ screen: 'ResultsScreen · Rankings', file: 'tui/screens/results.py', tree: RANK_TREE, sel: RANK_SEL, keys: RANK_KEYS, states: RANK_STATES, notes });
 
 const BREAKDOWN_TREE = `ScoreBreakdownScreen(ModalScreen[None])
@@ -221,18 +246,29 @@ const M06 = [
     S('Rankings', 'Rankings · original weights', { sizes: ['wide', 'compact'], focus: { wide: [['combined', 'DataTable #combined'], ['group', 'Select #judge-group'], ['all', 'DataTable #all-entries'], ['breakdown', 'Button #breakdown']], compact: [['combined', 'DataTable #combined'], ['group', 'Select #judge-group']] }, render: (sz, f) => rankings(sz, f), legend: rankLegend([
       'Eligible = completed, every required check verified, valid grades, business/spec grade ≥ 4 (R100). A high Q never bypasses a gate.',
       'Missing a positively weighted measurement excludes the entry from that ranking only; weights are never redistributed (R100).',
-      'Verified $0 minimum: each verified $0 entry earns the full cost points, positive costs earn 0 (R101). Here that puts the local Pi run first, which is the specified behavior.',
+      'Unknown or partial cost excludes an entry from cost-weighted rankings (D11): the local Pi runs ran in parallel, so their cost stays unknown (D4). Reasons such as “cost partial · covers 5 of 7 tasks” stay in the full table.',
+      'A verified $0 minimum (only when reported $0 with complete coverage and no subscription) would give each $0 entry the full cost points (R101).',
       'Fewer than five qualify → only that many are shown (lowest cost: 4).',
+    ]) }),
+    S('RankingsProfileDefaults', 'Rankings · profile defaults', { sizes: ['wide', 'compact'], focus: { wide: [['combined', 'DataTable #combined'], ['originals', 'Button #original-weights']], compact: [['combined', 'DataTable #combined'], ['group', 'Select #judge-group']] }, render: (sz, f) => rankings(sz, f, { profile: true }), legend: rankLegend([
+      'D13: the results of one judge group froze different weights, so the original combined ranking uses the grading profile’s default weights, labelled “Profile defaults: original weights differ across results”.',
+      'Each result’s original weights stay visible and selectable in WeightsScreen (w), plus custom weights. Quality uses one common set of category weights for every entry.',
+      'Replaces the former scoring.original_weights_differ refusal.',
+    ]) }),
+    S('RankingsTrials', 'Rankings · means of trials', { sizes: ['wide'], focus: { wide: [['combined', 'DataTable #combined'], ['all', 'DataTable #all-entries']] }, render: (sz, f) => rankingsTrials(sz, f), legend: rankLegend([
+      'D7: a configuration ranks by the means of its trials; per-trial min–max ranges are shown on the ranked row and never change the order.',
+      'A configuration is eligible only when every trial is: the Claude Code entry is excluded with “trial ineligible” and the failing trial named.',
+      'Minimums for the score come from the qualifying means.',
     ]) }),
     S('ScoreBreakdown', 'Score breakdown', { sizes: ['wide'], render: (sz) => scoreBreakdown(sz), legend: { screen: 'ScoreBreakdownScreen', file: 'tui/screens/results.py', tree: BREAKDOWN_TREE, sel: modalSel('ScoreBreakdownScreen', '#breakdown', 86), keys: [['esc', 'dismiss', 'Close'], ['← →', 'previous / next', 'Step through ranked entries']], states: RANK_STATES, notes: ['Q = Σ normalized category weight × raw grade (R097).', 'Score = 100 × (w_c·minCost/cost + w_t·minTime/time + w_q·Q/5), minima from this ranking’s eligible population (R098, R099).', 'Full precision internally; rounding is display only (R131).'] } }),
   ] },
   { id: 'm06-weights', page: 'm06', title: 'M06 · 2 · Weights and alternatives', note: 'Two independent weight sets: quality categories (decide Q) and ranking components (decide the combined score). Each normalizes by its own total. Applying creates a labelled alternative analysis; original weights and raw grades never change, and reset returns to them.', boards: [
-    S('WeightsEditor', 'Weights · ranking 2:1:1', { sizes: ['wide'], focus: { wide: [['ranking', 'Input #weight-cost'], ['quality', 'Input #weight-ux'], ['preset', 'Select #preset'], ['apply', 'Button #apply']] }, render: (sz, f) => weightsEditor(sz, f), legend: { screen: 'WeightsScreen', file: 'tui/screens/weights.py', tree: WEIGHTS_TREE, sel: WEIGHTS_SEL, keys: MODAL_KEYS([['ctrl+s', 'apply', 'Apply as a labelled alternative'], ['ctrl+r', 'restore_defaults', 'Load web v1 defaults and 1:1:1']]), states: RANK_STATES, notes: ['Ranking 2:1:1 previews 50% · 25% · 25%, independent of category weights (R094, R095).', 'Restore defaults (product profile) and Reset to original (frozen at launch) are different actions (R096).', 'Presets save both sets to YAML for reuse (R145).'] } }),
+    S('WeightsEditor', 'Weights · ranking 2:1:1', { sizes: ['wide'], focus: { wide: [['ranking', 'Input #weight-cost'], ['quality', 'Input #weight-ux'], ['preset', 'Select #preset'], ['apply', 'Button #apply']] }, render: (sz, f) => weightsEditor(sz, f), legend: { screen: 'WeightsScreen', file: 'tui/screens/weights.py', tree: WEIGHTS_TREE, sel: WEIGHTS_SEL, keys: MODAL_KEYS([['ctrl+s', 'apply', 'Apply as a labelled alternative'], ['ctrl+r', 'restore_defaults', 'Load web v1 defaults and 1:1:1']]), states: RANK_STATES, notes: ['Ranking 2:1:1 previews 50% · 25% · 25%, independent of category weights (R094, R095).', 'Restore defaults (product profile) and Reset to original (frozen at launch) are different actions (R096).', 'Presets save both sets to YAML for reuse (R145). Save preset… asks for a name in the shared PromptScreen (M15).', 'The Preset select also lists each result’s original weights when they differ across the judge group (D13).'] } }),
     S('WeightsInvalid', 'Weights · invalid values', { sizes: ['wide'], focus: { wide: [['ranking', 'Input #weight-time'], ['quality', 'Input #weight-ux']] }, render: (sz, f) => weightsEditor(sz, f, { invalid: true }), legend: { screen: 'WeightsScreen', file: 'tui/screens/weights.py', tree: WEIGHTS_TREE, sel: WEIGHTS_SEL, keys: MODAL_KEYS([]), states: RANK_STATES, notes: ['Rejected: negative, non-finite, unknown component, all-zero set; the message names the input (R145).', 'Apply and Save preset are disabled until both sets are valid. Previews show — instead of a percentage.'] } }),
     S('RankingsAlternative', 'Rankings · alternative weights', { sizes: ['wide'], focus: { wide: [['combined', 'DataTable #combined'], ['reset', 'Button #reset']] }, render: (sz, f) => rankings(sz, f, { alt: true }), legend: rankLegend([
       'Alternative weights are labelled on the tab row, the controls and a notice; nothing original is overwritten (R096).',
       'Scores, minima contributions and order are recomputed without judge calls.',
-      'Export writes the alternative configuration; reports say which weights they use.',
+      'Export configuration asks for a path and Save preset… for a name, both in the shared PromptScreen (M15). Reports say which weights they use.',
     ]) }),
   ] },
 ];
@@ -319,7 +355,8 @@ const CATALOG_TREE = `CatalogScreen(Screen)          m from Environment
 ├─ Horizontal #main
 │  ├─ Vertical #providers-pane .pane
 │  │  ├─ Tree #providers          harness › provider · account
-│  │  └─ Static #provider-facts .kv
+│  │  ├─ Static #provider-facts .kv   account billing kind · default model
+│  │  └─ Static #rates-summary        rates to USD · r
 │  └─ Vertical #entries
 │     ├─ DataTable #models .bordered
 │     └─ VerticalScroll #entry-detail .pane
@@ -341,20 +378,26 @@ const CATALOG_KEYS = [
   ['esc', 'app.pop_screen', 'Back to Environment'],
   ['f5', 'refresh', 'Refresh discovery for the selected provider'],
   ['o', 'override', 'Push OverrideScreen for the selected entry'],
+  ['r', 'rates', 'Push RatesScreen: exchange rates to USD with source and date'],
   ['/', 'filter', 'Filter models by name'],
   ['y', 'open_yaml', 'Open the catalog YAML (baseline, cache, overrides)'],
   ['tab', 'focus_next', 'Next pane'],
 ];
-const CAT_STATES = [['Catalog', 'Catalog'], ['Refresh failed', 'CatalogRefreshFailed'], ['Override', 'CatalogOverride'], ['Entry · known efforts', 'ModelPicker'], ['Entry · unknown effort', 'ModelPickerUnknown']];
+const CAT_STATES = [['Catalog', 'Catalog'], ['Refresh failed', 'CatalogRefreshFailed'], ['Override', 'CatalogOverride'], ['Rates', 'CatalogRates'], ['Entry · known efforts', 'ModelPicker'], ['Entry · unknown effort', 'ModelPickerUnknown']];
 const catLegend = (notes) => ({ screen: 'CatalogScreen', file: 'tui/screens/catalog.py', tree: CATALOG_TREE, sel: CATALOG_SEL, keys: CATALOG_KEYS, states: CAT_STATES, notes });
 
 const OVERRIDE_TREE = `OverrideScreen(ModalScreen[Override | None])
 ├─ Vertical #override .dialog
 │  ├─ Static #override-subject
-│  ├─ Input #override-efforts
-│  ├─ Select #override-default
-│  ├─ RadioSet #override-image
-│  ├─ Input .override-price × 2
+│  ├─ Horizontal .override-field × 5   Label · Select mode · value
+│  │  ├─ #override-efforts      Input
+│  │  ├─ #override-default      Select
+│  │  ├─ #override-image        Select
+│  │  ├─ #override-price-in     Input
+│  │  └─ #override-price-out    Input
+│  ├─ Horizontal .override-field   account scope
+│  │  └─ #override-billing      Select · api | subscription | local | unknown
+│  ├─ Static #override-effect
 │  ├─ Static #override-hint
 │  └─ Horizontal .dialog-actions
 └─ Footer`;
@@ -374,17 +417,28 @@ const M04 = [
     S('Catalog', 'Model catalog', { sizes: ['wide', 'compact'], focus: { wide: [['models', 'DataTable #models'], ['providers', 'Tree #providers'], ['detail', 'Button #add-override']], compact: [['models', 'DataTable #models'], ['provider', 'Select #provider']] }, render: (sz, f) => catalog(sz, f), legend: catLegend([
       'Lookup is by harness + installed version + provider/endpoint + account + model, never by display name alone (R010, R061).',
       'Known, unsupported and unknown are different states; unknown is never filled in (R062).',
-      'Each source is kept separately and shown per entry with its retrieval date (R064).',
+      'Each source is kept separately and shown per entry with its retrieval date (R064). Prices come from per-provider price sources during an explicit refresh, with source URL and date; bundled prices are the fallback (D4).',
+      '#provider-facts names the harness’s own default model and where it was read (D17), and the account’s billing kind with its source: harness status or “declared by user” (R3-1).',
+      '#rates-summary lists the rates to USD collected at the last explicit refresh, with source and date; a rate you supplied is marked ▲ (R3-2). r opens RatesScreen.',
     ]) }),
     S('CatalogRefreshFailed', 'Catalog · refresh failed', { sizes: ['wide'], focus: { wide: [['detail', 'Button #retry'], ['models', 'DataTable #models']] }, render: (sz, f) => catalog(sz, f, { failed: true }), legend: catLegend([
       'A failed refresh preserves the last valid catalog and shows the failure beside it (R063).',
       'Cached entries keep source and age; they are not presented as current account access (R137).',
       'Refresh never touches overrides (R064).',
+      'Exchange rates keep their last valid values and dates; nothing is converted with a guess (R3-2).',
     ]) }),
-    S('CatalogOverride', 'Override catalog entry', { sizes: ['wide'], focus: { wide: [['efforts', 'Input #override-efforts'], ['default', 'Select #override-default'], ['image', 'RadioSet #override-image'], ['save', 'Button #save']] }, render: (sz, f) => catalogOverride(sz, f), legend: { screen: 'OverrideScreen', file: 'tui/screens/catalog.py', tree: OVERRIDE_TREE, sel: [...modalSel('OverrideScreen', '#override', 80), ['.override-price', 'width: 14;']], keys: MODAL_KEYS([['ctrl+s', 'save', 'Write overrides.yaml']]), states: CAT_STATES, notes: ['Overrides win over discovered and bundled values and survive refresh (R064).', 'An override is user metadata, never evidence of authentication or effective settings (R065, R137); see ModelRejected in M05.'] } }),
+    S('CatalogOverride', 'Override catalog entry', { sizes: ['wide'], focus: { wide: [['efforts', 'Select #override-efforts-mode'], ['default', 'Select #override-default-mode'], ['image', 'Select #override-image-mode'], ['price', 'Select #override-price-in-mode'], ['billing', 'Select #override-billing-mode'], ['save', 'Button #save']] }, render: (sz, f) => catalogOverride(sz, f), legend: { screen: 'OverrideScreen', file: 'tui/screens/catalog.py', tree: OVERRIDE_TREE, sel: [...modalSel('OverrideScreen', '#override', 86), ['.override-field', 'height: 1; grid-size: 3; grid-columns: 16 14 1fr;'], ['.override-field Select', 'width: 12;  Inherit · Value · Unknown'], ['.override-field.-unknown', 'text-style: bold;']], keys: MODAL_KEYS([['ctrl+s', 'save', 'Write overrides.yaml']]), states: CAT_STATES, notes: ['D14: every field is tri-state through its mode Select (#…-mode): Inherit (empty, lower layers decide), Value, or Unknown. Unknown stops resolution with source “override”.', 'Unknown efforts → harness default only; unknown image input → not accepted as UI judge; unknown price → no API-equivalent estimate.', 'Overrides win over discovered and bundled values and survive refresh (R064). An override is user metadata, never evidence of authentication or effective settings (R065, R137); see ModelRejected in M05.', 'R3-1: billing kind (api, subscription, local, unknown) is declared per account with the same Inherit / Value / Unknown mode. Inherit uses what M05’s probe read from the harness status; a value is labelled “declared by user” and frozen in the launch (M07). Unknown never yields a verified $0.'] } }),
+    S('CatalogRates', 'Exchange rates · to USD', { sizes: ['wide'], focus: { wide: [['rates', 'DataTable #rates-table'], ['mode', 'Select #rate-mode'], ['value', 'Input #rate-value'], ['save', 'Button #save']] }, render: (sz, f) => catalogRates(sz, f), legend: { screen: 'RatesScreen', file: 'tui/screens/catalog.py', tree: `RatesScreen(ModalScreen[RateOverrides | None])
+├─ Vertical #rates .dialog
+│  ├─ Static #rates-subject       refresh time · counts
+│  ├─ DataTable #rates-table       currency · USD per unit · layer · source · retrieved
+│  ├─ Horizontal #rate-edit        Select #rate-mode · Input #rate-value
+│  ├─ Static #rates-hint
+│  └─ Horizontal .dialog-actions
+└─ Footer`, sel: [...modalSel('RatesScreen', '#rates', 92), ['#rates-table', 'height: 6;  cursor_type = "row"'], ['#rate-mode', 'width: 12;  Inherit · Value'], ['#rate-value', 'width: 12;  type="number", > 0'], ['#rates-table .-override', 'text-style: bold;  “▲ override · supplied by you”']], keys: MODAL_KEYS([['a', 'add_rate', 'Add a rate for a currency with none collected'], ['delete', 'remove_rate', 'Remove your rate; the collected one applies again'], ['ctrl+s', 'save', 'Write rates: in overrides.yaml']]), states: CAT_STATES, notes: ['R3-2: M04’s ExchangeRateSource collects rates to USD only during an explicit catalog refresh, never during a run, each with source and date.', 'A rate you supply overrides the collected one and is labelled “supplied by you” wherever it is used; the collected rate is kept.', 'Launch freezes a RateSnapshot (M07) with the rates for every price currency and the display currency; later changes here never reach a frozen run.', 'A currency without a rate converts to unknown (no_rate_conversion), never to a guess. The README’s historical COP rate is never used.'] } }),
   ] },
   { id: 'm04-picker', page: 'm04', title: 'M04 · 2 · Choosing model and effort', note: 'When an entry is added in Setup (M07), only efforts known for that exact combination are offered. If effort support is unknown, the only choice is harness default, and execution passes no effort argument.', boards: [
-    S('ModelPicker', 'Add entry · known efforts', { sizes: ['wide'], focus: { wide: [['model', 'OptionList #model-options'], ['effort', 'RadioSet #effort'], ['harness', 'Select #harness'], ['add', 'Button #add-entry']] }, render: (sz, f) => modelPicker(sz, f), legend: { screen: 'EntryPickerScreen', file: 'tui/screens/setup.py', tree: PICKER_TREE, sel: [...modalSel('EntryPickerScreen', '#entry-picker', 86), ['#model-options', 'height: 6; border: solid $foreground 30%;'], ['#effort', 'layout: horizontal;']], keys: MODAL_KEYS([['↑ ↓', 'cursor', 'Choose a model'], ['ctrl+s', 'add', 'Add the entry to the configuration']]), states: CAT_STATES, notes: ['Unsupported efforts are not offered; nothing is guessed from another model, provider, account or version (R065).', 'The catalog default is a requested setting, not proof of the effort used.'] } }),
+    S('ModelPicker', 'Add entry · known efforts', { sizes: ['wide'], focus: { wide: [['model', 'OptionList #model-options'], ['effort', 'RadioSet #effort'], ['harness', 'Select #harness'], ['add', 'Button #add-entry']] }, render: (sz, f) => modelPicker(sz, f), legend: { screen: 'EntryPickerScreen', file: 'tui/screens/setup.py', tree: PICKER_TREE, sel: [...modalSel('EntryPickerScreen', '#entry-picker', 86), ['#model-options', 'height: 6; border: solid $foreground 30%;'], ['#effort', 'layout: horizontal;']], keys: MODAL_KEYS([['↑ ↓', 'cursor', 'Choose a model'], ['ctrl+s', 'add', 'Add the entry to the configuration']]), states: CAT_STATES, notes: ['Unsupported efforts are not offered; nothing is guessed from another model, provider, account or version (R065).', 'The catalog default is a requested setting, not proof of the effort used.', 'D17: the harness’s own default model (read from its config during refresh) is labelled but never preselected for a competitor entry, which always needs an explicit model.'] } }),
     S('ModelPickerUnknown', 'Add entry · unknown effort', { sizes: ['wide'], focus: { wide: [['effort', 'RadioSet #effort'], ['model', 'OptionList #model-options']] }, render: (sz, f) => modelPicker(sz, f, { unknown: true }), legend: { screen: 'EntryPickerScreen', file: 'tui/screens/setup.py', tree: PICKER_TREE, sel: modalSel('EntryPickerScreen', '#entry-picker', 86), keys: MODAL_KEYS([]), states: CAT_STATES, notes: ['Unknown effort support → only “harness default”, and M05 omits the effort argument (R065).', 'Results record the effort as harness default; the effective value appears only if the harness exposes it.'] } }),
   ] },
 ];
@@ -420,11 +474,13 @@ const RUN_KEYS = [
   ['esc', 'app.pop_screen', 'Back to the run overview (M11)'],
   ['/', 'focus("#log-search")', 'Search the log; n next match'],
   ['i', 'isolation', 'Push IsolationScreen for the whole run'],
+  ['p', 'verify_progress', 'Push VerifyProgressScreen(run_id, configuration_id) for the task being verified (M08)'],
+  ['v', 'live_view', 'Open HarnessLive for this configuration (M11)'],
   ['s', 'stop_configuration', 'Stop this configuration; M11 cleans up its processes'],
   ['d', 'detach', 'Detach; the run keeps going'],
   ['tab', 'focus_next', 'Next focus stop'],
 ];
-const RUN_STATES = [['Run overview (M11)', 'RunOverview'], ['Running', 'RunConfig'], ['Blocked action', 'TaskBlocked'], ['Model rejected', 'ModelRejected'], ['Isolation', 'RunIsolation'], ['Policy', 'EnvPolicy'], ['Clean impossible', 'CleanModeBlocked']];
+const RUN_STATES = [['Run overview (M11)', 'RunOverview'], ['Running', 'RunConfig'], ['Verifying', 'VerifyProgress'], ['Live view', 'HarnessLive'], ['Blocked action', 'TaskBlocked'], ['Model rejected', 'ModelRejected'], ['Isolation', 'RunIsolation'], ['Policy', 'EnvPolicy'], ['Clean impossible', 'CleanModeBlocked']];
 const runLegend = (notes) => ({ screen: 'RunConfigScreen', file: 'tui/screens/run_config.py', tree: RUN_TREE, sel: RUN_SEL, keys: RUN_KEYS, states: RUN_STATES, notes });
 
 const POLICY_TREE = `EnvPolicyScreen(ModalScreen[EnvPolicy | None])   Setup · M07
@@ -488,7 +544,11 @@ const SETUP_TREE = `SetupScreen(Screen)            one revision-scoped configura
 │     ├─ Select #quality-preset
 │     └─ Select #ranking-preset
 ├─ Vertical #execution-pane .pane
-│  └─ RadioSet #concurrency
+│  ├─ RadioSet #concurrency
+│  ├─ Input #trials                default 1
+│  ├─ Input #sampling-interval     0.5–10 s · default 1 s
+│  ├─ Select #display-currency     default USD
+│  └─ Static #cost-energy          rates frozen at launch · tariff · c
 ├─ Static #limitations | #validation
 ├─ Horizontal .actions
 └─ Footer`;
@@ -496,7 +556,10 @@ const SETUP_SEL = [
   ['#identity-bar', 'height: 1; background: $surface; padding: 0 1;'],
   ['#entries', 'height: 8;  cursor_type = "row"'],
   ['#judge-pane, #weights-pane', 'width: 1fr; height: 12;'],
-  ['#execution-pane', 'height: 7;'],
+  ['#execution-pane', 'height: 9;'],
+  ['#trials', 'width: 5;  type="integer", validate ≥ 1'],
+  ['#sampling-interval', 'width: 7;  0.5–10 s, invalid values rejected'],
+  ['#display-currency', 'width: 9;  currencies with a catalog rate · default USD'],
   ['#validation', 'display: none;'],
   ['SetupScreen.-invalid #validation', 'display: block;'],
   ['SetupScreen.-invalid #review', 'disabled: True;  via check_action'],
@@ -508,10 +571,11 @@ const SETUP_KEYS = [
   ['p', 'policy', 'Environment policy for the entry (M05)'],
   ['j', 'judge', 'Push JudgeScreen'],
   ['w', 'weights', 'Push WeightsScreen (M06)'],
+  ['c', 'currency', 'Push CurrencyEnergyScreen(mode="setup") (M10): display currency and electricity tariff'],
   ['ctrl+s', 'save', 'Save the configuration YAML; the template is untouched'],
   ['enter', 'review', 'Push ReviewLaunchScreen (disabled while invalid)'],
 ];
-const SETUP_STATES = [['Setup', 'Setup'], ['Blocking issues', 'SetupInvalid'], ['Judge', 'JudgePicker'], ['Judge fallback', 'JudgeFallback'], ['Review', 'ReviewLaunch'], ['Launch record', 'LaunchRecord']];
+const SETUP_STATES = [['Setup', 'Setup'], ['Blocking issues', 'SetupInvalid'], ['Judge', 'JudgePicker'], ['Judge fallback', 'JudgeFallback'], ['Review', 'ReviewLaunch'], ['Budget warning', 'TrialBudgetWarning'], ['Launch record', 'LaunchRecord']];
 const setupLegend = (notes) => ({ screen: 'SetupScreen', file: 'tui/screens/setup.py', tree: SETUP_TREE, sel: SETUP_SEL, keys: SETUP_KEYS, states: SETUP_STATES, notes });
 const JUDGE_TREE = `JudgeScreen(ModalScreen[JudgeChoice | None])
 ├─ Vertical #judge .dialog
@@ -548,6 +612,9 @@ const M07 = [
       'Two Claude Code entries are distinct configurations; same-harness entries queue (R017, M11).',
       'Clean is the default policy; current is chosen per entry and never applied silently (R032).',
       'Presets are resolved into actual weights at launch, so later preset edits cannot change the run (R033).',
+      'Trials (#trials, default 1, no upper limit) run one after another from fresh baselines; each is its own result and review (D7). More than 5 for a configuration not on a local endpoint asks to confirm the budget at launch (R3-7).',
+      'Sampling interval 0.5–10 s, default 1 s, frozen at launch and not part of template identity; a slower collector records its own interval (D18).',
+      'Display currency (#display-currency, default USD) and the optional electricity tariff are frozen with the run, with a RateSnapshot of the rates for every price currency and the display currency (R3-2). Results and reports show this run in that currency; there is no later currency switch. c opens CurrencyEnergyScreen (W4, D4).',
     ]) }),
     S('SetupInvalid', 'Setup · blocking issues', { sizes: ['wide'], focus: { wide: [['entries', 'DataTable #entries']] }, render: (sz, f) => setup(sz, f, { invalid: true }), legend: setupLegend([
       'Each issue names its source: M04 for an unsupported effort, M03 for authentication, M06 for unresolved weights (R032, R033).',
@@ -557,7 +624,14 @@ const M07 = [
     S('JudgeFallback', 'Judge · fallback preselection', { sizes: ['wide'], focus: { wide: [['use', 'Button #use'], ['model', 'Select #judge-model']] }, render: (sz, f) => judgePicker(sz, f, { fallback: true }), legend: { screen: 'JudgeScreen', file: 'tui/screens/setup.py', tree: JUDGE_TREE, sel: modalSel('JudgeScreen', '#judge', 86), keys: MODAL_KEYS([]), states: SETUP_STATES, notes: ['An unusable saved judge is skipped with its reason, never assumed to work (R033).', 'If no candidate is usable, the judge stays unresolved and Setup lists it as a blocking issue.'] } }),
   ] },
   { id: 'm07-launch', page: 'm07', title: 'M07 · 2 · Review, launch and freeze', note: 'Before execution the complete setup is shown exactly as it will be frozen. Launch then runs the M01 identity check and freezes the template binding, the resolved configuration and the original weights as separate records, with machine and catalog metadata and no credentials.', boards: [
-    S('ReviewLaunch', 'Review before launch', { sizes: ['wide', 'compact'], focus: { wide: [['launch', 'Button #launch'], ['entries', 'DataTable #review-entries']], compact: [['launch', 'Button #launch'], ['entries', 'DataTable #review-entries']] }, render: (sz, f) => reviewLaunch(sz, f), legend: { screen: 'ReviewLaunchScreen', file: 'tui/screens/setup.py', tree: REVIEW_TREE, sel: [['#review-bar', 'height: 1; background: $surface;'], ['#review', 'height: 1fr; padding: 0 1;'], ['.section-rule', 'color: $foreground 30%;']], keys: [['esc', 'app.pop_screen', 'Back to setup'], ['c', 'copy_cli', 'Copy the equivalent unattended command (M14)'], ['ctrl+l', 'launch', 'Launch → identity check (M01)']], states: SETUP_STATES, notes: ['Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings and limitations (R032, R033, R037).', 'What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.'] } }),
+    S('ReviewLaunch', 'Review before launch', { sizes: ['wide', 'compact'], focus: { wide: [['launch', 'Button #launch'], ['entries', 'DataTable #review-entries']], compact: [['launch', 'Button #launch'], ['entries', 'DataTable #review-entries']] }, render: (sz, f) => reviewLaunch(sz, f), legend: { screen: 'ReviewLaunchScreen', file: 'tui/screens/setup.py', tree: REVIEW_TREE, sel: [['#review-bar', 'height: 1; background: $surface;'], ['#review', 'height: 1fr; padding: 0 1;'], ['.section-rule', 'color: $foreground 30%;']], keys: [['esc', 'app.pop_screen', 'Back to setup'], ['c', 'copy_cli', 'Copy the equivalent unattended command (M14)'], ['ctrl+l', 'launch', 'Launch → identity check (M01)']], states: SETUP_STATES, notes: ['Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings (trials with task-run and judge-session totals, sampling interval, display currency, tariff, billing kinds) and limitations (R032, R033, R037).', 'What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.', 'Launch goes to TrialBudgetWarning when launch validation returns trial_budget_warning (R3-7), otherwise straight to the identity check.'] } }),
+    S('TrialBudgetWarning', 'Launch · trial budget warning', { sizes: ['wide'], focus: { wide: [['back', 'Button #cancel'], ['ok', 'Button #ok']] }, render: (sz, f) => trialBudget(sz, f), legend: { screen: 'ConfirmScreen (M15, shared)', file: 'tui/widgets/confirm.py', tree: `ConfirmScreen(ModalScreen[bool])   over ReviewLaunchScreen
+├─ Vertical #confirm .dialog
+│  ├─ Static #confirm-message     budget and subscription usage
+│  ├─ Static #budget-totals .kv    task runs · judge sessions
+│  ├─ DataTable #budget-entries    configurations not on a local endpoint
+│  └─ Horizontal .dialog-actions   #cancel · #ok
+└─ Footer`, sel: [...modalSel('ConfirmScreen', '#confirm', 86), ['#budget-entries', 'height: 5;'], ['#ok', 'variant: primary;  “Launch N trials”']], keys: [['esc', 'dismiss(False)', 'Back to the review; nothing starts'], ['tab / shift+tab', 'focus_next / previous', 'Move between buttons'], ['enter', 'press', 'Activate the focused button']], states: SETUP_STATES, notes: ['R3-7: there is no upper limit on trials. When a launch requests more than 5 trials for any configuration not on a local endpoint, M07’s launch validation returns trial_budget_warning with its totals.', 'Totals: task runs = configurations × trials × tasks; judge sessions = configurations × trials. The dialog states clearly that the extra trials consume budget and subscription usage.', 'Not shown when every configuration above 5 trials is on a local endpoint; local configurations are listed apart as using no budget.', 'Focus starts on Back to review. run --no-tui prints the same warning and continues; it never prompts (M14).'] } }),
     S('LaunchRecord', 'Launch record', { sizes: ['wide'], render: (sz) => launchRecord(sz), legend: { screen: 'LaunchRecordScreen', file: 'tui/screens/run_config.py', tree: RECORD_TREE, sel: [...modalSel('LaunchRecordScreen', '#launch-record', 86), ['#resolved-yaml', 'height: 7;']], keys: [['esc', 'dismiss', 'Close'], ['c', 'copy_path', 'Copy the record path']], states: SETUP_STATES, notes: ['Template binding, resolved configuration and original weights are frozen separately before the first task (R067).', 'Machine and catalog metadata are captured for M02; credentials appear only as “set” (R066).'] } }),
   ] },
 ];
@@ -592,9 +666,9 @@ const CHECKS_KEYS = [
   ['s', 'screenshots', 'Push ScreenshotsScreen'],
   ['f', 'final_regression', 'Push FinalRegressionScreen'],
   ['j', 'judge_input', 'Show what the judge receives'],
-  ['l', 'log', 'Open the check log'],
+  ['l', 'log', 'Push EvidenceViewerScreen on the check log'],
 ];
-const V_STATES = [['Task checks', 'TaskChecks'], ['Final regression', 'FinalRegression'], ['Not passed', 'CheckOutcomes'], ['Screenshots', 'Screenshots'], ['In progress', 'VerifyProgress'], ['Judge input', 'JudgeHandoff']];
+const V_STATES = [['Task checks', 'TaskChecks'], ['Final regression', 'FinalRegression'], ['Not passed', 'CheckOutcomes'], ['Screenshots', 'Screenshots'], ['Evidence', 'EvidenceViewer'], ['In progress', 'VerifyProgress'], ['Judge input', 'JudgeHandoff']];
 const checksLegend = (screen, tree, sel, notes) => ({ screen, file: 'tui/screens/verification.py', tree, sel, keys: CHECKS_KEYS, states: V_STATES, notes });
 const REG_TREE = `FinalRegressionScreen(Screen)
 ├─ Header · Static #result-bar
@@ -630,7 +704,7 @@ const HANDOFF_TREE = `JudgeInputScreen(ModalScreen[None])
 └─ Footer`;
 
 const M08 = [
-  { id: 'm08-checks', page: 'm08', title: 'M08 · 1 · Checks and evidence', note: 'Every task is verified by its frozen acceptance checks on a disposable copy of its snapshot, with tooling outside the competitor workspace and no repairs. Each check is passed, failed or unverified; a final regression runs all checks again on the delivered artifact. Screenshots and logs stay with the task they describe.', boards: [
+  { id: 'm08-checks', page: 'm08', title: 'M08 · 1 · Checks and evidence', note: 'Every task is verified by its frozen acceptance checks on a disposable copy of its snapshot, with tooling outside the competitor workspace and no repairs. Each check is passed, failed or unverified; a final regression runs all checks again on the delivered artifact. Screenshots and logs stay with the task they describe and open read-only in the evidence viewer.', boards: [
     S('TaskChecks', 'Task checks · T5', { sizes: ['wide', 'compact'], focus: { wide: [['checks', 'DataTable #task-checks'], ['detail', 'VerticalScroll #check-detail'], ['final', 'DataTable #final-summary'], ['shots', 'Button #screenshots']], compact: [['checks', 'DataTable #task-checks'], ['detail', 'VerticalScroll #check-detail']] }, render: (sz, f) => taskChecks(sz, f), legend: checksLegend('TaskChecksScreen', CHECKS_TREE, CHECKS_SEL, [
       'The frozen checks decide task success; exit code, agent claims and grades are separate observations (R073, R144).',
       'Disposable copy, tooling outside the source, no manual fixes; the snapshot is preserved (R074).',
@@ -647,11 +721,24 @@ const M08 = [
     S('Screenshots', 'Screenshots', { sizes: ['wide'], focus: { wide: [['list', 'DataTable #shots']] }, render: (sz, f) => screenshots(sz, f), legend: checksLegend('ScreenshotsScreen', SHOT_TREE, [['.shot', 'border: solid $foreground 30%; content-align: center middle;'], ['.shot.-desktop', 'width: 63; height: 24;'], ['.shot.-mobile', 'width: 21; height: 24;']], [
       'Both required sizes are captured per check (R075); frames are drawn to scale as placeholders.',
       'Images open in the system viewer; terminals are not assumed to render them.',
+      'Per-task screenshots stay in evidence, results and the report but are not judge input; the judge gets the final regression’s screenshots (D12).',
     ]) }),
+    S('EvidenceViewer', 'Evidence viewer · check log', { sizes: ['wide', 'compact'], focus: { wide: [['text', 'TextArea #evidence-text'], ['files', 'DataTable #evidence-files'], ['open', 'Button #open-external']], compact: [['text', 'TextArea #evidence-text']] }, render: (sz, f) => evidenceViewer(sz, f), legend: { screen: 'EvidenceViewerScreen', file: 'tui/screens/evidence.py · EvidenceViewerVM', tree: `EvidenceViewerScreen(Screen)   result_id, path
+├─ Header
+├─ Static #evidence-bar
+├─ Horizontal #main
+│  ├─ Vertical #evidence-side          hidden when compact
+│  │  ├─ DataTable #evidence-files
+│  │  └─ Static #evidence-meta .kv
+│  └─ TextArea #evidence-text          read_only=True · paged
+├─ Horizontal .actions
+│  ├─ Button #open-external
+│  └─ Button #reveal
+└─ Footer`, sel: [['#evidence-bar', 'height: 1; background: $surface; padding: 0 1;'], ['#evidence-side', 'width: 44;'], ['#evidence-files', 'height: 10;  cursor_type = "row"'], ['#evidence-text', 'width: 1fr; border: solid $foreground 30%;  read_only=True, show_line_numbers=True'], ['Screen.-compact #evidence-side', 'display: none;  e toggles the file list']], keys: [['esc', 'app.pop_screen', 'Back to where it was opened'], ['enter', 'show_file', 'Show the selected file'], ['o', 'open_external', 'Open in the system viewer (images, snapshots)'], ['f', 'reveal', 'Reveal the file in its folder'], ['end', 'scroll_end', 'Jump to the end; pages load from results.read_evidence'], ['e', 'files', 'Compact only: show the file list']], states: V_STATES, notes: ['W1: opened from results with l and the Open log / Open snapshot / Open evidence buttons (M02), and with l on TaskChecks.', 'Content is paged from results.read_evidence; the view never writes, so outcomes and grades cannot change.', 'Binary evidence (screenshots) opens externally; snapshots list their files at the recorded commit.'] } }),
   ] },
-  { id: 'm08-flow', page: 'm08', title: 'M08 · 2 · During the run and handoff to the judge', note: 'Verification progress is part of the run view. The judge receives the artifact and acceptance evidence, kept apart from measured statistics, and a later grade can never rewrite a check outcome.', boards: [
-    S('VerifyProgress', 'Verifying a task', { sizes: ['wide'], render: (sz) => verifyProgress(sz), legend: { screen: 'VerifyProgressScreen', file: 'tui/screens/run_config.py', tree: PROG_TREE, sel: [...modalSel('VerifyProgressScreen', '#verify-progress', 84), ['ProgressBar', 'show_eta = False']], keys: [['esc', 'dismiss', 'Hide; verification continues']], states: V_STATES, notes: ['Verification progress and outcomes are supplied to the run view (R034).', 'Setup exposing an application defect is recorded, never repaired (R074).'] } }),
-    S('JudgeHandoff', 'Judge input', { sizes: ['wide'], render: (sz) => judgeHandoff(sz), legend: { screen: 'JudgeInputScreen', file: 'tui/screens/verification.py', tree: HANDOFF_TREE, sel: modalSel('JudgeInputScreen', '#judge-input', 86), keys: [['esc', 'dismiss', 'Close']], states: V_STATES, notes: ['Acceptance evidence goes to the judge separately from cost, time and other measurements (R075).', 'A grade never rewrites a check outcome (R144).'] } }),
+  { id: 'm08-flow', page: 'm08', title: 'M08 · 2 · During the run and handoff to the judge', note: 'Verification progress is part of the run view (p on a configuration). The judge receives the artifact, acceptance evidence and the final regression’s screenshots, kept apart from measured statistics, and a later grade can never rewrite a check outcome.', boards: [
+    S('VerifyProgress', 'Verifying a task', { sizes: ['wide'], render: (sz) => verifyProgress(sz), legend: { screen: 'VerifyProgressScreen', file: 'tui/screens/run_config.py', tree: PROG_TREE, sel: [...modalSel('VerifyProgressScreen', '#verify-progress', 84), ['ProgressBar', 'show_eta = False']], keys: [['esc', 'dismiss', 'Hide; verification continues']], states: V_STATES, notes: ['Opened with p on RunConfigScreen: VerifyProgressScreen(run_id, configuration_id) (W5).', 'Verification progress and outcomes are supplied to the run view (R034).', 'Setup exposing an application defect is recorded, never repaired (R074).'] } }),
+    S('JudgeHandoff', 'Judge input', { sizes: ['wide'], render: (sz) => judgeHandoff(sz), legend: { screen: 'JudgeInputScreen', file: 'tui/screens/verification.py', tree: HANDOFF_TREE, sel: modalSel('JudgeInputScreen', '#judge-input', 86), keys: [['esc', 'dismiss', 'Close']], states: V_STATES, notes: ['D12: the judge gets the screenshots from the final regression on the delivered artifact, at 1440×1000 and 390×844; for the inventory that is 14 (one desktop and one mobile per task area). Which steps capture is defined by the template’s checks.', 'Per-task screenshots stay in evidence, results and the report, not in judge input.', 'Acceptance evidence goes to the judge separately from cost, time and other measurements (R075). A grade never rewrites a check outcome (R144).'] } }),
   ] },
 ];
 
@@ -665,13 +752,14 @@ const PROMPTS_TREE = `PromptsScreen(Screen)          read-only
 │  │  └─ Tree #prompt-files
 │  └─ MarkdownViewer #prompt-text  show_table_of_contents=False
 └─ Footer`;
-const INV_STATES = [['Contract', 'InventoryAbout'], ['Prompts', 'InventoryPrompts'], ['Checks', 'InventoryChecks'], ['Look-alike', 'InventoryVariant']];
+const INV_STATES = [['Contract', 'InventoryAbout'], ['Prompts', 'InventoryPrompts'], ['Checks', 'InventoryChecks'], ['Look-alike', 'InventoryVariant'], ['Newer built-in', 'InventoryUpgrade']];
 const M09 = [
-  { id: 'm09-default', page: 'm09', title: 'M09 · Default seven-task inventory benchmark', note: 'The built-in Inventory web app r1: an empty starting project, HTML5 and vanilla JavaScript, localStorage, the shared specification and exactly T1–T7, bundled checks and the web rubric. It runs without a planner. The prompts are packaged unchanged; anything they leave open is not checked. A look-alike with another task count is a different template.', boards: [
-    S('InventoryAbout', 'Default benchmark · contract', { sizes: ['wide'], focus: { wide: [['configure', 'Button #configure'], ['contract', 'DataTable #contract'], ['prompts', 'Button #prompts']] }, render: (sz, f) => inventoryAbout(sz, f), legend: { screen: 'InventoryAboutScreen', file: 'tui/screens/library.py', tree: `InventoryAboutScreen(ModalScreen[None])\n├─ Vertical #inventory-about .dialog\n│  ├─ DataTable #contract\n│  ├─ Static #left-open\n│  └─ Horizontal .dialog-actions\n└─ Footer`, sel: modalSel('InventoryAboutScreen', '#inventory-about', 86), keys: MODAL_KEYS([['p / c', 'prompts / checks', 'Open the prompts or the check coverage'], ['enter', 'configure', 'Setup for r1, no planning (M07)']]), states: INV_STATES, notes: ['Opened with ? from the library detail pane.', 'Empty baseline, technology, persistence, seven ordered tasks with commits, bundled checks and rubric (R020–R028).', 'The website is the competitors’ artifact, not an AxBenchmark feature.'] } }),
+  { id: 'm09-default', page: 'm09', title: 'M09 · Default seven-task inventory benchmark', note: 'The built-in Inventory web app r1: an empty starting project, HTML5 and vanilla JavaScript, localStorage, the shared specification and exactly T1–T7, bundled checks and the web rubric. It runs without a planner. The prompts are packaged unchanged; anything they leave open is not checked. A look-alike with another task count is a different template, and a newer built-in revision never replaces a default that already has results.', boards: [
+    S('InventoryAbout', 'Default benchmark · contract', { sizes: ['wide'], focus: { wide: [['configure', 'Button #configure'], ['contract', 'DataTable #contract'], ['prompts', 'Button #prompts']] }, render: (sz, f) => inventoryAbout(sz, f), legend: { screen: 'InventoryAboutScreen', file: 'tui/screens/library.py', tree: `InventoryAboutScreen(ModalScreen[None])\n├─ Vertical #inventory-about .dialog\n│  ├─ DataTable #contract\n│  ├─ Static #left-open\n│  └─ Horizontal .dialog-actions\n└─ Footer`, sel: modalSel('InventoryAboutScreen', '#inventory-about', 86), keys: MODAL_KEYS([['p / c', 'prompts / checks', 'Open the prompts or the check coverage'], ['enter', 'configure', 'Setup for r1, no planning (M07)']]), states: INV_STATES, notes: ['Opened with a (About) from the Library, enabled only on the built-in inventory row (D2); ? stays the app-wide Help.', 'Empty baseline, technology, persistence, seven ordered tasks with commits, bundled checks and rubric (R020–R028).', 'The website is the competitors’ artifact, not an AxBenchmark feature.'] } }),
     S('InventoryPrompts', 'Preserved prompts', { sizes: ['wide'], focus: { wide: [['text', 'MarkdownViewer #prompt-text'], ['files', 'Tree #prompt-files']] }, render: (sz, f) => inventoryPrompts(sz, f), legend: { screen: 'PromptsScreen', file: 'tui/screens/template.py', tree: PROMPTS_TREE, sel: [['#prompt-files', 'width: 30;'], ['#prompt-text', 'width: 1fr; border: solid $foreground 30%;']], keys: [['esc', 'app.pop_screen', 'Back'], ['↑ ↓', 'scroll', 'Scroll'], ['c', 'checks', 'Check coverage'], ['y', 'copy', 'Copy the selected file']], states: INV_STATES, notes: ['Text is read from benchmark/tasks/ when the wireframes are built, so it is the preserved text verbatim (R020, R028).', 'Read-only: editing creates a new revision through M01.'] } }),
     S('InventoryChecks', 'Check coverage', { sizes: ['wide'], focus: { wide: [['checks', 'DataTable #coverage'], ['open', 'Static #not-checked']] }, render: (sz, f) => inventoryChecks(sz, f), legend: { screen: 'CoverageScreen', file: 'tui/screens/template.py', tree: `CoverageScreen(Screen)\n├─ Header · Static #checks-bar\n├─ DataTable #coverage .bordered\n├─ Horizontal\n│  ├─ Static #also-checked .pane\n│  └─ Static #not-checked .pane\n└─ Footer`, sel: [['#coverage', 'height: 24;'], ['#also-checked, #not-checked', 'width: 1fr;']], keys: [['esc', 'app.pop_screen', 'Back'], ['p', 'prompts', 'Preserved prompts'], ['o', 'open', 'Open checks/acceptance.v1.json']], states: INV_STATES, notes: ['Every task contract is covered, including README creation and update, persistence, lookup, checkout stock and browser QA (R021–R027).', 'Check titles are illustrative restatements; choices the prompts leave open are listed and not checked.'] } }),
-    S('InventoryVariant', 'Look-alike is not the default', { sizes: ['wide'], render: (sz) => inventoryVariant(sz), legend: { screen: 'VariantScreen', file: 'tui/screens/library.py', tree: `VariantScreen(ModalScreen[None])\n├─ Vertical #variant .dialog\n│  ├─ DataTable #variant-compare\n│  ├─ Static .notice.-warning\n│  └─ Horizontal .dialog-actions\n└─ Footer`, sel: modalSel('VariantScreen', '#variant', 86), keys: [['esc', 'dismiss', 'Close']], states: INV_STATES, notes: ['A six-task suite is a different template even with a similar name (R136).', 'Historical runs never get a verified hash from a matching name or task count (R028).'] } }),
+    S('InventoryVariant', 'Look-alike is not the default', { sizes: ['wide'], render: (sz) => inventoryVariant(sz), legend: { screen: 'VariantScreen', file: 'tui/screens/library.py', tree: `VariantScreen(ModalScreen[None])\n├─ Vertical #variant .dialog\n│  ├─ DataTable #variant-compare\n│  ├─ Static .notice.-warning\n│  └─ Horizontal .dialog-actions\n└─ Footer`, sel: modalSel('VariantScreen', '#variant', 86), keys: [['esc', 'dismiss', 'Close']], states: INV_STATES, notes: ['Opened with Why not the default? (#why-not-default) on a look-alike row (LibraryLookAlike).', 'A six-task suite is a different template even with a similar name (R136); names and task counts never confer identity.'] } }),
+    S('InventoryUpgrade', 'Newer built-in revision · what changed', { sizes: ['wide'], focus: { wide: [['close', 'Button #close']] }, render: (sz, f) => inventoryUpgrade(sz, f), legend: { screen: 'DefaultChangesScreen', file: 'tui/screens/library.py', tree: `DefaultChangesScreen(ModalScreen[None])\n├─ Vertical #default-changes-dialog .dialog\n│  ├─ Static #changes-diff\n│  ├─ Static #changes-digests\n│  ├─ Static .notice.-warning\n│  └─ Horizontal .dialog-actions\n│     ├─ Button #open-revision\n│     ├─ Button #make-default   → ConfirmScreen (M15)\n│     └─ Button #close .-primary\n└─ Footer`, sel: modalSel('DefaultChangesScreen', '#default-changes-dialog', 86), keys: [['esc', 'dismiss', 'Close'], ['tab', 'focus_next', 'Next button']], states: INV_STATES, notes: ['D16: opened from #default-changes in the Library notice. All built-in revisions stay available.', 'Prompts stay verbatim; only checks and protocol changed, which is enough for a new SHA-256, so r1 and r3 results never compare.', 'Make r3 the default… confirms through ConfirmScreen and changes only the Library’s default selection.'] } }),
   ] },
 ];
 

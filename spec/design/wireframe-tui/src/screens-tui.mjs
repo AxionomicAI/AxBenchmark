@@ -103,3 +103,23 @@ export function runListDetail(sz, focus = 'list') {
   footer(g, [{ k: '↑↓', d: 'Config' }, { k: 'enter', d: 'Tasks', go: 'RunConfig' }, { k: 'v', d: 'Live', go: 'HarnessLive' }, { k: '/', d: 'Search' }, { k: 's', d: 'Stop', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }]);
   return g;
 }
+
+// ---------------------------------------------------------------- PromptScreen · one value, typed (shared M15 widget)
+// PromptScreen(ModalScreen[str | None]) asks for a single value over the screen that needs it: a preset name, an export
+// path. A typed error keeps the dialog open and shows in #prompt-error; esc returns None and changes nothing.
+// o: { title, label, value, hint?, error?, ok, back, focus }
+export function promptScreen(g, o) {
+  const m = modal(g, 76, 12, o.title, { sel: '#prompt' });
+  let y = para(g, m.x, m.y, m.w, o.label);
+  g.region(m.x, m.y, m.w, y - m.y, 'Static', '#prompt-label');
+  y++;
+  input(g, m.x, y, m.w, o.value, { focus: o.focus === 'input', f: o.error ? 'bd' : '' });
+  g.region(m.x, y++, m.w, 1, 'Input', '#prompt-input');
+  if (o.error) { g.text(m.x, y, '✗', 'bd'); g.text(m.x + 2, y, fit(o.error, m.w - 2), 'bd'); g.region(m.x, y, m.w, 1, 'Static', '#prompt-error'); }
+  else if (o.hint) { g.text(m.x, y, '✓', 'ac'); g.text(m.x + 2, y, fit(o.hint, m.w - 2), 'mu'); }
+  const x0 = buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: o.back, focus: o.focus === 'cancel' }, { label: o.ok, v: 'primary', go: o.error ? undefined : o.back, focus: o.focus === 'ok' }]);
+  g.region(x0, m.bottom, 8, 1, 'Button', '#cancel');
+  g.region(x0 + 10, m.bottom, len(o.ok) + 2, 1, 'Button', '#ok');
+  footer(g, [{ k: 'esc', d: 'Cancel', go: o.back }, { k: 'enter', d: o.ok, go: o.error ? undefined : o.back }, { k: 'tab', d: 'Next', do: 'next' }], '');
+  return g;
+}

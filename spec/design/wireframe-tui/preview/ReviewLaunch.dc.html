@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1000px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1080px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Review before launch</b> · ReviewLaunchScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -92,17 +92,17 @@ body{margin:0}
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Execution and environment</span><span class="B0"> </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Concurrency   </span><span class="B0">one configuration per harness, up to 4 at once · Claude Code #2 after #1 · tasks sequential              </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Trials        </span><span class="B0">1 per configuration · 5 configurations × 1 trial × 7 tasks = 35 task runs · 5 judge sessions             </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Policy        </span><span class="B0">clean for all 5 entries · managed settings · no isolation limitations                                    </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">Timeouts      </span><span class="B0">execution protocol v1 defaults (M11)                                                                     </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">Optional      </span><span class="B0">▲ CPU and GPU power unavailable (permission) · run unaffected                                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Monitoring    </span><span class="B0">automatic · requested interval 1 s · each collector records its actual interval                          </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Currency      </span><span class="B0">display USD · rate snapshot: USD 1 (all 4 priced entries use USD prices) · catalog rates 2026-10-01      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Cost, energy  </span><span class="B0">tariff 0.18 USD/kWh · catalog price table at launch · billing #1 #2 subscription (declared by user)      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Optional      </span><span class="B0">▲ CPU and GPU power unavailable (insufficient permission) · run unaffected · no energy estimate          </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Recorded with every result</span><span class="B0"> </span><span class="B0 ln">───────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Machine       </span><span class="B0">mike-mbp-m4 · macOS 26.0 · Apple M4 Pro · 48 GB                                                          </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Catalog       </span><span class="B0">catalog 2026.09.2 · discovered 21:38 for each harness version                                            </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Credentials   </span><span class="B0">never recorded · keys appear as “set” in exports, logs and reports                                       </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
@@ -134,17 +134,17 @@ body{margin:0}
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Execution and environment</span><span class="B0"> </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Concurrency   </span><span class="B0">one configuration per harness, up to 4 at once · Claude Code #2 after #1 · tasks sequential              </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Trials        </span><span class="B0">1 per configuration · 5 configurations × 1 trial × 7 tasks = 35 task runs · 5 judge sessions             </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Policy        </span><span class="B0">clean for all 5 entries · managed settings · no isolation limitations                                    </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">Timeouts      </span><span class="B0">execution protocol v1 defaults (M11)                                                                     </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">Optional      </span><span class="B0">▲ CPU and GPU power unavailable (permission) · run unaffected                                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Monitoring    </span><span class="B0">automatic · requested interval 1 s · each collector records its actual interval                          </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Currency      </span><span class="B0">display USD · rate snapshot: USD 1 (all 4 priced entries use USD prices) · catalog rates 2026-10-01      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Cost, energy  </span><span class="B0">tariff 0.18 USD/kWh · catalog price table at launch · billing #1 #2 subscription (declared by user)      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Optional      </span><span class="B0">▲ CPU and GPU power unavailable (insufficient permission) · run unaffected · no energy estimate          </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Recorded with every result</span><span class="B0"> </span><span class="B0 ln">───────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Machine       </span><span class="B0">mike-mbp-m4 · macOS 26.0 · Apple M4 Pro · 48 GB                                                          </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Catalog       </span><span class="B0">catalog 2026.09.2 · discovered 21:38 for each harness version                                            </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Credentials   </span><span class="B0">never recorded · keys appear as “set” in exports, logs and reports                                       </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
@@ -182,13 +182,13 @@ body{margin:0}
 <table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to setup</span></td></tr><tr><td><kbd>c</kbd></td><td><code>copy_cli</code><br><span class="mut">Copy the equivalent unattended command (M14)</span></td></tr><tr><td><kbd>ctrl+l</kbd></td><td><code>launch</code><br><span class="mut">Launch → identity check (M01)</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>Button #launch</li><li>DataTable #review-entries</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="Setup.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch.dc.html">Review</a><a href="LaunchRecord.dc.html">Launch record</a></div>
+<div class="rel"><a href="Setup.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
 <h3>Notes</h3>
-<ul><li>Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings and limitations (R032, R033, R037).</li><li>What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.</li></ul>
+<ul><li>Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings (trials with task-run and judge-session totals, sampling interval, display currency, tariff, billing kinds) and limitations (R032, R033, R037).</li><li>What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.</li><li>Launch goes to TrialBudgetWarning when launch validation returns trial_budget_warning (R3-7), otherwise straight to the identity check.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1000}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1080}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

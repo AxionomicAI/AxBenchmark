@@ -5,7 +5,7 @@
 import { Grid, fit, len, header, footer, table, buttons, para, kv, notice, modal, progress, scrollbar } from './lib.mjs';
 import { SHA, s8 } from './screens.mjs';
 import { setup } from './screens-setup.mjs';
-import { byId, JUDGES, QCATS, QW, quality, normalize, f2 } from './results-data.mjs';
+import { byId, JUDGES, QCATS, QW, quality, normalize, f2, stats, TRIAL_RUN, TRIAL_CONFIGS, BACKEND_CATS, trialGates } from './results-data.mjs';
 
 const JUDGE = JUDGES.A.long;
 const pct = (x) => `${Math.round(x * 100)}%`;
@@ -43,7 +43,7 @@ export function judging(sz, focus = 'queue', st = {}) {
     g.region(1, 3, W - 2, 5, 'DataTable', '#reviews');
     g.box(0, 9, W, H - 10, { title: 'This session gets · never gets', f: focus === 'inputs' ? 'ac' : 'ln' });
     g.region(0, 9, W, H - 10, 'Static', '#inputs');
-    [['✓', 'artifact C · spec, prompts, source · rubric web v1'], ['✓', 'check outcomes · 14 screenshots · console errors'], ['✗', 'cost, time, tokens · other reviews · names'], ['✗', 'which configuration made artifact C']].forEach(([gl, t], i) => { g.text(2, 10 + i, gl, gl === '✓' ? 'ac' : 'mu'); g.text(4, 10 + i, fit(t, W - 6), gl === '✓' ? '' : 'mu'); });
+    [['✓', 'artifact C · spec, prompts, source · rubric web v1'], ['✓', 'check outcomes · 14 shots from the final regression'], ['✗', 'cost, time, tokens · other reviews · names'], ['✗', 'which configuration made artifact C']].forEach(([gl, t], i) => { g.text(2, 10 + i, gl, gl === '✓' ? 'ac' : 'mu'); g.text(4, 10 + i, fit(t, W - 6), gl === '✓' ? '' : 'mu'); });
     para(g, 2, 15, W - 4, 'The judge inspects only. It never edits or repairs the artifact.', 'mu');
     footer(g, [{ k: 'enter', d: 'Open review', go: 'ReviewDetail' }, { k: 'p', d: 'Profiles', go: 'RubricProfiles' }, { k: 'd', d: 'Detach' }]);
     return g;
@@ -71,7 +71,7 @@ export function judging(sz, focus = 'queue', st = {}) {
     g.text(2, y++, 'Inspecting screenshots · 9 of 14', 'bd');
     progress(g, 2, y++, 56, 64);
     y++;
-    ['read spec/00-project.md and 7 task prompts', 'read src/ · 14 files · no file was changed', 'opened check outcomes · 21✓ at final regression', 'viewing T5-cart-mobile-390x844.png'].forEach((t, i, a) => { g.text(2, y, i === a.length - 1 ? '●' : '✓', 'ac'); g.text(4, y++, fit(t, 54), i === a.length - 1 ? 'bd' : ''); });
+    ['read spec/00-project.md and 7 task prompts', 'read src/ · 14 files · no file was changed', 'opened check outcomes · 21✓ at final regression', 'viewing final regression · cart · 390×844'].forEach((t, i, a) => { g.text(2, y, i === a.length - 1 ? '●' : '✓', 'ac'); g.text(4, y++, fit(t, 54), i === a.length - 1 ? 'bd' : ''); });
     y++;
     para(g, 2, y, 56, 'Read-only workspace copy: the judge inspects and assesses, it never repairs the application.', 'mu');
 
@@ -80,12 +80,12 @@ export function judging(sz, focus = 'queue', st = {}) {
     g.region(60, 10, 60, 21, 'Static', '#inputs');
     y = 11;
     g.text(62, y++, 'Given', 'bd');
-    ['Artifact C · delivered snapshot at T7', 'Specification, the 7 task prompts and their source', 'Rubric web v1 and the 1 · 3 · 5 anchors', 'Check outcomes, 14 screenshots, console errors'].forEach((t) => { g.text(62, y, '✓', 'ac'); g.text(64, y++, fit(t, 54)); });
+    ['Artifact C · delivered snapshot at T7', 'Specification, the 7 task prompts and their source', 'Rubric web v1 and the 1 · 3 · 5 anchors', 'Check outcomes, console errors, 14 screenshots', 'from the final regression · 1440×1000 and 390×844'].forEach((t) => { g.text(62, y, '✓', 'ac'); g.text(64, y++, fit(t, 54)); });
     y++;
     g.text(62, y++, 'Never given', 'bd');
     ['Cost, elapsed time, tokens, pricing', 'Reviews of artifacts A, B and D', 'Harness, model and configuration names', 'The label → result mapping'].forEach((t) => { g.text(62, y, '✗', 'mu'); g.text(64, y++, fit(t, 54), 'mu'); });
     y++;
-    para(g, 62, y, 56, 'Evidence excerpts are filtered the same way before they are sent.', 'mu');
+    para(g, 62, y, 56, 'Per-task screenshots stay in evidence and the report; they are not judge input.', 'mu');
   }
   const ay = ung ? 19 : 31;
   para(g, 1, ay + 1, W - 2, 'Grades are the judge’s raw output. Weighted quality and combined scores are computed by AxBenchmark (M06), so changing weights never needs another session. A good review cannot turn a failed check or a failed process into a success.', 'mu');
@@ -93,15 +93,62 @@ export function judging(sz, focus = 'queue', st = {}) {
   return g;
 }
 
+// ---------------------------------------------------------------- JudgingScreen · 3 trials per configuration (D7)
+
+export function judgingTrials(sz, focus = 'queue') {
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
+  const R = TRIAL_RUN;
+  header(g, 'AxBenchmark', `Run ${R.run} · ${R.template} · independent judging`);
+  g.fill(0, 1, W, 1, 'B1');
+  g.text(1, 1, '✓', 'ac');
+  g.text(3, 1, fit(`Judging finished · 6 sessions · 2 configurations × ${R.trials} trials · judge claude-opus-5-5 · high · backend v1 · one per trial`, W - 4));
+  g.region(0, 1, W, 1, 'Static', '#judging-bar');
+  const L = 'ABCDEF';
+  const all = TRIAL_CONFIGS.flatMap((c, ci) => c.trials.map((t, ti) => ({ c, t, l: `Artifact ${L[ci * 3 + ti]}` })));
+  // the judge saw the artifacts in a shuffled order; the label never says which trial or configuration it is
+  const qf = focus === 'queue';
+  g.box(0, 2, W, 10, { f: qf ? 'ac' : 'ln', title: 'Reviews · one session per trial, in order', sub: 'grades 1–5 in steps of 0.5' });
+  table(g, 1, 3, W - 2, [{ l: 'Label', w: 12 }, { l: 'Status', w: 11 }, { l: 'Configuration · trial · visible to you only', w: 48 }, { l: 'Grades · DX → Ops', w: 29 }, { l: 'Q', w: 6, al: 'right' }, { l: 'Time', w: W - 2 - 106, al: 'right' }],
+    all.map(({ c, t, l }, i) => ({ v: [l, '✓ graded', `${c.h} · ${c.model} · trial ${t.trial} of ${c.trials.length}`, t.g.map((n) => n.toFixed(1)).join(' '), f2(quality(t.g)), ['3:02', '3:17', '2:58', '3:21', '3:09', '3:14'][i]] })), { cursor: 4, focused: qf });
+  g.region(1, 3, W - 2, 7, 'DataTable', '#reviews');
+  g.text(2, 10, fit('Each trial is its own artifact and fresh session; the judge never sees two trials together or compares them.', W - 4), 'mu');
+
+  const sf = focus === 'summary';
+  g.box(0, 12, W, 9, { f: sf ? 'ac' : 'ln', title: 'Quality per configuration · computed by AxBenchmark (M06)', sub: 'rankings use the mean' });
+  g.region(0, 12, W, 9, 'DataTable', '#trial-quality');
+  const rows = TRIAL_CONFIGS.flatMap((c) => {
+    const q = stats(c.trials.map((t) => quality(t.g))), gates = trialGates(c);
+    const per = BACKEND_CATS.map((_, i) => stats(c.trials.map((t) => t.g[i])));
+    return [
+      { v: [c.h, 'mean', ...per.map((p) => p.mean.toFixed(2)), { t: f2(q.mean), f: 'bd' }, gates.length ? { t: '✗ trial 2 not eligible', f: 'bd' } : '✓ every trial eligible'], f: 'bd' },
+      { v: [c.model, 'min–max', ...per.map((p) => (p.min === p.max ? p.min.toFixed(1) : `${p.min.toFixed(1)}–${p.max.toFixed(1)}`)), `${f2(q.min)}–${f2(q.max)}`, gates.length ? 'check T4.2 failed · spec 3.5' : ''], f: 'mu' },
+    ];
+  });
+  table(g, 1, 13, W - 2, [{ l: 'Configuration', w: 20 }, { l: '', w: 9 }, ...BACKEND_CATS.map(([, , s]) => ({ l: s, w: 8, al: 'right' })), { l: 'Q', w: 11, al: 'right' }, { l: 'Eligibility', w: W - 2 - 88 }], rows, { cursor: 0, focused: sf });
+  g.text(2, 18, fit('Q per trial uses the backend profile weights; the mean of the three is what ranks, and the range stays visible.', W - 4), 'mu');
+  g.text(2, 19, fit('A configuration ranks only when every trial is eligible: Claude Code is listed with trial 2’s reason, not ranked.', W - 4), 'mu');
+
+  const nf = focus === 'inputs';
+  g.box(0, 21, W, H - 22, { f: nf ? 'ac' : 'ln', title: 'Inputs to each session · the same for every trial' });
+  g.region(0, 21, W, H - 22, 'Static', '#inputs');
+  let y = 22;
+  [['✓', 'One trial’s delivered snapshot at T7, the specification, the 7 task prompts and the rubric backend v1'], ['✓', 'Check outcomes and console errors of that trial’s final regression · this backend template has no screenshots'], ['✗', 'Cost, time, tokens · other trials or their reviews · harness, model and trial names · the label mapping']].forEach(([gl, t]) => { g.text(2, y, gl, gl === '✓' ? 'ac' : 'mu'); g.text(4, y++, fit(t, W - 6), gl === '✓' ? '' : 'mu'); });
+  y++;
+  para(g, 2, y, W - 4, 'Six sessions cost six times one review; judging cost is recorded per trial (M10), apart from competitor cost. A failed or ungraded trial keeps its configuration out of quality and combined rankings until every trial is graded.', 'mu');
+  footer(g, [{ k: 'enter', d: 'Open review', go: 'ReviewDetail' }, { k: 'p', d: 'Grading profiles', go: 'RubricProfiles' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  return g;
+}
+
 // ---------------------------------------------------------------- ReviewScreen · one complete review
 
+// Screenshots are those of the final regression on the delivered artifact (D12): name · viewport.
 const EVID = [
-  ['T3-desktop · T5-mobile · trace T5.2', 'Flows work; badge lags after a removal'],
-  ['shot T3-desktop · T6-mobile', 'Consistent type; tight mobile header'],
+  ['shot cart-1440 · cart-390 · T5.2', 'Flows work; badge lags after a removal'],
+  ['shot inventory-1440 · checkout-390', 'Consistent type; tight mobile header'],
   ['src/cart.js:12–96 · src/store.js', 'Small modules; one 140-line function'],
   ['check T6.1–T6.3 · spec §Checkout', 'Stock, totals, order history match'],
-  ['trace T7 reload · storage cleared', 'Survives reload; no input length limits'],
-  ['shot T5-mobile · keyboard trace T5', 'Labels ok; focus skips the cart dialog'],
+  ['check T7.1 reload · storage cleared', 'Survives reload; no input length limits'],
+  ['shot cart-390 · keyboard check T5.4', 'Labels ok; focus skips the cart dialog'],
 ];
 const ANCHOR = (v) => '■'.repeat(Math.floor(v)) + (v % 1 ? '▪' : '') + '□'.repeat(5 - Math.ceil(v));
 
@@ -140,7 +187,7 @@ export function reviewDetail(sz, focus = 'grades') {
     ['Session', 'fresh · 1 artifact only'],
     ['Reviewed', '2026-09-28 21:16 · 3:10'],
     ['Cost', '$0.38 · judging, separate'],
-    ['Evidence', '14 screenshots · 2 traces'],
+    ['Evidence', '14 final-regression shots'],
     ['Raw file', 'reviews/R-0928a-1.a.json'],
   ]);
   y++;

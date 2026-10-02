@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1000px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>status · stop</b> · axbenchmark status · stop · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -75,8 +75,8 @@ body{margin:0}
 <div class="r"><span class="B0">   Claude Code  </span><span class="B0 mu">claude-opus-5-5 · medium  </span><span class="B0"> ✓✓✗––––   </span><span class="B0 mu">22:46   </span><span class="B0"> </span><span class="B0 mu">$1.52 ▲ </span><span class="B0"> </span><span class="B0 bd">✗ halted at T3 · authentication failed (401)   </span><span class="B0">  </span></div>
 <div class="r"><span class="B0">   Codex        </span><span class="B0 mu">gpt-6-sol · medium        </span><span class="B0"> ✓✓✓✗●○○   </span><span class="B0 mu">3:41:09 </span><span class="B0"> </span><span class="B0 mu">$5.88   </span><span class="B0"> ● running T5 · T4 timed out at 3:00:00           </span></div>
 <div class="r"><span class="B0">   Grok CLI     </span><span class="B0 mu">grok-4.7-fast · default   </span><span class="B0"> ✓✓✓✓✓●○   </span><span class="B0 mu">46:20   </span><span class="B0"> </span><span class="B0 mu">$0.66   </span><span class="B0"> ● running T6 · 2 harness retries in T2           </span></div>
-<div class="r"><span class="B0">   Pi           </span><span class="B0 mu">qwen3.5-35b-a3b · default </span><span class="B0"> ✓✓✓✓✓✗✓   </span><span class="B0 mu">1:34:02 </span><span class="B0"> </span><span class="B0 mu">$0.00   </span><span class="B0"> ✓ complete · T6 exit 1                           </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">  ▲ partial · costs: reported or estimate per configuration, see the result for its basis                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   Pi           </span><span class="B0 mu">qwen3.5-35b-a3b · default </span><span class="B0"> ✓✓✓✓✓✗✓   </span><span class="B0 mu">1:34:02 </span><span class="B0"> </span><span class="B0 mu">unknown </span><span class="B0"> ✓ complete · T6 exit 1                           </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">  ▲ partial · cost basis per configuration in its result · unknown: local endpoint in a parallel run                  </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">axbenchmark stop 2026-09-30-b                                                                                       </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> Stopping run 2026-09-30-b · 2 running configurations                                                                   </span></div>
@@ -90,13 +90,13 @@ body{margin:0}
 <div class="r"><span class="B0">   Claude Code  </span><span class="B0 mu">claude-opus-5-5 · medium  </span><span class="B0"> ✓✓✗––––   </span><span class="B0 mu">22:46   </span><span class="B0"> </span><span class="B0 mu">$1.52 ▲ </span><span class="B0"> </span><span class="B0 bd">✗ halted at T3 · authentication failed (401)   </span><span class="B0">  </span></div>
 <div class="r"><span class="B0">   Codex        </span><span class="B0 mu">gpt-6-sol · medium        </span><span class="B0"> ✓✓✓✗✗––   </span><span class="B0 mu">3:57:31 </span><span class="B0"> </span><span class="B0 mu">$6.40 ▲ </span><span class="B0"> </span><span class="B0 bd">✗ interrupted at T5 · stopped by you           </span><span class="B0">  </span></div>
 <div class="r"><span class="B0">   Grok CLI     </span><span class="B0 mu">grok-4.7-fast · default   </span><span class="B0"> ✓✓✓✓✓✗–   </span><span class="B0 mu">50:14   </span><span class="B0"> </span><span class="B0 mu">$0.71 ▲ </span><span class="B0"> </span><span class="B0 bd">✗ interrupted at T6 · stopped by you           </span><span class="B0">  </span></div>
-<div class="r"><span class="B0">   Pi           </span><span class="B0 mu">qwen3.5-35b-a3b · default </span><span class="B0"> ✓✓✓✓✓✗✓   </span><span class="B0 mu">1:34:02 </span><span class="B0"> </span><span class="B0 mu">$0.00   </span><span class="B0"> ✓ complete · T6 exit 1                           </span></div>
+<div class="r"><span class="B0">   Pi           </span><span class="B0 mu">qwen3.5-35b-a3b · default </span><span class="B0"> ✓✓✓✓✓✗✓   </span><span class="B0 mu">1:34:02 </span><span class="B0"> </span><span class="B0 mu">unknown </span><span class="B0"> ✓ complete · T6 exit 1                           </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Closing a terminal or a TUI only detaches. Only stop ends work, and the authentication failure stays visible after it.</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">echo $?                                                                                                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> 0                                                                                                                      </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 rv"> </span><span class="B0">                                                                                                                    </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
@@ -120,18 +120,18 @@ body{margin:0}
 <pre>status RUN_ID   saved state (M11)
 stop RUN_ID     explicit stop + cleanup</pre>
 <h3>Output contract</h3>
-<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>never prompts; a missing choice is an error</td></tr></table>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
 <h3>Arguments and exit codes</h3>
 <table><tr><td><kbd>RUN_ID</kbd></td><td><span class="mut">run folder name, e.g. 2026-09-30-b</span></td></tr><tr><td><kbd>exit 0</kbd></td><td><span class="mut">status read / stop completed</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>Status does not depend on an attached TUI and keeps the authentication failure visible after the stop (R051, R060).</li><li>Stop cleans up child processes and services before it reports (R052, R139).</li><li>Run 2026-09-30-b is the failures frame on the M11 page.</li></ul>
+<ul><li>Status does not depend on an attached TUI and keeps the authentication failure visible after the stop (R051, R060). It exits 0 whatever the run state (D1).</li><li>Stop cleans up child processes and services before it reports (R052, R139).</li><li>Run 2026-09-30-b is the failures frame on the M11 page.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1000}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

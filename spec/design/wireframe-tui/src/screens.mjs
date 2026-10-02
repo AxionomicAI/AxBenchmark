@@ -8,6 +8,7 @@ import { Grid, sha, fit, len, wrap, header, footer, table, tabs, button, buttons
 export const SHA = {
   inv1: '3f9c2e71' + sha('axbenchmark/template/inventory-web-app/r1').slice(8),
   inv2: '9c41d0b5' + sha('axbenchmark/template/inventory-web-app/r2').slice(8),
+  inv3: 'b7d2a6f0' + sha('axbenchmark/template/inventory-web-app/r3-builtin').slice(8),
   inv6: '8b04d6aa' + sha('axbenchmark/template/inventory-web-app-6/r1').slice(8),
   orders: sha('axbenchmark/template/orders-rest-api/r3'),
   billing: sha('axbenchmark/template/billing-refactor/r1'),
@@ -98,21 +99,43 @@ const libRow = (t) => ({ v: [t.m, t.name, t.type, t.src, String(t.tasks), t.rev,
 
 // ---------------------------------------------------------------- 1 · Library
 
+// Unfinished planning drafts (D10, W10): kept under ~/.axbenchmark/drafts/, no SHA-256 until approved.
+export const DRAFTS = [
+  { name: 'Household expense tracker', type: 'Frontend', state: 'planning', upd: 'today 21:38', go: 'PlanningProgress' },
+  { name: 'Team wiki search API', type: 'Backend', state: 'ready for review', upd: '09-30 19:12', go: 'PlanReview' },
+  { name: 'Photo gallery uploader', type: 'Fullstack', state: 'failed', upd: '09-29 17:05', go: 'PlanningFailed' },
+];
+const draftCols = (w) => [{ l: '', w: 2 }, { l: 'Draft · no SHA-256 yet', w: w - 44 }, { l: 'Type', w: 10 }, { l: 'State', w: 20 }, { l: 'Updated', w: 12 }];
+const draftState = (d) => ({ planning: { t: '● planning', f: 'ac' }, 'ready for review': { t: '✓ ready for review', f: '' }, failed: { t: '✗ failed', f: 'bd' } }[d.state]);
+const draftRow = (d) => ({ v: ['◇', d.name, d.type, draftState(d), d.upd], go: d.go });
+
 export function library(sz, focus = 'templates', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
   header(g, 'AxBenchmark', 'Template library');
   envBar(g, st);
   const top = 2, lw = compact ? W : 72, lh = compact ? H - 1 - top - 5 : H - 1 - top;
-  const lf = focus === 'templates' || focus === 'filter';
+  const lf = focus === 'templates' || focus === 'filter' || focus === 'drafts' || focus === 'notice';
   const shown = st.error ? TEMPLATES.filter((t) => t.src === 'Built-in') : TEMPLATES;
   const count = st.loading ? '…' : st.error ? '1 of 6' : st.filter ? '0 of 6' : '6';
-  g.box(0, top, lw, lh, { f: lf ? 'ac' : 'ln', title: `Library · ${count} templates`, sub: 'default first' });
+  const drafts = !st.loading && !st.filter;
+  g.box(0, top, lw, lh, { f: lf ? 'ac' : 'ln', title: `Library · ${count} templates${drafts ? ' · 3 drafts' : ''}`, sub: 'default first' });
   g.region(0, top, lw, lh, 'Vertical', '#library-pane.pane');
   const cx = 2, cw = lw - 4;
   input(g, cx, top + 1, cw, st.filter ?? '', { ph: '/ Filter by name, type or source', focus: focus === 'filter' });
   g.region(cx, top + 1, cw, 1, 'Input', '#filter');
   let ty = top + 2;
   const cols = libCols(cw);
+  if (st.upgrade) {
+    let y = notice(g, cx, ty + 1, cw, 'info', 'Built-in Inventory web app r3 is available',
+      'Results from r1 and r3 can’t be compared. Your default stays r1 because it has 12 results; all built-in revisions stay available.');
+    const bx = button(g, cx + 2, y, 'What changed', { go: 'InventoryUpgrade', focus: focus === 'notice' });
+    g.region(cx + 2, y, bx - cx - 2, 1, 'Button', '#default-changes');
+    const bx2 = button(g, bx + 2, y, 'Make r3 the default…');
+    g.region(bx + 2, y, bx2 - bx - 2, 1, 'Button', '#make-default');
+    button(g, bx2 + 2, y, 'Dismiss');
+    g.region(cx, ty + 1, cw, y - ty, 'Vertical', '#default-notice.notice');
+    ty = y + 2;
+  }
   if (st.error) {
     let y = notice(g, cx, ty + 1, cw, 'error', 'Library index could not be read',
       `~/.axbenchmark/library/index.yaml — PermissionError: [Errno 13] Permission denied. Built-in templates stay available; custom and imported templates are hidden until the index is readable. Nothing was modified.`);
@@ -131,12 +154,17 @@ export function library(sz, focus = 'templates', st = {}) {
       g.region(cx, mid, cw, 2, 'Static', '#templates-empty.empty');
     }
   } else {
-    const end = table(g, cx, ty, cw, cols, shown.map(libRow), { cursor: 0, focused: focus === 'templates' });
+    const cur = st.sel === 'draft' ? -1 : st.sel === 'lookalike' ? 1 : 0;
+    const end = table(g, cx, ty, cw, cols, shown.map(libRow), { cursor: cur, focused: focus === 'templates' });
     g.region(cx, ty, cw, end - ty, 'DataTable', '#templates');
+    const dy = compact ? end : end + 1;
+    const dend = table(g, cx, dy, cw, draftCols(cw), DRAFTS.map(draftRow), { cursor: st.sel === 'draft' ? 1 : -1, focused: focus === 'drafts' });
+    g.region(cx, dy, cw, dend - dy, 'DataTable', '#drafts');
   }
-  g.text(cx, top + lh - 2, fit('★ built-in default  ◆ custom  ↓ imported  Cfg configs  Res results', cw), 'mu');
+  g.text(cx, top + lh - 2, fit('★ default  ◆ custom  ↓ imported  ◇ draft  Cfg configs  Res results', cw), 'mu');
 
-  const sel = TEMPLATES[0];
+  const sel = st.sel === 'lookalike' ? TEMPLATES[1] : TEMPLATES[0];
+  const draft = st.sel === 'draft' ? DRAFTS[1] : null;
   if (compact) {
     const y = top + lh;
     g.box(0, y, W, 5, { title: 'Selected', f: 'ln' });
@@ -153,20 +181,61 @@ export function library(sz, focus = 'templates', st = {}) {
   } else {
     const df = focus === 'detail';
     const x = lw, w = W - lw;
-    g.box(x, top, w, lh, { f: df ? 'ac' : 'ln', title: st.loading || st.filter ? 'Details' : sel.name });
+    g.box(x, top, w, lh, { f: df || focus === 'why' ? 'ac' : 'ln', title: st.loading || st.filter ? 'Details' : draft ? draft.name : sel.name });
     g.region(x, top, w, lh, 'VerticalScroll', '#detail-pane.pane');
     const dx = x + 2, dw = w - 4;
+    const by = top + lh - 2;
     if (st.loading) { g.text(dx, top + 2, 'Waiting for the library…', 'mu'); }
     else if (st.filter) { g.text(dx, top + 2, 'No template selected.', 'mu'); g.text(dx, top + 3, 'Clear the filter to see the library.', 'mu'); }
-    else {
+    else if (draft) {
+      let y = top + 1;
+      g.text(dx, y++, draft.name, 'bd');
+      g.text(dx, y++, '◇ Draft · Backend · not a template yet', 'mu');
+      y = para(g, dx, y + 1, dw, 'Add full-text search to the team wiki API: index pages and comments, rank the results, and keep the existing endpoints unchanged.');
+      y = kv(g, dx, y + 1, 11, dw, [
+        ['State', '✓ ready for review'],
+        ['Planned', '7 tasks · 19 checks'],
+        ['Planner', 'Claude Code · opus-5-5 · high'],
+        ['Baseline', 'repository · commit c91e0d4'],
+        ['Updated', '2026-09-30 19:12'],
+        ['Saved in', '~/.axbenchmark/drafts/'],
+        ['Identity', 'none · SHA-256 at approval'],
+      ]);
+      g.region(dx, top + 1, dw, y - top - 1, 'Static', '#draft-fields.kv');
+      para(g, dx, y + 1, dw, 'Drafts survive closing the app and the engine. Enter reopens it where you left it. No configuration or result can refer to a draft.', 'mu');
+      const bx = button(g, dx, by, 'Reopen ▸', { v: 'primary', go: 'PlanReview', focus: df });
+      button(g, bx + 2, by, 'Discard draft…', { go: 'DraftDiscard' });
+      g.region(dx, by, dw, 1, 'Horizontal', '.actions');
+    } else if (st.sel === 'lookalike') {
+      let y = top + 1;
+      g.text(dx, y++, sel.name, 'bd');
+      g.text(dx, y++, '◆ Custom · duplicate of r1 · Frontend', 'mu');
+      y = para(g, dx, y + 1, dw, 'Six of the seven default tasks; T7 Test and fix was removed. A separate template with its own SHA-256 and results.');
+      y = kv(g, dx, y + 1, 12, dw, [
+        ['Tasks', '6 · scaffold → checkout'],
+        ['Revision', 'r1 · approved 2026-09-20'],
+        ['SHA-256', [sel.sha.slice(0, 32), sel.sha.slice(32)]],
+        ['Baseline', 'Empty project'],
+        ['Configs', '1 saved for r1'],
+        ['Results', '2 · never compared with r1'],
+      ]);
+      g.region(dx, top + 1, dw, y - top - 1, 'Static', '#detail-fields.kv');
+      para(g, dx, y + 1, dw, 'Not the default benchmark, whatever the name. About (a) is only for the built-in inventory template.', 'mu');
+      button(g, dx, by - 2, 'Why not the default?', { go: 'InventoryVariant', focus: focus === 'why' });
+      g.region(dx, by - 2, 22, 1, 'Button', '#why-not-default');
+      const bx = button(g, dx, by, '▶ Configure run', { v: 'primary', focus: df, go: 'Setup' });
+      const bx2 = button(g, bx + 2, by, 'Open', { go: 'TemplateTasks' });
+      button(g, bx2 + 2, by, 'Export', { go: 'ExportTemplate' });
+      g.region(dx, by, dw, 1, 'Horizontal', '.actions');
+    } else {
       let y = top + 1;
       g.text(dx, y++, sel.name, 'bd');
       g.text(dx, y, '★ Built-in · default · Frontend', 'mu');
-      g.text(dx + dw - 7, y, '?', 'ac bd'); g.text(dx + dw - 5, y, 'About'); g.link(dx + dw - 7, y++, 7, 1, 'go:InventoryAbout');
+      g.text(dx + dw - 7, y, 'a', 'ac bd'); g.text(dx + dw - 5, y, 'About'); g.link(dx + dw - 7, y++, 7, 1, 'go:InventoryAbout');
       y = para(g, dx, y + 1, dw, 'Inventory website in HTML5 and vanilla JavaScript with localStorage persistence, opened directly from index.html. Seven tasks from scaffold to browser QA.');
       y = kv(g, dx, y + 1, 12, dw, [
         ['Tasks', '7 · scaffold → browser QA'],
-        ['Revision', 'r1 of 2 · approved 2026-09-12'],
+        ['Revision', st.upgrade ? 'r1 of 3 · default · r3 built-in new' : 'r1 of 2 · approved 2026-09-12'],
         ['SHA-256', [sel.sha.slice(0, 32), sel.sha.slice(32)]],
         ['Baseline', 'Empty project'],
         ['Checks', '21 acceptance checks · v1'],
@@ -187,7 +256,6 @@ export function library(sz, focus = 'templates', st = {}) {
       y += 1;
       g.text(dx, y++, 'Latest result', 'bd');
       g.text(dx, y++, fit('2026-09-28-a · mike-mbp-m4 · 4/4 complete', dw), 'mu');
-      const by = top + lh - 2;
       const bx = button(g, dx, by, '▶ Configure run', { v: 'primary', focus: df, off: st.noHarness, go: st.noHarness ? undefined : 'Setup' });
       const bx2 = button(g, bx + 2, by, 'Open', { go: 'TemplateTasks' });
       button(g, bx2 + 2, by, 'Export', { go: 'ExportTemplate' });
@@ -195,9 +263,29 @@ export function library(sz, focus = 'templates', st = {}) {
       if (st.noHarness) notice(g, dx, by - 4, dw, 'warning', 'Runs need a harness', 'Install Claude Code, Codex, Grok CLI or Pi, then recheck in Environment.');
     }
   }
-  footer(g, compact
-    ? [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }]
-    : [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'd', d: 'Duplicate', go: 'Revise' }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: '/', d: 'Filter' }, { k: 'tab', d: 'Pane', do: 'next' }, { k: 'q', d: 'Quit' }]);
+  const builtin = !st.sel && !st.loading && !st.filter;
+  if (st.sel === 'draft') {
+    footer(g, [{ k: 'enter', d: 'Reopen', go: 'PlanReview' }, { k: 'delete', d: 'Discard draft', go: 'DraftDiscard' }, { k: 'a', d: 'About', off: true }, { k: 'n', d: 'New', go: 'NewTemplate' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: '/', d: 'Filter' }, { k: 'tab', d: 'Pane', do: 'next' }, { k: 'q', d: 'Quit' }]);
+  } else {
+    footer(g, compact
+      ? [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'a', d: 'About', go: builtin ? 'InventoryAbout' : undefined, off: !builtin }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }]
+      : [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'a', d: 'About', go: builtin ? 'InventoryAbout' : undefined, off: !builtin }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'd', d: 'Duplicate', go: 'Revise' }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: '/', d: 'Filter' }, { k: 'q', d: 'Quit' }]);
+  }
+  return g;
+}
+
+// ConfirmScreen (shared M15 widget) over the library: discard one planning draft.
+export function draftDiscard(sz, focus = 'cancel') {
+  const g = library(sz, 'none', { sel: 'draft' });
+  const m = modal(g, 72, 14, 'Discard draft?', { sel: '#confirm' });
+  let y = m.y;
+  g.text(m.x, y++, fit('Team wiki search API · ready for review · updated 2026-09-30 19:12', m.w), 'bd');
+  y++;
+  y = para(g, m.x, y, m.w, 'Deletes ~/.axbenchmark/drafts/team-wiki-search-api/ with its 7 planned tasks and planner output. This cannot be undone.');
+  y++;
+  para(g, m.x, y, m.w, 'Nothing else changes: the repository, templates, configurations and results never refer to a draft.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'LibraryDrafts', focus: focus === 'cancel' }, { label: 'Discard draft', v: 'error', go: 'LibraryDrafts', focus: focus === 'discard' }]);
+  footer(g, [{ k: 'esc', d: 'Cancel', go: 'LibraryDrafts' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'enter', d: 'Choose' }], '');
   return g;
 }
 
@@ -234,9 +322,10 @@ export function template(sz, focus = 'tasks', st = {}) {
     ], { focused: tf });
     g.region(2, top + 1, 26, 5, 'Tree', '#revisions');
     let y = kv(g, 2, ty + 1, 9, 26, r2
-      ? [['Status', 'approved'], ['Parent', 'r1 · 3f9c2e71'], ['Created', '2026-10-01'], ['Configs', '0 · copy from r1'], ['Results', 'none yet']]
-      : [['Status', 'approved'], ['Parent', '— (built-in)'], ['Created', '2026-09-12'], ['Configs', '3 saved'], ['Results', '12']]);
-    g.region(2, ty + 1, 26, y - ty - 1, 'Static', '#revision-facts.kv');
+      ? [['Status', 'approved'], ['Parent', 'r1 · 3f9c2e71'], ['Created', '2026-10-01'], ['Configs', '0 · copy from r1'], ['Results', 'none yet'], ['Name', 'editable (n)']]
+      : [['Status', 'approved'], ['Parent', '— (built-in)'], ['Created', '2026-09-12'], ['Configs', '3 saved'], ['Results', '12'], ['Name', 'fixed · built-in']]);
+    g.region(2, ty + 1, 26, y - ty - 2, 'Static', '#revision-facts.kv');
+    if (r2) { g.link(11, y - 1, 17, 1, 'do:rename'); g.region(11, y - 1, 17, 1, 'Button', '#rename'); }
     para(g, 2, y + 1, 26, 'Lineage is for navigation only. Identity always comes from content.', 'mu');
     cx = 31; cw = W - 32;
   }
@@ -371,9 +460,10 @@ export function template(sz, focus = 'tasks', st = {}) {
     g.text(cx, y++, '● Codex · gpt-6-astra · high                4 results · imported, original reviews kept', 'mu');
     g.region(cx, y - 3, cw, 3, 'Static', '#judge-groups');
     y += 1;
-    y = notice(g, cx, y, cw, 'warning', 'Historical runs are not linked to this template',
-      'The 2026 README runs (for example anthropic-cloud-opus-5.5-medium, 7 tasks) predate template hashing. A matching name or task count never establishes a verified SHA-256, so they stay preserved in their folders and cannot join this comparison.');
-    g.region(cx, y - 4, cw, 4, 'Static', '#historical.notice.-warning');
+    const ny = y;
+    y = notice(g, cx, y, cw, 'info', 'Only results bound to r1 are listed',
+      'Results of r2, of a newer built-in revision or of a look-alike template stay with their own SHA-256 and are never compared with r1. Several trials of one configuration are listed together with their mean on the Results screen.');
+    g.region(cx, ny, cw, y - ny, 'Static', '#scope-note.notice');
     buttons(g, cx + cw, bottom - 1, [{ label: 'Open result', go: 'Results', focus: focus === 'open' }, { label: 'Import results', go: 'ResultImport' }, { label: 'Export result ZIP', go: 'ExportResult' }]);
   }
 
@@ -381,7 +471,7 @@ export function template(sz, focus = 'tasks', st = {}) {
 
   footer(g, compact
     ? [{ k: 'esc', d: 'Back', go: 'Library' }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: 'enter', d: 'Configure', go: 'Setup' }, { k: 'r', d: 'Revisions' }]
-    : [{ k: 'esc', d: 'Back', go: 'Library' }, { k: '1-4', d: 'Tab' }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'd', d: 'Duplicate', go: 'Revise' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: 'enter', d: 'Configure', go: 'Setup' }, { k: 'c', d: 'Copy SHA' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+    : [{ k: 'esc', d: 'Back', go: 'Library' }, { k: '1-4', d: 'Tab' }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'd', d: 'Duplicate', go: 'Revise' }, { k: 'n', d: 'Rename', off: !r2 }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: 'enter', d: 'Configure', go: 'Setup' }, { k: 'c', d: 'Copy SHA' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 
@@ -434,9 +524,9 @@ export function newTemplate(sz, focus = 'prompt', st = {}) {
 
 // ---------------------------------------------------------------- 4 · Duplicate and revise
 
-export function revise(sz, focus = 'mode') {
+export function revise(sz, focus = 'mode', st = {}) {
   const g = template(sz, 'none');
-  const m = modal(g, sz.id === 'compact' ? 78 : 76, 20, 'Duplicate or revise', { sel: '#revise' });
+  const m = modal(g, sz.id === 'compact' ? 78 : 76, st.activeRun ? 25 : 20, 'Duplicate or revise', { sel: '#revise' });
   let y = m.y;
   g.text(m.x, y++, fit(`Inventory web app · r1 · ${s8(SHA.inv1)} · ★ built-in`, m.w), 'mu');
   y++;
@@ -455,29 +545,51 @@ export function revise(sz, focus = 'mode') {
   check(g, m.x, y, 'Baseline files', false); check(g, m.x + 30, y++, 'Grading rubric', false);
   g.region(m.x, y - 2, m.w, 2, 'Grid', '#revise-scope');
   y++;
-  para(g, m.x, y, m.w, 'r1 stays approved and unchanged; its 3 configurations and 12 results stay with r1. Renaming alone never changes identity.', 'mu');
+  y = para(g, m.x, y, m.w, 'r1 stays approved and unchanged; its 3 configurations and 12 results stay with r1. Renaming alone never changes identity.', 'mu');
+  if (st.activeRun) {
+    const ny = y + 1;
+    y = notice(g, m.x, ny, m.w, 'warning', 'Run 2026-10-01-a is active on r1',
+      'This creates a new revision. The active run continues on r1, and its results will not be comparable with the new revision.');
+    g.region(m.x, ny, m.w, y - ny, 'Static', '#revise-active-run.notice.-warning');
+  }
   buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'TemplateTasks' }, { label: 'Open editor ▸', v: 'primary', go: 'ReviseConfirm', focus: focus === 'editor' }]);
   footer(g, [{ k: 'esc', d: 'Cancel', go: 'TemplateTasks' }, { k: 'tab', d: 'Next field', do: 'next' }, { k: 'enter', d: 'Open editor', go: 'ReviseConfirm' }], '');
   return g;
 }
 
-export function reviseConfirm(sz, focus = 'approve') {
+export function reviseConfirm(sz, focus = 'approve', st = {}) {
   const g = template(sz, 'none');
-  const compact = sz.id === 'compact';
-  const m = modal(g, compact ? 78 : 86, 19, 'Approve revision r2', { sel: '#approve-revision' });
+  const compact = sz.id === 'compact', same = !!st.identical;
+  const m = modal(g, compact ? 78 : 86, 19, same ? 'Approve revision · nothing changed' : 'Approve revision r2', { sel: '#approve-revision' });
   let y = m.y;
   g.text(m.x, y++, 'Changes from r1', 'bd');
-  g.text(m.x, y, '~ order', ''); g.text(m.x + 10, y++, fit('T4 Inventory lookup ↔ T5 Shopping cart', m.w - 10));
-  g.text(m.x, y, '+ check', ''); g.text(m.x + 10, y++, fit('T6.4 Order history survives a page reload', m.w - 10));
-  g.text(m.x, y, '= same', 'mu'); g.text(m.x + 10, y++, fit('specification, prompt text, baseline, protocol, rubric', m.w - 10), 'mu');
+  if (same) {
+    g.text(m.x, y, '= same', 'mu'); g.text(m.x + 10, y++, fit('tasks, order, checks, spec, baseline, protocol, rubric', m.w - 10), 'mu');
+    g.text(m.x, y, '~ edited', ''); g.text(m.x + 10, y++, fit('T4 ↔ T5 swapped, then swapped back · net change none', m.w - 10));
+    y++;
+  } else {
+    g.text(m.x, y, '~ order', ''); g.text(m.x + 10, y++, fit('T4 Inventory lookup ↔ T5 Shopping cart', m.w - 10));
+    g.text(m.x, y, '+ check', ''); g.text(m.x + 10, y++, fit('T6.4 Order history survives a page reload', m.w - 10));
+    g.text(m.x, y, '= same', 'mu'); g.text(m.x + 10, y++, fit('specification, prompt text, baseline, protocol, rubric', m.w - 10), 'mu');
+  }
   g.region(m.x, m.y + 1, m.w, 3, 'Static', '#revision-diff');
   y++;
   g.text(m.x, y++, 'Identity', 'bd');
   g.text(m.x, y, 'r1', 'mu'); g.text(m.x + 4, y++, SHA.inv1, 'mu');
-  g.text(m.x, y, 'r2', 'bd'); g.text(m.x + 4, y++, SHA.inv2, 'bd');
+  g.text(m.x, y, same ? 'new' : 'r2', 'bd'); g.text(m.x + 4, y++, same ? SHA.inv1 : SHA.inv2, 'bd');
   g.region(m.x, y - 2, m.w, 2, 'Static', '#revision-digests');
+  if (same) {
+    const ny = ++y;
+    y = notice(g, m.x, y, m.w, 'error', 'Identical to r1 — nothing to approve',
+      'The computed SHA-256 equals r1, so no revision is created. To change only the name, rename the lineage display name (n on the revision); identity is unaffected.');
+    g.region(m.x, ny, m.w, y - ny, 'Static', '#revision-verdict.notice.-error');
+    buttons(g, m.right, m.bottom, [{ label: 'Back to editor', go: 'Revise', focus: focus === 'back' }, { label: 'Open r1', go: 'TemplateTasks', focus: focus === 'open' }, { label: 'Approve', v: 'primary', off: true }]);
+    footer(g, [{ k: 'esc', d: 'Back', go: 'Revise' }, { k: 'o', d: 'Open r1', go: 'TemplateTasks' }, { k: 'tab', d: 'Next', do: 'next' }, { k: '^s', d: 'Approve', off: true }], '');
+    return g;
+  }
   g.text(m.x, y, '✓', 'ac');
   y = para(g, m.x + 2, y, m.w - 2, 'Content differs, so r2 gets a new SHA-256. r1 and its 12 results are untouched.');
+  g.region(m.x, y - 1, m.w, 1, 'Static', '#revision-verdict');
   y++;
   check(g, m.x, y++, 'Copy 3 saved configurations to r2', false, { focus: focus === 'copy' });
   g.region(m.x, y - 1, m.w, 1, 'Checkbox', '#copy-configs');
@@ -587,7 +699,7 @@ export function importRejected(sz, focus = 'close') {
   pair('Declared', SHA.kanban, '');
   pair('Computed', SHA.kanbanComputed, 'bd');
   g.text(m.x, y, 'Differs', 'mu'); g.text(m.x + (compact ? 10 : 10), y++, fit('tasks/T3-board.md · digest differs from its manifest entry', m.w - 10));
-  g.region(m.x, m.y + 2, m.w, y - m.y - 2, 'Static', '#import-digests');
+  g.region(m.x, m.y + 2, m.w, y - m.y - 2, 'Vertical', '#rejection-detail › #digest-detail');
   y++;
   para(g, m.x, y, m.w, 'The package is corrupt or was edited after export. The library is unchanged. Ask the sender to export the template again, then retry.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Show file digests', focus: focus === 'digests' }, { label: 'Close', v: 'primary', go: 'Library', focus: focus === 'close' }]);

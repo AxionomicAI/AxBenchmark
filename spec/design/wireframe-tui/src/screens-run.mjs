@@ -2,8 +2,9 @@
 // RunScreen is the run overview: one lane per harness (2×2), the active configuration of each lane and its queue,
 // task progress, and an event log. RunConfigScreen (M05) is the per-configuration detail opened from a lane.
 // Detaching, reconnecting and stopping are separate actions. All data is fictional.
-import { Grid, fit, len, wrap, header, footer, table, buttons, para, kv, notice, toast, modal, progress, radios } from './lib.mjs';
+import { Grid, fit, len, wrap, sha, header, footer, table, buttons, para, kv, notice, toast, modal, progress, radios } from './lib.mjs';
 import { SHA, s8, step } from './screens.mjs';
+import { runListDetail } from './screens-tui.mjs';
 
 // ---------------------------------------------------------------- data
 
@@ -12,6 +13,10 @@ const NAMES = { T1: 'Repository and scaffold', T2: 'Inventory data and persisten
 
 // Lane: harness, active configuration and its queue. tasks: one glyph per task (✓ done · ✗ failed · ● running · ○ not started · – not run).
 const L = (harness, d) => ({ harness, ...d });
+// D4: a local endpoint has no API charge, but in a parallel run its shared energy is never divided, so its cost is unknown.
+const LOCAL = 'unknown · local endpoint, parallel run';
+// D9: the computed identity after an approved file changed on disk during run 2026-09-29-c.
+export const HALT_SHA = sha('axbenchmark/template/inventory-web-app/r1/edited-checks-during-run');
 
 const RUNS = {
   // Default scheduling, one configuration per harness, 4 at once. Matches RunConfig, RunIsolation and LaunchRecord.
@@ -21,7 +26,7 @@ const RUNS = {
       L('Claude Code', { cfg: 'claude-opus-5-5 · medium', state: 'done', tasks: '✓✓✓✓✓✓✓', now: 'complete 21:35:37 · final regression 21✓', elapsed: '36:50', cost: '$4.61 · API-equivalent estimate', go: 'RunConfig' }),
       L('Codex', { cfg: 'gpt-6-sol · medium', state: 'run', tasks: '✓✓✓✓●○○', now: 'T5 Shopping cart · 10:58 in this task', elapsed: '41:12', cost: '$1.92 · reported · T1–T4', live: '46.3 tok/s · context 84.2k of 272k · 31%', go: 'RunConfig' }),
       L('Grok CLI', { cfg: 'grok-4.7-fast · harness default', state: 'run', tasks: '✓✓✓●○○○', now: 'T4 Inventory lookup · 0:22 in this task', elapsed: '24:57', cost: '$0.41 · estimate · T1–T3', live: '112 tok/s · context ? not reported', go: 'RunConfig' }),
-      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 14:05 in this task', elapsed: '39:31', cost: '$0.00 · local endpoint, no charge', live: '29.4 tok/s · context 21.4k of 32k · 65%', go: 'RunConfig' }),
+      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 14:05 in this task', elapsed: '39:31', cost: LOCAL, live: '29.4 tok/s · context 21.4k of 32k · 65%', go: 'RunConfig' }),
     ],
     events: [
       ['20:58:47', 'run', 'frozen · template 3f9c2e71… · configuration and original weights · 4 configurations start together'],
@@ -39,7 +44,7 @@ const RUNS = {
       L('Claude Code', { cfg: '#1 claude-opus-5-5 · medium', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 6:12 in this task', elapsed: '19:40', cost: '$1.37 · API-equivalent estimate', queue: '#2 claude-opus-5-5 · high · starts when #1 ends' }),
       L('Codex', { cfg: '#3 gpt-6-sol · medium', state: 'run', tasks: '✓●○○○○○', now: 'T2 Inventory data and persistence · 9:30', elapsed: '17:04', cost: '$0.58 · reported · T1' }),
       L('Grok CLI', { cfg: '#4 grok-4.7-fast · harness default', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 2:48 in this task', elapsed: '13:31', cost: '$0.17 · estimate · T1–T2' }),
-      L('Pi', { cfg: '#5 qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓●○○○○○', now: 'T2 Inventory data and persistence · 11:15', elapsed: '18:52', cost: '$0.00 · local endpoint, no charge' }),
+      L('Pi', { cfg: '#5 qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓●○○○○○', now: 'T2 Inventory data and persistence · 11:15', elapsed: '18:52', cost: LOCAL }),
     ],
     events: [
       ['09:12:05', 'run', 'frozen · 5 entries · 4 lanes · #2 queued behind #1 (same harness)'],
@@ -64,6 +69,22 @@ const RUNS = {
       ['13:22:40', 'claude', 'T3 exit 0 · checks 5✓ · T4 started in a new process'],
     ],
   },
+  // D9: an approved template file changed on disk; the first detection halted the whole run with explicit-stop cleanup.
+  halted: {
+    id: '2026-09-29-c', frozen: `Approved template ${s8(SHA.inv1)}… · computed ${s8(HALT_SHA)}… on disk at 15:12:40 · the run is over and none of it is compared`, bar: '✗ Run halted 15:12:40 · template identity invalidated · 4 configurations interrupted · cleanup complete',
+    lanes: [
+      L('Claude Code', { cfg: 'claude-opus-5-5 · medium', state: 'halt', tasks: '✓✓✓✓✗––', now: '✗ interrupted at T5 · template identity invalidated', elapsed: '31:02', cost: '$3.18 ▲ · estimate · T5 partial', note: 'recorded as interrupted · never compared' }),
+      L('Codex', { cfg: 'gpt-6-sol · medium', state: 'halt', tasks: '✓✓✓✗–––', now: '✗ interrupted at T4 · template identity invalidated', elapsed: '33:47', cost: '$1.66 ▲ · reported · T4 partial', note: 'recorded as interrupted · never compared' }),
+      L('Grok CLI', { cfg: 'grok-4.7-fast · harness default', state: 'halt', tasks: '✓✓✓✓✗––', now: '✗ interrupted at T5 · template identity invalidated', elapsed: '29:15', cost: '$0.49 ▲ · estimate · T5 partial', note: 'recorded as interrupted · never compared' }),
+      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'halt', tasks: '✓✓✗––––', now: '✗ interrupted at T3 · template identity invalidated', elapsed: '34:40', cost: LOCAL, note: 'recorded as interrupted · never compared' }),
+    ],
+    events: [
+      ['15:12:40', 'run', '✗ template identity invalidated · checks/acceptance.v1.json and tasks/T6-checkout.md changed on disk'],
+      ['15:12:40', 'run', 'halting the whole run · same cleanup as an explicit stop · 4 configurations'],
+      ['15:12:44', 'run', '4 process trees ended · service npx serve :41021 stopped · 4 browser contexts closed · ports released'],
+      ['15:12:46', 'run', '4 results saved as interrupted · approved and computed SHA-256 and changed paths recorded · evidence kept'],
+    ],
+  },
   // Ordinary failure, timeout, authentication failure and a harness-internal retry, all recorded as they happened.
   fail: {
     id: '2026-09-30-b', bar: '● 2 of 4 running · 1 halted · 1 complete · failures are recorded as they happened · nothing is rerun',
@@ -71,7 +92,7 @@ const RUNS = {
       L('Claude Code', { cfg: 'claude-opus-5-5 · medium', state: 'halt', tasks: '✓✓✗–––', now: '✗ halted at T3 · authentication failed (401)', elapsed: '22:46', cost: '$1.52 · estimate · T3 partial', note: 'T4–T7 not run · the other configurations continue' }),
       L('Codex', { cfg: 'gpt-6-sol · medium', state: 'run', tasks: '✓✓✓✗●○○', now: 'T5 Shopping cart · from the T4 workspace', elapsed: '3:41:09', cost: '$5.88 · reported · T1–T4', note: 'T4 ✗ timeout 3:00:00 · no rerun · T5 continues' }),
       L('Grok CLI', { cfg: 'grok-4.7-fast · harness default', state: 'run', tasks: '✓✓✓✓✓●○', now: 'T6 Checkout · 7:02 in this task', elapsed: '46:20', cost: '$0.66 · estimate · T1–T5', note: 'T2: 2 harness-internal retries · recorded' }),
-      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'done', tasks: '✓✓✓✓✓✗✓', now: 'complete · T6 exit 1 · T7 used the T6 workspace', elapsed: '1:34:02', cost: '$0.00 · local endpoint, no charge' }),
+      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'done', tasks: '✓✓✓✓✓✗✓', now: 'complete · T6 exit 1 · T7 used the T6 workspace', elapsed: '1:34:02', cost: LOCAL }),
     ],
     events: [
       ['10:41:15', 'claude', '✗ T3 exit 1 · 401 token expired · configuration halted · process tree ended'],
@@ -113,35 +134,21 @@ function lane(g, x, y, w, h, d, n, focused) {
 
 // ---------------------------------------------------------------- RunScreen
 
+// Below 100×30 the run is list and detail (RunListDetail, M15); the 2×2 layout is drawn only at full size (W6).
 export function runOverview(sz, focus = 'lane1', st = {}) {
-  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
+  if (sz.id === 'compact') return runListDetail(sz, focus.startsWith('lane') ? 'list' : 'log');
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
   const run = st.data ?? RUNS[st.run ?? 'live'];
-  header(g, 'AxBenchmark', compact ? `Run ${run.id}` : `Run ${run.id} · Inventory web app r1`);
+  header(g, 'AxBenchmark', `Run ${run.id} · Inventory web app r1`);
   g.fill(0, 1, W, 1, 'B1');
   if (st.reattached) {
     g.text(1, 1, '●', 'ac');
-    g.text(3, 1, fit(compact ? 'Reattached · nothing was restarted · 3 of 4 running' : 'Reattached 21:52:08 · detached 21:44:30–21:52:08 · the run kept going and nothing was restarted · 3 of 4 running', W - 4));
-  } else g.text(1, 1, fit(compact ? run.bar.replace(' · one configuration per harness, up to 4 at once (jobs 4)', ' · jobs 4').replace(' · sequential (jobs 1) · one configuration at a time, entry order', ' · jobs 1').replace(' · tasks sequential', '') : run.bar, W - 2), run.id === '2026-09-30-b' ? 'bd' : '');
+    g.text(3, 1, fit('Reattached 21:52:08 · detached 21:44:30–21:52:08 · the run kept going and nothing was restarted · 3 of 4 running', W - 4));
+  } else g.text(1, 1, fit(run.bar, W - 2), run.id === '2026-09-30-b' || run.bar.startsWith('✗') ? 'bd' : '');
   g.region(0, 1, W, 1, 'Static', '#run-bar');
 
-  if (compact) {
-    const tf = focus.startsWith('lane');
-    g.box(0, 2, W, 8, { f: tf ? 'ac' : 'ln', title: 'Configurations · one lane per harness' });
-    table(g, 1, 3, W - 2, [{ l: 'Harness', w: 12 }, { l: 'Tasks', w: 10 }, { l: 'Now', w: W - 2 - 30 }, { l: 'Elapsed', w: 8, al: 'right' }],
-      run.lanes.map((d) => ({ v: [d.harness, d.tasks, { t: `${STATE[d.state][0]} ${d.now}`, f: d.state === 'halt' ? 'bd' : d.state === 'wait' ? 'mu' : '' }, d.elapsed], go: 'RunConfig' })), { cursor: 1, focused: tf });
-    g.region(1, 3, W - 2, 5, 'DataTable', '#lanes');
-    g.text(1, 10, fit(st.run === 'queued' ? 'Queued: #2 Claude Code · high · after #1' : 'Frozen · prompts, models and weights cannot change', W - 2), 'mu');
-    const ef = focus === 'events';
-    g.box(0, 11, W, H - 12, { f: ef ? 'ac' : 'ln', title: 'Events', sub: 'follows new lines' });
-    g.region(0, 11, W, H - 12, 'RichLog', '#events');
-    run.events.slice(-(H - 14)).forEach(([t, s, m], i) => { g.text(2, 12 + i, fit(t, 9), 'mu'); g.text(11, 12 + i, fit(s, 7), 'mu'); g.text(18, 12 + i, fit(m, W - 20), m.startsWith('✗') ? 'bd' : ''); });
-    if (st.reattached) toast(g, '✓ Reattached', 'Observing 2026-10-01-a. No task was restarted.', 40);
-    footer(g, [{ k: 'enter', d: 'Open', go: 'RunConfig' }, { k: 'v', d: 'Live', go: 'HarnessLive' }, { k: 's', d: 'Stop', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }, { k: 'e', d: 'Edit', off: true, go: 'ActiveLocked' }]);
-    return g;
-  }
-
   g.text(1, 2, '■', 'ac');
-  g.text(3, 2, fit(`Frozen at launch · template ${s8(SHA.inv1)}… · configuration ${s8(SHA.cfg)}… · original weights · none of them can change while running`, W - 4), 'mu');
+  g.text(3, 2, fit(run.frozen ?? `Frozen at launch · template ${s8(SHA.inv1)}… · configuration ${s8(SHA.cfg)}… · original weights · none of them can change while running`, W - 4), 'mu');
   g.region(0, 2, W, 1, 'Static', '#frozen');
   const lw = W / 2, lh = 11;
   run.lanes.forEach((d, i) => lane(g, (i % 2) * lw, 3 + Math.floor(i / 2) * lh, lw, lh, d, i + 1, focus === `lane${i}`));
@@ -401,6 +408,39 @@ export function stopCleanup(sz) {
   return g;
 }
 
+// ---------------------------------------------------------------- halted run · template identity invalidated (D9)
+
+export function runHalted(sz, focus = 'close') {
+  const g = runOverview(sz, 'none', { run: 'halted' });
+  const m = modal(g, 86, 31, 'Run 2026-09-29-c halted · template identity invalidated', { sel: '#halted' });
+  let y = notice(g, m.x, m.y, m.w, 'error', 'An approved file of Inventory web app r1 changed on disk during the run', 'The first detection halted the whole run. All four configurations were stopped with the same cleanup as an explicit stop and recorded as interrupted with this reason.');
+  g.region(m.x, m.y, m.w, y - m.y, 'Static', '.notice.-error');
+  y++;
+  const y0 = y;
+  g.text(m.x, y, 'Approved', 'mu'); g.text(m.x + 10, y++, SHA.inv1);
+  g.text(m.x, y, 'Computed', 'mu'); g.text(m.x + 10, y++, HALT_SHA, 'bd');
+  g.text(m.x + 10, y++, fit('recomputed at 15:12:40 before the next task’s checks · never rebound', m.w - 10), 'mu');
+  g.region(m.x, y0, m.w, 3, 'Static', '#halt-identities');
+  y++;
+  table(g, m.x, y, m.w, [{ l: 'Changed path', w: 28 }, { l: 'Change', w: 31 }, { l: 'On disk', w: m.w - 59 }], [
+    { v: ['checks/acceptance.v1.json', { t: '~ modified · 6.2 KB → 6.3 KB', f: 'bd' }, 'was read-only 0444'] },
+    { v: ['tasks/T6-checkout.md', { t: '~ modified · 150 B → 171 B', f: 'bd' }, 'was read-only 0444'] },
+  ], { cursor: focus === 'paths' ? 0 : -1, focused: focus === 'paths' });
+  g.region(m.x, y, m.w, 3, 'DataTable', '#changed-paths');
+  y += 4;
+  y = kv(g, m.x, y, 13, m.w, [
+    ['Recorded', '4 results · interrupted · “template identity invalidated”'],
+    ['Kept', 'evidence, logs, snapshots and partial measurements (▲)'],
+    ['Never', 'rebound to r1 or another revision · never in rankings or reports'],
+    ['Command line', 'axbenchmark status 2026-09-29-c shows the same reason'],
+  ]);
+  y++;
+  para(g, m.x, y, m.w, 'Restore the files from r1, or save the change as a new revision, then launch again. A new revision’s results are never compared with r1’s.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Open evidence', go: 'EvidenceViewer' }, { label: 'Save change as revision…', go: 'Revise' }, { label: 'Close', v: 'primary', go: 'Library', focus: focus === 'close' }]);
+  footer(g, [{ k: 'esc', d: 'Close', go: 'Library' }, { k: 'tab', d: 'Next', do: 'next' }], '');
+  return g;
+}
+
 // ---------------------------------------------------------------- restricted actions while running
 
 export function activeLocked(sz) {
@@ -420,7 +460,7 @@ export function activeLocked(sz) {
   ], { cursor: 3, focused: false });
   g.region(m.x, y, m.w, 8, 'DataTable', '#allowed');
   y += 9;
-  para(g, m.x, y, m.w, 'If a template file changes on disk during the run, its results lose their claim to r1 and are never given another identity.', 'mu');
+  para(g, m.x, y, m.w, 'Approved files are read-only on disk. If one changes anyway, the first detection halts the whole run: every configuration is recorded as interrupted and never given another identity.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Close', v: 'primary', go: 'RunOverview', focus: true }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'RunOverview' }], '');
   return g;

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 900px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1320px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>run --no-tui</b> · axbenchmark run --no-tui · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -76,7 +76,7 @@ body{margin:0}
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> policy     clean for all 5 · established for every harness                                                         </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> judge      Claude Code · claude-opus-5-5 · high · image input known                                                </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> weights    quality web v1 25 15 20 25 10 5 · ranking 1 : 1 : 1                                                     </span></div>
-<div class="r"><span class="B0"> Frozen       template · configuration cfg cba29b21… · original weights → runs/2026-10-02-a/                            </span></div>
+<div class="r"><span class="B0"> Frozen       template · configuration cfg cba29b21… · weights · prices · rates (display USD) → runs/2026-10-02-a/      </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Scheduling   one configuration per harness, up to 4 at once (jobs 4) · tasks sequential · 1 trial · 3:00:00 per task  </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">time      </span><span class="B0"> </span><span class="B0 mu">entry   </span><span class="B0"> </span><span class="B0 mu">harness      </span><span class="B0"> </span><span class="B0 mu">event                        </span><span class="B0"> </span><span class="B0 mu">detail                                               </span><span class="B0">  </span></div>
@@ -89,17 +89,17 @@ body{margin:0}
 <div class="r"><span class="B0"> </span><span class="B0 mu">09:21:40  </span><span class="B0"> </span><span class="B0 mu">#4      </span><span class="B0"> grok-cli      T1 ✓ exit 0 · 9:34            </span><span class="B0 mu">checks 2✓ · $0.05 estimate                           </span><span class="B0">  </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">09:23:55  </span><span class="B0"> </span><span class="B0 mu">#3      </span><span class="B0"> codex         T1 ✓ exit 0 · 11:49           </span><span class="B0 mu">checks 2✓ · $0.58 reported                           </span><span class="B0">  </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">09:25:33  </span><span class="B0"> </span><span class="B0 mu">#1      </span><span class="B0"> claude-code   T2 ✓ exit 0 · 8:23            </span><span class="B0 mu">checks 4✓ · $0.49 estimate                           </span><span class="B0">  </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">09:26:20  </span><span class="B0"> </span><span class="B0 mu">#5      </span><span class="B0"> pi            T1 ✓ exit 0 · 14:14           </span><span class="B0 mu">checks 2✓ · $0.00 local endpoint                     </span><span class="B0">  </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">09:26:20  </span><span class="B0"> </span><span class="B0 mu">#5      </span><span class="B0"> pi            T1 ✓ exit 0 · 14:14           </span><span class="B0 mu">checks 2✓ · cost unknown · local, parallel           </span><span class="B0">  </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">09:29:12  </span><span class="B0"> </span><span class="B0 mu">#4      </span><span class="B0"> grok-cli      T2 ✓ exit 0 · 7:32            </span><span class="B0 mu">checks 4✓ · $0.12 estimate                           </span><span class="B0">  </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">09:31:52  </span><span class="B0"> </span><span class="B0 mu">#5      </span><span class="B0"> pi            T2 running                    </span><span class="B0 mu">from the T1 workspace · commit 41d0e2a               </span><span class="B0">  </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">progress   #1 2/7 · #2 queued · #3 1/7 · #4 2/7 · #5 1/7      elapsed (sum of task processes) per entry in status     </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">Ctrl-C stops watching only. The run keeps going in the background:                                                    </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Ctrl-C stops watching only; the run keeps going. Followed to its end, run waits for the completion report, prints     </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">its path and exits 0 if it completed (even with failed tasks), 1 if it was stopped or interrupted. In the background: </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><a class="B0 k" href="RunQueued.dc.html">  reattach   axbenchmark --attach 2026-10-02-a                                                                        </a><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><a class="B0 k" href="CliStatusStop.dc.html">  status     axbenchmark status 2026-10-02-a                                                                          </a><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><a class="B0 k" href="CliStatusStop.dc.html">  stop       axbenchmark stop 2026-10-02-a                                                                            </a><span class="B0"> </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
@@ -122,18 +122,18 @@ body{margin:0}
 ├─ --no-tui          plain progress
 └─ --jobs N          default: per harness, ≤ 4</pre>
 <h3>Output contract</h3>
-<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>never prompts; a missing choice is an error</td></tr></table>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
 <h3>Arguments and exit codes</h3>
-<table><tr><td><kbd>--config FILE</kbd></td><td><span class="mut">template SHA-256, entries, policy, judge, both weight sets</span></td></tr><tr><td><kbd>--jobs 1</kbd></td><td><span class="mut">one configuration at a time (M11)</span></td></tr><tr><td><kbd>Ctrl-C</kbd></td><td><span class="mut">stops watching only; the run continues</span></td></tr></table>
+<table><tr><td><kbd>--config FILE</kbd></td><td><span class="mut">template SHA-256, entries, policy, judge, both weight sets</span></td></tr><tr><td><kbd>--jobs 1</kbd></td><td><span class="mut">one configuration at a time (M11)</span></td></tr><tr><td><kbd>Ctrl-C</kbd></td><td><span class="mut">stops watching only; the run continues</span></td></tr><tr><td><kbd>exit 0 · 1</kbd></td><td><span class="mut">followed to the end: 0 completed (even with failed tasks) · 1 stopped or interrupted, with the reason</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>Validation and freezing are the same as interactive launch (R050, R067).</li><li>Run 2026-10-02-a is the queued run drawn on the M11 page (R045, R138).</li><li>All model work runs headlessly; nothing waits for input (R060).</li></ul>
+<ul><li>Validation and freezing are the same as interactive launch (R050, R067).</li><li>Pi runs on a local endpoint in a parallel run, so its cost is printed as unknown (D4).</li><li>Run 2026-10-02-a is the queued run drawn on the M11 page (R045, R138).</li><li>All model work runs headlessly; nothing waits for input (R060).</li><li>R3-2: the frozen records include the price snapshot and the rate snapshot with the display currency (USD here).</li><li>R3-3: followed to its end, run waits for the completion report and prints its path (CliRunReport); --no-wait-report skips the wait.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1320}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

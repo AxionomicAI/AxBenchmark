@@ -64,14 +64,14 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1080px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Import · SHA-256 mismatch</b> · ImportScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
 <sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
 <div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                       </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Template library</span><span class="B2 xd">                         </span></div>
 <div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> 4 harnesses ready                              </span><span class="B1 mu xd">◆ 1 active run   </span><span class="B1 ac bd xd">^r</span><span class="B1 xd"> Reconnect </span></div>
-<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Library · 6 templates </span><span class="B0 ln xd">──────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Library · 6 templates · 3 drafts </span><span class="B0 ln xd">───────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Template not imported </span><span class="B1 ac">────────────────────────────────────────────────────╮</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B1 ac">│</span><span class="B1">                                                                            </span><span class="B1 ac">│</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">SHA-256 mismatch — nothing was added to the library                   </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">│</span></div>
@@ -97,7 +97,7 @@ body{margin:0}
 <sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
 <div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                       </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Template library</span><span class="B2 xd">                         </span></div>
 <div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> 4 harnesses ready                              </span><span class="B1 mu xd">◆ 1 active run   </span><span class="B1 ac bd xd">^r</span><span class="B1 xd"> Reconnect </span></div>
-<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Library · 6 templates </span><span class="B0 ln xd">──────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Library · 6 templates · 3 drafts </span><span class="B0 ln xd">───────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Template not imported </span><span class="B1 ac">────────────────────────────────────────────────────╮</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B1 ac">│</span><span class="B1">                                                                            </span><span class="B1 ac">│</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">SHA-256 mismatch — nothing was added to the library                   </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">│</span></div>
@@ -123,7 +123,7 @@ body{margin:0}
 <sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
 <div class="ov" data-widget="Vertical" data-tcss="#import" style="left: 1ch; top: 48px; width: 78ch; height: 272px"><span>Vertical #import</span></div>
 <div class="ov" data-widget="Static" data-tcss=".notice.-error" style="left: 4ch; top: 80px; width: 72ch; height: 16px"><span>Static .notice.-error</span></div>
-<div class="ov" data-widget="Static" data-tcss="#import-digests" style="left: 4ch; top: 112px; width: 72ch; height: 80px"><span>Static #import-digests</span></div>
+<div class="ov" data-widget="Vertical" data-tcss="#rejection-detail › #digest-detail" style="left: 4ch; top: 112px; width: 72ch; height: 80px"><span>Vertical #rejection-detail › #digest-detail</span></div>
 <div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
 </sc-if>
 </div>
@@ -141,6 +141,11 @@ body{margin:0}
 │  │  ├─ Vertical #import-steps
 │  │  │  └─ ProgressBar #import-progress
 │  │  ├─ Vertical #import-rejected .notice.-error
+│  │  │  └─ ContentSwitcher #rejection-detail
+│  │  │     ├─ Vertical #unsafe-detail      (M17)
+│  │  │     ├─ Vertical #incomplete-detail  (M17)
+│  │  │     ├─ Vertical #digest-detail
+│  │  │     └─ Vertical #other-detail
 │  │  └─ Vertical #import-duplicate .notice.-success
 │  └─ Horizontal .dialog-actions
 └─ Footer</pre>
@@ -150,13 +155,13 @@ body{margin:0}
 <table><tr><td><kbd>esc</kbd></td><td><code>dismiss(None)</code><br><span class="mut">Close without changes</span></td></tr><tr><td><kbd>tab / shift+tab</kbd></td><td><code>focus_next / previous</code><br><span class="mut">Move between fields</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>Button #close</li><li>Button #show-digests</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="ImportTemplate.dc.html">Choose</a><a href="ImportVerifying.dc.html">Validating</a><a href="ImportRejected-80x24.dc.html">Rejected</a><a href="ImportDuplicate.dc.html">Already present</a></div>
+<div class="rel"><a href="ImportTemplate.dc.html">Choose</a><a href="ImportVerifying.dc.html">Validating</a><a href="ImportRejected-80x24.dc.html">Rejected · digest</a><a href="ImportUnsafe.dc.html">Rejected · unsafe</a><a href="ImportIncomplete.dc.html">Rejected · incomplete</a><a href="ImportDuplicate.dc.html">Already present</a></div>
 <h3>Notes</h3>
-<ul><li>Shows expected and received identities in full; nothing is partially added (R118, R141).</li><li>On 80 columns the labels stack above each 64-character digest so nothing is truncated.</li></ul>
+<ul><li>W7: #import-rejected holds ContentSwitcher #rejection-detail (#unsafe-detail, #incomplete-detail, #digest-detail, #other-detail), shared with M17; this frame shows #digest-detail.</li><li>Shows expected and received identities in full; nothing is partially added (R118, R141).</li><li>On 80 columns the labels stack above each 64-character digest so nothing is truncated.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1080}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1240}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

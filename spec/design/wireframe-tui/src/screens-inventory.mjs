@@ -138,10 +138,38 @@ export function inventoryVariant(sz) {
   ]);
   g.region(m.x, y, m.w, 6, 'DataTable', '#variant-compare');
   y += 7;
-  y = notice(g, m.x, y, m.w, 'warning', 'Historical README runs stay unlinked', 'anthropic-cloud-opus-5.5-medium reports 7 tasks with this name, but has no verified SHA-256. It is kept unchanged and never joins r1 comparisons.');
+  y = notice(g, m.x, y, m.w, 'warning', 'A similar name is not the same benchmark', 'Its 2 results are compared only with each other. They never join r1 comparisons, and r1 results never join theirs.');
   y++;
   para(g, m.x, y, m.w, 'Names and task counts never confer identity; only the SHA-256 of the packaged content does.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Open 6-task template', go: 'TemplateTasks' }, { label: 'Close', v: 'primary', go: 'Library', focus: true }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'Library' }], '');
+  return g;
+}
+
+// ---------------------------------------------------------------- a newer built-in revision (D16)
+
+export function inventoryUpgrade(sz, focus = 'close') {
+  const g = library(sz, 'none', { upgrade: true });
+  const m = modal(g, 86, 27, 'Built-in Inventory web app r3 · what changed', { sel: '#default-changes-dialog' });
+  let y = m.y;
+  g.text(m.x, y++, fit('Shipped with AxBenchmark 1.4 · all built-in revisions stay available', m.w), 'bd');
+  y++;
+  g.text(m.x, y++, 'Changes from r1', 'bd');
+  for (const [k, t, f] of [
+    ['= same', 'spec and the seven prompts, verbatim · baseline · rubric web v1', 'mu'],
+    ['~ check', 'T2.3 waits for the sample data to render (verifier fix)', ''],
+    ['~ check', 'T7.1 browser start timeout 60 s → 120 s', ''],
+    ['~ protocol', 'execution protocol v1 → v1.1 · service readiness retries', ''],
+  ]) { g.text(m.x, y, k, f || ''); g.text(m.x + 12, y++, fit(t, m.w - 12), f); }
+  y++;
+  g.text(m.x, y++, 'Identity', 'bd');
+  g.text(m.x, y, 'r1', 'mu'); g.text(m.x + 4, y++, SHA.inv1, 'mu');
+  g.text(m.x, y, 'r3', 'bd'); g.text(m.x + 4, y++, SHA.inv3, 'bd');
+  y++;
+  y = notice(g, m.x, y, m.w, 'warning', 'Results from r1 and r3 can’t be compared', 'Different SHA-256, so they rank separately. Your 12 r1 results, its 3 configurations and the default stay as they are until you choose otherwise.');
+  y++;
+  para(g, m.x, y, m.w, 'Make r3 the default asks for confirmation; it changes only which revision the Library selects first. r1 stays runnable.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Open r3', go: 'TemplateTasks' }, { label: 'Make r3 the default…' }, { label: 'Close', v: 'primary', go: 'LibraryUpgrade', focus: focus === 'close' }]);
+  footer(g, [{ k: 'esc', d: 'Close', go: 'LibraryUpgrade' }, { k: 'tab', d: 'Next', do: 'next' }], '');
   return g;
 }

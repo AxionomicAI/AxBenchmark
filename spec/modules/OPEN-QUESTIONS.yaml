@@ -1,0 +1,254 @@
+# Open questions left to the product owner by the module Implementation sections.
+#
+# How to answer: fill in `answer` for each item. Pick one of `options` by its key
+# (e.g. `answer: b`), or write your own text. Add anything else under `notes`.
+# Leave `answer` empty to keep the current assumption for now.
+
+product_decisions:
+
+  - id: P1
+    modules: [M11, M14]
+    question: Should `run --no-tui` exit 1 when a run completes but some tasks failed?
+    current_assumption: Only stopped or interrupted runs exit 1.
+    options:
+      a: Keep it; completed runs exit 0 even with failed tasks.
+      b: Exit 1 when any task failed or ended unverified.
+    answer: a
+    notes:
+
+  - id: P2
+    modules: [M09, M15]
+    question: M09 wants `?` on the Library to open the inventory "about" screens, but `?` is the app-wide Help key. Which wins?
+    current_assumption: Binding not added.
+    options:
+      a: "`?` stays Help; open the about screens with another key (say which in notes)."
+      b: "`?` opens the about screens on the Library; Help moves to F1 there."
+    answer: a
+    notes:
+
+  - id: P3
+    modules: [M01, M02, M09]
+    question: Should old README runs that match the default template only by name (no SHA-256) exist as "unlinked historical results"?
+    current_assumption: M01 and M09 mention them; M02 has no such concept.
+    options:
+      a: No; historical runs stay in the repository and are not shown in the app.
+      b: Yes; show them read-only, never in comparisons or rankings.
+    answer: a
+    notes:
+
+  - id: P4
+    modules: [M04, M06, M07, M10]
+    question: What proves a cost is a verified $0 for the ranking rule (R101)?
+    current_assumption: Undecided.
+    options:
+      a: Only a local endpoint with no provider, recorded in the frozen launch.
+      b: (a), or a reported $0 with complete usage coverage.
+      c: Only an explicit user declaration recorded at launch.
+    answer:   neither
+    notes: cost is verified 0 when the api says so if is a local model and we could measure the power of the gpu we will display the kWh and we will ask the user the cost
+
+  - id: P5
+    modules: [M03, M14]
+    question: The CLI wireframe suggests `sudo axbenchmark doctor --collectors`, which under root would start a separate engine with root's state. What should happen?
+    current_assumption: Undecided.
+    options:
+      a: Under root, doctor runs in-process and keeps no saved state.
+      b: Drop the sudo suggestion; only show the permission fix.
+    answer: b
+    notes:
+
+  - id: P6
+    modules: [M01, M16]
+    question: Approving a duplicate or revision whose benchmark content did not change.
+    current_assumption: The preview reports `existing_identity`; the approval outcome is undecided.
+    options:
+      a: Block approval and point to the existing revision.
+      b: No-op; open the existing revision.
+      c: Record lineage pointing at the existing SHA-256 without a new revision.
+    answer: a
+    notes:
+
+  - id: P7
+    modules: [M07, M11]
+    question: How should more than one trial per configuration behave?
+    current_assumption: "`trials` is carried in the frozen launch with default 1."
+    options:
+      a: Allow only 1 for now; remove the field from the setup UI.
+      b: Allow N; each trial is a separate result run in sequence (say how to aggregate in notes).
+    answer: b
+    notes:  have a way to display the results of each runs and have a an average of the results
+
+  - id: P8
+    modules: [M11]
+    question: With two runs active at the same time, do the "4 active / 1 per harness" limits apply per run or across the engine?
+    current_assumption: Per run.
+    options:
+      a: Per run.
+      b: Across the whole engine; extra configurations queue.
+    answer: a
+    notes:
+
+  - id: P9
+    modules: [M01, M11]
+    question: If the template is found changed during a run, should that configuration halt?
+    current_assumption: The invalidation is recorded and execution continues.
+    options:
+      a: Keep going and record the invalidation.
+      b: Halt that configuration; others continue.
+      c: Halt the whole run.
+    answer: c
+    notes: and informe the user before it makes changes to the template of the consequence to prevent this
+
+  - id: P10
+    modules: [M07, M16]
+    question: Should setup and planning drafts survive an engine exit?
+    current_assumption: Drafts live in memory; they survive a client disconnect but not an engine exit.
+    options:
+      a: Persist drafts to disk.
+      b: Keep them in memory, and the engine does not idle-exit while unsaved drafts exist.
+    answer: a
+    notes:
+
+  - id: P11
+    modules: [M06, M10]
+    question: Does a partial cost measurement count as missing for ranking eligibility?
+    current_assumption: Undecided; M06 reads M10's cost basis and coverage.
+    options:
+      a: Yes; partial excludes the entry from cost-weighted rankings.
+      b: No; rank with it but label it partial.
+    answer: a
+    notes:
+
+  - id: P12
+    modules: [M08, M12]
+    question: Which screenshots go to the judge?
+    current_assumption: Undecided; boards disagree.
+    options:
+      a: Final-regression screenshots only (desktop and mobile).
+      b: One desktop and one mobile per task.
+      c: Every screenshot from every browser check.
+    answer: a
+    notes:
+
+  - id: P13
+    modules: [M06, M13]
+    question: When results in one judge group were frozen with different ranking weights, which weights does the original combined ranking use?
+    current_assumption: The engine returns `scoring.original_weights_differ` and does not rank.
+    options:
+      a: Keep refusing; the user must pick an alternative weight set.
+      b: Use the local template's saved default weights, labelled as such.
+      c: Use the weights of the most recent local run in the group.
+    answer: neither
+    notes: Profile defaults when originals differ: if all results froze the same weights, use them (labelled "original"). Otherwise, use the grading profile's SPEC §6 default weights, labelled "Profile defaults: original weights differ across results", so every machine shows the same ranking. Each result's own original weights stay visible in its detail and can be selected, along with custom weights, through the existing alternative-weights control. Raw grades and originals are never changed.
+
+  - id: P14
+    modules: [M04]
+    question: Can a saved model-catalog override set a field back to "unknown"?
+    current_assumption: No; an empty override field states nothing, so lower layers still apply.
+    options:
+      a: No (keep as is).
+      b: Yes; add an explicit "unknown" value to overrides.
+    answer: b
+    notes: 
+
+  - id: P15
+    modules: [M03, M16]
+    question: Does a harness whose readiness is undetermined (for example auth unknown while offline) count as usable for the planner fallback?
+    current_assumption: Only fully usable harnesses count.
+    options:
+      a: No (keep as is).
+      b: Yes, with a warning.
+    answer: neither
+    notes: prefer a confirmed-usable harness and error if no usable harness is found
+
+  - id: P16
+    modules: [M01, M09]
+    question: If a later release ships a new default revision (r2), does the default move to it?
+    current_assumption: Undecided; r1 is never edited.
+    options:
+      a: Yes, the default moves to the newest built-in revision.
+      b: No, the user chooses; r1 stays default until changed.
+    answer: neither
+    notes: new installations default to the newest revision; installations with existing results keep their current default and get a notice offering r2.
+
+  - id: P17
+    modules: [M04, M16]
+    question: Should the planner preselect a default model per harness and provider?
+    current_assumption: No default model; M04's catalog does not mark one.
+    options:
+      a: No; the user always picks.
+      b: Yes; the catalog marks the harness's own default model.
+    answer: b
+    notes:
+
+  - id: P18
+    modules: [M07, M18]
+    question: Should the 1-second hardware sampling interval be configurable?
+    current_assumption: Fixed engine default, recorded with results.
+    options:
+      a: No (keep fixed).
+      b: Yes; add it to the run configuration.
+    answer: b
+    notes:
+
+wireframe_gaps:
+
+  - id: W1
+    modules: [M02, M08]
+    gap: No artboard for EvidenceViewerScreen (opened from results with `l` and the Open log/snapshot/evidence buttons).
+    answer: add it to the wireframe
+    notes:
+
+  - id: W2
+    modules: [M06, M15, M18]
+    gap: No prompt artboards for the preset name (Save preset…), the export path (Export configuration) or Export CSV on the Telemetry screen.
+    answer: add it to the wireframe
+    notes:
+
+  - id: W3
+    modules: [M17]
+    gap: No ZIP picker on the ResultPackage artboard.
+    answer: add it to the wireframe
+    notes:
+
+  - id: W4
+    modules: [M07, M10]
+    gap: No key opens CurrencyEnergyScreen from Setup.
+    answer: add it to the wireframe
+    notes:
+
+  - id: W5
+    modules: [M08, M11, M15]
+    gap: Nothing opens VerifyProgressScreen from the run screens.
+    answer: add it to the wireframe
+    notes:
+
+  - id: W6
+    modules: [M11, M15]
+    gap: "Two compact run layouts: #lanes-table on the RunOverview board (M11) and #lane-list on RunListDetail (M15). Pick one."
+    answer: keep RunListDetail 
+    notes:
+
+  - id: W7
+    modules: [M01, M17]
+    gap: "M17 nests #rejection-detail inside #import-rejected; M01's import tree shows a single notice."
+    answer: us m17
+    notes:
+
+  - id: W8
+    modules: [M14]
+    gap: Board legends still list CLI exit codes 0–4; ARCHITECTURE.md fixes 0–3 (rejected package and not-found are typed errors, exit 1).
+    answer: update the wireframe
+    notes:
+
+  - id: W9
+    modules: [M16]
+    gap: The template-creation wireframes have no field for the template name, and no artboard for editing a service row on the Setup/start/stop tab.
+    answer: add a name field (prefilled from the planner's suggestion) to the plan review screen, editable before and after approval.
+    notes:
+
+  - id: W10
+    modules: [M01, M15, M16]
+    gap: No TUI entry point to reopen a hidden planning session or a closed, unapproved draft.
+    answer: The Library lists unfinished drafts as rows marked "draft," showing their state (planning, ready for review, failed) and last update; Enter reopens a draft where you left off, and a "Discard draft" action removes it after confirmation.
+    notes:

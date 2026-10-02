@@ -2,7 +2,7 @@
 // The M01/M02 frames already show export, the happy-path import, digest mismatch, duplicates and result-id conflicts.
 // This file adds the validation order itself: an unsafe package, an incomplete package, what a result ZIP carries
 // (with provenance through a relay machine), and a result ZIP whose template differs from the selected revision.
-import { fit, len, footer, table, buttons, para, kv, notice, modal, tree, radios, sha } from './lib.mjs';
+import { fit, len, footer, table, buttons, para, kv, notice, modal, tree, radios, sha, input } from './lib.mjs';
 import { SHA, s8, mid, library, step } from './screens.mjs';
 import { results } from './screens-results.mjs';
 
@@ -69,6 +69,38 @@ export function importIncomplete(sz, focus = 'close') {
   return g;
 }
 
+// ---------------------------------------------------------------- choose a result ZIP (over Results) · W3
+// Same picker as the template import (M01): Input #zip-path above DirectoryTree #zip-browser.
+
+export function resultPackagePick(sz, focus = 'files') {
+  const g = results(sz, 'none');
+  const m = modal(g, 86, 23, 'Import results · choose a ZIP', { sel: '#result-package' });
+  let y = m.y;
+  g.text(m.x, y, 'ZIP file', 'mu'); input(g, m.x + 10, y, m.w - 10, '~/bench/lab-results.zip', { focus: focus === 'path' });
+  g.region(m.x + 10, y++, m.w - 10, 1, 'Input', '#zip-path');
+  y++;
+  const tf = focus === 'files';
+  g.box(m.x, y, m.w, 10, { f: tf ? 'ac' : 'ln', fill: 'B0' });
+  const w = m.w - 4;
+  const row = (name, note) => fit(name, w - 22 - 3) + fit(note, 22, 'right');
+  tree(g, m.x + 2, y + 1, w, [
+    { t: '~/bench', depth: 0, kids: true, open: true, f: 'bd' },
+    { t: 'runs/', depth: 1, kids: true, f: 'mu' },
+    { t: row('bench-draft.yaml', 'configuration'), depth: 1, f: 'mu' },
+    { t: row('benchmark.yaml', 'configuration'), depth: 1, f: 'mu' },
+    { t: row('lab-results.zip', 'result ZIP · 48.2 MB'), depth: 1, sel: true },
+    { t: row('results.zip', 'result ZIP · 31.7 MB'), depth: 1 },
+    { t: row('template.zip', 'template ZIP · M01'), depth: 1, f: 'mu' },
+    { t: row('nightly.yaml', 'configuration'), depth: 1, last: true, f: 'mu' },
+  ], { focused: tf });
+  g.region(m.x, y, m.w, 10, 'DirectoryTree', '#zip-browser');
+  y += 11;
+  para(g, m.x, y, m.w, 'Choosing a file reads only its index and manifest, to show what it carries before anything is validated. A template ZIP here is refused with a pointer to Library › Import.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'Results' }, { label: 'Inspect package ▸', v: 'primary', go: 'ResultPackage', focus: focus === 'inspect' }]);
+  footer(g, [{ k: 'esc', d: 'Cancel', go: 'Results' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'enter', d: 'Inspect', go: 'ResultPackage' }], '');
+  return g;
+}
+
 // ---------------------------------------------------------------- what a result ZIP carries (over Results)
 
 export function resultPackage(sz, focus = 'tree') {
@@ -82,14 +114,15 @@ export function resultPackage(sz, focus = 'tree') {
     { t: row('template/', `Inventory web app r1 · ${s8(SHA.inv1)}`), depth: 0, kids: true },
     { t: row('results/R-0924lab-1…3/', '3 results · run 2026-09-24-lab'), depth: 0, kids: true, open: true, sel: true },
     { t: row('records · configuration · weights', 'original weights, judge B metadata'), depth: 1 },
+    { t: row('prices · rates · billing', 'frozen at launch · display USD'), depth: 1 },
     { t: row('machine · harness versions · times', 'lab-linux-4090 · Ubuntu 24.04'), depth: 1 },
     { t: row('outcomes · measurements · coverage', 'process, checks, tokens, cost'), depth: 1 },
     { t: row('reviews · grades · evidence', 'raw grades, 42 screenshots'), depth: 1 },
-    { t: row('snapshots · telemetry', 'T1–T7 per result · 1 s samples'), depth: 1, last: true },
+    { t: row('snapshots · telemetry', 'T1–T7 per result · actual intervals'), depth: 1, last: true },
     { t: row('results/R-0919lab-1/', '1 result · run 2026-09-19-lab'), depth: 0, kids: true, last: true },
   ], { focused: tf });
-  g.region(m.x, y, m.w, 9, 'Tree', '#package-tree');
-  y += 10;
+  g.region(m.x, y, m.w, 10, 'Tree', '#package-tree');
+  y += 11;
   g.text(m.x, y++, 'Provenance · kept through every relay', 'bd');
   table(g, m.x, y, m.w, [{ l: 'Result', w: 13 }, { l: 'Origin', w: 18 }, { l: 'Relayed by', w: 18 }, { l: 'Source id', w: m.w - 49 }], [
     { v: ['R-0924lab-1', 'lab-linux-4090', 'ci-mini-01', 'R-0924lab-1 · unchanged'] },
@@ -102,7 +135,7 @@ export function resultPackage(sz, focus = 'tree') {
     ['Origin', 'a relay never replaces the machine that ran the result'],
   ]);
   para(g, m.x, y + 1, m.w, 'Inspecting reads the archive index and manifest only. Validation runs when you import.', 'mu');
-  buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'Results' }, { label: 'Validate and import', v: 'primary', go: 'ResultImport', focus: focus === 'import' }]);
+  buttons(g, m.right, m.bottom, [{ label: 'Other ZIP…', go: 'ResultPackagePick' }, { label: 'Cancel', go: 'Results' }, { label: 'Validate and import', v: 'primary', go: 'ResultImport', focus: focus === 'import' }]);
   footer(g, [{ k: 'esc', d: 'Cancel', go: 'Results' }, { k: 'enter', d: 'Import', go: 'ResultImport' }, { k: 'tab', d: 'Next', do: 'next' }], '');
   return g;
 }

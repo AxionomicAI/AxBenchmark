@@ -2,7 +2,7 @@
 // Continues NewTemplate (M01) for the backend example: refactor ~/code/acme-billing from committed HEAD a41f9c2.
 // Planner choice, baseline capture and planning, review of the generated draft, editing, regeneration, approval and
 // a failed planning run. The draft is never a template until it is approved. All data is fictional.
-import { Grid, fit, len, wrap, header, footer, table, tabs, buttons, input, radios, para, kv, notice, modal, progress, scrollbar } from './lib.mjs';
+import { Grid, fit, len, wrap, header, footer, table, tabs, buttons, input, radios, para, kv, notice, modal, progress, scrollbar, toast } from './lib.mjs';
 import { SHA, s8, mid, library, newTemplate, step } from './screens.mjs';
 
 const REPO = '~/code/acme-billing';
@@ -21,31 +21,85 @@ const CHECKS = PLAN_TASKS.reduce((n, t) => n + t[3], 0);
 
 // ---------------------------------------------------------------- planner choice (over NewTemplate)
 
-export function plannerPicker(sz, focus = 'model') {
+// st.mode: undefined = previous choice invalid → first usable harness, with the catalog's default model (D15, D17)
+//          'unknown' = the catalog has no default model for the preselected harness → empty model field (D17)
+//          'none'    = no harness is confirmed usable → error with Verify now (D15)
+export function plannerPicker(sz, focus = 'model', st = {}) {
   const g = newTemplate(sz, 'none', { repo: true });
-  const m = modal(g, 86, 23, 'Planner', { sel: '#planner' });
+  const none = st.mode === 'none', unknown = st.mode === 'unknown';
+  const m = modal(g, 86, none ? 26 : 25, 'Planner', { sel: '#planner' });
   let y = m.y;
-  g.text(m.x, y, '✗', 'bd'); g.text(m.x + 2, y, fit('Previous choice', 18), 'mu'); g.text(m.x + 20, y++, fit('Grok CLI · grok-4.7 · high', m.w - 20));
-  g.text(m.x + 20, y++, fit('authentication failed (M03) → uses the order below', m.w - 20), 'bd');
+  if (none) {
+    y = notice(g, m.x, y, m.w, 'error', 'No confirmed-usable harness · planning cannot start', 'Claude Code and Codex are logged in, but their headless operation has not been confirmed. Undetermined harnesses are never preselected or run for planning.');
+    g.region(m.x, m.y, m.w, y - m.y, 'Static', '#no-usable.notice.-error');
+  } else if (unknown) {
+    g.text(m.x, y, '○', 'mu'); g.text(m.x + 2, y, fit('Previous choice', 18), 'mu'); g.text(m.x + 20, y++, fit('none · first planning on this machine', m.w - 20));
+    y++;
+  } else {
+    g.text(m.x, y, '✗', 'bd'); g.text(m.x + 2, y, fit('Previous choice', 18), 'mu'); g.text(m.x + 20, y++, fit('Grok CLI · grok-4.7 · high', m.w - 20));
+    g.text(m.x + 20, y++, fit('authentication failed (M03) → uses the order below', m.w - 20), 'bd');
+  }
   y++;
   g.text(m.x, y++, 'First usable harness in this order', 'bd');
-  table(g, m.x, y, m.w, [{ l: '#', w: 3 }, { l: 'Harness', w: 13 }, { l: 'Readiness', w: 22 }, { l: 'Discovered default', w: m.w - 38 }], [
-    { v: ['1', 'Claude Code', '✓ ready', 'claude-opus-5-5 · high  ← preselected'], f: 'bd' },
-    { v: ['2', 'Codex', '✓ ready', 'gpt-6-sol · medium'] },
+  const rows = none ? [
+    { v: ['1', 'Claude Code', { t: '? undetermined', f: 'it' }, { t: 'not preselected · headless not confirmed', f: 'mu' }] },
+    { v: ['2', 'Codex', { t: '? undetermined', f: 'it' }, { t: 'not preselected · headless not confirmed', f: 'mu' }] },
+    { v: ['3', 'Grok CLI', { t: '✗ auth failed', f: 'bd' }, { t: 'skipped · run grok login (M03)', f: 'mu' }] },
+    { v: ['4', 'Pi', { t: '✗ unreachable', f: 'bd' }, { t: 'skipped · localhost:8080 not answering', f: 'mu' }] },
+  ] : [
+    { v: ['1', 'Claude Code', '✓ usable', unknown ? { t: '? none recorded  ← preselected', f: 'bd' } : 'claude-opus-5-5 · high  ← preselected'], f: 'bd' },
+    { v: ['2', 'Codex', '✓ usable', 'gpt-6-sol · medium'] },
     { v: ['3', 'Grok CLI', { t: '✗ auth failed', f: 'bd' }, { t: 'skipped · detected but unusable', f: 'mu' }] },
-    { v: ['4', 'Pi', '✓ endpoint reachable', 'qwen3.5-35b-a3b · harness default'] },
-  ], { cursor: 0, focused: focus === 'order' });
+    { v: ['4', 'Pi', '✓ usable', 'qwen3.5-35b-a3b · harness default'] },
+  ];
+  table(g, m.x, y, m.w, [{ l: '#', w: 3 }, { l: 'Harness', w: 13 }, { l: 'Readiness', w: 17 }, { l: 'Catalog default model (M04)', w: m.w - 33 }], rows, { cursor: 0, focused: focus === 'order' });
   g.region(m.x, y, m.w, 5, 'DataTable', '#planner-order');
   y += 6;
   const L = 10;
-  g.text(m.x, y, 'Harness', 'mu'); input(g, m.x + L, y++, 34, 'Claude Code 3.4.1 · ✓ ready', { focus: focus === 'harness' });
-  g.text(m.x, y, 'Model', 'mu'); input(g, m.x + L, y++, 34, 'claude-opus-5-5', { focus: focus === 'model' });
-  g.text(m.x, y, 'Effort', 'mu'); radios(g, m.x + L, y++, ['low', 'medium', 'high'], 2, { focus: focus === 'effort' });
-  g.region(m.x + L, y - 3, m.w - L, 3, 'Vertical', '#planner-fields');
+  if (none) {
+    g.text(m.x, y, 'Harness', 'mu'); input(g, m.x + L, y++, 34, '', { ph: 'none usable' });
+    g.text(m.x, y, 'Model', 'mu'); input(g, m.x + L, y++, 34, '', { ph: '—' });
+    g.region(m.x + L, y - 2, m.w - L, 2, 'Vertical', '#planner-fields');
+    y++;
+    para(g, m.x, y, m.w, 'Verify now asks for your consent, then makes one minimal headless call per harness that can be called (Claude Code, Codex). The outcome is recorded in readiness and the first usable harness is preselected.', 'mu');
+    buttons(g, m.right, m.bottom, [{ label: 'Environment…', go: 'EnvironmentAuthFailed' }, { label: 'Back', go: 'NewTemplateRepo' }, { label: 'Start planning ▸', off: true }, { label: 'Verify now…', v: 'primary', go: 'PlannerVerify', focus: focus === 'verify' }]);
+    g.region(m.right - 14, m.bottom, 14, 1, 'Button', '#verify-now');
+    footer(g, [{ k: 'esc', d: 'Back', go: 'NewTemplateRepo' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'v', d: 'Verify now', go: 'PlannerVerify' }, { k: '^s', d: 'Start planning', off: true }], '');
+    return g;
+  }
+  g.text(m.x, y, 'Harness', 'mu'); input(g, m.x + L, y++, 34, 'Claude Code 3.4.1 · ✓ usable', { focus: focus === 'harness' });
+  g.text(m.x, y, 'Model', 'mu'); input(g, m.x + L, y, 34, unknown ? '' : 'claude-opus-5-5', { focus: focus === 'model', ph: 'pick a model' });
+  if (unknown) g.text(m.x + L + 36, y++, fit('▲ required', m.w - L - 36), 'bd');
+  else g.text(m.x + L + 36, y++, fit('catalog default', m.w - L - 36), 'mu');
+  g.text(m.x + L, y++, fit(unknown ? 'None recorded: Claude Code’s settings and status output name no model.' : '~/.claude/settings.json · read at refresh 2026-10-01 · no model call', m.w - L), unknown ? 'bd' : 'mu');
+  g.text(m.x, y, 'Effort', 'mu'); radios(g, m.x + L, y++, ['low', 'medium', 'high'], unknown ? -1 : 2, { focus: focus === 'effort' });
+  g.region(m.x + L, y - 4, m.w - L, 4, 'Vertical', '#planner-fields');
   y++;
-  para(g, m.x, y, m.w, 'A preselection is a convenience, not a quality recommendation. The planner runs headless once; the competitors never see its conversation.', 'mu');
-  buttons(g, m.right, m.bottom, [{ label: 'Back', go: 'NewTemplateRepo' }, { label: 'Start planning ▸', v: 'primary', go: 'PlanningProgress', focus: focus === 'start' }]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'NewTemplateRepo' }, { k: 'tab', d: 'Next', do: 'next' }, { k: '^s', d: 'Start planning', go: 'PlanningProgress' }], '');
+  para(g, m.x, y, m.w, unknown
+    ? 'The planner never runs without an explicit model, so the template’s provenance always names it. Pick one of the models the catalog lists for Claude Code.'
+    : 'A preselection is a convenience, not a quality recommendation. The planner runs headless once with this explicit model; the competitors never see its conversation.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Back', go: 'NewTemplateRepo' }, { label: 'Start planning ▸', v: 'primary', go: 'PlanningProgress', focus: focus === 'start', off: unknown }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'NewTemplateRepo' }, { k: 'tab', d: 'Next', do: 'next' }, { k: '^s', d: 'Start planning', go: 'PlanningProgress', off: unknown }], '');
+  return g;
+}
+
+// ConfirmScreen (shared M15 widget) over the planner: consent before Verify now (D15).
+export function plannerVerify(sz, focus = 'verify') {
+  const g = plannerPicker(sz, 'none', { mode: 'none' });
+  const m = modal(g, 72, 18, 'Verify Claude Code and Codex now?', { sel: '#confirm' });
+  let y = m.y;
+  y = para(g, m.x, y, m.w, 'One minimal model call per harness confirms its login and headless operation:');
+  y = kv(g, m.x + 2, y, 10, m.w - 2, [
+    ['Call', 'headless · no model or effort argument'],
+    ['', 'no tools · 60 s deadline · a few tokens'],
+    ['Billing', 'each provider may bill those tokens'],
+    ['Recorded', 'outcome and time in readiness (M03)'],
+    ['Skipped', 'Grok CLI and Pi · fix their failure first'],
+  ]);
+  y++;
+  para(g, m.x, y, m.w, 'Afterwards the first usable harness is preselected. Nothing is planned until you start.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'PlannerNoUsable', focus: focus === 'cancel' }, { label: 'Verify 2 harnesses', v: 'primary', go: 'PlannerPicker', focus: focus === 'verify' }]);
+  footer(g, [{ k: 'esc', d: 'Cancel', go: 'PlannerNoUsable' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'enter', d: 'Choose' }], '');
   return g;
 }
 
@@ -53,7 +107,7 @@ export function plannerPicker(sz, focus = 'model') {
 
 export function planningProgress(sz) {
   const g = library(sz, 'none');
-  const m = modal(g, 84, 18, 'Planning · Billing service refactor', { sel: '#planning' });
+  const m = modal(g, 84, 21, 'Planning · Billing service refactor', { sel: '#planning' });
   let y = m.y;
   step(g, m.x, y++, m.w, 'done', `Read ${REPO} · read-only`);
   step(g, m.x, y++, m.w, 'done', `HEAD → ${BASE} “Add invoice PDF export” · pinned, never resolved again`);
@@ -65,7 +119,8 @@ export function planningProgress(sz) {
   step(g, m.x, y++, m.w, 'todo', 'Open the draft for review · nothing is saved before approval');
   g.region(m.x, m.y, m.w, 8, 'Vertical', '#planning-steps');
   y++;
-  para(g, m.x, y, m.w, 'The planner works on a disposable copy of the snapshot. Your repository, its branches and uncommitted work are never touched.', 'mu');
+  y = para(g, m.x, y, m.w, 'The planner works on a disposable copy of the snapshot. Your repository, its branches and uncommitted work are never touched.', 'mu');
+  para(g, m.x, y + 1, m.w, 'Hide keeps planning: the draft is saved in ~/.axbenchmark/drafts/ and listed in the Library as “planning”, then “ready for review”.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'Library' }, { label: 'Hide', v: 'primary', go: 'PlanReview', focus: true }]);
   footer(g, [{ k: 'esc', d: 'Hide · planning continues', go: 'PlanReview' }], '');
   return g;
@@ -81,12 +136,14 @@ const SERVICES = [
   ['test', 'uv run pytest -q', 'used by the acceptance checks'],
 ];
 
-function planChrome(g, sz, tab) {
+function planChrome(g, sz, tab, st = {}) {
   const W = g.w, compact = sz.id === 'compact';
   header(g, 'AxBenchmark', compact ? 'Draft · Billing service refactor' : 'New template · Billing service refactor · review the draft');
   g.fill(0, 1, W, 1, 'B1');
-  g.text(1, 1, '◆', 'bd');
-  g.text(3, 1, fit(compact ? `Draft · not approved · backend · ${BASE} snapshot · 2 edits` : `Draft · not approved · backend · baseline ${BASE} · planner Claude Code · claude-opus-5-5 · high · 2 tasks edited`, W - 4), 'bd');
+  g.text(1, 1, '◇', 'bd');
+  g.text(3, 1, fit(st.reopened
+    ? `Draft · ready for review · reopened from the Library · saved 2026-10-01 18:42 in ~/.axbenchmark/drafts/`
+    : compact ? `Draft · not approved · backend · ${BASE} snapshot · 2 edits` : `Draft · not approved · backend · baseline ${BASE} · planner Claude Code · claude-opus-5-5 · high · 2 tasks edited`, W - 4), 'bd');
   g.region(0, 1, W, 1, 'Static', '#draft-bar');
   tabs(g, 0, 2, W, compact ? ['Spec', 'Tasks 7', `Checks ${CHECKS}`, 'Services'] : ['Specification', 'Tasks · 7', `Acceptance checks · ${CHECKS}`, 'Setup · start · stop'], tab, { go: [null, 'PlanReview', null, 'PlanServices'] });
   g.region(0, 2, W, 2, 'TabbedContent', '#draft-tabs');
@@ -94,10 +151,11 @@ function planChrome(g, sz, tab) {
 const planFooter = (compact) => (compact
   ? [{ k: 'e', d: 'Edit', go: 'PlanEdit' }, { k: 'r', d: 'Regenerate', go: 'PlanRegenerate' }, { k: 'a', d: 'Approve', go: 'PlanApprove' }, { k: 'esc', d: 'Close' }]
   : [{ k: 'esc', d: 'Close · draft kept', go: 'Library' }, { k: '1-4', d: 'Tab' }, { k: 'e', d: 'Edit', go: 'PlanEdit' }, { k: 'r', d: 'Regenerate…', go: 'PlanRegenerate' }, { k: 'a', d: 'Approve and save', go: 'PlanApprove' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+const svcFooter = [{ k: 'esc', d: 'Close · draft kept', go: 'Library' }, { k: '1-4', d: 'Tab' }, { k: 'e', d: 'Edit service', go: 'PlanServiceEdit' }, { k: 'r', d: 'Regenerate…', go: 'PlanRegenerate' }, { k: 'a', d: 'Approve and save', go: 'PlanApprove' }, { k: 'tab', d: 'Focus', do: 'next' }];
 
-export function planReview(sz, focus = 'tasks') {
+export function planReview(sz, focus = 'tasks', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
-  planChrome(g, sz, 1);
+  planChrome(g, sz, 1, st);
   const tf = focus === 'tasks';
   const rows = PLAN_TASKS.map(([id, t, , c, ed]) => ({ v: [id, t, String(c), ed ? { t: '~ edited', f: 'bd' } : { t: 'generated', f: 'mu' }], go: 'PlanEdit' }));
   if (compact) {
@@ -127,9 +185,12 @@ export function planReview(sz, focus = 'tasks') {
   g.text(66, y++, 'Runs on', 'bd');
   y = para(g, 66, y, 52, 'The T3 snapshot of each configuration’s own copy. Checks use pytest and HTTP requests against the started service, outside the workspace.', 'mu');
 
-  g.box(0, 15, 64, 14, { f: focus === 'spec' ? 'ac' : 'ln', title: 'Draft summary' });
+  g.box(0, 15, 64, 14, { f: focus === 'spec' || focus === 'name' ? 'ac' : 'ln', title: 'Draft summary' });
   g.region(0, 15, 64, 14, 'Static', '#draft-summary.kv');
-  kv(g, 2, 16, 13, 60, [
+  g.text(2, 16, 'Name', 'mu'); input(g, 15, 16, 47, 'Billing service refactor', { focus: focus === 'name' });
+  g.region(15, 16, 47, 1, 'Input', '#draft-name');
+  kv(g, 2, 17, 13, 60, [
+    ['', 'planner’s suggestion · editable until approval'],
     ['Prompt', 'Refactor the billing service so every invoice…'],
     ['Type', 'backend · rubric backend v1'],
     ['Baseline', `${REPO} @ ${BASE} · 214 files`],
@@ -140,10 +201,10 @@ export function planReview(sz, focus = 'tasks') {
     ['Services', 'setup · start · ready · stop · test'],
     ['Identity', 'none yet · computed when you approve'],
     ['Planner cost', '$0.62 · reported · not a benchmark cost'],
-    ['Status', 'draft · competitors never see a draft'],
   ]);
   para(g, 1, 30, W - 2, 'Generation is not approval. Review, edit or regenerate anything; only “Approve and save” creates the template, and a saved template is reused later without calling the planner again.', 'mu');
   buttons(g, W - 1, H - 2, [{ label: 'Edit task', go: 'PlanEdit', focus: focus === 'edit' }, { label: 'Regenerate…', go: 'PlanRegenerate' }, { label: 'Approve and save ▸', v: 'primary', go: 'PlanApprove' }]);
+  if (st.reopened) toast(g, '✓ Draft reopened where you left it', 'Tasks tab · T4 selected · your 2 edits and the planner output are as you saved them.', 46);
   footer(g, planFooter(false));
   return g;
 }
@@ -174,8 +235,37 @@ export function planServices(sz, focus = 'services') {
     ['Ports', 'from each configuration’s range'],
   ]);
   para(g, 1, 30, W - 2, 'Setup, start and stop instructions are part of the template and its SHA-256. Editing them later creates a new revision.', 'mu');
-  buttons(g, W - 1, H - 2, [{ label: 'Edit', go: 'PlanEdit' }, { label: 'Approve and save ▸', v: 'primary', go: 'PlanApprove', focus: focus === 'approve' }]);
-  footer(g, planFooter(false));
+  buttons(g, W - 1, H - 2, [{ label: 'Edit service…', go: 'PlanServiceEdit' }, { label: 'Approve and save ▸', v: 'primary', go: 'PlanApprove', focus: focus === 'approve' }]);
+  footer(g, svcFooter);
+  return g;
+}
+
+// ---------------------------------------------------------------- edit one service row (e on Setup · start · stop)
+
+export function planServiceEdit(sz, focus = 'cwd') {
+  const g = planServices(sz, 'none');
+  const m = modal(g, 86, 26, 'Edit service · start', { sel: '#service-edit' });
+  let y = m.y;
+  g.text(m.x, y++, fit('protocol/services.yaml · start · part of the draft and of its SHA-256', m.w), 'mu');
+  y++;
+  const L = 19, IW = m.w - L;
+  const field = (label, id, value, key, ok, note) => {
+    g.text(m.x, y, label, 'mu'); input(g, m.x + L, y++, IW, value, { focus: focus === key, f: ok === false ? 'bd' : '' });
+    g.region(m.x + L, y - 1, IW, 1, 'Input', id);
+    g.text(m.x + L, y, ok === false ? '✗' : '✓', ok === false ? 'bd' : 'ac'); g.text(m.x + L + 2, y++, fit(note, IW - 2), ok === false ? 'bd' : 'mu');
+  };
+  field('Command', '#service-command', 'uv run uvicorn billing.app:app --port $PORT', 'command', true, 'runs in each configuration’s copy · only $PORT is expanded');
+  field('Working directory', '#service-cwd', 'services/api', 'cwd', false, 'services/api is not in the a41f9c2 snapshot · use . or billing/');
+  field('Port', '#service-port', '$PORT', 'port', true, 'from the configuration’s range (41020–41029) · never fixed');
+  field('Readiness check', '#service-ready', 'GET /health → 200 within 30 s', 'ready', true, 'HTTP probe outside the workspace · start fails after 30 s');
+  y++;
+  g.text(m.x, y++, 'Changes from the generated row', 'bd');
+  g.text(m.x, y++, fit('= command · port · readiness check', m.w), 'mu');
+  g.text(m.x, y++, fit('~ working directory · . → services/api', m.w), 'bd');
+  y++;
+  para(g, m.x, y, m.w, 'Each field is checked as you leave it; Save stays disabled while a field is invalid. The generated row is kept, so Reset restores it.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Reset to generated' }, { label: 'Cancel', go: 'PlanServices' }, { label: 'Save', v: 'primary', off: true, focus: focus === 'save' }]);
+  footer(g, [{ k: 'esc', d: 'Cancel', go: 'PlanServices' }, { k: 'tab', d: 'Next field', do: 'next' }, { k: 'ctrl+z', d: 'Undo' }, { k: '^s', d: 'Save', off: true }], '');
   return g;
 }
 
@@ -245,11 +335,13 @@ export function planRegenerate(sz, focus = 'scope') {
 
 // ---------------------------------------------------------------- approve and save
 
-export function planApprove(sz, focus = 'approve') {
+export function planApprove(sz, focus = 'approve', st = {}) {
+  if (st.identical) return planApproveIdentical(sz, focus);
   const g = planReview(sz, 'none');
-  const m = modal(g, 86, 22, 'Approve and save · Billing service refactor r1', { sel: '#approve-draft' });
+  const m = modal(g, 86, 23, 'Approve and save · Billing service refactor r1', { sel: '#approve-draft' });
   let y = m.y;
   y = kv(g, m.x, y, 12, m.w, [
+    ['Name', 'Billing service refactor · the lineage display name'],
     ['Type', 'backend · rubric backend v1'],
     ['Baseline', `${REPO} @ ${BASE} · 214 files packaged in the template`],
     ['Tasks', '7 · T4 and T6 edited by you · T7 final verification'],
@@ -260,7 +352,7 @@ export function planApprove(sz, focus = 'approve') {
   g.text(m.x, y++, 'SHA-256 of the approved content', 'bd');
   g.text(m.x, y++, SHA.billing, 'ac');
   y++;
-  ['Every run, ZIP and import uses the packaged baseline; HEAD and branches are never looked up again.', 'Choosing this template later reuses these tasks; the planner is not called.', 'Run configurations are saved separately and never change this hash.'].forEach((t) => { g.text(m.x, y, '·', 'mu'); y = para(g, m.x + 2, y, m.w - 2, t); });
+  ['Every run, ZIP and import uses the packaged baseline; HEAD and branches are never looked up again.', 'Choosing this template later reuses these tasks; the planner is not called.', 'The name can be changed later without changing this hash; run configurations never change it either.'].forEach((t) => { g.text(m.x, y, '·', 'mu'); y = para(g, m.x + 2, y, m.w - 2, t); });
   y++;
   para(g, m.x, y, m.w, `${REPO} is unchanged, including its 3 uncommitted changes.`, 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Back to draft', go: 'PlanReview' }, { label: 'Approve r1', v: 'primary', go: 'TemplateTasks', focus: focus === 'approve' }]);
@@ -268,23 +360,42 @@ export function planApprove(sz, focus = 'approve') {
   return g;
 }
 
+// D6 · a draft whose computed SHA-256 equals an existing revision has nothing to approve.
+export function planApproveIdentical(sz, focus = 'open') {
+  const g = planReview(sz, 'none');
+  const m = modal(g, 86, 19, 'Approve and save · duplicate of Billing service refactor r1', { sel: '#approve-draft' });
+  let y = notice(g, m.x, m.y, m.w, 'error', 'Identical to Billing service refactor r1 — nothing to approve', 'This duplicate has no changes yet: its content gives exactly the SHA-256 of an approved revision. Saving it would add a second name for the same template.');
+  y++;
+  g.text(m.x, y, 'Computed', 'mu'); g.text(m.x + 10, y++, SHA.billing);
+  g.text(m.x, y, 'Existing', 'mu'); g.text(m.x + 10, y++, fit('Billing service refactor r1 · approved 2026-10-01 · same SHA-256', m.w - 10));
+  g.region(m.x, y - 2, m.w, 2, 'Static', '#identical');
+  y++;
+  ['Change a task, check, service or the baseline to make a new revision.', 'To rename r1, edit its display name in the Library; that never changes identity.'].forEach((t) => { g.text(m.x, y, '·', 'mu'); y = para(g, m.x + 2, y, m.w - 2, t); });
+  buttons(g, m.right, m.bottom, [{ label: 'Back to draft', go: 'PlanReview' }, { label: 'Approve', off: true }, { label: 'Open existing revision', v: 'primary', go: 'TemplateTasks', focus: focus === 'open' }]);
+  g.region(m.right - 24, m.bottom, 24, 1, 'Button', '#open-existing');
+  footer(g, [{ k: 'esc', d: 'Back', go: 'PlanReview' }, { k: 'enter', d: 'Approve', off: true }, { k: 'o', d: 'Open existing', go: 'TemplateTasks' }], '');
+  return g;
+}
+
 // ---------------------------------------------------------------- planning failed
 
-export function planningFailed(sz, focus = 'retry') {
+export function planningFailed(sz, focus = 'retry', st = {}) {
   const g = library(sz, 'none');
-  const m = modal(g, 84, 21, 'Planning failed · nothing was saved', { sel: '#planning-failed' });
-  let y = notice(g, m.x, m.y, m.w, 'error', 'Claude Code exited 1 after 2:10 · rate limit (429) · no draft produced', null);
+  const it = !!st.interrupted;
+  const m = modal(g, 84, 23, it ? 'Photo gallery uploader · planning failed · interrupted' : 'Planning failed · no draft to review', { sel: '#planning-failed' });
+  let y = notice(g, m.x, m.y, m.w, 'error', it ? 'Interrupted · the engine stopped at 17:05 while Claude Code was planning' : 'Claude Code exited 1 after 2:10 · rate limit (429) · no draft produced', null);
   y++;
-  step(g, m.x, y++, m.w, 'done', `Baseline snapshot of ${BASE} · kept for a retry`);
-  step(g, m.x, y++, m.w, 'fail', 'Planning · stopped · partial output kept in planning/attempt-1.log');
+  step(g, m.x, y++, m.w, 'done', it ? 'Baseline snapshot of ~/code/photo-gallery @ 5e7a120 · kept for a retry' : `Baseline snapshot of ${BASE} · kept for a retry`);
+  step(g, m.x, y++, m.w, 'fail', it ? 'Planning · reason “interrupted” · partial output in planning/attempt-1.log' : 'Planning · stopped · partial output kept in planning/attempt-1.log');
   step(g, m.x, y++, m.w, 'todo', 'Draft review · not available');
   g.region(m.x, m.y + 2, m.w, 3, 'Vertical', '#planning-steps');
   y++;
-  y = para(g, m.x, y, m.w, 'A failed plan never becomes a draft, and nothing stands in for it: no partial tasks, no earlier template, and never your live working tree in place of the snapshot.', 'mu');
+  y = para(g, m.x, y, m.w, 'A failed plan never becomes a reviewable draft, and nothing stands in for it: no partial tasks, no earlier template, and never your live working tree in place of the snapshot.', 'mu');
+  y = para(g, m.x, y + 1, m.w, it ? 'Reopened from the Library, where it is listed as “failed” until you retry or discard it.' : 'Until you choose, the Library lists it as a “failed” draft; closing keeps it there.', 'mu');
   y++;
   g.text(m.x, y++, 'Choose how to continue', 'bd');
   const cf = focus === 'retry';
-  [['● Retry with the same planner', true], ['○ Choose another planner', false], ['○ Discard the snapshot and close', false]].forEach(([t, on]) => g.text(m.x, y++, fit(t, m.w), on ? (cf ? 'bd' : '') : 'mu', on && cf ? { b: 'BT' } : {}));
+  [['● Retry with the same planner', true], ['○ Choose another planner', false], ['○ Discard draft and snapshot…', false]].forEach(([t, on]) => g.text(m.x, y++, fit(t, m.w), on ? (cf ? 'bd' : '') : 'mu', on && cf ? { b: 'BT' } : {}));
   g.region(m.x, y - 3, m.w, 3, 'RadioSet', '#planning-next');
   buttons(g, m.right, m.bottom, [{ label: 'Open log' }, { label: 'Continue', v: 'primary', go: 'PlanningProgress', focus: focus === 'go' }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'Library' }, { k: 'tab', d: 'Next', do: 'next' }], '');

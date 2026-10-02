@@ -64,13 +64,13 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1280px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1440px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Review the draft</b> · PlanReviewScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
 <sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
 <div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">               </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Draft · Billing service refactor</span><span class="B2">                 </span></div>
-<div class="r"><span class="B1"> </span><span class="B1 bd">◆</span><span class="B1"> </span><span class="B1 bd">Draft · not approved · backend · a41f9c2 snapshot · 2 edits                 </span><span class="B1"> </span></div>
+<div class="r"><span class="B1"> </span><span class="B1 bd">◇</span><span class="B1"> </span><span class="B1 bd">Draft · not approved · backend · a41f9c2 snapshot · 2 edits                 </span><span class="B1"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu"> Spec </span><span class="B0"> </span><a class="B0 bd k" href="PlanReview-80x24.dc.html"> Tasks 7 </a><span class="B0"> </span><span class="B0 mu"> Checks 19 </span><span class="B0"> </span><a class="B0 mu k" href="PlanServices.dc.html"> Services </a><span class="B0">                                        </span></div>
 <div class="r"><span class="B0 ln">────────</span><span class="B0 ac bd">─────────</span><span class="B0 ln">───────────────────────────────────────────────────────────────</span></div>
 <div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Tasks · in run order </span><span class="B0 ac">───────────────────────────────────────────────────────┐</span></div>
@@ -96,7 +96,7 @@ body{margin:0}
 </sc-if>
 <sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
 <div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">               </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Draft · Billing service refactor</span><span class="B2">                 </span></div>
-<div class="r"><span class="B1"> </span><span class="B1 bd">◆</span><span class="B1"> </span><span class="B1 bd">Draft · not approved · backend · a41f9c2 snapshot · 2 edits                 </span><span class="B1"> </span></div>
+<div class="r"><span class="B1"> </span><span class="B1 bd">◇</span><span class="B1"> </span><span class="B1 bd">Draft · not approved · backend · a41f9c2 snapshot · 2 edits                 </span><span class="B1"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu"> Spec </span><span class="B0"> </span><a class="B0 bd k" href="PlanReview-80x24.dc.html"> Tasks 7 </a><span class="B0"> </span><span class="B0 mu"> Checks 19 </span><span class="B0"> </span><a class="B0 mu k" href="PlanServices.dc.html"> Services </a><span class="B0">                                        </span></div>
 <div class="r"><span class="B0 ln">────────</span><span class="B0 ac bd">─────────</span><span class="B0 ln">───────────────────────────────────────────────────────────────</span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Tasks · in run order </span><span class="B0 ln">───────────────────────────────────────────────────────┐</span></div>
@@ -134,12 +134,13 @@ body{margin:0}
 <div class="lg-h"><b>PlanReviewScreen</b><span class="mut">tui/screens/planning.py</span></div>
 <h3>Widget tree</h3>
 <pre>PlanReviewScreen(Screen)       after planning
-├─ Header · Static #draft-bar      draft, never a template
+├─ Header · Static #draft-bar      draft, never a template · reopened
 ├─ TabbedContent #draft-tabs
 │  ├─ TabPane &quot;Specification&quot;
 │  ├─ TabPane &quot;Tasks&quot;
 │  │  ├─ DataTable #draft-tasks .bordered
 │  │  ├─ Static #draft-summary .pane.kv
+│  │  │  └─ Input #draft-name       prefilled by the planner
 │  │  └─ VerticalScroll #task-detail .pane
 │  ├─ TabPane &quot;Acceptance checks&quot;
 │  └─ TabPane &quot;Setup · start · stop&quot;
@@ -149,18 +150,18 @@ body{margin:0}
 ├─ Horizontal .actions
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
-<table><tr><td><code>#draft-bar</code></td><td>height: 1; background: $surface; text-style: bold;</td></tr><tr><td><code>#draft-tasks</code></td><td>height: 9;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#draft-tasks .-edited</code></td><td>text-style: bold;  “~ edited”</td></tr><tr><td><code>#task-detail</code></td><td>width: 56; height: 25;</td></tr><tr><td><code>Screen.-compact #draft-summary</code></td><td>display: none;</td></tr></table>
+<table><tr><td><code>#draft-bar</code></td><td>height: 1; background: $surface; text-style: bold;</td></tr><tr><td><code>#draft-tasks</code></td><td>height: 9;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#draft-tasks .-edited</code></td><td>text-style: bold;  “~ edited”</td></tr><tr><td><code>#task-detail</code></td><td>width: 56; height: 25;</td></tr><tr><td><code>#draft-name</code></td><td>width: 47;  editable until approval</td></tr><tr><td><code>Screen.-compact #draft-summary</code></td><td>display: none;</td></tr></table>
 <h3>Key bindings</h3>
-<table><tr><td><kbd>e</kbd></td><td><code>edit</code><br><span class="mut">Edit the selected task, its checks or a service</span></td></tr><tr><td><kbd>r</kbd></td><td><code>regenerate</code><br><span class="mut">Regenerate a task, all tasks or the spec</span></td></tr><tr><td><kbd>a</kbd></td><td><code>approve</code><br><span class="mut">Approve and save as r1 · computes the SHA-256</span></td></tr><tr><td><kbd>1–4</kbd></td><td><code>show_tab</code><br><span class="mut">Specification · Tasks · Checks · Services</span></td></tr><tr><td><kbd>esc</kbd></td><td><code>close</code><br><span class="mut">Close; the draft is kept, not approved</span></td></tr></table>
+<table><tr><td><kbd>e</kbd></td><td><code>edit</code><br><span class="mut">Edit the selected task and its checks · on Setup · start · stop: the selected service row</span></td></tr><tr><td><kbd>r</kbd></td><td><code>regenerate</code><br><span class="mut">Regenerate a task, all tasks or the spec</span></td></tr><tr><td><kbd>a</kbd></td><td><code>approve</code><br><span class="mut">Approve and save as r1 · computes the SHA-256</span></td></tr><tr><td><kbd>1–4</kbd></td><td><code>show_tab</code><br><span class="mut">Specification · Tasks · Checks · Services</span></td></tr><tr><td><kbd>esc</kbd></td><td><code>close</code><br><span class="mut">Close; the draft is kept, not approved</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>DataTable #draft-tasks</li><li>Static #task-detail</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="NewTemplateRepo-80x24.dc.html">New template (M01)</a><a href="PlannerPicker.dc.html">Planner</a><a href="PlanningProgress.dc.html">Planning</a><a href="PlanReview-80x24.dc.html">Review</a><a href="PlanServices.dc.html">Services</a><a href="PlanEdit.dc.html">Edit</a><a href="PlanRegenerate.dc.html">Regenerate</a><a href="PlanApprove.dc.html">Approve</a><a href="PlanningFailed.dc.html">Failed</a></div>
+<div class="rel"><a href="NewTemplateRepo-80x24.dc.html">New template (M01)</a><a href="PlannerPicker.dc.html">Planner</a><a href="PlannerUnknownModel.dc.html">No default model</a><a href="PlannerNoUsable.dc.html">No usable harness</a><a href="PlannerVerify.dc.html">Verify now</a><a href="PlanningProgress.dc.html">Planning</a><a href="PlanReview-80x24.dc.html">Review</a><a href="PlanReopened.dc.html">Reopened draft</a><a href="PlanServices.dc.html">Services</a><a href="PlanServiceEdit.dc.html">Edit service</a><a href="PlanEdit.dc.html">Edit</a><a href="PlanRegenerate.dc.html">Regenerate</a><a href="PlanApprove.dc.html">Approve</a><a href="PlanApproveIdentical.dc.html">Identical</a><a href="PlanningFailed.dc.html">Failed</a><a href="PlanningInterrupted.dc.html">Interrupted</a><a href="Library-80x24.dc.html">Library drafts (M01)</a></div>
 <h3>Notes</h3>
-<ul><li>Seven tasks is the default for custom work, not a rule; T7 is final verification and fixes (R007, R031).</li><li>Edited tasks are marked; the generated text is kept beside the edit.</li><li>Planning cost is shown but is not a benchmark measurement.</li></ul>
+<ul><li>Seven tasks is the default for custom work, not a rule; T7 is final verification and fixes (R007, R031).</li><li>W9: #draft-name is prefilled with the planner’s suggestion and editable until approval; after approval it is the lineage display name, editable without changing identity.</li><li>Edited tasks are marked; the generated text is kept beside the edit.</li><li>Planning cost is shown but is not a benchmark measurement.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1280}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1440}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

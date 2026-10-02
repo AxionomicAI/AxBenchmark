@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1620px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2160px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Setup · configuration</b> · SetupScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -84,10 +84,10 @@ body{margin:0}
 <div class="r"><span class="B0"> </span><span class="B0 mu">Rubric   </span><span class="B0">web v1 · from the template · same for every entry                     </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Weights  </span><span class="B0">quality web v1 · ranking equal thirds · resolved at launch         </span><a class="B0 ac bd k" href="WeightsEditor.dc.html">w</a><span class="B0">  </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Run      </span><span class="B0">one per harness, up to 4 · Claude Code #2 waits for #1                </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Trials   </span><span class="B0">1 per configuration · sampling 1 s · display USD · 0.18 USD/kWh    </span><a class="B0 ac bd k" href="CurrencyEnergy.dc.html">c</a><span class="B0">  </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">▲</span><span class="B0"> </span><span class="B0 bd">CPU and GPU power unavailable                                               </span><span class="B0"> </span></div>
-<div class="r"><span class="B0">   </span><span class="B0 mu">Optional metrics (permission). The run is unaffected.</span><span class="B0">                        </span></div>
-<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 mu">Optional metrics (insufficient permission). The run is unaffected.</span><span class="B0">           </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
@@ -110,10 +110,10 @@ body{margin:0}
 <div class="r"><span class="B0"> </span><span class="B0 mu">Rubric   </span><span class="B0">web v1 · from the template · same for every entry                     </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Weights  </span><span class="B0">quality web v1 · ranking equal thirds · resolved at launch         </span><a class="B0 ac bd k" href="WeightsEditor.dc.html">w</a><span class="B0">  </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Run      </span><span class="B0">one per harness, up to 4 · Claude Code #2 waits for #1                </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Trials   </span><span class="B0">1 per configuration · sampling 1 s · display USD · 0.18 USD/kWh    </span><a class="B0 ac bd k" href="CurrencyEnergy.dc.html">c</a><span class="B0">  </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">▲</span><span class="B0"> </span><span class="B0 bd">CPU and GPU power unavailable                                               </span><span class="B0"> </span></div>
-<div class="r"><span class="B0">   </span><span class="B0 mu">Optional metrics (permission). The run is unaffected.</span><span class="B0">                        </span></div>
-<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 mu">Optional metrics (insufficient permission). The run is unaffected.</span><span class="B0">           </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
@@ -125,7 +125,7 @@ body{margin:0}
 <div class="ov" data-widget="Static" data-tcss="#identity-bar" style="left: 0ch; top: 16px; width: 80ch; height: 16px"><span>Static #identity-bar</span></div>
 <div class="ov" data-widget="Select" data-tcss="#configuration" style="left: 8ch; top: 32px; width: 30ch; height: 16px"><span>Select #configuration</span></div>
 <div class="ov" data-widget="DataTable" data-tcss="#entries" style="left: 1ch; top: 64px; width: 78ch; height: 96px"><span>DataTable #entries</span></div>
-<div class="ov" data-widget="Static" data-tcss="#setup-summary.kv" style="left: 1ch; top: 176px; width: 78ch; height: 64px"><span>Static #setup-summary.kv</span></div>
+<div class="ov" data-widget="Static" data-tcss="#setup-summary.kv" style="left: 1ch; top: 176px; width: 78ch; height: 80px"><span>Static #setup-summary.kv</span></div>
 <div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
 </sc-if>
 </div>
@@ -147,23 +147,27 @@ body{margin:0}
 │     ├─ Select #quality-preset
 │     └─ Select #ranking-preset
 ├─ Vertical #execution-pane .pane
-│  └─ RadioSet #concurrency
+│  ├─ RadioSet #concurrency
+│  ├─ Input #trials                default 1
+│  ├─ Input #sampling-interval     0.5–10 s · default 1 s
+│  ├─ Select #display-currency     default USD
+│  └─ Static #cost-energy          rates frozen at launch · tariff · c
 ├─ Static #limitations | #validation
 ├─ Horizontal .actions
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
-<table><tr><td><code>#identity-bar</code></td><td>height: 1; background: $surface; padding: 0 1;</td></tr><tr><td><code>#entries</code></td><td>height: 8;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#judge-pane, #weights-pane</code></td><td>width: 1fr; height: 12;</td></tr><tr><td><code>#execution-pane</code></td><td>height: 7;</td></tr><tr><td><code>#validation</code></td><td>display: none;</td></tr><tr><td><code>SetupScreen.-invalid #validation</code></td><td>display: block;</td></tr><tr><td><code>SetupScreen.-invalid #review</code></td><td>disabled: True;  via check_action</td></tr><tr><td><code>Screen.-compact #middle, Screen.-compact #execution-pane</code></td><td>display: none;  → #setup-summary</td></tr></table>
+<table><tr><td><code>#identity-bar</code></td><td>height: 1; background: $surface; padding: 0 1;</td></tr><tr><td><code>#entries</code></td><td>height: 8;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#judge-pane, #weights-pane</code></td><td>width: 1fr; height: 12;</td></tr><tr><td><code>#execution-pane</code></td><td>height: 9;</td></tr><tr><td><code>#trials</code></td><td>width: 5;  type=&quot;integer&quot;, validate ≥ 1</td></tr><tr><td><code>#sampling-interval</code></td><td>width: 7;  0.5–10 s, invalid values rejected</td></tr><tr><td><code>#display-currency</code></td><td>width: 9;  currencies with a catalog rate · default USD</td></tr><tr><td><code>#validation</code></td><td>display: none;</td></tr><tr><td><code>SetupScreen.-invalid #validation</code></td><td>display: block;</td></tr><tr><td><code>SetupScreen.-invalid #review</code></td><td>disabled: True;  via check_action</td></tr><tr><td><code>Screen.-compact #middle, Screen.-compact #execution-pane</code></td><td>display: none;  → #setup-summary</td></tr></table>
 <h3>Key bindings</h3>
-<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the revision’s configurations</span></td></tr><tr><td><kbd>a / e / del</kbd></td><td><code>add / edit / remove entry</code><br><span class="mut">Entry picker (M04) · several entries per harness</span></td></tr><tr><td><kbd>p</kbd></td><td><code>policy</code><br><span class="mut">Environment policy for the entry (M05)</span></td></tr><tr><td><kbd>j</kbd></td><td><code>judge</code><br><span class="mut">Push JudgeScreen</span></td></tr><tr><td><kbd>w</kbd></td><td><code>weights</code><br><span class="mut">Push WeightsScreen (M06)</span></td></tr><tr><td><kbd>ctrl+s</kbd></td><td><code>save</code><br><span class="mut">Save the configuration YAML; the template is untouched</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>review</code><br><span class="mut">Push ReviewLaunchScreen (disabled while invalid)</span></td></tr></table>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the revision’s configurations</span></td></tr><tr><td><kbd>a / e / del</kbd></td><td><code>add / edit / remove entry</code><br><span class="mut">Entry picker (M04) · several entries per harness</span></td></tr><tr><td><kbd>p</kbd></td><td><code>policy</code><br><span class="mut">Environment policy for the entry (M05)</span></td></tr><tr><td><kbd>j</kbd></td><td><code>judge</code><br><span class="mut">Push JudgeScreen</span></td></tr><tr><td><kbd>w</kbd></td><td><code>weights</code><br><span class="mut">Push WeightsScreen (M06)</span></td></tr><tr><td><kbd>c</kbd></td><td><code>currency</code><br><span class="mut">Push CurrencyEnergyScreen(mode=&quot;setup&quot;) (M10): display currency and electricity tariff</span></td></tr><tr><td><kbd>ctrl+s</kbd></td><td><code>save</code><br><span class="mut">Save the configuration YAML; the template is untouched</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>review</code><br><span class="mut">Push ReviewLaunchScreen (disabled while invalid)</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>DataTable #entries</li><li>Button #review</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="Setup-80x24.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch-80x24.dc.html">Review</a><a href="LaunchRecord.dc.html">Launch record</a></div>
+<div class="rel"><a href="Setup-80x24.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch-80x24.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
 <h3>Notes</h3>
-<ul><li>Configurations are saved per revision and pin its SHA-256 (R019). The built-in benchmark reuses its approved tasks with no planner call (R136).</li><li>Two Claude Code entries are distinct configurations; same-harness entries queue (R017, M11).</li><li>Clean is the default policy; current is chosen per entry and never applied silently (R032).</li><li>Presets are resolved into actual weights at launch, so later preset edits cannot change the run (R033).</li></ul>
+<ul><li>Configurations are saved per revision and pin its SHA-256 (R019). The built-in benchmark reuses its approved tasks with no planner call (R136).</li><li>Two Claude Code entries are distinct configurations; same-harness entries queue (R017, M11).</li><li>Clean is the default policy; current is chosen per entry and never applied silently (R032).</li><li>Presets are resolved into actual weights at launch, so later preset edits cannot change the run (R033).</li><li>Trials (#trials, default 1, no upper limit) run one after another from fresh baselines; each is its own result and review (D7). More than 5 for a configuration not on a local endpoint asks to confirm the budget at launch (R3-7).</li><li>Sampling interval 0.5–10 s, default 1 s, frozen at launch and not part of template identity; a slower collector records its own interval (D18).</li><li>Display currency (#display-currency, default USD) and the optional electricity tariff are frozen with the run, with a RateSnapshot of the rates for every price currency and the display currency (R3-2). Results and reports show this run in that currency; there is no later currency switch. c opens CurrencyEnergyScreen (W4, D4).</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1620}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2160}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

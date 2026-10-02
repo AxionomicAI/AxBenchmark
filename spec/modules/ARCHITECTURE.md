@@ -103,7 +103,7 @@ TUI screens:
 CLI commands:
 
 - Each command maps to one API method (or a job plus its event stream). Human output is the default; `--json` prints the API response or event stream as JSON lines.
-- Exit codes: 0 success, 1 operation failed (typed error, including a rejected package, an unknown id or an incomplete configuration, and a followed run that ended stopped or interrupted), 2 invalid usage, 3 engine unreachable or incompatible.
+- Exit codes: 0 success (including a followed run that completed with failed or unverified tasks; scripts read task outcomes from `status --json`), 1 operation failed (typed error, including a rejected package, an unknown id or an incomplete configuration, and a followed run that ended stopped or interrupted), 2 invalid usage, 3 engine unreachable or incompatible.
 
 ## Ownership of API namespaces
 

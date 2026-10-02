@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Run halted · template identity invalidated · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1160px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Run halted · template identity invalidated</b> · RunHaltedScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                               </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Run 2026-09-29-c · Inventory web app r1</span><span class="B2 xd">                                  </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 bd xd">✗ Run halted 15:12:40 · template identity invalidated · 4 configurations interrupted · cleanup complete               </span><span class="B1 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 ac xd">■</span><span class="B0 xd"> </span><span class="B0 mu xd">Approved template 3f9c2e71… · computed 252621cb… on disk at 15:12:40 · the run is over and none of it is compared   </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Claude Code </span><span class="B0 ln xd">────────────────────────────────────────────┐┌─</span><span class="B0 bd xd"> Codex </span><span class="B0 ln xd">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 bd xd">✗</span><span class="B0 xd"> </span><span class="B0 bd xd">halted</span><span class="B0 xd"> </span><span class="B0 mu xd">· clau</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Run 2026-09-29-c halted · template identity invalidated </span><span class="B1 ac">──────────────────────────╮</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">T1</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T2</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T3</span><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 ac xd">███████████████</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">An approved file of Inventory web app r1 changed on disk during the run       </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">░░░░░░░░░░</span><span class="B0 mu xd">  57%</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Now      </span><span class="B0 bd xd">✗ inte</span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">The first detection halted the whole run. All four configurations were stopped</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 bd xd">dentity invali…</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Elapsed  </span><span class="B0 xd">31:02 </span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">with the same cleanup as an explicit stop and recorded as interrupted with</span><span class="B1">      </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Cost     </span><span class="B0 xd">$3.18 </span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">this reason.</span><span class="B1">                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Queue    none i</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">recorded as int</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Approved</span><span class="B1">  3f9c2e710640fa4dc37ee9e73ea2376b6deb29e142b7706aa1380bc01229ff49        </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Computed</span><span class="B1">  </span><span class="B1 bd">252621cb393c403c28eb4fe4fe5fe06590f08ba550dc094d4f471a7a88718488</span><span class="B1">        </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">│</span><span class="B1">            </span><span class="B1 mu">recomputed at 15:12:40 before the next task’s checks · never rebound  </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">───────</span><span class="B0 mu xd"> lane 2 </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Grok CLI </span><span class="B0 ln xd">─────</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 bd xd">✗</span><span class="B0 xd"> </span><span class="B0 bd xd">halted</span><span class="B0 xd"> </span><span class="B0 mu xd">· grok</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> Changed path                Change                         On disk             </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 mu xd">ult            </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">T1</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T2</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T3</span><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> checks/acceptance.v1.json  </span><span class="B0 bd"> ~ modified · 6.2 KB → 6.3 KB  </span><span class="B0"> was read-only 0444  </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 ac xd">███████████████</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> tasks/T6-checkout.md       </span><span class="B0 bd"> ~ modified · 150 B → 171 B    </span><span class="B0"> was read-only 0444  </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">░░░░░░░░░░</span><span class="B0 mu xd">  43%</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Now      </span><span class="B0 bd xd">✗ inte</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 bd xd">dentity invali…</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Elapsed  </span><span class="B0 xd">29:15 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Recorded     </span><span class="B1">4 results · interrupted · “template identity invalidated”            </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Cost     </span><span class="B0 xd">$0.49 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Kept         </span><span class="B1">evidence, logs, snapshots and partial measurements (▲)               </span><span class="B1 ac">│</span><span class="B0 xd">el run          </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Queue    none i</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Never        </span><span class="B1">rebound to r1 or another revision · never in rankings or reports     </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">recorded as int</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Command line </span><span class="B1">axbenchmark status 2026-09-29-c shows the same reason                </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Restore the files from r1, or save the change as a new revision, then launch</span><span class="B1">      </span><span class="B1 ac">│</span><span class="B0 ln xd">───────</span><span class="B0 mu xd"> lane 4 </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Events · all c</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">again. A new revision’s results are never compared with r1’s.</span><span class="B1">                     </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:40  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 bd xd">d changed on d…</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:40  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:44  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">d · ports rele… </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:46  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">corded · evide… </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                              </span><a class="BS k" href="EvidenceViewer.dc.html"> Open evidence </a><span class="B1">  </span><a class="BS k" href="Revise.dc.html"> Save change as revision… </a><span class="B1">  </span><a class="BA on bd rv bd k" href="Library.dc.html"> Close </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└──────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu xd"> follows new lines </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Library.dc.html">esc</a><a class="B2 k" href="Library.dc.html"> Close</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Next</button><span class="B2">                                                                                                    </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                               </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Run 2026-09-29-c · Inventory web app r1</span><span class="B2 xd">                                  </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 bd xd">✗ Run halted 15:12:40 · template identity invalidated · 4 configurations interrupted · cleanup complete               </span><span class="B1 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 ac xd">■</span><span class="B0 xd"> </span><span class="B0 mu xd">Approved template 3f9c2e71… · computed 252621cb… on disk at 15:12:40 · the run is over and none of it is compared   </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Claude Code </span><span class="B0 ln xd">────────────────────────────────────────────┐┌─</span><span class="B0 bd xd"> Codex </span><span class="B0 ln xd">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 bd xd">✗</span><span class="B0 xd"> </span><span class="B0 bd xd">halted</span><span class="B0 xd"> </span><span class="B0 mu xd">· clau</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Run 2026-09-29-c halted · template identity invalidated </span><span class="B1 ac">──────────────────────────╮</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">T1</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T2</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T3</span><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 ac xd">███████████████</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">An approved file of Inventory web app r1 changed on disk during the run       </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">░░░░░░░░░░</span><span class="B0 mu xd">  57%</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Now      </span><span class="B0 bd xd">✗ inte</span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">The first detection halted the whole run. All four configurations were stopped</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 bd xd">dentity invali…</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Elapsed  </span><span class="B0 xd">31:02 </span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">with the same cleanup as an explicit stop and recorded as interrupted with</span><span class="B1">      </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Cost     </span><span class="B0 xd">$3.18 </span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">this reason.</span><span class="B1">                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Queue    none i</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">recorded as int</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Approved</span><span class="B1">  3f9c2e710640fa4dc37ee9e73ea2376b6deb29e142b7706aa1380bc01229ff49        </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Computed</span><span class="B1">  </span><span class="B1 bd">252621cb393c403c28eb4fe4fe5fe06590f08ba550dc094d4f471a7a88718488</span><span class="B1">        </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">│</span><span class="B1">            </span><span class="B1 mu">recomputed at 15:12:40 before the next task’s checks · never rebound  </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">───────</span><span class="B0 mu xd"> lane 2 </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Grok CLI </span><span class="B0 ln xd">─────</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 bd xd">✗</span><span class="B0 xd"> </span><span class="B0 bd xd">halted</span><span class="B0 xd"> </span><span class="B0 mu xd">· grok</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> Changed path                Change                         On disk             </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 mu xd">ult            </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">T1</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T2</span><span class="B0 xd"> </span><span class="B0 ac xd">✓</span><span class="B0 xd">  </span><span class="B0 mu xd">T3</span><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="BA on"> checks/acceptance.v1.json  </span><span class="BA on bd"> ~ modified · 6.2 KB → 6.3 KB  </span><span class="BA on"> was read-only 0444  </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 ac xd">███████████████</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> tasks/T6-checkout.md       </span><span class="B0 bd"> ~ modified · 150 B → 171 B    </span><span class="B0"> was read-only 0444  </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">░░░░░░░░░░</span><span class="B0 mu xd">  43%</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Now      </span><span class="B0 bd xd">✗ inte</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 bd xd">dentity invali…</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Elapsed  </span><span class="B0 xd">29:15 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Recorded     </span><span class="B1">4 results · interrupted · “template identity invalidated”            </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Cost     </span><span class="B0 xd">$0.49 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Kept         </span><span class="B1">evidence, logs, snapshots and partial measurements (▲)               </span><span class="B1 ac">│</span><span class="B0 xd">el run          </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Queue    none i</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Never        </span><span class="B1">rebound to r1 or another revision · never in rankings or reports     </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">recorded as int</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Command line </span><span class="B1">axbenchmark status 2026-09-29-c shows the same reason                </span><span class="B1 ac">│</span><span class="B0 mu xd">               </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Restore the files from r1, or save the change as a new revision, then launch</span><span class="B1">      </span><span class="B1 ac">│</span><span class="B0 ln xd">───────</span><span class="B0 mu xd"> lane 4 </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Events · all c</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">again. A new revision’s results are never compared with r1’s.</span><span class="B1">                     </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:40  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 bd xd">d changed on d…</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:40  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:44  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">d · ports rele… </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">15:12:46  </span><span class="B0 bd xd">run  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">corded · evide… </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                              </span><a class="BS k" href="EvidenceViewer.dc.html"> Open evidence </a><span class="B1">  </span><a class="BS k" href="Revise.dc.html"> Save change as revision… </a><span class="B1">  </span><a class="BA on bd k" href="Library.dc.html"> Close </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└──────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu xd"> follows new lines </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Library.dc.html">esc</a><a class="B2 k" href="Library.dc.html"> Close</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Next</button><span class="B2">                                                                                                    </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Vertical" data-tcss="#halted" style="left: 17ch; top: 64px; width: 86ch; height: 496px"><span>Vertical #halted</span></div>
+<div class="ov" data-widget="Static" data-tcss=".notice.-error" style="left: 20ch; top: 96px; width: 80ch; height: 64px"><span>Static .notice.-error</span></div>
+<div class="ov" data-widget="Static" data-tcss="#halt-identities" style="left: 20ch; top: 176px; width: 80ch; height: 48px"><span>Static #halt-identities</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#changed-paths" style="left: 20ch; top: 240px; width: 80ch; height: 48px"><span>DataTable #changed-paths</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>RunHaltedScreen</b><span class="mut">tui/screens/run.py</span></div>
+<h3>Widget tree</h3>
+<pre>RunHaltedScreen(ModalScreen[None])   pushed over RunScreen
+├─ Vertical #halted .dialog
+│  ├─ Static .notice.-error
+│  ├─ Static #halt-identities      approved · computed SHA-256
+│  ├─ DataTable #changed-paths
+│  ├─ Static .kv                   recorded outcome
+│  └─ Horizontal .dialog-actions
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>RunHaltedScreen</code></td><td>align: center middle; background: $background 60%;</td></tr><tr><td><code>#halted</code></td><td>width: 86; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;</td></tr><tr><td><code>.dialog-actions</code></td><td>height: 1; align-horizontal: right; margin-top: 1;</td></tr><tr><td><code>#halt-identities</code></td><td>height: 3;  both digests in full</td></tr><tr><td><code>#changed-paths</code></td><td>height: 3;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>dismiss(None)</code><br><span class="mut">Close without changes</span></td></tr><tr><td><kbd>tab / shift+tab</kbd></td><td><code>focus_next / previous</code><br><span class="mut">Move between fields</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>close</code><br><span class="mut">Back to the Library; the run is over</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>Button #close</li><li>DataTable #changed-paths</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="RunOverview.dc.html">Running</a><a href="RunListDetail-80x24.dc.html">Below 100×30</a><a href="HarnessLive.dc.html">Live view</a><a href="RunQueued.dc.html">Queued</a><a href="RunSequential.dc.html">Sequential</a><a href="RunFailures.dc.html">Failures</a><a href="RunHalted.dc.html">Halted · identity</a><a href="ResultsHalted.dc.html">Halted · results (M02)</a><a href="RunDetach.dc.html">Detach</a><a href="RunReattached.dc.html">Reattached</a><a href="StopConfirm.dc.html">Stop</a><a href="ActiveLocked.dc.html">Locked</a></div>
+<h3>Notes</h3>
+<ul><li>D9: approved revision files are read-only on disk; the first detected change halts the whole run with the same cleanup as an explicit stop.</li><li>Every configuration is recorded as interrupted with reason “template identity invalidated”, the approved and computed SHA-256 and the changed paths. Evidence is kept; results are never rebound and never compared.</li><li>axbenchmark status shows the same reason, and a followed run --no-tui exits 1 (CliHalted).</li><li>Run 2026-09-29-c is fictional and is not one of r1’s 12 comparable results.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1160}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["Button #close","DataTable #changed-paths"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

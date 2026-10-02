@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1020px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Screenshots</b> · ScreenshotsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -131,16 +131,16 @@ body{margin:0}
 <h3>IDs and classes · TCSS</h3>
 <table><tr><td><code>.shot</code></td><td>border: solid $foreground 30%; content-align: center middle;</td></tr><tr><td><code>.shot.-desktop</code></td><td>width: 63; height: 24;</td></tr><tr><td><code>.shot.-mobile</code></td><td>width: 21; height: 24;</td></tr></table>
 <h3>Key bindings</h3>
-<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result’s outcomes (M02)</span></td></tr><tr><td><kbd>← →</kbd></td><td><code>previous / next task</code><br><span class="mut">Step through T1–T7</span></td></tr><tr><td><kbd>s</kbd></td><td><code>screenshots</code><br><span class="mut">Push ScreenshotsScreen</span></td></tr><tr><td><kbd>f</kbd></td><td><code>final_regression</code><br><span class="mut">Push FinalRegressionScreen</span></td></tr><tr><td><kbd>j</kbd></td><td><code>judge_input</code><br><span class="mut">Show what the judge receives</span></td></tr><tr><td><kbd>l</kbd></td><td><code>log</code><br><span class="mut">Open the check log</span></td></tr></table>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result’s outcomes (M02)</span></td></tr><tr><td><kbd>← →</kbd></td><td><code>previous / next task</code><br><span class="mut">Step through T1–T7</span></td></tr><tr><td><kbd>s</kbd></td><td><code>screenshots</code><br><span class="mut">Push ScreenshotsScreen</span></td></tr><tr><td><kbd>f</kbd></td><td><code>final_regression</code><br><span class="mut">Push FinalRegressionScreen</span></td></tr><tr><td><kbd>j</kbd></td><td><code>judge_input</code><br><span class="mut">Show what the judge receives</span></td></tr><tr><td><kbd>l</kbd></td><td><code>log</code><br><span class="mut">Push EvidenceViewerScreen on the check log</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="TaskChecks.dc.html">Task checks</a><a href="FinalRegression.dc.html">Final regression</a><a href="CheckOutcomes.dc.html">Not passed</a><a href="Screenshots.dc.html">Screenshots</a><a href="VerifyProgress.dc.html">In progress</a><a href="JudgeHandoff.dc.html">Judge input</a></div>
+<div class="rel"><a href="TaskChecks.dc.html">Task checks</a><a href="FinalRegression.dc.html">Final regression</a><a href="CheckOutcomes.dc.html">Not passed</a><a href="Screenshots.dc.html">Screenshots</a><a href="EvidenceViewer.dc.html">Evidence</a><a href="VerifyProgress.dc.html">In progress</a><a href="JudgeHandoff.dc.html">Judge input</a></div>
 <h3>Notes</h3>
-<ul><li>Both required sizes are captured per check (R075); frames are drawn to scale as placeholders.</li><li>Images open in the system viewer; terminals are not assumed to render them.</li></ul>
+<ul><li>Both required sizes are captured per check (R075); frames are drawn to scale as placeholders.</li><li>Images open in the system viewer; terminals are not assumed to render them.</li><li>Per-task screenshots stay in evidence, results and the report but are not judge input; the judge gets the final regression’s screenshots (D12).</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1020}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

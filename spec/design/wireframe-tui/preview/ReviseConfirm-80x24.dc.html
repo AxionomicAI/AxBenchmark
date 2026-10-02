@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1100px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1120px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Approve revision r2</b> · ApproveRevisionScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -124,6 +124,7 @@ body{margin:0}
 <div class="ov" data-widget="Vertical" data-tcss="#approve-revision" style="left: 1ch; top: 32px; width: 78ch; height: 304px"><span>Vertical #approve-revision</span></div>
 <div class="ov" data-widget="Static" data-tcss="#revision-diff" style="left: 4ch; top: 80px; width: 72ch; height: 48px"><span>Static #revision-diff</span></div>
 <div class="ov" data-widget="Static" data-tcss="#revision-digests" style="left: 4ch; top: 160px; width: 72ch; height: 32px"><span>Static #revision-digests</span></div>
+<div class="ov" data-widget="Static" data-tcss="#revision-verdict" style="left: 4ch; top: 208px; width: 72ch; height: 16px"><span>Static #revision-verdict</span></div>
 <div class="ov" data-widget="Checkbox" data-tcss="#copy-configs" style="left: 4ch; top: 240px; width: 72ch; height: 16px"><span>Checkbox #copy-configs</span></div>
 <div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
 </sc-if>
@@ -137,11 +138,12 @@ body{margin:0}
 ├─ Vertical #approve-revision .dialog
 │  ├─ Static #revision-diff
 │  ├─ Static #revision-digests
-│  ├─ Static #revision-verdict
-│  ├─ Checkbox #copy-configs
+│  ├─ Static #revision-verdict       .notice.-error when identical
+│  ├─ Checkbox #copy-configs         hidden when identical
 │  └─ Horizontal .dialog-actions
 │     ├─ Button #back
-│     └─ Button #approve .-primary
+│     ├─ Button #open-existing       identical only (o)
+│     └─ Button #approve .-primary   disabled when identical
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
 <table><tr><td><code>ApproveRevisionScreen</code></td><td>align: center middle; background: $background 60%;</td></tr><tr><td><code>#approve-revision</code></td><td>width: 86; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;</td></tr><tr><td><code>.dialog-actions</code></td><td>height: 1; align-horizontal: right; margin-top: 1;</td></tr><tr><td><code>Button.-primary</code></td><td>background: $primary; color: $background; text-style: bold;</td></tr><tr><td><code>Button:focus</code></td><td>text-style: reverse bold;</td></tr><tr><td><code>#revision-digests</code></td><td>height: 2; text-wrap: nowrap;</td></tr></table>
@@ -149,13 +151,13 @@ body{margin:0}
 <table><tr><td><kbd>esc</kbd></td><td><code>dismiss(None)</code><br><span class="mut">Close without changes</span></td></tr><tr><td><kbd>tab / shift+tab</kbd></td><td><code>focus_next / previous</code><br><span class="mut">Move between fields</span></td></tr><tr><td><kbd>ctrl+s</kbd></td><td><code>approve</code><br><span class="mut">Approve r2</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>Button #approve</li><li>Checkbox #copy-configs</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="Revise.dc.html">Choose</a><a href="ReviseConfirm-80x24.dc.html">Approve</a><a href="RevisionSaved.dc.html">Saved</a></div>
+<div class="rel"><a href="Revise.dc.html">Choose</a><a href="ReviseActiveRun.dc.html">Run active</a><a href="ReviseConfirm-80x24.dc.html">Approve</a><a href="ReviseIdentical-80x24.dc.html">Identical</a><a href="RevisionSaved.dc.html">Saved</a></div>
 <h3>Notes</h3>
 <ul><li>Task-order changes alone produce a new digest (R067, R118).</li><li>Configurations do not carry over silently; copying is an explicit choice that creates new r2 configurations.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1100}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1120}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

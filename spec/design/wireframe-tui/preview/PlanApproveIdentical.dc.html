@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Approve · identical, blocked · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1020px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Approve · identical, blocked</b> · ApproveDraftScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                      </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — New template · Billing service refactor · review the draft</span><span class="B2 xd">                        </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 bd xd">◇</span><span class="B1 xd"> </span><span class="B1 bd xd">Draft · not approved · backend · baseline a41f9c2 · planner Claude Code · claude-opus-5-5 · high · 2 tasks edited   </span><span class="B1 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd"> Specification </span><span class="B0 xd"> </span><span class="B0 bd xd"> Tasks · 7 </span><span class="B0 xd"> </span><span class="B0 mu xd"> Acceptance checks · 19 </span><span class="B0 xd"> </span><span class="B0 mu xd"> Setup · start · stop </span><span class="B0 xd">                                            </span></div>
+<div class="r"><span class="B0 ln xd">─────────────────</span><span class="B0 ac bd xd">───────────</span><span class="B0 ln xd">────────────────────────────────────────────────────────────────────────────────────────────</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Tasks · in run order </span><span class="B0 ln xd">───────────────────────────────────────┐┌─</span><span class="B0 bd xd"> T4 · Move PDF rendering </span><span class="B0 ln xd">────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B2 bd xd"> #   Task                               Checks State          </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="B0 bd xd">Prompt</span><span class="B0 xd">                                               </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T1  Characterize invoice behaviour          3</span><span class="B0 mu xd"> generated      </span><span class="B0 ln xd">││</span><span class="B0 xd"> Move PDF rendering into the invoice module. CSV      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T2  Extract an invoice module               2</span><span class="B0 mu xd"> generated      </span><span class="B0 ln xd">││</span><span class="B0 xd"> export stays where it is; it is outside this         </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T3  Move tax and discount rules             3</span><span class="B0 mu xd"> generated      </span><span class="B0 ln xd">││</span><span class="B0 xd"> refactor.                                            </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="BS xd"> T4  Move PDF rendering                      3</span><span class="BS bd xd"> ~ edited       </span><span class="B0 ln xd">││</span><span class="B0 xd">                                                      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T5  Remove dupl</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Approve and save · duplicate of Billing service refactor r1 </span><span class="B1 ac">──────────────────────╮</span><span class="B0 mu xd">t is”. The</span><span class="B0 xd">      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T6  Unit tests </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">edit.</span><span class="B0 xd">           </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T7  Verify and </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">Identical to Billing service refactor r1 — nothing to approve                 </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">A new session p</span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">This duplicate has no changes yet: its content gives exactly the SHA-256 of an</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 mu">approved revision. Saving it would add a second name for the same template.</span><span class="B1">     </span><span class="B1 ac">│</span><span class="B0 xd">tes as before   </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Draft summary </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ling/invoice/   </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Name</span><span class="B0 xd">         </span><span class="B1 xd"> B</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Computed</span><span class="B1">  927b6a7dcf416818c73fedc327c94ecc2d63742bcabf46f9e68edeef4b6037bd        </span><span class="B1 ac">│</span><span class="B0 xd">same file       </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">             </span><span class="B0 xd">pl</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Existing</span><span class="B1">  Billing service refactor r1 · approved 2026-10-01 · same SHA-256        </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Prompt       </span><span class="B0 xd">Re</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Type         </span><span class="B0 xd">ba</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">·</span><span class="B1"> Change a task, check, service or the baseline to make a new revision.           </span><span class="B1 ac">│</span><span class="B0 mu xd">’s own copy.</span><span class="B0 xd">    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Baseline     </span><span class="B0 xd">~/</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">·</span><span class="B1"> To rename r1, edit its display name in the Library; that never changes          </span><span class="B1 ac">│</span><span class="B0 mu xd">gainst the</span><span class="B0 xd">      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Excluded     </span><span class="B0 xd">3 </span><span class="B1 ac">│</span><span class="B1">    identity.                                                                       </span><span class="B1 ac">│</span><span class="B0 mu xd">e.</span><span class="B0 xd">              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Spec         </span><span class="B0 xd">sp</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Tasks        </span><span class="B0 xd">7 </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Checks       </span><span class="B0 xd">19</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Services     </span><span class="B0 xd">se</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Identity     </span><span class="B0 xd">no</span><span class="B1 ac">│</span><span class="B1">                              </span><a class="BS k" href="PlanReview.dc.html"> Back to draft </a><span class="B1">  </span><span class="B2 mu dm"> Approve </span><span class="B1">  </span><a class="BA on bd rv bd k" href="TemplateTasks.dc.html"> Open existing revision </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">Planner cost </span><span class="B0 xd">$0</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 ln xd">────────────────┘</span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Generation is not approval. Review, edit or regenerate anything; only “Approve and save” creates the template, and a</span><span class="B0 xd">   </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">saved template is reused later without calling the planner again.</span><span class="B0 xd">                                                      </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                       </span><span class="BS xd"> Edit task </span><span class="B0 xd">  </span><span class="BS xd"> Regenerate… </span><span class="B0 xd">  </span><span class="BA on bd xd"> Approve and save ▸ </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="PlanReview.dc.html">esc</a><a class="B2 k" href="PlanReview.dc.html"> Back</a><span class="B2">  </span><span class="B2 mu dm">enter</span><span class="B2"> </span><span class="B2 mu dm">Approve</span><span class="B2">  </span><a class="B2 ac bd k" href="TemplateTasks.dc.html">o</a><a class="B2 k" href="TemplateTasks.dc.html"> Open existing</a><span class="B2">                                                                               </span></div>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Vertical" data-tcss="#approve-draft" style="left: 17ch; top: 160px; width: 86ch; height: 304px"><span>Vertical #approve-draft</span></div>
+<div class="ov" data-widget="Static" data-tcss="#identical" style="left: 20ch; top: 256px; width: 80ch; height: 32px"><span>Static #identical</span></div>
+<div class="ov" data-widget="Button" data-tcss="#open-existing" style="left: 76ch; top: 416px; width: 24ch; height: 16px"><span>Button #open-existing</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><span>focus · <b>Button #open-existing</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ApproveDraftScreen</b><span class="mut">tui/screens/planning.py</span></div>
+<h3>Widget tree</h3>
+<pre>ApproveDraftScreen(ModalScreen[bool])
+├─ Vertical #approve-draft .dialog
+│  ├─ Static .kv                     name · type · baseline · tasks
+│  ├─ Static #draft-sha · Static #identical
+│  └─ Horizontal .dialog-actions     … · Button #open-existing
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>ApproveDraftScreen</code></td><td>align: center middle; background: $background 60%;</td></tr><tr><td><code>#approve-draft</code></td><td>width: 86; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;</td></tr><tr><td><code>.dialog-actions</code></td><td>height: 1; align-horizontal: right; margin-top: 1;</td></tr><tr><td><code>#identical</code></td><td>display: none unless the SHA-256 already exists</td></tr><tr><td><code>#approve:disabled</code></td><td>dimmed via check_action when identical</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>dismiss(None)</code><br><span class="mut">Close without changes</span></td></tr><tr><td><kbd>tab / shift+tab</kbd></td><td><code>focus_next / previous</code><br><span class="mut">Move between fields</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>approve</code><br><span class="mut">Save r1 and open it · dimmed when identical</span></td></tr><tr><td><kbd>o</kbd></td><td><code>open_existing</code><br><span class="mut">Open the identical revision</span></td></tr></table>
+
+<h3>States and related frames</h3>
+<div class="rel"><a href="NewTemplateRepo.dc.html">New template (M01)</a><a href="PlannerPicker.dc.html">Planner</a><a href="PlannerUnknownModel.dc.html">No default model</a><a href="PlannerNoUsable.dc.html">No usable harness</a><a href="PlannerVerify.dc.html">Verify now</a><a href="PlanningProgress.dc.html">Planning</a><a href="PlanReview.dc.html">Review</a><a href="PlanReopened.dc.html">Reopened draft</a><a href="PlanServices.dc.html">Services</a><a href="PlanServiceEdit.dc.html">Edit service</a><a href="PlanEdit.dc.html">Edit</a><a href="PlanRegenerate.dc.html">Regenerate</a><a href="PlanApprove.dc.html">Approve</a><a href="PlanApproveIdentical.dc.html">Identical</a><a href="PlanningFailed.dc.html">Failed</a><a href="PlanningInterrupted.dc.html">Interrupted</a><a href="Library.dc.html">Library drafts (M01)</a></div>
+<h3>Notes</h3>
+<ul><li>D6: a duplicate whose computed SHA-256 equals an existing revision cannot be approved: “Identical to &lt;label&gt; — nothing to approve”, Approve dimmed, #open-existing opens that revision.</li><li>Renaming is done on the lineage display name, which never touches identity.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["Button #open-existing"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

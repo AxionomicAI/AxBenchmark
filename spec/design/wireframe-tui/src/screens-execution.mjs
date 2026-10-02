@@ -96,7 +96,7 @@ export function runConfig(sz, focus = 'tasks', st = {}) {
     const lines = rej ? [['21:05:03', 'claude', 'exit 1 · model “claude-fable-5-1” not found for this account']] : blk ? LOG_T4.slice(3, 6) : LOG_T5.slice(-4);
     lines.slice(0, lh - 2).forEach(([t, s, m], i) => { g.text(2, ly + 1 + i, fit(t, 9), 'mu'); g.text(11, ly + 1 + i, fit(s, 7), s === 'policy' ? 'bd' : 'mu'); g.text(18, ly + 1 + i, fit(m, W - 20), m.includes('✗') ? 'bd' : ''); });
     g.region(0, ly, W, lh, 'RichLog', '#log');
-    footer(g, [{ k: 'esc', d: 'Run', go: 'RunOverview' }, { k: '/', d: 'Search' }, { k: 'i', d: 'Isolation', go: 'RunIsolation' }, { k: 's', d: 'Stop' }, { k: 'd', d: 'Detach' }]);
+    footer(g, [{ k: 'esc', d: 'Run', go: 'RunOverview' }, { k: '/', d: 'Search' }, { k: 'v', d: 'Live', go: 'HarnessLive', off: rej }, { k: 'p', d: 'Verify', go: 'VerifyProgress', off: rej }, { k: 's', d: 'Stop' }, { k: 'd', d: 'Detach' }]);
     return g;
   }
 
@@ -153,7 +153,7 @@ export function runConfig(sz, focus = 'tasks', st = {}) {
     g.text(20, y + i, fit(m, W - 23), hit ? 'bd' : '', hit ? { b: 'BT' } : {});
   });
   if (!rej) scrollbar(g, W - 2, ly + 2, lh - 3, lh - 6, 3);
-  footer(g, [{ k: 'esc', d: 'Run overview', go: 'RunOverview' }, { k: '/', d: 'Search' }, { k: 'i', d: 'Isolation', go: 'RunIsolation' }, { k: 'v', d: 'Live view', go: 'HarnessLive', off: rej }, { k: 's', d: 'Stop configuration', off: rej }, { k: 'd', d: 'Detach' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  footer(g, [{ k: 'esc', d: 'Run overview', go: 'RunOverview' }, { k: '/', d: 'Search' }, { k: 'i', d: 'Isolation', go: 'RunIsolation' }, { k: 'v', d: 'Live view', go: 'HarnessLive', off: rej }, { k: 'p', d: 'Verify', go: 'VerifyProgress', off: rej }, { k: 's', d: 'Stop configuration', off: rej }, { k: 'd', d: 'Detach' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 

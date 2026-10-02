@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1060px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>exchange · report</b> · axbenchmark templates · results · report · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -78,7 +78,7 @@ body{margin:0}
 <div class="r"><span class="B0"> </span><span class="B0 mu">    computed  a9089c1309c531b09a3575c70a8b8260fbb4626e4df92f1dd36f70970337310d                                        </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">    tasks/T3-board.md differs from the package manifest · no scripts ran, nothing was installed                       </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">echo $?                                                                                                             </span><span class="B0"> </span></div>
-<div class="r"><span class="B0"> 3                                                                                                                      </span></div>
+<div class="r"><span class="B0"> 1                                                                                                                      </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="ResultImport.dc.html">axbenchmark results import lab-results.zip --template 3f9c2e710640fa4d…</a><span class="B0 bd">                                             </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> package     paths, size and format safe · payload digests match · 4 results                                        </span></div>
@@ -123,18 +123,18 @@ results import ZIP --template SHA
 results export RUN_ID --output
 report RUN_DIR</pre>
 <h3>Output contract</h3>
-<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>never prompts; a missing choice is an error</td></tr></table>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
 <h3>Arguments and exit codes</h3>
-<table><tr><td><kbd>exit 3</kbd></td><td><span class="mut">package rejected · nothing added</span></td></tr><tr><td><kbd>TEMPLATE_SHA</kbd></td><td><span class="mut">full SHA-256 or an unambiguous prefix</span></td></tr></table>
+<table><tr><td><kbd>exit 1</kbd></td><td><span class="mut">typed error: package rejected · nothing added</span></td></tr><tr><td><kbd>TEMPLATE_SHA</kbd></td><td><span class="mut">full SHA-256 or an unambiguous prefix</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
 <ul><li>Expected and received identities are shown in full on mismatch (R057, R120).</li><li>Identical re-imports are skipped, so importing is idempotent (R122).</li><li>The report path is printed even when no browser opens (R055, R134).</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1060}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

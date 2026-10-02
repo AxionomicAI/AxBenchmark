@@ -72,6 +72,7 @@ const FREEZE = [
   'Recompute the template SHA-256 and compare with approved r1',
   `Freeze the run configuration separately · cfg ${s8(SHA.cfg)} · 5 entries`,
   'Freeze the original weights · quality web v1 · ranking 1:1:1',
+  'Freeze the price and rate snapshots · display USD · catalog 2026-10-01',
   `Bind every result of this run to ${s8(SHA.inv1)}`,
   'Start 4 lanes · Claude Code #2 waits behind #1',
 ];
@@ -91,8 +92,8 @@ function freeze(done, pct) {
   footer(g, [{ k: 'esc', d: 'Cancel' }], '');
   return g;
 }
-scene('Freeze the inputs', 'M01 · M07', 'The template hash is recomputed and must match r1. Configuration and original weights are frozen as separate records, and every result is bound to this identity.');
-[[0, 30], [0, 85], [1, 50], [2, 40], [3, 70], [4, 60]].forEach(([d, p]) => show(freeze(d, p), 520));
+scene('Freeze the inputs', 'M01 · M07', 'The template hash is recomputed and must match r1. Configuration, original weights, prices and exchange rates are frozen as separate records, and every result is bound to this identity.');
+[[0, 30], [0, 85], [1, 50], [2, 40], [3, 50], [4, 70], [5, 60]].forEach(([d, p]) => show(freeze(d, p), 520));
 show(freeze(5, 100), 700);
 
 // ---------------------------------------------------------------- 5 · run (time-lapse)
@@ -107,7 +108,7 @@ const lane = (harness, cfg, tasks, nowText, elapsed, cost, o = {}) => ({
 });
 const Q2 = '#2 claude-opus-5-5 · high · starts when #1 ends';
 const C1 = '#1 claude-opus-5-5 · medium', C2 = '#2 claude-opus-5-5 · high', CX = '#3 gpt-6-sol · medium', GK = '#4 grok-4.7-fast · harness default', PI = '#5 qwen3.5-35b-a3b · harness default';
-const LOCAL = '$0.00 · local endpoint, no charge';
+const LOCAL = 'unknown · local endpoint, parallel run'; // D4: shared energy is never divided
 
 const events = [];
 const K = [
@@ -277,7 +278,7 @@ function judgeFrame(i, phase, done = false) {
   g.text(64, 19, fit('Reviews of the other artifacts', 54), 'mu');
   return g;
 }
-scene('Independent judging', 'M12', 'Each delivered artifact gets one fresh judge session with an anonymous label. The judge sees the spec, checks and screenshots, never cost, time, names or other reviews.');
+scene('Independent judging', 'M12', 'Each delivered artifact gets one fresh judge session with an anonymous label. The judge sees the spec, checks and the final regression’s screenshots, never cost, time, names or other reviews.');
 ART.forEach((_, i) => {
   show(judgeFrame(i, 0), i === 0 ? 1500 : 700);
   show(judgeFrame(i, 1), i === 0 ? 1700 : 800);

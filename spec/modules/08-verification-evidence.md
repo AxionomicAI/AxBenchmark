@@ -16,9 +16,9 @@ For each task, run the applicable approved checks against a disposable copy of i
 
 Outputs comprise independently recorded process and verification outcomes plus task-associated evidence, snapshots, logs, and available commit identities. A missing commit identity remains unavailable rather than being invented. Evidence must remain attributable to the task and snapshot it describes; final regression evidence describes the delivered artifact. These are conceptual information requirements, not a prescribed storage format or check schema; the format chosen for this implementation is recorded under Implementation and is not a product requirement. **[R074, R076]**
 
-Browser verification uses Python Playwright. Exercise meaningful workflows and keyboard behavior, observe browser errors, and capture desktop screenshots at 1440×1000 and mobile screenshots at 390×844. Screenshots support inspection; producing images alone does not establish workflow success. Backend verification exercises the approved interface contract. Fullstack artifacts require the applicable browser and backend behavior to be observable through that contract. **[R073, R075, R149]**
+Browser verification uses Python Playwright. Exercise meaningful workflows and keyboard behavior, observe browser errors, and capture desktop screenshots at 1440×1000 and mobile screenshots at 390×844. Which steps capture screenshots is defined by the template's checks; each capture produces both viewports. Screenshots support inspection; producing images alone does not establish workflow success. Backend verification exercises the approved interface contract. Fullstack artifacts require the applicable browser and backend behavior to be observable through that contract. **[R073, R075, R149]**
 
-Provide the resulting acceptance evidence to the independent judge separately from measured execution statistics. The handoff includes the relevant check results and browser evidence without conflating behavioral verification with cost, timing, or other execution measurements. A later judge grade must not rewrite a check outcome. **[R075, R144]**
+Provide the resulting acceptance evidence to the independent judge separately from measured execution statistics. The handoff includes the relevant check results and browser evidence without conflating behavioral verification with cost, timing, or other execution measurements. The screenshots the judge receives are those captured by the final regression check against the delivered artifact, at both viewports; per-task screenshots stay in evidence, results and the report but are not judge input. A later judge grade must not rewrite a check outcome. **[R075, R083, R144]**
 
 ## Outcomes, failures, and invariants
 
@@ -36,7 +36,7 @@ Product integration verification must exercise frontend and backend workflows en
 
 - A process reports success while an observable requirement fails: the approved check records failure. A favorable judge review does not change it. Unexecuted checks remain unverified. **[R073, R144]**
 - Task checks use disposable snapshot copies, verification tooling remains outside competitor source, and verification introduces no manual application fixes. Final regression tests the delivered artifact and preserves earlier task evidence. **[R074, R076]**
-- Python Playwright evidence demonstrates meaningful browser workflows, keyboard behavior, browser-error observations, and screenshots at both required dimensions. Backend evidence exercises the approved interface, and the judge receives evidence separately from measured statistics. **[R075]**
+- Python Playwright evidence demonstrates meaningful browser workflows, keyboard behavior, browser-error observations, and screenshots at both required dimensions at the steps the checks define. Backend evidence exercises the approved interface, and the judge receives evidence separately from measured statistics, with the final-regression screenshots at both viewports and no per-task screenshots. **[R075, R083]**
 - Missing prerequisites, broken verification infrastructure, application-check failures, and process failures remain distinguishable in retained task outcomes, logs, snapshots, and available commit identities. **[R076, R144]**
 - End-to-end frontend and backend scenarios include an existing-repository baseline, expose progress and measurements alongside preserved evidence, and verify navigation, resizing, failure handling, and score calculation integration. **[R034, R149]**
 
@@ -60,17 +60,17 @@ Frozen slotted dataclasses and enums; no I/O, no asyncio, no pydantic.
 | `Phase` | Enum `at_task`, `final_regression`. Every result, event and evidence file carries it. **[R074]** |
 | `CheckStatus` | Enum `passed`, `failed`, `unverified`. The only three outcomes. **[R073, R076]** |
 | `NotPassedCause` | Enum `application_failure` (with `failed`), `missing_prerequisite`, `verifier_error`, `not_run` (each with `unverified`). The pairing is enforced in `CheckResult.__post_init__`. **[R076, R144]** |
-| `StepRecord` | `index`, `description`, `ok: bool`, `keyboard: bool`, `observed: str \| None`. A step is a requirement observation declared by the check. |
+| `StepRecord` | `index`, `description`, `ok: bool`, `keyboard: bool`, `observed: str \| None`, `captured: bool` (the check captured screenshots after this step). A step is a requirement observation declared by the check. |
 | `RunnerReport` | What a verifier process returned: `exit` (code or signal), `report: ParsedReport \| None` (`verdict: passed \| requirement_failed \| check_crashed \| prerequisite_missing`, expected, observed, steps, console errors, screenshot files, traceback). |
 | `classify(snapshot, preflight, report) -> CheckResult` | No task snapshot → `unverified/not_run`. Unmet preflight prerequisite → `unverified/missing_prerequisite` with M03's reason code. `prerequisite_missing` reported by the runner → same. `requirement_failed` (a declared step or expectation failed, including an approved setup or start step that the application did not satisfy) → `failed/application_failure`. `passed` with exit 0 and a well-formed report → `passed`. Everything else (exception outside a declared step, killed at the time limit, nonzero exit, missing or malformed report) → `unverified/verifier_error`. Screenshots and console output never influence the status. No branch maps an inability to run to `passed`. **[R073, R076, R144]** |
 | `CheckResult` | `check_id`, `task_id`, `phase`, `status`, `cause \| None`, `reason`, `expected`, `observed`, `steps`, `console_errors`, `evidence: tuple[EvidenceRef, ...]`, `duration`, `snapshot: SnapshotRef`, `tooling: ToolingFacts`. |
 | `ToolingFacts` | Verifier version, Playwright for Python version, browser name and build, tooling location, `copy_disposed: bool`, `repairs: Literal["none"]`. The type admits no other repairs value. **[R074, R075]** |
 | `SnapshotRef` | Snapshot id from M05's end-of-task record, `commit: CommitIdentity \| Unavailable(reason)`. A missing commit stays `Unavailable`; there is no constructor that derives one. **[R076]** |
-| `Viewport` | Constants `DESKTOP = Viewport(1440, 1000)`, `MOBILE = Viewport(390, 844)`; every browser check captures both after its last step. **[R075]** |
+| `Viewport` | Constants `DESKTOP = Viewport(1440, 1000)`, `MOBILE = Viewport(390, 844)`. A browser check captures at the steps its module requests (`CheckContext.capture()`); every capture produces both viewports. The template's checks, not M08, decide which steps capture. **[R075]** |
 | `TaskVerification` | `run_id`, `result_id`, `configuration_id`, `task_id`, `phase`, `state: pending \| running \| complete`, `stage`, `results: tuple[CheckResult, ...]`, `process_outcome_ref` (M05's record, shown, never read for classification), `failure: VerificationFailure \| None`. Rule `summary()` counts by status and cause. |
 | `Stage` | Enum `preserve_snapshot`, `create_copy`, `setup`, `run_checks`, `capture_screenshots`, `dispose_copy`, the steps drawn on VerifyProgress. |
 | `compare(at_task, final) -> tuple[RegressionRow, ...]` | Per check: both results and `change: same \| fixed \| regressed \| differs` (`differs` covers any other pair, e.g. passed → unverified). Both sides are kept; neither replaces the other. **[R074]** |
-| `JudgeEvidence` | `result_id`, artifact `SnapshotRef` (final), revision refs (specification, prompts, rubric), per-task and final `CheckResult`s, screenshots, keyboard steps, console errors. The type has no field for cost, tokens, time or hardware samples; `KEPT_APART` lists those categories for display. **[R075, R144]** |
+| `JudgeEvidence` | `result_id`, artifact `SnapshotRef` (final), revision refs (specification, prompts, rubric), per-task and final `CheckResult`s, `screenshots`: only those of `Phase.final_regression`, each at `DESKTOP` and `MOBILE`, keyed by check and step, keyboard steps, console errors. Per-task screenshots are not admitted (`select_judge_screenshots(results)` filters by phase). The type has no field for cost, tokens, time or hardware samples; `KEPT_APART` lists those categories, plus per-task screenshots, for display. **[R075, R083, R144]** |
 | `assert_outside(tool_dir, copy_dir, workspace)` | Raises `ToolingInsideWorkspace` when the tooling directory is inside either tree. Called before every runner start. **[R074]** |
 
 Domain errors: `ToolingInsideWorkspace`, `SnapshotUnavailable`, `SuiteInvalid(path, message)`, `PhaseNotReady`, `UnknownCheck`.
@@ -81,7 +81,7 @@ Domain errors: `ToolingInsideWorkspace`, `SnapshotUnavailable`, `SuiteInvalid(pa
 class SuiteSource(Protocol):                 # bound to M01's RevisionReader
     async def suite(self, sha: Sha256) -> CheckSuite: ...              # raises IdentityMismatch, SuiteInvalid
 class SnapshotSource(Protocol):              # bound to M05's application interface
-    async def task_snapshot(self, run: RunId, cfg: ConfigurationId, task: TaskId) -> SnapshotRef | None: ...
+    async def task_snapshot(self, run: RunId, cfg: ConfigurationId, trial_index: int, task: TaskId) -> SnapshotRef | None: ...
     async def materialize(self, ref: SnapshotRef, into: Path) -> None: ...   # read-only source, copy target
 class DisposableCopies(Protocol):
     async def create(self, ref: SnapshotRef) -> DisposableCopy: ...    # under ~/.axbenchmark/tmp/verify/
@@ -119,8 +119,8 @@ Interfaces offered to other engine modules (`application/interfaces.py`):
 
 ```python
 class TaskVerifier(Protocol):                # used by M11
-    async def verify_task(self, rid: ResultId, run: RunId, cfg: ConfigurationId, task: TaskId, sha: Sha256) -> TaskVerification: ...
-    async def verify_final(self, rid: ResultId, run: RunId, cfg: ConfigurationId, sha: Sha256) -> TaskVerification: ...
+    async def verify_task(self, rid: ResultId, run: RunId, cfg: ConfigurationId, trial_index: int, task: TaskId, sha: Sha256) -> TaskVerification: ...
+    async def verify_final(self, rid: ResultId, run: RunId, cfg: ConfigurationId, trial_index: int, sha: Sha256) -> TaskVerification: ...
     async def cancel(self, run: RunId, cfg: ConfigurationId | None) -> None: ...   # runs.stop; unfinished checks → unverified/not_run
     async def reconcile(self) -> None: ...                                         # engine start: dispose orphan copies, end orphan verifiers
 class AcceptanceEvidence(Protocol):          # used by M12
@@ -138,7 +138,7 @@ class CheckFormat(Protocol):                 # used by M16 (planned and edited c
 | `VerifyFinal` | internal | Same pipeline with `Phase.final_regression`, the last task's snapshot as the delivered artifact and `all_checks()`. Task-phase results are not read or changed. **[R074]** |
 | `CancelVerification` | internal | Ends verifier and service process groups for the scope, records unfinished checks as `unverified/not_run` with reason `stopped`, disposes copies. Called only from M11's stop. |
 | `ReconcileVerification` | internal | At engine start, removes leftover copies under `tmp/verify/` and ends recorded verifier groups; checks of an interrupted verification are recorded `unverified/verifier_error` with reason `engine stopped`, never re-run silently. |
-| `PrepareJudgeEvidence` | internal + query | Builds `JudgeEvidence` from the retained result. Backs `AcceptanceEvidence.for_judge` and `verification.judge_input.get`. **[R075]** |
+| `PrepareJudgeEvidence` | internal + query | Builds `JudgeEvidence` from the retained result with the final-regression screenshots only. Backs `AcceptanceEvidence.for_judge` and `verification.judge_input.get`. **[R075, R083]** |
 | `GetTaskChecks`, `GetRegression`, `ListNotPassed`, `ListScreenshots`, `GetProgress` | query | Back the queries in part 2; read through `ResultSource` (plus in-memory stage state for a running verification) and compute capability flags. |
 | `OpenEvidence`, `RevealEvidence` | command | Resolve the evidence path through M02 (confined to the result directory) and hand it to `SystemOpener`. No state changes. |
 
@@ -148,7 +148,7 @@ class CheckFormat(Protocol):                 # used by M16 (planned and edited c
 |---|---|
 | `suite_v1.py` | `SuiteSource` over M01's `RevisionReader`: parses the revision's `checks/acceptance.v1.json` (check id, task id, title, kind, required, entry, needs, timeout) and the approved execution instructions; also implements `CheckIndex`. The planner of [M16](16-custom-template-planning.md) emits the same format. |
 | `runner_process.py` | `CheckRunner`: starts `python -m axbenchmark.engine.verification.adapters.verifier` in its own process group with its working directory in the tooling directory, never in the copy, and arguments naming the check module (read from the read-only revision tree), the target and the output directory. It enforces the check's time limit and reads `report.json`. |
-| `verifier/` | The verifier program. Provides check modules with a `CheckContext` (`step()`, `expect()`, `press()`, `page`, `http`, `repo`) on Python Playwright with a fresh context per check; records console and page errors, keyboard steps, screenshots at `DESKTOP` then `MOBILE` after the last step; writes `report.json`. An exception inside `step()` or `expect()` is `requirement_failed`; any other exception is `check_crashed`; a missing browser executable is `prerequisite_missing`. **[R075]** |
+| `verifier/` | The verifier program. Provides check modules with a `CheckContext` (`step()`, `expect()`, `press()`, `capture()`, `page`, `http`, `repo`) on Python Playwright with a fresh context per check; records console and page errors, keyboard steps, and on each `capture()` screenshots at `DESKTOP` then `MOBILE` named by step; writes `report.json`. An exception inside `step()` or `expect()` is `requirement_failed`; any other exception is `check_crashed`; a missing browser executable is `prerequisite_missing`. **[R075]** |
 | `fs_copies.py` | `DisposableCopies`, `EvidenceFiles`, and `SnapshotSource.materialize` target directories; copies are removed with a verified `rmtree`. |
 | `services_process.py` | `AppServices`: runs approved setup/start/stop commands with the copy as working directory, inside the lease's port range, and waits for the approved readiness probe. |
 | `opener.py` | `SystemOpener`. |
@@ -160,7 +160,7 @@ M08 writes working files only under the configuration directory M11 hands it and
 
 | Path | Content |
 |---|---|
-| `~/.axbenchmark/runs/<run_id>/<configuration_slug>/verify/<task_id>/` | Per check: `<check_id>.json` (the `CheckResult`), `<check_id>.log`, `<check_id>-desktop.png`, `<check_id>-mobile.png`; `stages.jsonl`; `services.log`. |
+| `~/.axbenchmark/runs/<run_id>/<configuration_slug>/trial-<n>/verify/<task_id>/` | Per check: `<check_id>.json` (the `CheckResult`), `<check_id>.log`, `<check_id>-s<step>-desktop.png`, `<check_id>-s<step>-mobile.png` per capture; `stages.jsonl`; `services.log`. |
 | `…/verify/final/` | The same files for the final regression. |
 | `~/.axbenchmark/tmp/verify/<copy_id>/` | Disposable copies and the tooling directory. Deleted after each verification and swept on engine start. |
 
@@ -182,7 +182,7 @@ Verification itself has no client-callable command or job: it starts only from M
 | `verification.regression.get` | `result_id` | `RegressionDTO`: `artifact` (task id, commit), `rows: list[RegressionRowDTO(check_id, title, kind, task_id, at_task, final, change)]`, `summary` (counts per phase, changed check ids) | `verification.unknown_result`, `verification.regression_pending` | `can_open_check` per row |
 | `verification.not_passed.list` | `template_sha256`, `result_ids?`, `run_id?`, `causes?: list[NotPassedCause]`, `text?` | `NotPassedPage`: `causes: list[CauseDTO(code, label, description, count)]`, `rows: list[NotPassedRowDTO(result_id, result_label, live, check_ids, status, cause, reason, task_id, evidence_ids, effect)]` (consecutive checks of one task with one cause are one row) | `verification.unknown_template`, `verification.invalid_filter` (with `field`) | `can_open` per row |
 | `verification.screenshots.list` | `result_id`, `task_id`, `check_id?`, `phase?` | `list[ScreenshotDTO(check_id, after_step, viewport{name, width, height}, evidence_id, file_name, size)]` | `verification.unknown_result`, `verification.unknown_task` | `can_open`, `can_reveal` |
-| `verification.judge_input.get` | `result_id` | `JudgeInputDTO`: `judge_label`, `given: list[HandoffItemDTO(label, count?, evidence_ids)]`, `kept_apart: list[HandoffItemDTO]` | `verification.unknown_result`, `verification.regression_pending` | `can_reveal` |
+| `verification.judge_input.get` | `result_id` | `JudgeInputDTO`: `judge_label`, `given: list[HandoffItemDTO(label, count?, evidence_ids)]` (screenshots appear as one item "screenshots from the final regression" with their count, both viewports), `kept_apart: list[HandoffItemDTO]` (includes per-task screenshots) | `verification.unknown_result`, `verification.regression_pending` | `can_reveal` |
 | `verification.progress.get` | `run_id`, `configuration_id` | `VerifyProgressDTO`: `task_id`, `phase`, `subject` (harness, model, effort), `stages: list[StageDTO(stage, label, status: done \| now \| todo)]`, `checks_done`, `checks_total`, `current_check`, `so_far: list[CheckRowDTO]`, `seq` | `verification.unknown_configuration` | `is_verifying` |
 
 `CheckDetailDTO.observed`, step text and console output are data from the competitor's application; interfaces render them as inert text.
@@ -224,7 +224,7 @@ Verification failures are data, not RPC errors: they appear as `unverified` chec
 | Name | Owner | Purpose |
 |---|---|---|
 | `RevisionReader.open(sha)` (in-engine) | M01 | Frozen check definitions, execution instructions, specification, prompts and rubric refs; raises on identity mismatch. **[R067, R073]** |
-| `HarnessExecution.task_snapshot(run, cfg, task)` / `.materialize(ref, into)` (in-engine) | M05 | Source of each disposable copy; commit identity from the snapshot. **[R074]** |
+| `HarnessExecution.task_snapshot(run, cfg, trial_index, task)` / `.materialize(ref, into)` (in-engine) | M05 | Source of each disposable copy; commit identity from the snapshot. **[R074]** |
 | `HarnessResources.lease_verification(run, cfg)` / `.release_verification(lease)` (in-engine): port range and empty browser profile disjoint from the competitor's | M05 | Running services and browsers on the copy without colliding with the configuration's live resources. **[R072, R074]** |
 | `AssessOperation` (in-engine) / `environment.assess` | M03 | Preflight of Python Playwright, Chromium, Node.js and template-declared runtimes; its reason codes become `missing_prerequisite` reasons. **[R076]** |
 | `ResultRecorder.append_check_outcomes`, `ResultRecorder.attach_evidence` | M02 | Retention of outcomes and evidence. **[R076]** |
@@ -236,8 +236,9 @@ Verification failures are data, not RPC errors: they appear as `unverified` chec
 | Caller of `CheckIndex.titles` | M01, M09 | Task tab and coverage screens. |
 | Caller of `CheckFormat.parse` / `.validate` | M16, M09 | Planned checks and the built-in suite use the one `acceptance.v1` reader. |
 | Check generation in `acceptance.v1` format | M16 | Planned templates verifiable by the same runner. |
-| App shell, `.-compact` class, push of TaskChecksScreen from ResultScreen `enter` on `#task-outcomes`, and of the evidence viewer from `l` | M02 / M15 | Navigation into M08 screens. |
-| Trigger that opens VerifyProgressScreen from RunConfigScreen | M05 / M15 | The artboard shows it over RunConfig; neither owner has assigned a key or event yet. |
+| App shell, `.-compact` class, push of TaskChecksScreen from ResultScreen `enter` on `#task-outcomes`, and of `EvidenceViewerScreen` from ResultScreen `l`, `#open-log`, "Open snapshot" and "Open evidence" | M02 / M15 | Navigation into M08 screens. |
+| `p` on RunConfigScreen pushing `VerifyProgressScreen(run_id, configuration_id)` (in its key list, beside `v` for the live view) | M05 | Entry point of VerifyProgress. |
+| `results.evidence(result_id, task_id?)`, `results.read_evidence(result_id, evidence_id, offset, limit)` | M02 | EvidenceViewerScreen file list and paged content. |
 
 ### 4. Screens
 
@@ -301,7 +302,7 @@ All screens are pure views. View models are frozen dataclasses built by pure fun
 
 #### VerifyProgressScreen — artboard VerifyProgress
 
-`VerifyProgressScreen(ModalScreen[None])` in `tui/screens/run_config.py`, over M05's RunConfigScreen, constructed with `run_id`, `configuration_id`; tree `Vertical #verify-progress .dialog` (`Vertical #verify-steps` with `ProgressBar` `show_eta = False`, `Static #verify-so-far`, `Horizontal .dialog-actions` with Hide), `Footer`; dialog width 84. View model `VerifyProgressVM(title, steps: tuple[StepVM, ...], progress: tuple[int, int], so_far: tuple[CheckRowVM, ...], note)` from `build_verify_progress_vm(VerifyProgressDTO)`; events are folded in by a pure `apply_event(vm, event) -> VerifyProgressVM`. Load `verification.progress.get(run_id, configuration_id)`; subscribe to `verification.stage.changed`, `verification.check.completed`, `verification.task.completed` for the configuration, resuming with `since_seq` from the DTO. States `#verify-progress`, `#verify-progress-loading`, `#verify-progress-empty` (`is_verifying` false: “No verification is running for this configuration”), `#verify-progress-error`.
+`VerifyProgressScreen(ModalScreen[None])` in `tui/screens/run_config.py`, pushed by `p` on M05's RunConfigScreen, constructed with `run_id`, `configuration_id`; tree `Vertical #verify-progress .dialog` (`Vertical #verify-steps` with `ProgressBar` `show_eta = False`, `Static #verify-so-far`, `Horizontal .dialog-actions` with Hide), `Footer`; dialog width 84. View model `VerifyProgressVM(title, steps: tuple[StepVM, ...], progress: tuple[int, int], so_far: tuple[CheckRowVM, ...], note)` from `build_verify_progress_vm(VerifyProgressDTO)`; events are folded in by a pure `apply_event(vm, event) -> VerifyProgressVM`. Load `verification.progress.get(run_id, configuration_id)`; subscribe to `verification.stage.changed`, `verification.check.completed`, `verification.task.completed` for the configuration, resuming with `since_seq` from the DTO. States `#verify-progress`, `#verify-progress-loading`, `#verify-progress-empty` (`is_verifying` false: “No verification is running for this configuration”), `#verify-progress-error`.
 
 | Binding | API call |
 |---|---|
@@ -316,20 +317,36 @@ All screens are pure views. View models are frozen dataclasses built by pure fun
 | `esc`, Close | none; `dismiss(None)` |
 | Open folder | `verification.evidence.reveal(result_id, task_id=artifact task)`; enabled by `can_reveal` |
 
-#### EvidenceViewerScreen — no artboard yet
+#### EvidenceViewerScreen — artboard EvidenceViewer
 
-M02's ResultScreen (`l`, `#open-log`, “Open evidence”) and TaskChecksScreen (`l`) push `EvidenceViewerScreen(ModalScreen[None])` in `tui/screens/verification.py` with `result_id` and `evidence_id`. It pages `results.read_evidence(result_id, evidence_id, offset, limit)` into a read-only `TextArea #evidence-text`; non-text media show “Open in the system viewer” bound to `o` → `verification.evidence.open`. States `#evidence`, `#evidence-loading`, `#evidence-error`. Its board belongs in the wireframe generator before it is built.
+| Item | Specification |
+|---|---|
+| Class and file | `EvidenceViewerScreen(Screen)` in `axbenchmark/tui/screens/verification.py`, constructed with `result_id`, optional `evidence_id` to select, optional `task_id` to scope the list. Pushed by M02's ResultScreen (`l` and `#open-log` with the check log's id, "Open snapshot" with the task snapshot's id, "Open evidence" with no id) and by TaskChecksScreen `l` (the highlighted check's `log_evidence_id`). Tree: `Header`, `Static #evidence-bar`, `Horizontal #evidence-main` with `DataTable #evidence-files .bordered` (Kind, Task, Name, Size) and `Vertical #evidence-view .pane` (`Static #evidence-meta .kv`, `TextArea #evidence-text`, `read_only=True`, `soft_wrap=False`), `Horizontal .actions` (`Button #open-external` "Open in system viewer", `Button #reveal` "Show in folder"), `Footer`. `Screen.-compact` hides `#evidence-files` and shows the selected item only; `e` toggles the list. |
+| View model | `tui/viewmodels/evidence.py`: `EvidenceViewerVM(bar, files: tuple[EvidenceFileVM, ...], selected: str \| None, meta: tuple[KV, ...], text: str \| None, text_complete: bool, binary_note: str \| None, actions: Mapping[str, ActionState])` from `build_evidence_vm(items: list[EvidenceItemDTO], chunks: Sequence[EvidenceChunkDTO], selected)`. Text is concatenated chunk data rendered inert; a non-text media type (screenshot, snapshot archive) sets `binary_note` ("Binary evidence · open it in the system viewer") and no text. `open_external` and `reveal` are always enabled for an item; the open outcome decides. |
+| Load | Worker on mount: `results.evidence(result_id, task_id?)` for `#evidence-files`, then for the selected item `results.read_evidence(result_id, evidence_id, offset=0, limit=256 KiB)`. Scrolling to the end of `#evidence-text` while the last chunk has `eof == false` loads the next chunk with `offset` advanced; nothing is loaded past what the user scrolls to. |
+| Subscriptions | None: evidence of a retained result does not change. |
+| States | `ContentSwitcher #evidence-switch`: `#evidence` (list and view), `#evidence-loading`, `#evidence-empty` (no evidence for the result or task: "No evidence recorded"), `#evidence-error` (`results.not_found`, `results.evidence_not_found`, `results.evidence_outside_result` with message and remedy verbatim, Retry repeats the load). |
+
+| Binding | Action | API call |
+|---|---|---|
+| `esc` | `app.pop_screen` | none |
+| `↑ ↓` in `#evidence-files` | select item | `results.read_evidence(result_id, evidence_id, 0, limit)` for the new item (debounced 150 ms) |
+| `end`, scroll past the last line | `more` | `results.read_evidence(result_id, evidence_id, offset, limit)`; disabled when `text_complete` |
+| `o`, `#open-external` | `open_external` | `verification.evidence.open(result_id, evidence_id)`; `opened: false` or `verification.open_failed` shows the message verbatim |
+| `f`, `#reveal` | `reveal` | `verification.evidence.reveal(result_id, evidence_id)` |
+| `e` (compact) | toggle `#evidence-files` | none |
+| `tab` | `focus_next` | none |
 
 #### Screens owned elsewhere that consume M08
 
 | Screen (owner) | M08 data |
 |---|---|
 | `ResultScreen` Outcomes tab (M02) | Check states and causes inside `results.get` outcomes, recorded by M08; `enter` pushes TaskChecksScreen. |
-| `RunScreen` lanes, `RunConfigScreen` (M11/M15, M05) | `verification.task.started`, `verification.task.completed`; VerifyProgressScreen on top. |
+| `RunScreen` lanes, `RunConfigScreen` (M11/M15, M05) | `verification.task.started`, `verification.task.completed`; VerifyProgressScreen on top of RunConfigScreen through `p`. |
 | Rankings, ScoreBreakdown (M06) | Required-check status via M02 records. |
 | Measurements (M10) | Check counts per task via M02; verification phase duration from `verification.task.completed`. |
 | Template task tab (M01), coverage (M09) | Check titles through `CheckIndex`. |
-| Judging screens (M12) | `JudgeEvidence` through `AcceptanceEvidence`; the review stores evidence references, never check outcomes. |
+| Judging screens (M12) | `JudgeEvidence` (final-regression screenshots at both viewports, no per-task screenshots) through `AcceptanceEvidence`; the review stores evidence references, never check outcomes. |
 | HTML report (M13) | Task evidence and screenshots via M02. |
 
 ### 5. CLI
@@ -346,8 +363,8 @@ M14 owns the commands; these reach M08.
 
 | Level | Tests |
 |---|---|
-| Domain (`tests/engine/verification/domain/`) | `classify` table: no snapshot → `unverified/not_run`; unmet preflight → `missing_prerequisite`; `requirement_failed` → `failed/application_failure`; `check_crashed`, timeout kill, nonzero exit with a passing report, missing and malformed report → `unverified/verifier_error`; only an explicit pass with exit 0 is `passed`. Property test (hypothesis): no input without an explicit passing report yields `passed`; screenshots and console data never change the status. `CheckResult` rejects invalid status/cause pairs. `compare` yields `same`, `fixed`, `regressed`, `differs` and keeps both sides (the board's 18✓ 3✗ / 18✓ 3✗ fixture with T4.2 and T5.4 swapped). `assert_outside` rejects tooling inside the copy or workspace. `JudgeEvidence` has no measurement field (asserted on `dataclasses.fields`). `SnapshotRef` keeps an unavailable commit unavailable. |
-| Use cases with fakes | `FakeSnapshotSource`, `FakeCheckRunner` (scripted reports), `FakePreflight`, `FakeAppServices`, in-memory `ResultSink`. A process with exit 0 and a failing check records `failed`; a failed process with a snapshot still has its checks run; no snapshot gives `not_run`. Missing Chromium from preflight and a crashing fixture loader produce different causes with reasons kept. A failing approved start step records `failed/application_failure` and no write reaches the snapshot (fake snapshot is read-only and asserts on write). The copy is disposed after success, failure and cancel. `VerifyFinal` leaves task-phase results untouched. `cancel` turns unfinished checks into `not_run` with reason `stopped`. `for_judge` before the final regression raises `PhaseNotReady`. Events are published in stage order. |
-| Verifier (integration, marked `browser`) | The real verifier against a small static fixture site and a broken copy of it: steps, keyboard presses, console errors, both screenshot sizes (1440×1000, 390×844 read from the PNG headers), `requirement_failed` vs `check_crashed`, working directory outside the copy. |
-| API via `InProcessClient` | Composed engine with fake adapters and no interface: run a fake two-task configuration through M11, observe `verification.*` events, then `verification.task.get`, `regression.get`, `not_passed.list` (cause counts and filters), `screenshots.list`, `judge_input.get` (no measurement category in `given`). Typed errors and capability reasons serialize as specified; registry kinds and safety classes; JSON Schema snapshot; drop and reconnect with `since_seq` during verification. `import-linter` contracts for the four layers. |
-| Screens with a fake client | View-model builders unit-tested from canned DTOs (glyph mapping, `not_run` rendering, `null` commit text, compact hiding). Textual `Pilot` for TaskChecks (wide and 80×24), FinalRegression, CheckOutcomes, Screenshots, VerifyProgress and JudgeHandoff fixtures: each binding issues exactly the call in part 4 and `esc` issues none; flags dim `s`, `f`, `j`, `l`, `←`, `→`; pending, running and failure states land in the right `ContentSwitcher` child; engine messages render verbatim; no screen imports `axbenchmark.engine`. |
+| Domain (`tests/engine/verification/domain/`) | `classify` table: no snapshot → `unverified/not_run`; unmet preflight → `missing_prerequisite`; `requirement_failed` → `failed/application_failure`; `check_crashed`, timeout kill, nonzero exit with a passing report, missing and malformed report → `unverified/verifier_error`; only an explicit pass with exit 0 is `passed`. Property test (hypothesis): no input without an explicit passing report yields `passed`; screenshots and console data never change the status. `CheckResult` rejects invalid status/cause pairs. `compare` yields `same`, `fixed`, `regressed`, `differs` and keeps both sides (the board's 18✓ 3✗ / 18✓ 3✗ fixture with T4.2 and T5.4 swapped). `assert_outside` rejects tooling inside the copy or workspace. `JudgeEvidence` has no measurement field (asserted on `dataclasses.fields`); `select_judge_screenshots` keeps only final-regression captures and both viewports of each. `SnapshotRef` keeps an unavailable commit unavailable. |
+| Use cases with fakes | `FakeSnapshotSource`, `FakeCheckRunner` (scripted reports), `FakePreflight`, `FakeAppServices`, in-memory `ResultSink`. A process with exit 0 and a failing check records `failed`; a failed process with a snapshot still has its checks run; no snapshot gives `not_run`. Missing Chromium from preflight and a crashing fixture loader produce different causes with reasons kept. A failing approved start step records `failed/application_failure` and no write reaches the snapshot (fake snapshot is read-only and asserts on write). The copy is disposed after success, failure and cancel. `VerifyFinal` leaves task-phase results untouched. `cancel` turns unfinished checks into `not_run` with reason `stopped`. `for_judge` before the final regression raises `PhaseNotReady`; after it, its screenshots are exactly the fake final-regression captures and none of the per-task ones. Events are published in stage order. |
+| Verifier (integration, marked `browser`) | The real verifier against a small static fixture site and a broken copy of it: steps, keyboard presses, console errors, both screenshot sizes (1440×1000, 390×844 read from the PNG headers) at each step the fixture check captures and at no other step, `requirement_failed` vs `check_crashed`, working directory outside the copy. |
+| API via `InProcessClient` | Composed engine with fake adapters and no interface: run a fake two-task configuration through M11, observe `verification.*` events, then `verification.task.get`, `regression.get`, `not_passed.list` (cause counts and filters), `screenshots.list`, `judge_input.get` (no measurement category and no per-task screenshot in `given`). Typed errors and capability reasons serialize as specified; registry kinds and safety classes; JSON Schema snapshot; drop and reconnect with `since_seq` during verification. `import-linter` contracts for the four layers. |
+| Screens with a fake client | View-model builders unit-tested from canned DTOs (glyph mapping, `not_run` rendering, `null` commit text, compact hiding). Textual `Pilot` for TaskChecks (wide and 80×24), FinalRegression, CheckOutcomes, Screenshots, VerifyProgress, JudgeHandoff and EvidenceViewer fixtures (text log paged in two chunks, a binary screenshot showing the system-viewer note, `results.evidence_not_found` in `#evidence-error`): each binding issues exactly the call in part 4 and `esc` issues none; flags dim `s`, `f`, `j`, `l`, `←`, `→`; pending, running and failure states land in the right `ContentSwitcher` child; engine messages render verbatim; no screen imports `axbenchmark.engine`. |

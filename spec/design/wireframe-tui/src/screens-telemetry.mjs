@@ -2,7 +2,7 @@
 // Monitoring settings (Setup), collector guidance (Environment), the telemetry of one experiment, how its energy was
 // derived, and energy per execution window in a sequential run. Telemetry is from lab-linux-4090 (imported results
 // of run 2026-09-24-lab, 3 configurations at once). All data is fictional.
-import { Grid, fit, len, header, footer, table, buttons, para, kv, notice, modal, radios } from './lib.mjs';
+import { Grid, fit, len, header, footer, table, buttons, para, kv, notice, modal, radios, input } from './lib.mjs';
 import { environment } from './screens-readiness.mjs';
 import { setup } from './screens-setup.mjs';
 import { byId, dur } from './results-data.mjs';
@@ -19,29 +19,33 @@ const WINDOW = 2465; // seconds of telemetry: launch to the last verification
 
 export function monitoringSettings(sz, focus = 'mode') {
   const g = setup(sz, 'none');
-  const m = modal(g, 86, 23, 'Hardware monitoring · optional', { sel: '#monitoring' });
+  const m = modal(g, 86, 27, 'Hardware monitoring · optional', { sel: '#monitoring' });
   let y = m.y;
   radios(g, m.x, y++, ['Automatic · detect what this machine can measure', 'Off'], 0, { focus: focus === 'mode' });
   g.region(m.x, y - 1, m.w, 1, 'RadioSet', '#monitoring-mode');
-  g.text(m.x, y, 'Interval', 'mu'); g.text(m.x + 12, y++, fit('1 s · one host collection per experiment, shared', m.w - 12));
+  g.text(m.x, y, 'Interval', 'mu'); input(g, m.x + 12, y, 8, '0.5', { focus: focus === 'interval' }); g.text(m.x + 21, y++, fit('s · requested · 0.5–10 s, default 1 s · frozen at launch', m.w - 21), 'mu');
+  g.region(m.x + 12, y - 1, 8, 1, 'Input', '#sampling-interval');
+  g.text(m.x + 12, y++, fit('One host collection per experiment · not part of the template identity', m.w - 12), 'mu');
   y++;
   g.text(m.x, y++, 'Detected on mike-mbp-m4 · macOS 26.0 · Apple M4 Pro', 'bd');
-  table(g, m.x, y, m.w, [{ l: 'Metric', w: 18 }, { l: 'Source', w: 14 }, { l: 'Scope', w: 21 }, { l: 'Status', w: m.w - 53 }], [
-    { v: ['CPU utilization', 'psutil 6.1', 'host + process trees', '✓ on'] },
-    { v: ['Memory', 'psutil 6.1', 'process trees (RSS)', '✓ on'] },
-    { v: ['GPU utilization', 'IOReport', 'whole GPU', '✓ on'] },
-    { v: ['CPU and GPU power', 'powermetrics', 'SoC domains', { t: '▲ no permission (root)', f: 'bd' }] },
-    { v: ['SoC temperature', '—', '—', { t: '✗ unsupported hardware', f: 'bd' }] },
-  ], { cursor: focus === 'table' ? 3 : -1, focused: focus === 'table' });
+  table(g, m.x, y, m.w, [{ l: 'Metric', w: 18 }, { l: 'Source', w: 13 }, { l: 'Scope', w: 20 }, { l: 'Interval', w: 15 }, { l: 'Status', w: m.w - 66 }], [
+    { v: ['CPU utilization', 'psutil 6.1', 'host + processes', '0.5 s', '✓ on'] },
+    { v: ['Memory', 'psutil 6.1', 'process trees (RSS)', '0.5 s', '✓ on'] },
+    { v: ['GPU utilization', 'IOReport', 'whole GPU', { t: '1 s · minimum', f: 'bd' }, '✓ on'] },
+    { v: ['CPU and GPU power', 'powermetrics', 'SoC domains', '—', { t: '▲ no access', f: 'bd' }] },
+    { v: ['SoC temperature', '—', '—', '—', { t: '✗ unsupported', f: 'bd' }] },
+  ], { cursor: focus === 'table' ? 2 : -1, focused: focus === 'table' });
   g.region(m.x, y, m.w, 6, 'DataTable', '#detected');
   y += 7;
+  y = para(g, m.x, y, m.w, 'IOReport cannot sample faster than 1 s, so it uses its own minimum. Each collector’s actual interval is recorded and shown with its data, never presented as the 0.5 s requested.', 'mu');
+  y++;
   y = kv(g, m.x, y, 12, m.w, [
     ['Energy', 'unavailable here · power is needed to derive it'],
     ['Never', 'blocks a run, installs a tool or changes permissions'],
     ['Results', 'every missing metric is stored with its cause'],
   ]);
   y++;
-  para(g, m.x, y, m.w, 'Turning monitoring off records “monitoring off” in results instead of empty values.', 'mu');
+  para(g, m.x, y, m.w, 'Turning monitoring off records “monitoring off” in results instead of empty values. A value outside 0.5–10 s is rejected.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Guidance…', go: 'CollectorGuide' }, { label: 'Cancel', go: 'Setup' }, { label: 'Save', v: 'primary', go: 'Setup', focus: focus === 'save' }]);
   footer(g, [{ k: 'esc', d: 'Cancel', go: 'Setup' }, { k: 'tab', d: 'Next', do: 'next' }, { k: '^s', d: 'Save', go: 'Setup' }], '');
   return g;
@@ -84,24 +88,24 @@ export function telemetry(sz, focus = 'charts') {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
   header(g, 'AxBenchmark', 'Run 2026-09-24-lab · hardware telemetry');
   g.fill(0, 1, W, 1, 'B1');
-  g.text(1, 1, fit(`↓ Imported · lab-linux-4090 · Ubuntu 24.04 · Ryzen 9 7950X · RTX 4090 · 3 configurations at once · 1 s samples · ${dur(WINDOW)}`, W - 2));
+  g.text(1, 1, fit(`↓ Imported · lab-linux-4090 · Ubuntu 24.04 · Ryzen 9 7950X · RTX 4090 · 3 at once · 1 s requested · ${dur(WINDOW)}`, W - 2));
   g.region(0, 1, W, 1, 'Static', '#telemetry-bar');
 
   const cf = focus === 'charts';
-  g.box(0, 2, W, 13, { f: cf ? 'ac' : 'ln', title: 'Host · one collection for the whole experiment', sub: '· gap in samples' });
+  g.box(0, 2, W, 13, { f: cf ? 'ac' : 'ln', title: 'Host · one collection for the whole experiment · source · actual interval', sub: '· gap in samples' });
   g.region(0, 2, W, 13, 'Static', '#charts');
   const CW = W - 46, gaps = [57, 58];
   const rows = [
-    ['CPU utilization', 'host', series(CW, (t) => 0.35 + 0.25 * Math.sin(t * 19) ** 2 + (t > 0.86 ? -0.25 : 0)), '38% avg · 96% peak'],
-    ['GPU utilization', 'device', series(CW, (t, i) => (t < 0.7 ? 0.55 + 0.4 * Math.abs(Math.sin(i * 0.7)) : 0.05)), '61% avg · model server'],
-    ['CPU package', 'RAPL', series(CW, (t) => 0.3 + 0.3 * Math.sin(t * 19) ** 2), '56 W avg · counter'],
-    ['GPU board', 'NVML', series(CW, (t, i) => (t < 0.7 ? 0.5 + 0.45 * Math.abs(Math.sin(i * 0.7)) : 0.08)), '164 W avg · sampled'],
-    ['GPU temperature', 'NVML', series(CW, (t) => (t < 0.7 ? 0.4 + 0.5 * Math.min(1, t * 4) : 0.5 - (t - 0.7))), '71 °C peak'],
+    ['CPU utilization', 'psutil · 1 s', series(CW, (t) => 0.35 + 0.25 * Math.sin(t * 19) ** 2 + (t > 0.86 ? -0.25 : 0)), '38% avg · 96% peak'],
+    ['GPU utilization', 'NVML · 1 s', series(CW, (t, i) => (t < 0.7 ? 0.55 + 0.4 * Math.abs(Math.sin(i * 0.7)) : 0.05)), '61% avg · model server'],
+    ['CPU package', 'RAPL · 1 s', series(CW, (t) => 0.3 + 0.3 * Math.sin(t * 19) ** 2), '56 W avg · counter'],
+    ['GPU board', 'NVML · 1 s', series(CW, (t, i) => (t < 0.7 ? 0.5 + 0.45 * Math.abs(Math.sin(i * 0.7)) : 0.08)), '164 W avg · sampled'],
+    ['CPU temperature', 'k10temp · 2 s', series(CW, (t) => 0.35 + 0.3 * Math.sin(t * 19) ** 2), '78 °C peak · 2 s minimum'],
   ];
   rows.forEach(([l, s, v, sum], i) => {
     const y = 3 + i * 2;
     g.text(2, y, fit(l, 16), 'bd'); g.text(2, y + 1, fit(s, 16), 'mu');
-    spark(g, 19, y, v, 'ac', i === 1 || i === 3 || i === 4 ? gaps : []);
+    spark(g, 19, y, v, 'ac', i === 1 || i === 3 ? gaps : []);
     g.text(19 + CW + 2, y, fit(sum, W - CW - 23), 'mu');
   });
   const px = 19 + Math.round(CW * 1720 / WINDOW);
@@ -128,10 +132,11 @@ export function telemetry(sz, focus = 'charts') {
     ['Per config', 'not split · ran at the same time'],
     ['Electricity', '$0.03 at 0.18 USD/kWh · estimate'],
   ]);
-  para(g, 68, y + 1, 50, 'Never added to provider cost and never part of a ranking.', 'mu');
-  para(g, 1, 28, W - 2, 'Every value keeps its source, scope, interval and coverage when it is exported or shown in the report. Missing samples stay gaps, never zero.', 'mu');
-  buttons(g, W - 1, H - 2, [{ label: 'How energy was derived', go: 'EnergyDetail', focus: focus === 'detail' }, { label: 'Export CSV' }]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOrigin' }, { k: 'e', d: 'Energy detail', go: 'EnergyDetail' }, { k: 'w', d: 'Sequential windows', go: 'SequentialEnergy' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  para(g, 68, y + 1, 50, 'Parallel run: never divided, so Pi’s cost stays unknown in rankings (M10). Never added to an API charge.', 'mu');
+  para(g, 1, 28, W - 2, 'Every value keeps its source, scope, actual interval and coverage when it is exported or shown in the report. Requested 1 s; a collector that cannot sample that fast shows its own minimum. Missing samples stay gaps, never zero.', 'mu');
+  const bx = buttons(g, W - 1, H - 2, [{ label: 'How energy was derived', go: 'EnergyDetail', focus: focus === 'detail' }, { label: 'Export CSV…', go: 'PromptExportCsv', focus: focus === 'csv' }]);
+  g.region(W - 1 - 13, H - 2, 13, 1, 'Button', '#export-csv');
+  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOrigin' }, { k: 'e', d: 'Energy detail', go: 'EnergyDetail' }, { k: 'w', d: 'Sequential windows', go: 'SequentialEnergy' }, { k: 'x', d: 'Export CSV', go: 'PromptExportCsv' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 
@@ -168,7 +173,7 @@ export function energyDetail(sz, focus = 'table') {
 export function sequentialEnergy(sz, focus = 'table') {
   const g = telemetry(sz, 'none');
   const r = byId['R-0919lab-1'];
-  const m = modal(g, 86, 23, 'Energy during execution windows · run 2026-09-19-lab', { sel: '#windows' });
+  const m = modal(g, 86, 26, 'Energy during execution windows · run 2026-09-19-lab', { sel: '#windows' });
   let y = m.y;
   g.text(m.x, y++, fit(`Sequential (jobs 1) · ${r.h} · ${r.model} · ${dur(r.time)} of task processes`, m.w), 'bd');
   y++;
@@ -179,7 +184,11 @@ export function sequentialEnergy(sz, focus = 'table') {
       { v: ['Σ windows', dur(r.time), `${T.reduce((n, t) => n + t[2], 0).toFixed(1)} Wh`, `${T.reduce((n, t) => n + t[3], 0).toFixed(1)} Wh`, 'not exclusive to Pi'], f: 'bd' }], { cursor: 2, focused: focus === 'table' });
   g.region(m.x, y, m.w, 9, 'DataTable', '#window-energy');
   y += 10;
-  para(g, m.x, y, m.w, 'Only one configuration ran at a time, so energy can be shown per window. It still includes the operating system, the idle model server and anything else running: sequential scheduling does not isolate electricity use, and these values are never called Pi’s own consumption.', 'mu');
+  y = kv(g, m.x, y, 16, m.w, [
+    ['Energy estimate', [`${(T.reduce((n, t) => n + t[2] + t[3], 0)).toFixed(1)} Wh × $0.18/kWh = $0.01 · CPU package + GPU`, 'counts as Pi’s cost in rankings, labelled as such (M10)']],
+  ]);
+  y++;
+  para(g, m.x, y, m.w, 'Only one configuration ran at a time, so energy can be shown per window. It still includes the operating system, the idle model server and anything else running: sequential scheduling does not isolate electricity use, so the estimate keeps this scope and is never called Pi’s own consumption.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Close', v: 'primary', go: 'Telemetry', focus: true }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'Telemetry' }], '');
   return g;

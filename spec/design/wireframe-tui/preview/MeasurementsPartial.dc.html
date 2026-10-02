@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1280px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1400px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Measurements · halted, partial</b> · MeasurementsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -95,7 +95,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Coverage        </span><span class="B0">complete for T1–T4 · partial for T5 · none for T6–T7                                                 </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Elapsed         </span><span class="B0">45:10 ▲ · T5 counted up to the failure · sequential run, so no queue time                            </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Status          </span><span class="B0">halted by an authentication failure · not an interruption, not a timeout                             </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Rankings        </span><span class="B0">cost and time cover 5 of 7 tasks · counted as missing in any ranking that weights them (M06)         </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
@@ -137,7 +137,7 @@ body{margin:0}
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Coverage        </span><span class="B0">complete for T1–T4 · partial for T5 · none for T6–T7                                                 </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Elapsed         </span><span class="B0">45:10 ▲ · T5 counted up to the failure · sequential run, so no queue time                            </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Status          </span><span class="B0">halted by an authentication failure · not an interruption, not a timeout                             </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Rankings        </span><span class="B0">cost and time cover 5 of 7 tasks · counted as missing in any ranking that weights them (M06)         </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
@@ -170,7 +170,8 @@ body{margin:0}
 ├─ Header
 ├─ Static #result-bar
 ├─ Vertical #measurements-pane .pane
-│  ├─ DataTable #measurements    per task + Σ row
+│  ├─ DataTable #measurements    per task + Σ row · per trial
+│  ├─ Static #trial-summary      mean · min–max, N trials only
 │  └─ Static #overlap-hint
 ├─ Horizontal
 │  ├─ Static #formation .pane.kv     selected task
@@ -179,18 +180,18 @@ body{margin:0}
 ├─ Static #accounting           .-compact only
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
-<table><tr><td><code>#measurements</code></td><td>height: 9;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#measurements .-partial</code></td><td>text-style: bold;  value + &quot; ▲&quot;</td></tr><tr><td><code>#measurements .-unknown</code></td><td>color: $foreground 60%;  &quot;—&quot;, never 0</td></tr><tr><td><code>#formation, #phases</code></td><td>width: 1fr; height: 18;</td></tr><tr><td><code>Screen.-compact #formation, Screen.-compact #phases</code></td><td>display: none;</td></tr><tr><td><code>Screen.-compact #accounting</code></td><td>display: block; height: 1fr;</td></tr></table>
+<table><tr><td><code>#measurements</code></td><td>height: 9;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#measurements .-partial</code></td><td>text-style: bold;  value + &quot; ▲&quot;</td></tr><tr><td><code>#measurements .-unknown</code></td><td>color: $foreground 60%;  &quot;—&quot;, never 0</td></tr><tr><td><code>#trial-summary</code></td><td>height: 2; text-style: bold;  display: none with 1 trial</td></tr><tr><td><code>#formation, #phases</code></td><td>width: 1fr; height: 18;</td></tr><tr><td><code>Screen.-compact #formation, Screen.-compact #phases</code></td><td>display: none;</td></tr><tr><td><code>Screen.-compact #accounting</code></td><td>display: block; height: 1fr;</td></tr></table>
 <h3>Key bindings</h3>
-<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result</span></td></tr><tr><td><kbd>t</kbd></td><td><code>timing</code><br><span class="mut">Push TimingScreen for the run</span></td></tr><tr><td><kbd>b</kbd></td><td><code>cost_basis</code><br><span class="mut">Cost basis of every result of this revision</span></td></tr><tr><td><kbd>u</kbd></td><td><code>currency</code><br><span class="mut">Currency and energy inputs recorded at launch</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>open_task</code><br><span class="mut">Task checks and evidence (M08)</span></td></tr></table>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result</span></td></tr><tr><td><kbd>t</kbd></td><td><code>timing</code><br><span class="mut">Push TimingScreen for the run</span></td></tr><tr><td><kbd>b</kbd></td><td><code>cost_basis</code><br><span class="mut">Cost basis of every result of this revision</span></td></tr><tr><td><kbd>u</kbd></td><td><code>currency</code><br><span class="mut">Display currency, exchange rates and tariff frozen at launch</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>open_task</code><br><span class="mut">Task checks and evidence (M08)</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>DataTable #measurements</li><li>Static #coverage</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
+<div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="MeasurementsTrials.dc.html">3 trials</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="TariffAnalysis.dc.html">Tariff · analysis</a><a href="ResultsAnalysisTariff.dc.html">Results · tariff (M02)</a><a href="ResultsTrials.dc.html">Results · trials (M02)</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
 <h3>Notes</h3>
-<ul><li>R-0925b-2: authentication failed in T5. Usage up to the failure is kept as partial (▲); T6 and T7 are unknown (—), never zero (R078, R147).</li><li>The total keeps ▲ and its coverage (5 of 7) so it is never read as a complete benchmark cost (R080).</li><li>Status (halted, not interrupted, not timeout) stays beside the measurements.</li></ul>
+<ul><li>R-0925b-2: authentication failed in T5. Usage up to the failure is kept as partial (▲); T6 and T7 are unknown (—), never zero (R078, R147).</li><li>The total keeps ▲ and its coverage (5 of 7) so it is never read as a complete benchmark cost (R080).</li><li>D11: a partial cost or time counts as missing in any ranking where it carries weight; the entry stays in tables with its ▲ value and “covers 5 of 7 tasks”.</li><li>Status (halted, not interrupted, not timeout) stays beside the measurements.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1280}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1400}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

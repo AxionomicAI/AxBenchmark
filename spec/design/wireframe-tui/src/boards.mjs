@@ -1,6 +1,6 @@
 // Artboard catalogue for M01: one entry per frame, grouped into the flows of navigation.md.
 // Each board names its Textual screen, the focus stops Tab moves through, and the annotation legend.
-import { library, template, newTemplate, revise, reviseConfirm, exportTemplate, importTemplate, importVerifying, importRejected, importDuplicate, launchCheck, launchMismatch, commandPalette } from './screens.mjs';
+import { library, draftDiscard, template, newTemplate, revise, reviseConfirm, exportTemplate, importTemplate, importVerifying, importRejected, importDuplicate, launchCheck, launchMismatch, commandPalette } from './screens.mjs';
 
 // ---------------------------------------------------------------- legends (shared per screen)
 
@@ -10,18 +10,24 @@ const LIB_TREE = `LibraryScreen(Screen)          AUTO_FOCUS = "#templates"
 ├─ Horizontal #main
 │  ├─ Vertical #library-pane .pane
 │  │  ├─ Input #filter
-│  │  └─ ContentSwitcher #library-body
-│  │     ├─ DataTable #templates
-│  │     ├─ LoadingIndicator #templates-loading
-│  │     ├─ Static #templates-empty .empty
-│  │     └─ Vertical #templates-error .notice.-error
-│  │        └─ Button #retry
+│  │  ├─ Vertical #default-notice .notice   newer built-in
+│  │  │  ├─ Button #default-changes
+│  │  │  ├─ Button #make-default      → ConfirmScreen
+│  │  │  └─ Button #dismiss-notice
+│  │  ├─ ContentSwitcher #library-body
+│  │  │  ├─ DataTable #templates
+│  │  │  ├─ LoadingIndicator #templates-loading
+│  │  │  ├─ Static #templates-empty .empty
+│  │  │  └─ Vertical #templates-error .notice.-error
+│  │  │     └─ Button #retry
+│  │  └─ DataTable #drafts            planning drafts
 │  └─ VerticalScroll #detail-pane .pane
-│     ├─ Static #detail-fields .kv
+│     ├─ Static #detail-fields .kv | #draft-fields .kv
 │     ├─ ListView #saved-configs
+│     ├─ Button #why-not-default    look-alike rows
 │     └─ Horizontal .actions
-│        ├─ Button #configure .-primary
-│        ├─ Button #open
+│        ├─ Button #configure .-primary | #reopen .-primary
+│        ├─ Button #open | #discard-draft
 │        └─ Button #export
 ├─ Static #summary            .-compact only
 └─ Footer`;
@@ -33,14 +39,22 @@ const LIB_SEL = [
   ['#detail-pane', 'width: 2fr; border: solid $foreground 30%; padding: 0 1;'],
   ['.pane:focus-within', 'border: solid $primary; border-title-color: $primary;'],
   ['#filter', 'height: 1; background: $surface; border: none;'],
-  ['#templates', 'height: 1fr;  cursor_type = "row", zebra_stripes = False'],
+  ['#templates', 'height: auto; max-height: 1fr;  cursor_type = "row", zebra_stripes = False'],
+  ['#drafts', 'height: auto; margin-top: 1;  cursor_type = "row"; hidden while filtering or loading'],
+  ['#default-notice', 'height: auto; display: none; padding: 1 0;'],
+  ['LibraryScreen.-newer-builtin #default-notice', 'display: block;  until dismissed'],
+  ['#why-not-default', 'display: none;'],
+  ['#detail-pane.-lookalike #why-not-default', 'display: block;'],
   ['#summary', 'display: none; height: 5; border: solid $foreground 30%;'],
   ['Screen.-compact #detail-pane', 'display: none;'],
   ['Screen.-compact #summary', 'display: block;'],
 ];
 
 const LIB_KEYS = [
-  ['enter', 'configure', 'Configure a run for the selected revision (Setup · M07)'],
+  ['enter', 'configure / reopen', 'Configure a run for the selected revision (Setup · M07); on a draft row, reopen the draft where it was left (M16)'],
+  ['a', 'about', 'InventoryAboutScreen (M09). Enabled only on the built-in inventory row; dimmed via check_action otherwise'],
+  ['?', 'app.help', 'App-wide Help (M15), never About'],
+  ['delete', 'discard_draft', 'Draft rows only: ConfirmScreen (M15), then the draft folder is deleted'],
   ['o', 'open_template', 'Open TemplateScreen'],
   ['n', 'new_template', 'Push NewTemplateScreen'],
   ['d / e', 'duplicate / revise', 'Push ReviseScreen with the mode preselected'],
@@ -60,7 +74,8 @@ const TPL_TREE = `TemplateScreen(Screen)         AUTO_FOCUS = "#tasks"
 ├─ Horizontal #body
 │  ├─ Vertical #revisions-pane .pane    width: 30
 │  │  ├─ Tree #revisions
-│  │  └─ Static #revision-facts .kv
+│  │  ├─ Static #revision-facts .kv
+│  │  └─ Button #rename .link        → PromptScreen (M15)
 │  └─ TabbedContent #tabs             width: 1fr
 │     ├─ TabPane #tab-tasks "Tasks"
 │     │  ├─ DataTable #tasks .bordered
@@ -79,7 +94,7 @@ const TPL_TREE = `TemplateScreen(Screen)         AUTO_FOCUS = "#tasks"
 │     └─ TabPane #tab-results "Results"
 │        ├─ DataTable #results .bordered
 │        ├─ Static #judge-groups
-│        ├─ Static #historical .notice.-warning
+│        ├─ Static #scope-note .notice
 │        └─ Horizontal .actions
 └─ Footer`;
 
@@ -100,6 +115,7 @@ const TPL_KEYS = [
   ['esc', 'app.pop_screen', 'Back to the library (selection and filter kept)'],
   ['1 … 4', 'show_tab', 'Tasks · Identity · Configurations · Results'],
   ['e / d', 'revise / duplicate', 'Push ReviseScreen'],
+  ['n', 'rename', 'Rename the lineage display name via PromptScreen (M15); identity unchanged. Dimmed for built-ins'],
   ['x', 'export', 'Push ExportScreen for this revision'],
   ['enter', 'configure', 'Configure a run (Setup · M07)'],
   ['c', 'copy_sha', 'Copy the full SHA-256 to the clipboard'],
@@ -146,6 +162,7 @@ const REVISE_TREE = `ReviseScreen(ModalScreen[ReviseRequest])
 │  ├─ Grid #revise-scope              grid-size: 2
 │  │  └─ Checkbox × 4
 │  ├─ Static #revise-hint
+│  ├─ Static #revise-active-run .notice.-warning   non-blocking
 │  └─ Horizontal .dialog-actions
 │     ├─ Button #cancel
 │     └─ Button #open-editor .-primary
@@ -155,11 +172,12 @@ const APPROVE_TREE = `ApproveRevisionScreen(ModalScreen[bool])
 ├─ Vertical #approve-revision .dialog
 │  ├─ Static #revision-diff
 │  ├─ Static #revision-digests
-│  ├─ Static #revision-verdict
-│  ├─ Checkbox #copy-configs
+│  ├─ Static #revision-verdict       .notice.-error when identical
+│  ├─ Checkbox #copy-configs         hidden when identical
 │  └─ Horizontal .dialog-actions
 │     ├─ Button #back
-│     └─ Button #approve .-primary
+│     ├─ Button #open-existing       identical only (o)
+│     └─ Button #approve .-primary   disabled when identical
 └─ Footer`;
 
 const EXPORT_TREE = `ExportScreen(ModalScreen[Path | None])
@@ -184,6 +202,11 @@ const IMPORT_TREE = `ImportScreen(ModalScreen[ImportOutcome])
 │  │  ├─ Vertical #import-steps
 │  │  │  └─ ProgressBar #import-progress
 │  │  ├─ Vertical #import-rejected .notice.-error
+│  │  │  └─ ContentSwitcher #rejection-detail
+│  │  │     ├─ Vertical #unsafe-detail      (M17)
+│  │  │     ├─ Vertical #incomplete-detail  (M17)
+│  │  │     ├─ Vertical #digest-detail
+│  │  │     └─ Vertical #other-detail
 │  │  └─ Vertical #import-duplicate .notice.-success
 │  └─ Horizontal .dialog-actions
 └─ Footer`;
@@ -215,7 +238,7 @@ const MODAL_KEYS = (extra) => [['esc', 'dismiss(None)', 'Close without changes']
 // ---------------------------------------------------------------- boards
 
 const S = (name, title, def) => ({ name, title, ...def });
-const LIB_STATES = [['Default', 'Library'], ['Loading', 'LibraryLoading'], ['Empty', 'LibraryEmpty'], ['Error', 'LibraryError'], ['No harness', 'LibraryNoHarness']];
+const LIB_STATES = [['Default', 'Library'], ['Drafts', 'LibraryDrafts'], ['Discard draft', 'DraftDiscard'], ['Look-alike', 'LibraryLookAlike'], ['Newer built-in', 'LibraryUpgrade'], ['Loading', 'LibraryLoading'], ['Empty', 'LibraryEmpty'], ['Error', 'LibraryError'], ['No harness', 'LibraryNoHarness']];
 const TPL_STATES = [['Tasks', 'TemplateTasks'], ['Identity', 'TemplateIdentity'], ['Configurations', 'TemplateConfigs'], ['Results', 'TemplateResults'], ['Empty · loading · error', 'WidgetStates']];
 const libLegend = (notes) => ({ screen: 'LibraryScreen', file: 'tui/screens/library.py', tree: LIB_TREE, sel: LIB_SEL, keys: LIB_KEYS, states: LIB_STATES, notes });
 const tplLegend = (notes) => ({ screen: 'TemplateScreen', file: 'tui/screens/template.py', tree: TPL_TREE, sel: TPL_SEL, keys: TPL_KEYS, states: TPL_STATES, notes });
@@ -223,12 +246,30 @@ const tplLegend = (notes) => ({ screen: 'TemplateScreen', file: 'tui/screens/tem
 const LIB_FOCUS = { wide: [['templates', 'DataTable #templates'], ['detail', 'Button #configure'], ['filter', 'Input #filter']], compact: [['templates', 'DataTable #templates'], ['filter', 'Input #filter']] };
 
 export const GROUPS = [
-  { id: 'browse', title: '1 · Browse the library', note: 'Home view. The built-in seven-task inventory benchmark is the default selection; every row shows the required library fields. Then the loading, empty-filter, error and no-harness states, and the command palette.', boards: [
+  { id: 'browse', title: '1 · Browse the library', note: 'Home view. The built-in seven-task inventory benchmark is the default selection; every row shows the required library fields, and unfinished planning drafts are listed below. Then the draft, look-alike and newer-built-in states, the loading, empty-filter, error and no-harness states, and the command palette.', boards: [
     S('Library', 'Library', { sizes: ['wide', 'compact'], focus: LIB_FOCUS, render: (sz, f) => library(sz, f), legend: libLegend([
-      'Default selection: built-in Inventory web app r1, runnable with no planner call (R018, R030, R136).',
+      'Default selection: built-in Inventory web app r1, runnable with no planner call (R018, R030, R136). a About opens its frozen contract (M09); ? is the app-wide Help.',
+      'Planning drafts are listed below the templates in #drafts, marked ◇ (W10).',
       'Every required field is visible: name, project type, tasks, revision, SHA-256, saved configurations and results; the description is in the detail pane.',
       'Below 100 columns or 30 rows the app sets Screen.-compact: the detail pane hides and #summary shows the selection (list/detail).',
       '#env-bar surfaces readiness (M03) and the active run so it can be reattached from home.',
+    ]) }),
+    S('LibraryDrafts', 'Library · planning drafts', { sizes: ['wide'], focus: { wide: [['drafts', 'DataTable #drafts'], ['detail', 'Button #reopen'], ['templates', 'DataTable #templates']] }, render: (sz, f) => library(sz, f, { sel: 'draft' }), legend: libLegend([
+      'Unfinished planning drafts are rows marked ◇ draft with their state (planning, ready for review, failed) and last update (W10). They live in ~/.axbenchmark/drafts/ and survive app and engine exit (D10).',
+      'enter reopens the draft where it was left: planning → PlanningProgress, ready for review → PlanReview, failed → PlanningFailed (M16).',
+      'delete or Discard draft… asks through the shared ConfirmScreen (M15). A draft has no SHA-256, so nothing else can refer to it.',
+      'a About is dimmed: it only applies to the built-in inventory row (D2).',
+    ]) }),
+    S('DraftDiscard', 'Discard draft · confirm', { sizes: ['wide'], focus: { wide: [['cancel', 'Button #cancel'], ['discard', 'Button #confirm']] }, render: (sz, f) => draftDiscard(sz, f), legend: { screen: 'ConfirmScreen (M15, shared)', file: 'tui/widgets/confirm.py', tree: `ConfirmScreen(ModalScreen[bool])\n├─ Vertical #confirm .dialog\n│  ├─ Static #confirm-subject\n│  ├─ Static #confirm-body\n│  └─ Horizontal .dialog-actions\n│     ├─ Button #cancel          default focus\n│     └─ Button #confirm .-error\n└─ Footer`, sel: [...modalSel('#confirm', 72), ['Button.-error', 'text-style: bold underline;  destructive']], keys: MODAL_KEYS([['enter', 'choose', 'Activate the focused button; Cancel has focus first']]), states: LIB_STATES, notes: ['Instance of the shared ConfirmScreen drawn on the M15 page; the Library supplies subject and body.', 'Only the draft folder is deleted. Repository, templates, configurations and results are untouched.'] } }),
+    S('LibraryLookAlike', 'Library · look-alike selected', { sizes: ['wide'], focus: { wide: [['templates', 'DataTable #templates'], ['why', 'Button #why-not-default'], ['detail', 'Button #configure']] }, render: (sz, f) => library(sz, f, { sel: 'lookalike' }), legend: libLegend([
+      'Selecting a look-alike of the default (same name, different task count) shows Why not the default? (#why-not-default), which opens VariantScreen (M09, capability can_compare_default).',
+      'a About is dimmed in the Footer: it is enabled only on the built-in inventory row (D2). ? stays the app-wide Help.',
+    ]) }),
+    S('LibraryUpgrade', 'Library · newer built-in revision', { sizes: ['wide'], focus: { wide: [['notice', 'Button #default-changes'], ['templates', 'DataTable #templates']] }, render: (sz, f) => library(sz, f, { upgrade: true }), legend: libLegend([
+      'D16: an upgrade shipped a new built-in revision. With results on the current default, the default stays and #default-notice offers what changed (#default-changes), says results can’t be compared, and Make r3 the default… (#make-default → ConfirmScreen, M15).',
+      'Without results on the current default, the default moves to the newest built-in revision silently and no notice is shown.',
+      'The decision text names r2; here the user’s custom revision is already r2, so the shipped built-in revision is r3.',
+      'All built-in revisions stay available and runnable.',
     ]) }),
     S('LibraryLoading', 'Library · loading', { sizes: ['wide'], render: (sz) => library(sz, 'none', { loading: true }), legend: libLegend([
       'ContentSwitcher #library-body shows #templates-loading while the index is read in a worker.',
@@ -266,7 +307,7 @@ export const GROUPS = [
     ]) }),
     S('TemplateResults', 'Revision · results', { sizes: ['wide'], focus: { wide: [['results', 'DataTable #results'], ['open', 'Button #open-result']] }, render: (sz, f) => template(sz, f, { tab: 3 }), legend: tplLegend([
       'Only results bound to this exact SHA-256 are listed; local and imported are labelled and judge groups stay separate (M02).',
-      'Historical README runs remain preserved but unlinked: names and task counts never confer a verified hash (R028).',
+      'Results of other revisions or look-alike templates are never listed here; #scope-note says so. Several trials of one configuration are grouped with their mean on Results (D7).',
     ]) }),
     S('WidgetStates', 'Data widgets · empty, loading, error', { sizes: ['wide'], special: 'states' }),
   ] },
@@ -275,20 +316,23 @@ export const GROUPS = [
     S('NewTemplateRepo', 'New template · existing repository', { sizes: ['wide', 'compact'], focus: { wide: [['repo', 'Input #repo-path'], ['revision', 'Input #revision'], ['continue', 'Button #continue']], compact: [['repo', 'Input #repo-path'], ['revision', 'Input #revision'], ['continue', 'Button #continue']] }, render: (sz, f) => newTemplate(sz, f, { repo: 'ok' }), legend: { screen: 'NewTemplateScreen', file: 'tui/screens/new_template.py', tree: NEW_TREE, sel: [...modalSel('#new-template', 76), ['#repo-fields', 'height: auto; display: none;'], ['.-existing #repo-fields', 'display: block;']], keys: MODAL_KEYS([['ctrl+s', 'submit', 'Continue to planning (M16)']]), states: [['Empty project', 'NewTemplate'], ['Existing repository', 'NewTemplateRepo'], ['Invalid repository', 'NewTemplateInvalid']], notes: ['Revision defaults to HEAD and is resolved immediately to a commit, which the template pins forever.', 'Uncommitted changes are counted and explicitly excluded; the source repository is only read (R030, R067).'] } }),
     S('NewTemplateInvalid', 'New template · not a Git repository', { sizes: ['wide'], focus: { wide: [['repo', 'Input #repo-path']] }, render: (sz, f) => newTemplate(sz, f, { repo: 'invalid' }), legend: { screen: 'NewTemplateScreen', file: 'tui/screens/new_template.py', tree: NEW_TREE, sel: [...modalSel('#new-template', 76), ['Input.-invalid', 'border: none; background: $surface; text-style: bold;']], keys: MODAL_KEYS([]), states: [['Empty project', 'NewTemplate'], ['Existing repository', 'NewTemplateRepo'], ['Invalid repository', 'NewTemplateInvalid']], notes: ['Validation runs on Input.Changed (debounced); Continue stays disabled until the path is a Git repository with a resolvable revision.'] } }),
   ] },
-  { id: 'revise', title: '4 · Duplicate and revise', note: 'e or d opens one modal with the mode preselected. Approval compares content: changed content gets a new SHA-256 and revision, the original stays approved with its configurations and results.', boards: [
-    S('Revise', 'Duplicate or revise', { sizes: ['wide'], focus: { wide: [['mode', 'RadioSet #revise-mode'], ['name', 'Input #revise-name'], ['changes', 'Checkbox #scope-prompts'], ['editor', 'Button #open-editor']] }, render: (sz, f) => revise(sz, f), legend: { screen: 'ReviseScreen', file: 'tui/screens/revise.py', tree: REVISE_TREE, sel: [...modalSel('#revise', 76), ['#revise-scope', 'grid-size: 2; grid-gutter: 0 2; height: 2;']], keys: MODAL_KEYS([['enter', 'open_editor', 'Open the template editor (M16)']]), states: [['Choose', 'Revise'], ['Approve', 'ReviseConfirm'], ['Saved', 'RevisionSaved']], notes: ['The scope checkboxes are a guide for the editor; the actual new identity is computed from content at approval.', 'Renaming alone never changes identity (display-only naming, R118).'] } }),
-    S('ReviseConfirm', 'Approve revision r2', { sizes: ['wide', 'compact'], focus: { wide: [['approve', 'Button #approve'], ['copy', 'Checkbox #copy-configs']], compact: [['approve', 'Button #approve'], ['copy', 'Checkbox #copy-configs']] }, render: (sz, f) => reviseConfirm(sz, f), legend: { screen: 'ApproveRevisionScreen', file: 'tui/screens/revise.py', tree: APPROVE_TREE, sel: [...modalSel('#approve-revision', 86), ['#revision-digests', 'height: 2; text-wrap: nowrap;']], keys: MODAL_KEYS([['ctrl+s', 'approve', 'Approve r2']]), states: [['Choose', 'Revise'], ['Approve', 'ReviseConfirm'], ['Saved', 'RevisionSaved']], notes: ['Task-order changes alone produce a new digest (R067, R118).', 'Configurations do not carry over silently; copying is an explicit choice that creates new r2 configurations.'] } }),
+  { id: 'revise', title: '4 · Duplicate and revise', note: 'e or d opens one modal with the mode preselected; a run active on the revision adds a non-blocking warning. Approval compares content: changed content gets a new SHA-256 and revision, identical content is blocked, and the original stays approved with its configurations and results.', boards: [
+    S('Revise', 'Duplicate or revise', { sizes: ['wide'], focus: { wide: [['mode', 'RadioSet #revise-mode'], ['name', 'Input #revise-name'], ['changes', 'Checkbox #scope-prompts'], ['editor', 'Button #open-editor']] }, render: (sz, f) => revise(sz, f), legend: { screen: 'ReviseScreen', file: 'tui/screens/revise.py', tree: REVISE_TREE, sel: [...modalSel('#revise', 76), ['#revise-scope', 'grid-size: 2; grid-gutter: 0 2; height: 2;']], keys: MODAL_KEYS([['enter', 'open_editor', 'Open the template editor (M16)']]), states: [['Choose', 'Revise'], ['Run active', 'ReviseActiveRun'], ['Approve', 'ReviseConfirm'], ['Identical', 'ReviseIdentical'], ['Saved', 'RevisionSaved']], notes: ['The scope checkboxes are a guide for the editor; the actual new identity is computed from content at approval.', 'Renaming alone never changes identity (display-only naming, R118).'] } }),
+    S('ReviseActiveRun', 'Duplicate or revise · run active', { sizes: ['wide'], focus: { wide: [['mode', 'RadioSet #revise-mode'], ['editor', 'Button #open-editor']] }, render: (sz, f) => revise(sz, f, { activeRun: true }), legend: { screen: 'ReviseScreen', file: 'tui/screens/revise.py', tree: REVISE_TREE, sel: [...modalSel('#revise', 76), ['#revise-active-run', 'height: auto; display: none;'], ['ReviseScreen.-active-run #revise-active-run', 'display: block;']], keys: MODAL_KEYS([['enter', 'open_editor', 'Continue; the warning never blocks']]), states: [['Choose', 'Revise'], ['Run active', 'ReviseActiveRun'], ['Approve', 'ReviseConfirm'], ['Identical', 'ReviseIdentical'], ['Saved', 'RevisionSaved']], notes: ['D9: choosing duplicate or revise while a run uses this revision shows #revise-active-run. It is a warning, not a block.', 'Approved revision files are written read-only; if r1 changed on disk anyway, the run halts (Results · halted run, M02).'] } }),
+    S('ReviseConfirm', 'Approve revision r2', { sizes: ['wide', 'compact'], focus: { wide: [['approve', 'Button #approve'], ['copy', 'Checkbox #copy-configs']], compact: [['approve', 'Button #approve'], ['copy', 'Checkbox #copy-configs']] }, render: (sz, f) => reviseConfirm(sz, f), legend: { screen: 'ApproveRevisionScreen', file: 'tui/screens/revise.py', tree: APPROVE_TREE, sel: [...modalSel('#approve-revision', 86), ['#revision-digests', 'height: 2; text-wrap: nowrap;']], keys: MODAL_KEYS([['ctrl+s', 'approve', 'Approve r2']]), states: [['Choose', 'Revise'], ['Run active', 'ReviseActiveRun'], ['Approve', 'ReviseConfirm'], ['Identical', 'ReviseIdentical'], ['Saved', 'RevisionSaved']], notes: ['Task-order changes alone produce a new digest (R067, R118).', 'Configurations do not carry over silently; copying is an explicit choice that creates new r2 configurations.'] } }),
+    S('ReviseIdentical', 'Approve · identical to r1', { sizes: ['wide', 'compact'], focus: { wide: [['open', 'Button #open-existing'], ['back', 'Button #back']], compact: [['open', 'Button #open-existing'], ['back', 'Button #back']] }, render: (sz, f) => reviseConfirm(sz, f, { identical: true }), legend: { screen: 'ApproveRevisionScreen', file: 'tui/screens/revise.py', tree: APPROVE_TREE, sel: [...modalSel('#approve-revision', 86), ['#approve:disabled', 'background: $panel; color: $foreground 50%;'], ['#open-existing', 'display: none;'], ['.-identical #open-existing', 'display: block;']], keys: MODAL_KEYS([['o', 'open_existing', 'Open the existing revision (r1)'], ['ctrl+s', 'approve', 'Disabled: nothing to approve']]), states: [['Choose', 'Revise'], ['Run active', 'ReviseActiveRun'], ['Approve', 'ReviseConfirm'], ['Identical', 'ReviseIdentical'], ['Saved', 'RevisionSaved']], notes: ['D6: when the computed SHA-256 equals an existing revision, Approve is disabled with “Identical to r1 — nothing to approve” and #open-existing opens it.', 'Renaming is done on the lineage display name (n on TemplateScreen), which never touches identity.'] } }),
     S('RevisionSaved', 'Revision r2 saved', { sizes: ['wide'], focus: { wide: [['revisions', 'Tree #revisions'], ['tasks', 'DataTable #tasks']] }, render: (sz, f) => template(sz, f, { tab: 0, rev: 'r2', toast: true }), legend: tplLegend([
       'After approval the screen reloads on r2; the tree keeps r1 selectable and unchanged.',
       'app.notify(..., severity="information", timeout=6) confirms with the new short digest.',
+      'n Rename (#rename) is enabled here because r2 is custom: it edits the lineage display name through PromptScreen (M15) and never changes identity.',
     ]) }),
   ] },
   { id: 'exchange', title: '5 · Exchange templates', note: 'Export writes the exact revision with its manifest; import validates paths, size, format and the recomputed SHA-256 before anything is added. Mismatches add nothing; identical re-imports change nothing. Package rules belong to M17.', boards: [
     S('ExportTemplate', 'Export template', { sizes: ['wide'], focus: { wide: [['destination', 'Input #export-path'], ['export', 'Button #export-zip']] }, render: (sz, f) => exportTemplate(sz, f), legend: { screen: 'ExportScreen', file: 'tui/screens/exchange.py', tree: EXPORT_TREE, sel: modalSel('#export', 84), keys: MODAL_KEYS([['ctrl+s', 'export', 'Write the ZIP; the path is shown on success']]), states: [['Export', 'ExportTemplate'], ['Import', 'ImportTemplate']], notes: ['Contents mirror the identity manifest plus declared dependencies; installed dependency folders and credentials are never packed (R115).'] } }),
-    S('ImportTemplate', 'Import template · choose ZIP', { sizes: ['wide'], focus: { wide: [['files', 'DirectoryTree #zip-browser'], ['path', 'Input #zip-path'], ['import', 'Button #import']] }, render: (sz, f) => importTemplate(sz, f), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: [...modalSel('#import', 80), ['#zip-browser', 'height: 9; border: solid $foreground 30%; background: $background;'], ['#zip-browser:focus', 'border: solid $primary;']], keys: MODAL_KEYS([['enter', 'validate', 'Validate and import the selected ZIP']]), states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected', 'ImportRejected'], ['Already present', 'ImportDuplicate']], notes: ['DirectoryTree icons are replaced by ▸ ▾ glyphs; result ZIPs are labelled and routed to Results › Import.'] } }),
-    S('ImportVerifying', 'Import · validating', { sizes: ['wide'], render: (sz) => importVerifying(sz), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: [...modalSel('#import', 80), ['#import-progress', 'width: 1fr;  show_eta = False']], keys: [['esc', 'cancel_import', 'Cancel; nothing has been added']], states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected', 'ImportRejected'], ['Already present', 'ImportDuplicate']], notes: ['Steps run in a thread worker and post messages; the list is the loading state of this flow.'] } }),
-    S('ImportRejected', 'Import · SHA-256 mismatch', { sizes: ['wide', 'compact'], focus: { wide: [['close', 'Button #close'], ['digests', 'Button #show-digests']], compact: [['close', 'Button #close'], ['digests', 'Button #show-digests']] }, render: (sz, f) => importRejected(sz, f), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: modalSel('#import', 86), keys: MODAL_KEYS([]), states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected', 'ImportRejected'], ['Already present', 'ImportDuplicate']], notes: ['Shows expected and received identities in full; nothing is partially added (R118, R141).', 'On 80 columns the labels stack above each 64-character digest so nothing is truncated.'] } }),
-    S('ImportDuplicate', 'Import · already in the library', { sizes: ['wide'], render: (sz) => importDuplicate(sz), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: modalSel('#import', 72), keys: [['esc', 'dismiss', 'Close'], ['o', 'open', 'Open the existing template']], states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected', 'ImportRejected'], ['Already present', 'ImportDuplicate']], notes: ['Re-importing identical content is idempotent: no new row, no new revision.'] } }),
+    S('ImportTemplate', 'Import template · choose ZIP', { sizes: ['wide'], focus: { wide: [['files', 'DirectoryTree #zip-browser'], ['path', 'Input #zip-path'], ['import', 'Button #import']] }, render: (sz, f) => importTemplate(sz, f), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: [...modalSel('#import', 80), ['#zip-browser', 'height: 9; border: solid $foreground 30%; background: $background;'], ['#zip-browser:focus', 'border: solid $primary;']], keys: MODAL_KEYS([['enter', 'validate', 'Validate and import the selected ZIP']]), states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected · digest', 'ImportRejected'], ['Rejected · unsafe', 'ImportUnsafe'], ['Rejected · incomplete', 'ImportIncomplete'], ['Already present', 'ImportDuplicate']], notes: ['DirectoryTree icons are replaced by ▸ ▾ glyphs; result ZIPs are labelled and routed to Results › Import.'] } }),
+    S('ImportVerifying', 'Import · validating', { sizes: ['wide'], render: (sz) => importVerifying(sz), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: [...modalSel('#import', 80), ['#import-progress', 'width: 1fr;  show_eta = False']], keys: [['esc', 'cancel_import', 'Cancel; nothing has been added']], states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected · digest', 'ImportRejected'], ['Rejected · unsafe', 'ImportUnsafe'], ['Rejected · incomplete', 'ImportIncomplete'], ['Already present', 'ImportDuplicate']], notes: ['Steps run in a thread worker and post messages; the list is the loading state of this flow.'] } }),
+    S('ImportRejected', 'Import · SHA-256 mismatch', { sizes: ['wide', 'compact'], focus: { wide: [['close', 'Button #close'], ['digests', 'Button #show-digests']], compact: [['close', 'Button #close'], ['digests', 'Button #show-digests']] }, render: (sz, f) => importRejected(sz, f), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: modalSel('#import', 86), keys: MODAL_KEYS([]), states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected · digest', 'ImportRejected'], ['Rejected · unsafe', 'ImportUnsafe'], ['Rejected · incomplete', 'ImportIncomplete'], ['Already present', 'ImportDuplicate']], notes: ['W7: #import-rejected holds ContentSwitcher #rejection-detail (#unsafe-detail, #incomplete-detail, #digest-detail, #other-detail), shared with M17; this frame shows #digest-detail.', 'Shows expected and received identities in full; nothing is partially added (R118, R141).', 'On 80 columns the labels stack above each 64-character digest so nothing is truncated.'] } }),
+    S('ImportDuplicate', 'Import · already in the library', { sizes: ['wide'], render: (sz) => importDuplicate(sz), legend: { screen: 'ImportScreen', file: 'tui/screens/exchange.py', tree: IMPORT_TREE, sel: modalSel('#import', 72), keys: [['esc', 'dismiss', 'Close'], ['o', 'open', 'Open the existing template']], states: [['Choose', 'ImportTemplate'], ['Validating', 'ImportVerifying'], ['Rejected · digest', 'ImportRejected'], ['Rejected · unsafe', 'ImportUnsafe'], ['Rejected · incomplete', 'ImportIncomplete'], ['Already present', 'ImportDuplicate']], notes: ['Re-importing identical content is idempotent: no new row, no new revision.'] } }),
   ] },
   { id: 'launch', title: '6 · Launch identity check', note: 'Right before execution the app recomputes the template SHA-256, freezes the run configuration and original weights separately, and binds results to that identity. Changed inputs block the launch instead of relabelling it.', boards: [
     S('LaunchCheck', 'Before launch · freezing', { sizes: ['wide'], render: (sz) => launchCheck(sz), legend: { screen: 'LaunchCheckScreen', file: 'tui/screens/launch_check.py', tree: LAUNCH_TREE, sel: [...modalSel('#launch-check', 86), ['#launch-progress', 'width: 1fr;  show_eta = False'], ['Button:disabled', 'background: $panel; color: $foreground 50%;']], keys: [['esc', 'dismiss(None)', 'Cancel before launch']], states: [['Freezing', 'LaunchCheck'], ['Blocked', 'LaunchMismatch']], notes: ['Opened by Setup (M07) on Launch; the prototype opens it from Configure run.', 'Template, configuration and original weights are frozen separately (R037, R067).'] } }),

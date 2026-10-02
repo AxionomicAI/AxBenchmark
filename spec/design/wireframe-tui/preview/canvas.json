@@ -115,49 +115,85 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 2000,
+      "h": 2620,
       "title": "Library · Library",
       "page": "wide",
       "is_interactive": true
     },
-    "LibraryLoading.dc.html": {
+    "LibraryDrafts.dc.html": {
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 1780,
+      "h": 2580,
+      "title": "LibraryDrafts · Library · planning drafts",
+      "page": "wide",
+      "is_interactive": true
+    },
+    "DraftDiscard.dc.html": {
+      "x": 3072,
+      "y": 0,
+      "w": 1456,
+      "h": 1120,
+      "title": "DraftDiscard · Discard draft · confirm",
+      "page": "wide",
+      "is_interactive": true
+    },
+    "LibraryLookAlike.dc.html": {
+      "x": 4608,
+      "y": 0,
+      "w": 1456,
+      "h": 2480,
+      "title": "LibraryLookAlike · Library · look-alike selected",
+      "page": "wide",
+      "is_interactive": true
+    },
+    "LibraryUpgrade.dc.html": {
+      "x": 6144,
+      "y": 0,
+      "w": 1456,
+      "h": 2560,
+      "title": "LibraryUpgrade · Library · newer built-in revision",
+      "page": "wide",
+      "is_interactive": true
+    },
+    "LibraryLoading.dc.html": {
+      "x": 7680,
+      "y": 0,
+      "w": 1456,
+      "h": 2320,
       "title": "LibraryLoading · Library · loading",
       "page": "wide",
       "is_interactive": true
     },
     "LibraryEmpty.dc.html": {
-      "x": 3072,
+      "x": 9216,
       "y": 0,
       "w": 1456,
-      "h": 1760,
+      "h": 2300,
       "title": "LibraryEmpty · Library · filter matches nothing",
       "page": "wide",
       "is_interactive": true
     },
     "LibraryError.dc.html": {
-      "x": 4608,
+      "x": 10752,
       "y": 0,
       "w": 1456,
-      "h": 1800,
+      "h": 2340,
       "title": "LibraryError · Library · index unreadable",
       "page": "wide",
       "is_interactive": true
     },
     "LibraryNoHarness.dc.html": {
-      "x": 6144,
+      "x": 12288,
       "y": 0,
       "w": 1456,
-      "h": 1900,
+      "h": 2440,
       "title": "LibraryNoHarness · Library · no supported harness",
       "page": "wide",
       "is_interactive": true
     },
     "CommandPalette.dc.html": {
-      "x": 7680,
+      "x": 13824,
       "y": 0,
       "w": 1456,
       "h": 860,
@@ -167,43 +203,43 @@
     },
     "TemplateTasks.dc.html": {
       "x": 0,
-      "y": 2460,
+      "y": 3080,
       "w": 1456,
-      "h": 1820,
+      "h": 1900,
       "title": "TemplateTasks · Revision · tasks",
       "page": "wide",
       "is_interactive": true
     },
     "TemplateIdentity.dc.html": {
       "x": 1536,
-      "y": 2460,
+      "y": 3080,
       "w": 1456,
-      "h": 1880,
+      "h": 1980,
       "title": "TemplateIdentity · Revision · identity",
       "page": "wide",
       "is_interactive": true
     },
     "TemplateConfigs.dc.html": {
       "x": 3072,
-      "y": 2460,
+      "y": 3080,
       "w": 1456,
-      "h": 1760,
+      "h": 1860,
       "title": "TemplateConfigs · Revision · configurations",
       "page": "wide",
       "is_interactive": true
     },
     "TemplateResults.dc.html": {
       "x": 4608,
-      "y": 2460,
+      "y": 3080,
       "w": 1456,
-      "h": 1760,
+      "h": 1860,
       "title": "TemplateResults · Revision · results",
       "page": "wide",
       "is_interactive": true
     },
     "WidgetStates.dc.html": {
       "x": 6144,
-      "y": 2460,
+      "y": 3080,
       "w": 1456,
       "h": 3540,
       "title": "WidgetStates · Data widgets · empty, loading, error",
@@ -212,7 +248,7 @@
     },
     "NewTemplate.dc.html": {
       "x": 0,
-      "y": 6460,
+      "y": 7080,
       "w": 1456,
       "h": 1460,
       "title": "NewTemplate · New template · empty project",
@@ -221,7 +257,7 @@
     },
     "NewTemplateRepo.dc.html": {
       "x": 1536,
-      "y": 6460,
+      "y": 7080,
       "w": 1456,
       "h": 1320,
       "title": "NewTemplateRepo · New template · existing repository",
@@ -230,7 +266,7 @@
     },
     "NewTemplateInvalid.dc.html": {
       "x": 3072,
-      "y": 6460,
+      "y": 7080,
       "w": 1456,
       "h": 1140,
       "title": "NewTemplateInvalid · New template · not a Git repository",
@@ -239,34 +275,52 @@
     },
     "Revise.dc.html": {
       "x": 0,
-      "y": 8380,
+      "y": 9000,
       "w": 1456,
-      "h": 1260,
+      "h": 1280,
       "title": "Revise · Duplicate or revise",
       "page": "wide",
       "is_interactive": true
     },
-    "ReviseConfirm.dc.html": {
+    "ReviseActiveRun.dc.html": {
       "x": 1536,
-      "y": 8380,
+      "y": 9000,
       "w": 1456,
-      "h": 1100,
+      "h": 1280,
+      "title": "ReviseActiveRun · Duplicate or revise · run active",
+      "page": "wide",
+      "is_interactive": true
+    },
+    "ReviseConfirm.dc.html": {
+      "x": 3072,
+      "y": 9000,
+      "w": 1456,
+      "h": 1120,
       "title": "ReviseConfirm · Approve revision r2",
       "page": "wide",
       "is_interactive": true
     },
-    "RevisionSaved.dc.html": {
-      "x": 3072,
-      "y": 8380,
+    "ReviseIdentical.dc.html": {
+      "x": 4608,
+      "y": 9000,
       "w": 1456,
-      "h": 1720,
+      "h": 1280,
+      "title": "ReviseIdentical · Approve · identical to r1",
+      "page": "wide",
+      "is_interactive": true
+    },
+    "RevisionSaved.dc.html": {
+      "x": 6144,
+      "y": 9000,
+      "w": 1456,
+      "h": 1860,
       "title": "RevisionSaved · Revision r2 saved",
       "page": "wide",
       "is_interactive": true
     },
     "ExportTemplate.dc.html": {
       "x": 0,
-      "y": 10560,
+      "y": 11320,
       "w": 1456,
       "h": 1100,
       "title": "ExportTemplate · Export template",
@@ -275,43 +329,43 @@
     },
     "ImportTemplate.dc.html": {
       "x": 1536,
-      "y": 10560,
+      "y": 11320,
       "w": 1456,
-      "h": 1160,
+      "h": 1260,
       "title": "ImportTemplate · Import template · choose ZIP",
       "page": "wide",
       "is_interactive": true
     },
     "ImportVerifying.dc.html": {
       "x": 3072,
-      "y": 10560,
+      "y": 11320,
       "w": 1456,
-      "h": 920,
+      "h": 1020,
       "title": "ImportVerifying · Import · validating",
       "page": "wide",
       "is_interactive": true
     },
     "ImportRejected.dc.html": {
       "x": 4608,
-      "y": 10560,
+      "y": 11320,
       "w": 1456,
-      "h": 1080,
+      "h": 1240,
       "title": "ImportRejected · Import · SHA-256 mismatch",
       "page": "wide",
       "is_interactive": true
     },
     "ImportDuplicate.dc.html": {
       "x": 6144,
-      "y": 10560,
+      "y": 11320,
       "w": 1456,
-      "h": 940,
+      "h": 1040,
       "title": "ImportDuplicate · Import · already in the library",
       "page": "wide",
       "is_interactive": true
     },
     "LaunchCheck.dc.html": {
       "x": 0,
-      "y": 12180,
+      "y": 13040,
       "w": 1456,
       "h": 1020,
       "title": "LaunchCheck · Before launch · freezing",
@@ -320,7 +374,7 @@
     },
     "LaunchMismatch.dc.html": {
       "x": 1536,
-      "y": 12180,
+      "y": 13040,
       "w": 1456,
       "h": 1120,
       "title": "LaunchMismatch · Launch blocked · inputs changed",
@@ -331,13 +385,40 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1640,
+      "h": 2100,
       "title": "Results · Results",
       "page": "m02",
       "is_interactive": true
     },
-    "ResultImport.dc.html": {
+    "ResultsTrials.dc.html": {
       "x": 1536,
+      "y": 0,
+      "w": 1456,
+      "h": 1940,
+      "title": "ResultsTrials · Results · 3 trials per configuration",
+      "page": "m02",
+      "is_interactive": true
+    },
+    "ResultsHalted.dc.html": {
+      "x": 3072,
+      "y": 0,
+      "w": 1456,
+      "h": 1920,
+      "title": "ResultsHalted · Results · run halted by a template change",
+      "page": "m02",
+      "is_interactive": true
+    },
+    "ResultsAnalysisTariff.dc.html": {
+      "x": 4608,
+      "y": 0,
+      "w": 1456,
+      "h": 1860,
+      "title": "ResultsAnalysisTariff · Results · analysis tariff",
+      "page": "m02",
+      "is_interactive": true
+    },
+    "ResultImport.dc.html": {
+      "x": 6144,
       "y": 0,
       "w": 1456,
       "h": 1120,
@@ -346,7 +427,7 @@
       "is_interactive": true
     },
     "ResultImportConflict.dc.html": {
-      "x": 3072,
+      "x": 7680,
       "y": 0,
       "w": 1456,
       "h": 1000,
@@ -355,7 +436,7 @@
       "is_interactive": true
     },
     "ExportResult.dc.html": {
-      "x": 4608,
+      "x": 9216,
       "y": 0,
       "w": 1456,
       "h": 1100,
@@ -364,7 +445,7 @@
       "is_interactive": true
     },
     "ReportReady.dc.html": {
-      "x": 6144,
+      "x": 10752,
       "y": 0,
       "w": 1456,
       "h": 1020,
@@ -374,34 +455,34 @@
     },
     "ResultOrigin.dc.html": {
       "x": 0,
-      "y": 2100,
+      "y": 2560,
       "w": 1456,
-      "h": 1400,
+      "h": 1420,
       "title": "ResultOrigin · Result · launch and origin",
       "page": "m02",
       "is_interactive": true
     },
     "ResultOutcomes.dc.html": {
       "x": 1536,
-      "y": 2100,
+      "y": 2560,
       "w": 1456,
-      "h": 1460,
+      "h": 1500,
       "title": "ResultOutcomes · Result · outcomes and measurements",
       "page": "m02",
       "is_interactive": true
     },
     "ResultReviews.dc.html": {
       "x": 3072,
-      "y": 2100,
+      "y": 2560,
       "w": 1456,
-      "h": 1400,
+      "h": 1420,
       "title": "ResultReviews · Result · reviews and evidence",
       "page": "m02",
       "is_interactive": true
     },
     "Rejudge.dc.html": {
       "x": 4608,
-      "y": 2100,
+      "y": 2560,
       "w": 1456,
       "h": 1060,
       "title": "Rejudge · Review again",
@@ -466,7 +547,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1460,
+      "h": 1740,
       "title": "Catalog · Model catalog",
       "page": "m04",
       "is_interactive": true
@@ -475,7 +556,7 @@
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 1400,
+      "h": 1520,
       "title": "CatalogRefreshFailed · Catalog · refresh failed",
       "page": "m04",
       "is_interactive": true
@@ -484,23 +565,32 @@
       "x": 3072,
       "y": 0,
       "w": 1456,
-      "h": 1100,
+      "h": 1540,
       "title": "CatalogOverride · Override catalog entry",
+      "page": "m04",
+      "is_interactive": true
+    },
+    "CatalogRates.dc.html": {
+      "x": 4608,
+      "y": 0,
+      "w": 1456,
+      "h": 1420,
+      "title": "CatalogRates · Exchange rates · to USD",
       "page": "m04",
       "is_interactive": true
     },
     "ModelPicker.dc.html": {
       "x": 0,
-      "y": 1920,
+      "y": 2200,
       "w": 1456,
-      "h": 1180,
+      "h": 1260,
       "title": "ModelPicker · Add entry · known efforts",
       "page": "m04",
       "is_interactive": true
     },
     "ModelPickerUnknown.dc.html": {
       "x": 1536,
-      "y": 1920,
+      "y": 2200,
       "w": 1456,
       "h": 980,
       "title": "ModelPickerUnknown · Add entry · unknown effort",
@@ -529,7 +619,7 @@
       "x": 0,
       "y": 1560,
       "w": 1456,
-      "h": 1540,
+      "h": 1660,
       "title": "RunConfig · Run · configuration detail",
       "page": "m05",
       "is_interactive": true
@@ -538,7 +628,7 @@
       "x": 1536,
       "y": 1560,
       "w": 1456,
-      "h": 1420,
+      "h": 1540,
       "title": "TaskBlocked · Run · blocked action",
       "page": "m05",
       "is_interactive": true
@@ -547,7 +637,7 @@
       "x": 3072,
       "y": 1560,
       "w": 1456,
-      "h": 1440,
+      "h": 1560,
       "title": "ModelRejected · Run · model rejected",
       "page": "m05",
       "is_interactive": true
@@ -565,13 +655,31 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1500,
+      "h": 1640,
       "title": "Rankings · Rankings · original weights",
       "page": "m06",
       "is_interactive": true
     },
-    "ScoreBreakdown.dc.html": {
+    "RankingsProfileDefaults.dc.html": {
       "x": 1536,
+      "y": 0,
+      "w": 1456,
+      "h": 1480,
+      "title": "RankingsProfileDefaults · Rankings · profile defaults",
+      "page": "m06",
+      "is_interactive": true
+    },
+    "RankingsTrials.dc.html": {
+      "x": 3072,
+      "y": 0,
+      "w": 1456,
+      "h": 1420,
+      "title": "RankingsTrials · Rankings · means of trials",
+      "page": "m06",
+      "is_interactive": true
+    },
+    "ScoreBreakdown.dc.html": {
+      "x": 4608,
       "y": 0,
       "w": 1456,
       "h": 880,
@@ -581,16 +689,16 @@
     },
     "WeightsEditor.dc.html": {
       "x": 0,
-      "y": 1960,
+      "y": 2100,
       "w": 1456,
-      "h": 1280,
+      "h": 1360,
       "title": "WeightsEditor · Weights · ranking 2:1:1",
       "page": "m06",
       "is_interactive": true
     },
     "WeightsInvalid.dc.html": {
       "x": 1536,
-      "y": 1960,
+      "y": 2100,
       "w": 1456,
       "h": 1120,
       "title": "WeightsInvalid · Weights · invalid values",
@@ -599,9 +707,9 @@
     },
     "RankingsAlternative.dc.html": {
       "x": 3072,
-      "y": 1960,
+      "y": 2100,
       "w": 1456,
-      "h": 1360,
+      "h": 1440,
       "title": "RankingsAlternative · Rankings · alternative weights",
       "page": "m06",
       "is_interactive": true
@@ -610,7 +718,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1680,
+      "h": 2240,
       "title": "Setup · Setup · configuration",
       "page": "m07",
       "is_interactive": true
@@ -619,7 +727,7 @@
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 1460,
+      "h": 1720,
       "title": "SetupInvalid · Setup · blocking issues",
       "page": "m07",
       "is_interactive": true
@@ -644,16 +752,25 @@
     },
     "ReviewLaunch.dc.html": {
       "x": 0,
-      "y": 2140,
+      "y": 2700,
       "w": 1456,
-      "h": 1000,
+      "h": 1080,
       "title": "ReviewLaunch · Review before launch",
       "page": "m07",
       "is_interactive": true
     },
-    "LaunchRecord.dc.html": {
+    "TrialBudgetWarning.dc.html": {
       "x": 1536,
-      "y": 2140,
+      "y": 2700,
+      "w": 1456,
+      "h": 1200,
+      "title": "TrialBudgetWarning · Launch · trial budget warning",
+      "page": "m07",
+      "is_interactive": true
+    },
+    "LaunchRecord.dc.html": {
+      "x": 3072,
+      "y": 2700,
       "w": 1456,
       "h": 860,
       "title": "LaunchRecord · Launch record",
@@ -691,8 +808,17 @@
       "x": 4608,
       "y": 0,
       "w": 1456,
-      "h": 960,
+      "h": 1020,
       "title": "Screenshots · Screenshots",
+      "page": "m08",
+      "is_interactive": true
+    },
+    "EvidenceViewer.dc.html": {
+      "x": 6144,
+      "y": 0,
+      "w": 1456,
+      "h": 1340,
+      "title": "EvidenceViewer · Evidence viewer · check log",
       "page": "m08",
       "is_interactive": true
     },
@@ -709,7 +835,7 @@
       "x": 1536,
       "y": 1860,
       "w": 1456,
-      "h": 860,
+      "h": 880,
       "title": "JudgeHandoff · Judge input",
       "page": "m08",
       "is_interactive": true
@@ -718,7 +844,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1060,
+      "h": 1080,
       "title": "InventoryAbout · Default benchmark · contract",
       "page": "m09",
       "is_interactive": true
@@ -750,11 +876,20 @@
       "page": "m09",
       "is_interactive": true
     },
+    "InventoryUpgrade.dc.html": {
+      "x": 6144,
+      "y": 0,
+      "w": 1456,
+      "h": 940,
+      "title": "InventoryUpgrade · Newer built-in revision · what changed",
+      "page": "m09",
+      "is_interactive": true
+    },
     "Measurements.dc.html": {
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1400,
+      "h": 1460,
       "title": "Measurements · Measurements · complete",
       "page": "m10",
       "is_interactive": true
@@ -763,13 +898,22 @@
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 1280,
+      "h": 1400,
       "title": "MeasurementsPartial · Measurements · halted, partial",
       "page": "m10",
       "is_interactive": true
     },
-    "TimingPhases.dc.html": {
+    "MeasurementsTrials.dc.html": {
       "x": 3072,
+      "y": 0,
+      "w": 1456,
+      "h": 1460,
+      "title": "MeasurementsTrials · Measurements · 3 trials per configuration",
+      "page": "m10",
+      "is_interactive": true
+    },
+    "TimingPhases.dc.html": {
+      "x": 4608,
       "y": 0,
       "w": 1456,
       "h": 900,
@@ -779,19 +923,28 @@
     },
     "CostBasis.dc.html": {
       "x": 0,
-      "y": 1860,
+      "y": 1920,
       "w": 1456,
-      "h": 1060,
+      "h": 1560,
       "title": "CostBasis · Cost basis · 12 results",
       "page": "m10",
       "is_interactive": true
     },
     "CurrencyEnergy.dc.html": {
       "x": 1536,
-      "y": 1860,
+      "y": 1920,
       "w": 1456,
-      "h": 1160,
-      "title": "CurrencyEnergy · Currency and energy",
+      "h": 1780,
+      "title": "CurrencyEnergy · Currency and energy · Setup",
+      "page": "m10",
+      "is_interactive": true
+    },
+    "TariffAnalysis.dc.html": {
+      "x": 3072,
+      "y": 1920,
+      "w": 1456,
+      "h": 1580,
+      "title": "TariffAnalysis · Tariff · analysis setting in Results",
       "page": "m10",
       "is_interactive": true
     },
@@ -799,7 +952,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1420,
+      "h": 1500,
       "title": "RunOverview · Run overview",
       "page": "m11",
       "is_interactive": true
@@ -817,7 +970,7 @@
       "x": 3072,
       "y": 0,
       "w": 1456,
-      "h": 1380,
+      "h": 1400,
       "title": "RunSequential · Run · sequential (jobs 1)",
       "page": "m11",
       "is_interactive": true
@@ -826,14 +979,23 @@
       "x": 4608,
       "y": 0,
       "w": 1456,
-      "h": 1420,
+      "h": 1440,
       "title": "RunFailures · Run · failures recorded",
+      "page": "m11",
+      "is_interactive": true
+    },
+    "RunHalted.dc.html": {
+      "x": 6144,
+      "y": 0,
+      "w": 1456,
+      "h": 1160,
+      "title": "RunHalted · Run halted · template identity invalidated",
       "page": "m11",
       "is_interactive": true
     },
     "HarnessLive.dc.html": {
       "x": 0,
-      "y": 1880,
+      "y": 1960,
       "w": 1456,
       "h": 1500,
       "title": "HarnessLive · Live view · Codex",
@@ -842,7 +1004,7 @@
     },
     "HarnessLiveStreaming.dc.html": {
       "x": 1536,
-      "y": 1880,
+      "y": 1960,
       "w": 1456,
       "h": 1220,
       "title": "HarnessLiveStreaming · Live view · edit streaming",
@@ -851,7 +1013,7 @@
     },
     "HarnessLiveLimited.dc.html": {
       "x": 3072,
-      "y": 1880,
+      "y": 1960,
       "w": 1456,
       "h": 1280,
       "title": "HarnessLiveLimited · Live view · less exposed",
@@ -860,7 +1022,7 @@
     },
     "RunDetach.dc.html": {
       "x": 0,
-      "y": 3840,
+      "y": 3920,
       "w": 1456,
       "h": 860,
       "title": "RunDetach · Detach",
@@ -869,16 +1031,16 @@
     },
     "RunReattached.dc.html": {
       "x": 1536,
-      "y": 3840,
+      "y": 3920,
       "w": 1456,
-      "h": 1380,
+      "h": 1400,
       "title": "RunReattached · Reattached",
       "page": "m11",
       "is_interactive": true
     },
     "StopConfirm.dc.html": {
       "x": 3072,
-      "y": 3840,
+      "y": 3920,
       "w": 1456,
       "h": 1020,
       "title": "StopConfirm · Stop · confirm and clean up",
@@ -887,7 +1049,7 @@
     },
     "StopCleanup.dc.html": {
       "x": 4608,
-      "y": 3840,
+      "y": 3920,
       "w": 1456,
       "h": 860,
       "title": "StopCleanup · Stop · cleaning up",
@@ -896,7 +1058,7 @@
     },
     "ActiveLocked.dc.html": {
       "x": 6144,
-      "y": 3840,
+      "y": 3920,
       "w": 1456,
       "h": 860,
       "title": "ActiveLocked · Frozen while running",
@@ -907,7 +1069,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1100,
+      "h": 1220,
       "title": "Judging · Judging · in progress",
       "page": "m12",
       "is_interactive": true
@@ -916,13 +1078,22 @@
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 1020,
+      "h": 1100,
       "title": "JudgingDone · Judging · finished, 1 ungraded",
       "page": "m12",
       "is_interactive": true
     },
-    "ReviewUngraded.dc.html": {
+    "JudgingTrials.dc.html": {
       "x": 3072,
+      "y": 0,
+      "w": 1456,
+      "h": 1240,
+      "title": "JudgingTrials · Judging · 3 trials per configuration",
+      "page": "m12",
+      "is_interactive": true
+    },
+    "ReviewUngraded.dc.html": {
+      "x": 4608,
       "y": 0,
       "w": 1456,
       "h": 1020,
@@ -932,16 +1103,16 @@
     },
     "ReviewDetail.dc.html": {
       "x": 0,
-      "y": 1560,
+      "y": 1700,
       "w": 1456,
-      "h": 1020,
+      "h": 1060,
       "title": "ReviewDetail · Review · complete",
       "page": "m12",
       "is_interactive": true
     },
     "RubricProfiles.dc.html": {
       "x": 1536,
-      "y": 1560,
+      "y": 1700,
       "w": 1456,
       "h": 860,
       "title": "RubricProfiles · Grading profiles",
@@ -950,7 +1121,7 @@
     },
     "JudgeCapability.dc.html": {
       "x": 3072,
-      "y": 1560,
+      "y": 1700,
       "w": 1456,
       "h": 860,
       "title": "JudgeCapability · Judge cannot inspect screenshots",
@@ -961,13 +1132,22 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1100,
+      "h": 1120,
       "title": "ReportGenerate · Generate HTML report",
       "page": "m13",
       "is_interactive": true
     },
-    "ReportProgress.dc.html": {
+    "ReportGenerateDefaults.dc.html": {
       "x": 1536,
+      "y": 0,
+      "w": 1456,
+      "h": 1140,
+      "title": "ReportGenerateDefaults · Generate · original weights differ",
+      "page": "m13",
+      "is_interactive": true
+    },
+    "ReportProgress.dc.html": {
+      "x": 3072,
       "y": 0,
       "w": 1456,
       "h": 860,
@@ -977,7 +1157,7 @@
     },
     "ReportPage.dc.html": {
       "x": 0,
-      "y": 1560,
+      "y": 1600,
       "w": 1456,
       "h": 3040,
       "title": "ReportPage · Report · standalone HTML",
@@ -988,7 +1168,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 900,
+      "h": 1280,
       "title": "CliHelp · axbenchmark --help",
       "page": "m14",
       "is_interactive": true
@@ -997,43 +1177,70 @@
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 900,
+      "h": 1320,
       "title": "CliRun · run --no-tui",
       "page": "m14",
       "is_interactive": true
     },
-    "CliInvalid.dc.html": {
+    "CliRunReport.dc.html": {
       "x": 3072,
       "y": 0,
       "w": 1456,
-      "h": 860,
+      "h": 1320,
+      "title": "CliRunReport · run · trial budget warning · report wait",
+      "page": "m14",
+      "is_interactive": true
+    },
+    "CliInvalid.dc.html": {
+      "x": 4608,
+      "y": 0,
+      "w": 1456,
+      "h": 980,
       "title": "CliInvalid · run · incomplete configuration",
+      "page": "m14",
+      "is_interactive": true
+    },
+    "CliHalted.dc.html": {
+      "x": 6144,
+      "y": 0,
+      "w": 1456,
+      "h": 1080,
+      "title": "CliHalted · run · halted, then status",
       "page": "m14",
       "is_interactive": true
     },
     "CliStatusStop.dc.html": {
       "x": 0,
-      "y": 1360,
+      "y": 1780,
       "w": 1456,
-      "h": 860,
+      "h": 1000,
       "title": "CliStatusStop · status · stop",
       "page": "m14",
       "is_interactive": true
     },
     "CliDoctor.dc.html": {
       "x": 1536,
-      "y": 1360,
+      "y": 1780,
       "w": 1456,
-      "h": 860,
+      "h": 1260,
       "title": "CliDoctor · doctor · models refresh",
       "page": "m14",
       "is_interactive": true
     },
-    "CliExchange.dc.html": {
+    "CliVerify.dc.html": {
       "x": 3072,
-      "y": 1360,
+      "y": 1780,
       "w": 1456,
-      "h": 860,
+      "h": 1320,
+      "title": "CliVerify · doctor --verify",
+      "page": "m14",
+      "is_interactive": true
+    },
+    "CliExchange.dc.html": {
+      "x": 4608,
+      "y": 1780,
+      "w": 1456,
+      "h": 1060,
       "title": "CliExchange · exchange · report",
       "page": "m14",
       "is_interactive": true
@@ -1051,8 +1258,35 @@
       "x": 1536,
       "y": 0,
       "w": 1144,
-      "h": 1100,
+      "h": 1140,
       "title": "RunListDetail-80x24 · Run · list and detail",
+      "page": "m15",
+      "is_interactive": true
+    },
+    "PromptSavePreset.dc.html": {
+      "x": 0,
+      "y": 1600,
+      "w": 1456,
+      "h": 1120,
+      "title": "PromptSavePreset · Prompt · Save preset…",
+      "page": "m15",
+      "is_interactive": true
+    },
+    "PromptExportConfig.dc.html": {
+      "x": 1536,
+      "y": 1600,
+      "w": 1456,
+      "h": 1160,
+      "title": "PromptExportConfig · Prompt · Export configuration",
+      "page": "m15",
+      "is_interactive": true
+    },
+    "PromptExportCsv.dc.html": {
+      "x": 3072,
+      "y": 1600,
+      "w": 1456,
+      "h": 1100,
+      "title": "PromptExportCsv · Prompt · Export CSV · telemetry",
       "page": "m15",
       "is_interactive": true
     },
@@ -1060,13 +1294,40 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1020,
+      "h": 1260,
       "title": "PlannerPicker · Planner · fallback order",
       "page": "m16",
       "is_interactive": true
     },
-    "PlanningProgress.dc.html": {
+    "PlannerUnknownModel.dc.html": {
       "x": 1536,
+      "y": 0,
+      "w": 1456,
+      "h": 1180,
+      "title": "PlannerUnknownModel · Planner · no default model",
+      "page": "m16",
+      "is_interactive": true
+    },
+    "PlannerNoUsable.dc.html": {
+      "x": 3072,
+      "y": 0,
+      "w": 1456,
+      "h": 1300,
+      "title": "PlannerNoUsable · Planner · no confirmed-usable harness",
+      "page": "m16",
+      "is_interactive": true
+    },
+    "PlannerVerify.dc.html": {
+      "x": 4608,
+      "y": 0,
+      "w": 1456,
+      "h": 960,
+      "title": "PlannerVerify · Planner · Verify now consent",
+      "page": "m16",
+      "is_interactive": true
+    },
+    "PlanningProgress.dc.html": {
+      "x": 6144,
       "y": 0,
       "w": 1456,
       "h": 860,
@@ -1075,35 +1336,62 @@
       "is_interactive": true
     },
     "PlanningFailed.dc.html": {
-      "x": 3072,
+      "x": 7680,
       "y": 0,
       "w": 1456,
-      "h": 880,
+      "h": 940,
       "title": "PlanningFailed · Planning failed",
+      "page": "m16",
+      "is_interactive": true
+    },
+    "PlanningInterrupted.dc.html": {
+      "x": 9216,
+      "y": 0,
+      "w": 1456,
+      "h": 960,
+      "title": "PlanningInterrupted · Planning failed · interrupted, reopened",
       "page": "m16",
       "is_interactive": true
     },
     "PlanReview.dc.html": {
       "x": 0,
-      "y": 1480,
+      "y": 1760,
       "w": 1456,
-      "h": 1320,
+      "h": 1480,
       "title": "PlanReview · Review the draft",
       "page": "m16",
       "is_interactive": true
     },
-    "PlanServices.dc.html": {
+    "PlanReopened.dc.html": {
       "x": 1536,
-      "y": 1480,
+      "y": 1760,
       "w": 1456,
-      "h": 1260,
+      "h": 1360,
+      "title": "PlanReopened · Draft reopened from the Library",
+      "page": "m16",
+      "is_interactive": true
+    },
+    "PlanServices.dc.html": {
+      "x": 3072,
+      "y": 1760,
+      "w": 1456,
+      "h": 1380,
       "title": "PlanServices · Draft · setup, start and stop",
       "page": "m16",
       "is_interactive": true
     },
+    "PlanServiceEdit.dc.html": {
+      "x": 4608,
+      "y": 1760,
+      "w": 1456,
+      "h": 1320,
+      "title": "PlanServiceEdit · Edit a service row",
+      "page": "m16",
+      "is_interactive": true
+    },
     "PlanEdit.dc.html": {
-      "x": 3072,
-      "y": 1480,
+      "x": 6144,
+      "y": 1760,
       "w": 1456,
       "h": 960,
       "title": "PlanEdit · Edit a task",
@@ -1111,8 +1399,8 @@
       "is_interactive": true
     },
     "PlanRegenerate.dc.html": {
-      "x": 4608,
-      "y": 1480,
+      "x": 7680,
+      "y": 1760,
       "w": 1456,
       "h": 900,
       "title": "PlanRegenerate · Regenerate",
@@ -1120,11 +1408,20 @@
       "is_interactive": true
     },
     "PlanApprove.dc.html": {
-      "x": 6144,
-      "y": 1480,
+      "x": 9216,
+      "y": 1760,
       "w": 1456,
-      "h": 860,
+      "h": 1000,
       "title": "PlanApprove · Approve and save",
+      "page": "m16",
+      "is_interactive": true
+    },
+    "PlanApproveIdentical.dc.html": {
+      "x": 10752,
+      "y": 1760,
+      "w": 1456,
+      "h": 1020,
+      "title": "PlanApproveIdentical · Approve · identical, blocked",
       "page": "m16",
       "is_interactive": true
     },
@@ -1146,17 +1443,26 @@
       "page": "m17",
       "is_interactive": true
     },
-    "ResultPackage.dc.html": {
+    "ResultPackagePick.dc.html": {
       "x": 0,
       "y": 1380,
       "w": 1456,
-      "h": 980,
+      "h": 1100,
+      "title": "ResultPackagePick · Result package · choose a ZIP",
+      "page": "m17",
+      "is_interactive": true
+    },
+    "ResultPackage.dc.html": {
+      "x": 1536,
+      "y": 1380,
+      "w": 1456,
+      "h": 1060,
       "title": "ResultPackage · Result package contents",
       "page": "m17",
       "is_interactive": true
     },
     "ResultMismatch.dc.html": {
-      "x": 1536,
+      "x": 3072,
       "y": 1380,
       "w": 1456,
       "h": 920,
@@ -1165,7 +1471,7 @@
       "is_interactive": true
     },
     "ResultEmbedded.dc.html": {
-      "x": 3072,
+      "x": 4608,
       "y": 1380,
       "w": 1456,
       "h": 860,
@@ -1177,7 +1483,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1020,
+      "h": 1240,
       "title": "MonitoringSettings · Monitoring settings",
       "page": "m18",
       "is_interactive": true
@@ -1193,16 +1499,16 @@
     },
     "Telemetry.dc.html": {
       "x": 0,
-      "y": 1480,
+      "y": 1700,
       "w": 1456,
-      "h": 1000,
+      "h": 1200,
       "title": "Telemetry · Telemetry · one experiment",
       "page": "m18",
       "is_interactive": true
     },
     "EnergyDetail.dc.html": {
       "x": 1536,
-      "y": 1480,
+      "y": 1700,
       "w": 1456,
       "h": 860,
       "title": "EnergyDetail · Energy derivation",
@@ -1211,7 +1517,7 @@
     },
     "SequentialEnergy.dc.html": {
       "x": 3072,
-      "y": 1480,
+      "y": 1700,
       "w": 1456,
       "h": 860,
       "title": "SequentialEnergy · Sequential execution windows",
@@ -1222,7 +1528,7 @@
       "x": 0,
       "y": 0,
       "w": 1144,
-      "h": 1980,
+      "h": 2600,
       "title": "Library-80x24 · Library",
       "page": "compact",
       "is_interactive": true
@@ -1231,32 +1537,32 @@
       "x": 1224,
       "y": 0,
       "w": 1144,
-      "h": 1800,
+      "h": 2340,
       "title": "LibraryError-80x24 · Library · index unreadable",
       "page": "compact",
       "is_interactive": true
     },
     "TemplateTasks-80x24.dc.html": {
       "x": 0,
-      "y": 2440,
+      "y": 3060,
       "w": 1144,
-      "h": 1800,
+      "h": 1880,
       "title": "TemplateTasks-80x24 · Revision · tasks",
       "page": "compact",
       "is_interactive": true
     },
     "TemplateIdentity-80x24.dc.html": {
       "x": 1224,
-      "y": 2440,
+      "y": 3060,
       "w": 1144,
-      "h": 1780,
+      "h": 1880,
       "title": "TemplateIdentity-80x24 · Revision · identity",
       "page": "compact",
       "is_interactive": true
     },
     "NewTemplate-80x24.dc.html": {
       "x": 0,
-      "y": 4700,
+      "y": 5400,
       "w": 1144,
       "h": 1440,
       "title": "NewTemplate-80x24 · New template · empty project",
@@ -1265,7 +1571,7 @@
     },
     "NewTemplateRepo-80x24.dc.html": {
       "x": 1224,
-      "y": 4700,
+      "y": 5400,
       "w": 1144,
       "h": 1320,
       "title": "NewTemplateRepo-80x24 · New template · existing repository",
@@ -1274,25 +1580,34 @@
     },
     "ReviseConfirm-80x24.dc.html": {
       "x": 0,
-      "y": 6600,
+      "y": 7300,
       "w": 1144,
-      "h": 1100,
+      "h": 1120,
       "title": "ReviseConfirm-80x24 · Approve revision r2",
+      "page": "compact",
+      "is_interactive": true
+    },
+    "ReviseIdentical-80x24.dc.html": {
+      "x": 1224,
+      "y": 7300,
+      "w": 1144,
+      "h": 1280,
+      "title": "ReviseIdentical-80x24 · Approve · identical to r1",
       "page": "compact",
       "is_interactive": true
     },
     "ImportRejected-80x24.dc.html": {
       "x": 0,
-      "y": 8160,
+      "y": 9040,
       "w": 1144,
-      "h": 1080,
+      "h": 1240,
       "title": "ImportRejected-80x24 · Import · SHA-256 mismatch",
       "page": "compact",
       "is_interactive": true
     },
     "LaunchMismatch-80x24.dc.html": {
       "x": 0,
-      "y": 9700,
+      "y": 10740,
       "w": 1144,
       "h": 1120,
       "title": "LaunchMismatch-80x24 · Launch blocked · inputs changed",
@@ -1301,16 +1616,16 @@
     },
     "Results-80x24.dc.html": {
       "x": 0,
-      "y": 11280,
+      "y": 12320,
       "w": 1144,
-      "h": 1620,
+      "h": 2080,
       "title": "Results-80x24 · Results",
       "page": "compact",
       "is_interactive": true
     },
     "ResultImportConflict-80x24.dc.html": {
       "x": 1224,
-      "y": 11280,
+      "y": 12320,
       "w": 1144,
       "h": 1000,
       "title": "ResultImportConflict-80x24 · Import · result id conflict",
@@ -1319,16 +1634,16 @@
     },
     "ResultOutcomes-80x24.dc.html": {
       "x": 0,
-      "y": 13360,
+      "y": 14860,
       "w": 1144,
-      "h": 1420,
+      "h": 1480,
       "title": "ResultOutcomes-80x24 · Result · outcomes and measurements",
       "page": "compact",
       "is_interactive": true
     },
     "Environment-80x24.dc.html": {
       "x": 0,
-      "y": 15240,
+      "y": 16800,
       "w": 1144,
       "h": 1440,
       "title": "Environment-80x24 · Environment · ready",
@@ -1337,7 +1652,7 @@
     },
     "EnvironmentAuthFailed-80x24.dc.html": {
       "x": 1224,
-      "y": 15240,
+      "y": 16800,
       "w": 1144,
       "h": 1340,
       "title": "EnvironmentAuthFailed-80x24 · Environment · authentication failed",
@@ -1346,79 +1661,88 @@
     },
     "Catalog-80x24.dc.html": {
       "x": 0,
-      "y": 17140,
+      "y": 18700,
       "w": 1144,
-      "h": 1440,
+      "h": 1720,
       "title": "Catalog-80x24 · Model catalog",
       "page": "compact",
       "is_interactive": true
     },
     "RunConfig-80x24.dc.html": {
       "x": 0,
-      "y": 19040,
+      "y": 20880,
       "w": 1144,
-      "h": 1480,
+      "h": 1600,
       "title": "RunConfig-80x24 · Run · configuration detail",
       "page": "compact",
       "is_interactive": true
     },
     "Rankings-80x24.dc.html": {
       "x": 0,
-      "y": 20980,
+      "y": 22940,
       "w": 1144,
-      "h": 1460,
+      "h": 1580,
       "title": "Rankings-80x24 · Rankings · original weights",
+      "page": "compact",
+      "is_interactive": true
+    },
+    "RankingsProfileDefaults-80x24.dc.html": {
+      "x": 1224,
+      "y": 22940,
+      "w": 1144,
+      "h": 1480,
+      "title": "RankingsProfileDefaults-80x24 · Rankings · profile defaults",
       "page": "compact",
       "is_interactive": true
     },
     "Setup-80x24.dc.html": {
       "x": 0,
-      "y": 22900,
+      "y": 24980,
       "w": 1144,
-      "h": 1620,
+      "h": 2160,
       "title": "Setup-80x24 · Setup · configuration",
       "page": "compact",
       "is_interactive": true
     },
     "ReviewLaunch-80x24.dc.html": {
       "x": 0,
-      "y": 24980,
+      "y": 27600,
       "w": 1144,
-      "h": 1000,
+      "h": 1080,
       "title": "ReviewLaunch-80x24 · Review before launch",
       "page": "compact",
       "is_interactive": true
     },
     "TaskChecks-80x24.dc.html": {
       "x": 0,
-      "y": 26440,
+      "y": 29140,
       "w": 1144,
       "h": 1340,
       "title": "TaskChecks-80x24 · Task checks · T5",
       "page": "compact",
       "is_interactive": true
     },
-    "Measurements-80x24.dc.html": {
-      "x": 0,
-      "y": 28240,
+    "EvidenceViewer-80x24.dc.html": {
+      "x": 1224,
+      "y": 29140,
       "w": 1144,
-      "h": 1340,
-      "title": "Measurements-80x24 · Measurements · complete",
+      "h": 1240,
+      "title": "EvidenceViewer-80x24 · Evidence viewer · check log",
       "page": "compact",
       "is_interactive": true
     },
-    "RunOverview-80x24.dc.html": {
+    "Measurements-80x24.dc.html": {
       "x": 0,
-      "y": 30040,
+      "y": 30940,
       "w": 1144,
-      "h": 1360,
-      "title": "RunOverview-80x24 · Run overview",
+      "h": 1400,
+      "title": "Measurements-80x24 · Measurements · complete",
       "page": "compact",
       "is_interactive": true
     },
     "HarnessLive-80x24.dc.html": {
       "x": 0,
-      "y": 31860,
+      "y": 32800,
       "w": 1144,
       "h": 1400,
       "title": "HarnessLive-80x24 · Live view · Codex",
@@ -1427,27 +1751,27 @@
     },
     "Judging-80x24.dc.html": {
       "x": 0,
-      "y": 33720,
+      "y": 34660,
       "w": 1144,
-      "h": 1060,
+      "h": 1200,
       "title": "Judging-80x24 · Judging · in progress",
       "page": "compact",
       "is_interactive": true
     },
     "CliRun-80x24.dc.html": {
       "x": 0,
-      "y": 35240,
+      "y": 36320,
       "w": 1144,
-      "h": 900,
+      "h": 1320,
       "title": "CliRun-80x24 · run --no-tui",
       "page": "compact",
       "is_interactive": true
     },
     "PlanReview-80x24.dc.html": {
       "x": 0,
-      "y": 36600,
+      "y": 38100,
       "w": 1144,
-      "h": 1280,
+      "h": 1440,
       "title": "PlanReview-80x24 · Review the draft",
       "page": "compact",
       "is_interactive": true
@@ -1457,6 +1781,10 @@
     "Main.dc.html",
     "DesignSystem.dc.html",
     "Library.dc.html",
+    "LibraryDrafts.dc.html",
+    "DraftDiscard.dc.html",
+    "LibraryLookAlike.dc.html",
+    "LibraryUpgrade.dc.html",
     "LibraryLoading.dc.html",
     "LibraryEmpty.dc.html",
     "LibraryError.dc.html",
@@ -1471,7 +1799,9 @@
     "NewTemplateRepo.dc.html",
     "NewTemplateInvalid.dc.html",
     "Revise.dc.html",
+    "ReviseActiveRun.dc.html",
     "ReviseConfirm.dc.html",
+    "ReviseIdentical.dc.html",
     "RevisionSaved.dc.html",
     "ExportTemplate.dc.html",
     "ImportTemplate.dc.html",
@@ -1481,6 +1811,9 @@
     "LaunchCheck.dc.html",
     "LaunchMismatch.dc.html",
     "Results.dc.html",
+    "ResultsTrials.dc.html",
+    "ResultsHalted.dc.html",
+    "ResultsAnalysisTariff.dc.html",
     "ResultImport.dc.html",
     "ResultImportConflict.dc.html",
     "ExportResult.dc.html",
@@ -1498,6 +1831,7 @@
     "Catalog.dc.html",
     "CatalogRefreshFailed.dc.html",
     "CatalogOverride.dc.html",
+    "CatalogRates.dc.html",
     "ModelPicker.dc.html",
     "ModelPickerUnknown.dc.html",
     "EnvPolicy.dc.html",
@@ -1507,6 +1841,8 @@
     "ModelRejected.dc.html",
     "RunIsolation.dc.html",
     "Rankings.dc.html",
+    "RankingsProfileDefaults.dc.html",
+    "RankingsTrials.dc.html",
     "ScoreBreakdown.dc.html",
     "WeightsEditor.dc.html",
     "WeightsInvalid.dc.html",
@@ -1516,26 +1852,32 @@
     "JudgePicker.dc.html",
     "JudgeFallback.dc.html",
     "ReviewLaunch.dc.html",
+    "TrialBudgetWarning.dc.html",
     "LaunchRecord.dc.html",
     "TaskChecks.dc.html",
     "FinalRegression.dc.html",
     "CheckOutcomes.dc.html",
     "Screenshots.dc.html",
+    "EvidenceViewer.dc.html",
     "VerifyProgress.dc.html",
     "JudgeHandoff.dc.html",
     "InventoryAbout.dc.html",
     "InventoryPrompts.dc.html",
     "InventoryChecks.dc.html",
     "InventoryVariant.dc.html",
+    "InventoryUpgrade.dc.html",
     "Measurements.dc.html",
     "MeasurementsPartial.dc.html",
+    "MeasurementsTrials.dc.html",
     "TimingPhases.dc.html",
     "CostBasis.dc.html",
     "CurrencyEnergy.dc.html",
+    "TariffAnalysis.dc.html",
     "RunOverview.dc.html",
     "RunQueued.dc.html",
     "RunSequential.dc.html",
     "RunFailures.dc.html",
+    "RunHalted.dc.html",
     "HarnessLive.dc.html",
     "HarnessLiveStreaming.dc.html",
     "HarnessLiveLimited.dc.html",
@@ -1546,31 +1888,47 @@
     "ActiveLocked.dc.html",
     "Judging.dc.html",
     "JudgingDone.dc.html",
+    "JudgingTrials.dc.html",
     "ReviewUngraded.dc.html",
     "ReviewDetail.dc.html",
     "RubricProfiles.dc.html",
     "JudgeCapability.dc.html",
     "ReportGenerate.dc.html",
+    "ReportGenerateDefaults.dc.html",
     "ReportProgress.dc.html",
     "ReportPage.dc.html",
     "CliHelp.dc.html",
     "CliRun.dc.html",
+    "CliRunReport.dc.html",
     "CliInvalid.dc.html",
+    "CliHalted.dc.html",
     "CliStatusStop.dc.html",
     "CliDoctor.dc.html",
+    "CliVerify.dc.html",
     "CliExchange.dc.html",
     "HelpKeys.dc.html",
     "RunListDetail-80x24.dc.html",
+    "PromptSavePreset.dc.html",
+    "PromptExportConfig.dc.html",
+    "PromptExportCsv.dc.html",
     "PlannerPicker.dc.html",
+    "PlannerUnknownModel.dc.html",
+    "PlannerNoUsable.dc.html",
+    "PlannerVerify.dc.html",
     "PlanningProgress.dc.html",
     "PlanningFailed.dc.html",
+    "PlanningInterrupted.dc.html",
     "PlanReview.dc.html",
+    "PlanReopened.dc.html",
     "PlanServices.dc.html",
+    "PlanServiceEdit.dc.html",
     "PlanEdit.dc.html",
     "PlanRegenerate.dc.html",
     "PlanApprove.dc.html",
+    "PlanApproveIdentical.dc.html",
     "ImportUnsafe.dc.html",
     "ImportIncomplete.dc.html",
+    "ResultPackagePick.dc.html",
     "ResultPackage.dc.html",
     "ResultMismatch.dc.html",
     "ResultEmbedded.dc.html",
@@ -1586,6 +1944,7 @@
     "NewTemplate-80x24.dc.html",
     "NewTemplateRepo-80x24.dc.html",
     "ReviseConfirm-80x24.dc.html",
+    "ReviseIdentical-80x24.dc.html",
     "ImportRejected-80x24.dc.html",
     "LaunchMismatch-80x24.dc.html",
     "Results-80x24.dc.html",
@@ -1596,11 +1955,12 @@
     "Catalog-80x24.dc.html",
     "RunConfig-80x24.dc.html",
     "Rankings-80x24.dc.html",
+    "RankingsProfileDefaults-80x24.dc.html",
     "Setup-80x24.dc.html",
     "ReviewLaunch-80x24.dc.html",
     "TaskChecks-80x24.dc.html",
+    "EvidenceViewer-80x24.dc.html",
     "Measurements-80x24.dc.html",
-    "RunOverview-80x24.dc.html",
     "HarnessLive-80x24.dc.html",
     "Judging-80x24.dc.html",
     "CliRun-80x24.dc.html",
@@ -1625,7 +1985,7 @@
     },
     "row-wide-inspect": {
       "x": 0,
-      "y": 2160,
+      "y": 2780,
       "text": "2 · Inspect a template revision",
       "kind": "title1",
       "maxW": 7600,
@@ -1633,7 +1993,7 @@
     },
     "row-wide-create": {
       "x": 0,
-      "y": 6160,
+      "y": 6780,
       "text": "3 · Create a template",
       "kind": "title1",
       "maxW": 4528,
@@ -1641,15 +2001,15 @@
     },
     "row-wide-revise": {
       "x": 0,
-      "y": 8080,
+      "y": 8700,
       "text": "4 · Duplicate and revise",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 7600,
       "page": "wide"
     },
     "row-wide-exchange": {
       "x": 0,
-      "y": 10260,
+      "y": 11020,
       "text": "5 · Exchange templates",
       "kind": "title1",
       "maxW": 7600,
@@ -1657,7 +2017,7 @@
     },
     "row-wide-launch": {
       "x": 0,
-      "y": 11880,
+      "y": 12740,
       "text": "6 · Launch identity check",
       "kind": "title1",
       "maxW": 2992,
@@ -1668,12 +2028,12 @@
       "y": -300,
       "text": "M02 · 1 · Compare retained results",
       "kind": "title1",
-      "maxW": 7600,
+      "maxW": 8000,
       "page": "m02"
     },
     "row-m02-m02-result": {
       "x": 0,
-      "y": 1800,
+      "y": 2260,
       "text": "M02 · 2 · Inspect one result",
       "kind": "title1",
       "maxW": 6064,
@@ -1700,12 +2060,12 @@
       "y": -300,
       "text": "M04 · 1 · Model catalog",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 6064,
       "page": "m04"
     },
     "row-m04-m04-picker": {
       "x": 0,
-      "y": 1620,
+      "y": 1900,
       "text": "M04 · 2 · Choosing model and effort",
       "kind": "title1",
       "maxW": 2992,
@@ -1732,12 +2092,12 @@
       "y": -300,
       "text": "M06 · 1 · Rankings and eligibility",
       "kind": "title1",
-      "maxW": 2992,
+      "maxW": 6064,
       "page": "m06"
     },
     "row-m06-m06-weights": {
       "x": 0,
-      "y": 1660,
+      "y": 1800,
       "text": "M06 · 2 · Weights and alternatives",
       "kind": "title1",
       "maxW": 4528,
@@ -1753,10 +2113,10 @@
     },
     "row-m07-m07-launch": {
       "x": 0,
-      "y": 1840,
+      "y": 2400,
       "text": "M07 · 2 · Review, launch and freeze",
       "kind": "title1",
-      "maxW": 2992,
+      "maxW": 4528,
       "page": "m07"
     },
     "row-m08-m08-checks": {
@@ -1764,7 +2124,7 @@
       "y": -300,
       "text": "M08 · 1 · Checks and evidence",
       "kind": "title1",
-      "maxW": 6064,
+      "maxW": 7600,
       "page": "m08"
     },
     "row-m08-m08-flow": {
@@ -1780,7 +2140,7 @@
       "y": -300,
       "text": "M09 · Default seven-task inventory benchmark",
       "kind": "title1",
-      "maxW": 6064,
+      "maxW": 7600,
       "page": "m09"
     },
     "row-m10-m10-measure": {
@@ -1788,15 +2148,15 @@
       "y": -300,
       "text": "M10 · 1 · Measurements per task and configuration",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 6064,
       "page": "m10"
     },
     "row-m10-m10-cost": {
       "x": 0,
-      "y": 1560,
+      "y": 1620,
       "text": "M10 · 2 · Cost basis, currency and energy",
       "kind": "title1",
-      "maxW": 2992,
+      "maxW": 4528,
       "page": "m10"
     },
     "row-m11-m11-overview": {
@@ -1804,12 +2164,12 @@
       "y": -300,
       "text": "M11 · 1 · Run overview and scheduling",
       "kind": "title1",
-      "maxW": 6064,
+      "maxW": 7600,
       "page": "m11"
     },
     "row-m11-m11-live": {
       "x": 0,
-      "y": 1580,
+      "y": 1660,
       "text": "M11 · 2 · Live view inside one harness",
       "kind": "title1",
       "maxW": 4528,
@@ -1817,7 +2177,7 @@
     },
     "row-m11-m11-lifecycle": {
       "x": 0,
-      "y": 3540,
+      "y": 3620,
       "text": "M11 · 3 · Detach, reconnect and stop",
       "kind": "title1",
       "maxW": 7600,
@@ -1828,12 +2188,12 @@
       "y": -300,
       "text": "M12 · 1 · Sequential independent reviews",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 6064,
       "page": "m12"
     },
     "row-m12-m12-review": {
       "x": 0,
-      "y": 1260,
+      "y": 1400,
       "text": "M12 · 2 · Review contract, profiles and judge capability",
       "kind": "title1",
       "maxW": 4528,
@@ -1844,12 +2204,12 @@
       "y": -300,
       "text": "M13 · 1 · Generate from retained results",
       "kind": "title1",
-      "maxW": 2992,
+      "maxW": 4528,
       "page": "m13"
     },
     "row-m13-m13-file": {
       "x": 0,
-      "y": 1260,
+      "y": 1300,
       "text": "M13 · 2 · The generated HTML file",
       "kind": "title1",
       "maxW": 1456,
@@ -1860,15 +2220,15 @@
       "y": -300,
       "text": "M14 · 1 · Commands and unattended runs",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 7600,
       "page": "m14"
     },
     "row-m14-m14-ops": {
       "x": 0,
-      "y": 1060,
+      "y": 1480,
       "text": "M14 · 2 · Observe, stop, check and exchange",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 6064,
       "page": "m14"
     },
     "row-m15-m15-tui": {
@@ -1879,20 +2239,28 @@
       "maxW": 2680,
       "page": "m15"
     },
+    "row-m15-m15-prompts": {
+      "x": 0,
+      "y": 1300,
+      "text": "M15 · Prompts · one value, typed",
+      "kind": "title1",
+      "maxW": 4528,
+      "page": "m15"
+    },
     "row-m16-m16-plan": {
       "x": 0,
       "y": -300,
       "text": "M16 · 1 · Planner, baseline capture and planning",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 8000,
       "page": "m16"
     },
     "row-m16-m16-review": {
       "x": 0,
-      "y": 1180,
+      "y": 1460,
       "text": "M16 · 2 · Review, edit, regenerate and approve",
       "kind": "title1",
-      "maxW": 7600,
+      "maxW": 8000,
       "page": "m16"
     },
     "row-m17-m17-template": {
@@ -1908,7 +2276,7 @@
       "y": 1080,
       "text": "M17 · 2 · Result packages and template mismatch",
       "kind": "title1",
-      "maxW": 4528,
+      "maxW": 6064,
       "page": "m17"
     },
     "row-m18-m18-setup": {
@@ -1921,7 +2289,7 @@
     },
     "row-m18-m18-data": {
       "x": 0,
-      "y": 1180,
+      "y": 1400,
       "text": "M18 · 2 · Telemetry, attribution and energy",
       "kind": "title1",
       "maxW": 4528,
@@ -1937,7 +2305,7 @@
     },
     "row-compact-inspect": {
       "x": 0,
-      "y": 2140,
+      "y": 2760,
       "text": "2 · Inspect a template revision · 80×24",
       "kind": "title1",
       "maxW": 2368,
@@ -1945,7 +2313,7 @@
     },
     "row-compact-create": {
       "x": 0,
-      "y": 4400,
+      "y": 5100,
       "text": "3 · Create a template · 80×24",
       "kind": "title1",
       "maxW": 2368,
@@ -1953,15 +2321,15 @@
     },
     "row-compact-revise": {
       "x": 0,
-      "y": 6300,
+      "y": 7000,
       "text": "4 · Duplicate and revise · 80×24",
       "kind": "title1",
-      "maxW": 1456,
+      "maxW": 2368,
       "page": "compact"
     },
     "row-compact-exchange": {
       "x": 0,
-      "y": 7860,
+      "y": 8740,
       "text": "5 · Exchange templates · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -1969,7 +2337,7 @@
     },
     "row-compact-launch": {
       "x": 0,
-      "y": 9400,
+      "y": 10440,
       "text": "6 · Launch identity check · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -1977,7 +2345,7 @@
     },
     "row-compact-m02-results": {
       "x": 0,
-      "y": 10980,
+      "y": 12020,
       "text": "M02 · 1 · Compare retained results · 80×24",
       "kind": "title1",
       "maxW": 2368,
@@ -1985,7 +2353,7 @@
     },
     "row-compact-m02-result": {
       "x": 0,
-      "y": 13060,
+      "y": 14560,
       "text": "M02 · 2 · Inspect one result · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -1993,7 +2361,7 @@
     },
     "row-compact-m03-env": {
       "x": 0,
-      "y": 14940,
+      "y": 16500,
       "text": "M03 · 1 · Environment readiness · 80×24",
       "kind": "title1",
       "maxW": 2368,
@@ -2001,7 +2369,7 @@
     },
     "row-compact-m04-catalog": {
       "x": 0,
-      "y": 16840,
+      "y": 18400,
       "text": "M04 · 1 · Model catalog · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2009,7 +2377,7 @@
     },
     "row-compact-m05-run": {
       "x": 0,
-      "y": 18740,
+      "y": 20580,
       "text": "M05 · 2 · Invocation and isolation · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2017,15 +2385,15 @@
     },
     "row-compact-m06-rank": {
       "x": 0,
-      "y": 20680,
+      "y": 22640,
       "text": "M06 · 1 · Rankings and eligibility · 80×24",
       "kind": "title1",
-      "maxW": 1456,
+      "maxW": 2368,
       "page": "compact"
     },
     "row-compact-m07-setup": {
       "x": 0,
-      "y": 22600,
+      "y": 24680,
       "text": "M07 · 1 · Configure a run · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2033,7 +2401,7 @@
     },
     "row-compact-m07-launch": {
       "x": 0,
-      "y": 24680,
+      "y": 27300,
       "text": "M07 · 2 · Review, launch and freeze · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2041,31 +2409,23 @@
     },
     "row-compact-m08-checks": {
       "x": 0,
-      "y": 26140,
+      "y": 28840,
       "text": "M08 · 1 · Checks and evidence · 80×24",
       "kind": "title1",
-      "maxW": 1456,
+      "maxW": 2368,
       "page": "compact"
     },
     "row-compact-m10-measure": {
       "x": 0,
-      "y": 27940,
+      "y": 30640,
       "text": "M10 · 1 · Measurements per task and configuration · 80×24",
-      "kind": "title1",
-      "maxW": 1456,
-      "page": "compact"
-    },
-    "row-compact-m11-overview": {
-      "x": 0,
-      "y": 29740,
-      "text": "M11 · 1 · Run overview and scheduling · 80×24",
       "kind": "title1",
       "maxW": 1456,
       "page": "compact"
     },
     "row-compact-m11-live": {
       "x": 0,
-      "y": 31560,
+      "y": 32500,
       "text": "M11 · 2 · Live view inside one harness · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2073,7 +2433,7 @@
     },
     "row-compact-m12-judging": {
       "x": 0,
-      "y": 33420,
+      "y": 34360,
       "text": "M12 · 1 · Sequential independent reviews · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2081,7 +2441,7 @@
     },
     "row-compact-m14-run": {
       "x": 0,
-      "y": 34940,
+      "y": 36020,
       "text": "M14 · 1 · Commands and unattended runs · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2089,7 +2449,7 @@
     },
     "row-compact-m16-review": {
       "x": 0,
-      "y": 36300,
+      "y": 37800,
       "text": "M16 · 2 · Review, edit, regenerate and approve · 80×24",
       "kind": "title1",
       "maxW": 1456,

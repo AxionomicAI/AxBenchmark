@@ -33,6 +33,7 @@ All modules: [headless engine and interface architecture](ARCHITECTURE.md).
 
 - [Requirement coverage](TRACEABILITY.md) maps every source unit to its module owners.
 - [Suggested development sequence](DEVELOPMENT-SEQUENCE.md) orders implementation and integration checks.
+- [Open questions](OPEN-QUESTIONS.yaml), [round 2](OPEN-QUESTIONS-R2.yaml) and [round 3](OPEN-QUESTIONS-R3.yaml) list product decisions and wireframe gaps, with fields for the answers.
 
 Module IDs and filename prefixes follow the recommended development order, from M01 through M18. Specifications contain prose, contract tables, and optional Mermaid diagrams; Implementation sections may also contain short Python signatures (Protocols, use-case and view-model shapes), never full implementations.
 

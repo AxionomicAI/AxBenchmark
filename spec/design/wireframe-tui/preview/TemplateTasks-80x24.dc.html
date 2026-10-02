@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1800px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1880px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Revision · tasks</b> · TemplateScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -140,7 +140,8 @@ body{margin:0}
 ├─ Horizontal #body
 │  ├─ Vertical #revisions-pane .pane    width: 30
 │  │  ├─ Tree #revisions
-│  │  └─ Static #revision-facts .kv
+│  │  ├─ Static #revision-facts .kv
+│  │  └─ Button #rename .link        → PromptScreen (M15)
 │  └─ TabbedContent #tabs             width: 1fr
 │     ├─ TabPane #tab-tasks &quot;Tasks&quot;
 │     │  ├─ DataTable #tasks .bordered
@@ -159,13 +160,13 @@ body{margin:0}
 │     └─ TabPane #tab-results &quot;Results&quot;
 │        ├─ DataTable #results .bordered
 │        ├─ Static #judge-groups
-│        ├─ Static #historical .notice.-warning
+│        ├─ Static #scope-note .notice
 │        └─ Horizontal .actions
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
 <table><tr><td><code>#identity-bar</code></td><td>height: 1; background: $surface; padding: 0 1;</td></tr><tr><td><code>#revisions-pane</code></td><td>width: 30; border: solid $foreground 30%;</td></tr><tr><td><code>#tabs</code></td><td>width: 1fr; padding: 0 1;</td></tr><tr><td><code>.bordered</code></td><td>border: solid $foreground 30%;</td></tr><tr><td><code>.bordered:focus</code></td><td>border: solid $primary;</td></tr><tr><td><code>#tasks</code></td><td>height: 10;</td></tr><tr><td><code>#task-prompt</code></td><td>height: 1fr;</td></tr><tr><td><code>#manifest</code></td><td>height: 18; max-height: 1fr;</td></tr><tr><td><code>Screen.-compact #revisions-pane</code></td><td>display: none;</td></tr><tr><td><code>Toast.-success</code></td><td>border-left: outer $primary;</td></tr></table>
 <h3>Key bindings</h3>
-<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the library (selection and filter kept)</span></td></tr><tr><td><kbd>1 … 4</kbd></td><td><code>show_tab</code><br><span class="mut">Tasks · Identity · Configurations · Results</span></td></tr><tr><td><kbd>e / d</kbd></td><td><code>revise / duplicate</code><br><span class="mut">Push ReviseScreen</span></td></tr><tr><td><kbd>x</kbd></td><td><code>export</code><br><span class="mut">Push ExportScreen for this revision</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>configure</code><br><span class="mut">Configure a run (Setup · M07)</span></td></tr><tr><td><kbd>c</kbd></td><td><code>copy_sha</code><br><span class="mut">Copy the full SHA-256 to the clipboard</span></td></tr><tr><td><kbd>r</kbd></td><td><code>pick_revision</code><br><span class="mut">Compact only: OptionList of revisions</span></td></tr><tr><td><kbd>tab</kbd></td><td><code>focus_next</code><br><span class="mut">Next focus stop</span></td></tr></table>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the library (selection and filter kept)</span></td></tr><tr><td><kbd>1 … 4</kbd></td><td><code>show_tab</code><br><span class="mut">Tasks · Identity · Configurations · Results</span></td></tr><tr><td><kbd>e / d</kbd></td><td><code>revise / duplicate</code><br><span class="mut">Push ReviseScreen</span></td></tr><tr><td><kbd>n</kbd></td><td><code>rename</code><br><span class="mut">Rename the lineage display name via PromptScreen (M15); identity unchanged. Dimmed for built-ins</span></td></tr><tr><td><kbd>x</kbd></td><td><code>export</code><br><span class="mut">Push ExportScreen for this revision</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>configure</code><br><span class="mut">Configure a run (Setup · M07)</span></td></tr><tr><td><kbd>c</kbd></td><td><code>copy_sha</code><br><span class="mut">Copy the full SHA-256 to the clipboard</span></td></tr><tr><td><kbd>r</kbd></td><td><code>pick_revision</code><br><span class="mut">Compact only: OptionList of revisions</span></td></tr><tr><td><kbd>tab</kbd></td><td><code>focus_next</code><br><span class="mut">Next focus stop</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>DataTable #tasks</li><li>Markdown #task-prompt</li></ol>
 <h3>States and related frames</h3>
 <div class="rel"><a href="TemplateTasks-80x24.dc.html">Tasks</a><a href="TemplateIdentity-80x24.dc.html">Identity</a><a href="TemplateConfigs.dc.html">Configurations</a><a href="TemplateResults.dc.html">Results</a><a href="WidgetStates.dc.html">Empty · loading · error</a></div>
@@ -174,7 +175,7 @@ body{margin:0}
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1800}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1880}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

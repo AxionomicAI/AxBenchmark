@@ -1,0 +1,203 @@
+# Open questions, round 2: follow-ups to the answers in OPEN-QUESTIONS.yaml.
+#
+# Each item has an explanation and a suggestion. To accept the suggestion,
+# write `answer: ok`. Otherwise pick an option key or write your own text,
+# and add anything else under `notes`.
+
+follow_ups:
+
+  - id: R2-1
+    refers_to: P4
+    question: Does a reported $0 count as verified when the billing is a subscription?
+    explanation: >
+      You said cost is verified $0 when the API says so. Some harnesses report $0 (or omit cost)
+      when usage is covered by a subscription plan. SPEC §5 says "A subscription or missing price
+      is not a zero-cost run", so a subscription $0 must not win the lowest-cost ranking.
+    suggestion: >
+      Verified $0 only when the provider or harness reports $0, usage coverage is complete for
+      every task, and the billing basis is not a subscription. Otherwise the cost is unknown or an
+      estimate, never zero.
+    options:
+      a: As suggested.
+      b: Any reported $0 counts, including subscriptions (contradicts SPEC §5; needs a SPEC change).
+    answer: we need to create something to scrape the prices from each provider so we could have a table to compute this in case the harness does not provide the price
+    notes:
+
+  - id: R2-2
+    refers_to: P4
+    question: How does the user give the electricity price for local models?
+    explanation: >
+      You said that for local models with measurable GPU power, the app shows kWh and asks the user
+      for the cost. Unattended runs (`run --no-tui`) cannot stop to ask, and SPEC §7 already allows
+      an optional electricity tariff.
+    suggestion: >
+      An optional tariff ($/kWh, with currency) in the run configuration, set in Setup or YAML before
+      launch and frozen with the run. It can also be entered or changed afterwards in Results as an
+      analysis setting, which recalculates the energy-cost estimate without changing the original
+      record.
+    options:
+      a: As suggested (before launch, and editable later as analysis).
+      b: Before launch only.
+      c: In Results only, after the run.
+    answer: a
+    notes:
+
+  - id: R2-3
+    refers_to: P4
+    question: Does a local model's energy-cost estimate count as its cost in rankings?
+    explanation: >
+      With your P4 and P11 answers, a local model has no API cost, so its cost is unknown and it
+      drops out of the lowest-cost ranking and of combined rankings with a cost weight above 0.
+      Comparing local rigs against cloud models is a core use of this benchmark, so this matters.
+      SPEC §7 currently keeps energy cost separate from rankings, for two reasons: GPU or CPU-package
+      readings are not whole-system electricity, and in parallel runs shared GPU energy cannot be
+      divided between configurations.
+    suggestion: >
+      Option b. In sequential runs, where each configuration's execution windows are known, the
+      energy-cost estimate (measured kWh × tariff) counts as that configuration's cost. It is labelled
+      "energy estimate · GPU+CPU package · not whole-system", and the ranking shows its basis next to
+      API costs. In parallel runs it stays separate and the cost is unknown. This needs a small
+      SPEC §7 change, which I would make.
+    options:
+      a: Keep it separate; local models show kWh and an energy estimate but have no cost ranking.
+      b: As suggested (sequential runs only, labelled estimate, SPEC §7 updated).
+      c: Count it in parallel runs too, with an equal split of shared energy (contradicts SPEC §7).
+    answer: b
+    notes:
+
+  - id: R2-4
+    refers_to: P7
+    question: How are multiple trials aggregated and judged?
+    explanation: >
+      You want each trial's results visible plus an average. The details decide cost and fairness:
+      every trial produces its own artifact, so judging each one multiplies judging cost by N, and
+      eligibility has to say what happens when some trials pass and others fail.
+    suggestion: >
+      Trials of a configuration run one after another, each from a fresh baseline. Each trial is
+      judged separately (N judge sessions). Results show every trial plus the mean of cost, time and
+      quality, with the min–max range. Rankings use the means. A configuration is eligible only when
+      every trial is eligible, so a flaky configuration cannot rank on its good trials alone.
+    options:
+      a: As suggested.
+      b: Same, but eligibility uses the mean of the eligible trials only.
+      c: Same, but only the last trial is judged.
+    answer: a
+    notes:
+
+  - id: R2-5
+    refers_to: P9
+    question: How should the app prevent and warn about template changes during a run?
+    explanation: >
+      You asked to inform the user before changes are made to the template. The app itself never
+      edits an approved revision: duplicate and revise always create a new one. A change during a
+      run can only come from outside the app, such as a manual edit or a script on the revision files.
+    suggestion: >
+      Two measures. First, approved revision files are written read-only on disk, so accidental edits
+      fail. Second, choosing duplicate or revise on a revision with an active run shows: "This
+      creates a new revision. The active run continues on r1, and its results will not be comparable
+      with the new revision." If an outside change is still detected, the whole run halts (your P9
+      answer).
+    options:
+      a: As suggested.
+      b: Only the warning; do not make files read-only.
+    answer: a
+    notes:
+
+  - id: R2-6
+    refers_to: P15
+    question: What happens when no harness is confirmed usable for planning?
+    explanation: >
+      You chose to prefer a confirmed-usable harness and show an error if none is found. Some
+      harnesses cannot confirm login without a paid model call, so on a fresh install they stay
+      "undetermined" until they have run once. Your rule would then block planning on a fresh install.
+    suggestion: >
+      The error offers a "Verify now" action. With the user's consent it makes one minimal headless
+      call per harness to confirm login and headless operation, records the outcome, and then
+      preselects the first usable harness. Nothing is preselected or run without that confirmation.
+    options:
+      a: As suggested.
+      b: Allow picking an undetermined harness by hand; only the preselection refuses it.
+      c: Block until the harness becomes usable some other way.
+    answer: a
+    notes:
+
+  - id: R2-7
+    refers_to: P2
+    question: Which Library key opens the inventory "about" screens?
+    explanation: >
+      `?` stays Help (your P2 answer). `i` is already Import on the Library; `a` is free.
+    suggestion: "`a` (about), shown in the Footer when the selected row is the built-in inventory template."
+    options:
+      a: As suggested.
+    answer: a
+    notes:
+
+  - id: R2-8
+    refers_to: W9
+    question: Add a dialog for editing a service row on the Setup/start/stop tab?
+    explanation: >
+      You answered the name-field half of W9. The other half is unanswered. A template's
+      Setup/start/stop tab lists the commands that install, start and stop the generated app.
+      The spec lets `e` edit one and the engine supports it, but no dialog is drawn.
+    suggestion: >
+      A modal with command, working directory, port and readiness check, styled like the
+      task editor, with validation errors shown per field.
+    options:
+      a: As suggested.
+      b: No; service rows can only be changed by regenerating the plan.
+    answer: a
+    notes:
+
+confirmations:
+  # Details I will apply unless you change them. Write `answer: ok` or your correction.
+
+  - id: C1
+    refers_to: P1
+    item: >
+      A completed run exits 0 even with failed tasks. Scripts detect task failures by reading
+      `axbenchmark status RUN_ID --json`.
+    answer: ok
+
+  - id: C2
+    refers_to: P11
+    item: >
+      The "partial counts as missing" rule also applies to elapsed time: a partial time excludes the
+      entry from rankings where time has positive weight.
+    answer: ok
+
+  - id: C3
+    refers_to: P17
+    item: >
+      The default model is read from the harness's config or status output without a model call.
+      If it is unknown, the model field stays empty and must be picked. The planner never runs
+      without an explicit model.
+    answer: ok
+
+  - id: C4
+    refers_to: P18
+    item: >
+      Sampling interval 0.5–10 s, default 1 s, frozen with the run. Each collector's actual interval
+      is recorded and shown.
+    answer: ok
+
+  - id: C5
+    refers_to: P3
+    item: Remove the "unlinked historical results" mentions from M01 and M09.
+    answer: ok
+
+  - id: C6
+    refers_to: W4
+    item: "`c` on Setup opens the currency/energy screen."
+    answer: ok
+
+  - id: C7
+    refers_to: W5
+    item: "`p` on a run configuration opens the verification progress screen."
+    answer: ok
+
+  - id: C8
+    refers_to: P10, W10
+    item: >
+      Drafts are saved to disk under ~/.axbenchmark/drafts/, so they survive an engine exit and appear
+      as "draft" rows in the Library.
+    answer: ok

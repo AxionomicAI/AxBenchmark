@@ -2,16 +2,16 @@
 // MeasurementsScreen (m from a result's Outcomes tab) shows every measurement category per task with its source,
 // coverage and cost basis; TimingScreen separates benchmark elapsed time from excluded phases; the cost-basis and
 // currency/energy dialogs keep reported amounts, estimates and unknowns apart. Totals agree with results-data.mjs.
-import { Grid, fit, len, header, footer, table, buttons, input, check, para, kv, notice, modal } from './lib.mjs';
+import { Grid, fit, len, header, footer, table, buttons, input, check, para, kv, notice, modal, select } from './lib.mjs';
 import { SHA, s8 } from './screens.mjs';
 import { results, GROK_TASKS } from './screens-results.mjs';
 import { setup } from './screens-setup.mjs';
-import { RESULTS, byId, dur, usd, f2 } from './results-data.mjs';
+import { RESULTS, byId, dur, usd, f2, quality, stats, TRIAL_RUN, TRIAL_CONFIGS, trialGates, checksText, BILLING } from './results-data.mjs';
 
 const k = (n) => (n >= 1000 ? `${(n / 1000).toFixed(2)}M` : `${n}k`);
 
 // R-0928a-3 · Grok CLI. Input/output match the Outcomes tab; reasoning is a subset of output; cache is not exposed.
-// Grok CLI reports no cost, so cost = known usage × xAI list rates recorded in the catalog.
+// Grok CLI reports no cost, so cost = known usage × the xAI price table recorded at launch (x.ai/api, 2026-09-15).
 const RATE = { in: 0.25, out: 0.80 };
 const REASONING = [3, 8, 17, 5, 14, 12, 9];
 const GROK = GROK_TASKS.map(([id, t, ex, ch, s, tok, c], i) => {
@@ -65,7 +65,7 @@ export function measurements(sz, focus = 'tasks') {
     g.region(0, 13, W, H - 14, 'Static', '#accounting.kv');
     kv(g, 2, 14, 11, W - 4, [
       ['Cost', 'API-equivalent estimate · Grok CLI reports none'],
-      ['Rates', '$0.25 in · $0.80 out per M · catalog 2026-09-15'],
+      ['Prices', '$0.25 in · $0.80 out per M · x.ai/api · 2026-09-15'],
       ['Cached', '? not exposed · no discount applied'],
       ['Reasoning', `${tot.rs}k, part of output · never added again`],
       ['Elapsed', `${dur(tot.s)} · 7 task processes, tool work included`],
@@ -91,8 +91,9 @@ export function measurements(sz, focus = 'tasks') {
     ['Cached', '? Grok CLI 1.9.2 does not expose cache reads'],
     ['Cost', 'no reported cost for this task'],
     ['Estimate', '702k × $0.25/M + 44k × $0.80/M = $0.21'],
-    ['Rates', 'xAI list price · catalog 2026-09-15 (M04)'],
-    ['Labelled', 'API-equivalent estimate, wherever it is shown'],
+    ['Prices', 'x.ai/api price table · retrieved 2026-09-15'],
+    ['', 'recorded with the launch evidence (M04)'],
+    ['Labelled', 'estimate · price source and date, everywhere'],
     ['Time', '11:05 · start to exit, tool work included'],
   ]);
   para(g, 2, y + 1, 56, 'Without cache reads the estimate cannot apply a cache discount, so it may overstate cost. That limitation travels with exports and the report.', 'mu');
@@ -151,6 +152,7 @@ export function measurementsPartial(sz, focus = 'tasks') {
     ['Coverage', 'complete for T1–T4 · partial for T5 · none for T6–T7'],
     ['Elapsed', `${dur(tot.s)} ▲ · T5 counted up to the failure · sequential run, so no queue time`],
     ['Status', 'halted by an authentication failure · not an interruption, not a timeout'],
+    ['Rankings', 'cost and time cover 5 of 7 tasks · counted as missing in any ranking that weights them (M06)'],
   ]);
   footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: 't', d: 'Timing', go: 'TimingPhases' }, { k: 'b', d: 'Cost basis', go: 'CostBasis' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
@@ -217,42 +219,62 @@ export function timingPhases(sz, focus = 'table') {
 
 // ---------------------------------------------------------------- cost basis across the 12 results (over Results)
 
-const BASIS = {
-  'R-0928a-1': ['subscription estimate', 'usage known'],
-  'R-0928a-2': ['reported', 'complete'],
-  'R-0928a-3': ['estimate · list price', 'cache not exposed'],
-  'R-0928a-4': ['$0 verified · local', 'no charge'],
-  'R-0925b-1': ['reported', 'complete'],
-  'R-0925b-2': ['reported', '▲ partial T5–T7'],
-  'R-0921a-1': ['$0 verified · local', 'no charge'],
-  'R-0921a-2': ['unknown', 'no usage, no rate'],
-  'R-0924lab-1': ['reported', 'complete'],
-  'R-0924lab-2': ['$0 verified · local', 'no charge'],
-  'R-0924lab-3': ['estimate · list price', 'complete'],
-  'R-0919lab-1': ['$0 verified · local', 'no charge'],
+// Source, scope or coverage beside each basis (D4). The cost and basis come from results-data.mjs.
+const SOURCE = {
+  'R-0928a-1': 'anthropic.com/pricing 09-26',
+  'R-0928a-2': 'Codex 0.98.0 · complete',
+  'R-0928a-3': 'x.ai/api 09-15 · no cache split',
+  'R-0928a-4': 'jobs 4 · energy not divided',
+  'R-0925b-1': 'Claude Code 3.4.1 · complete',
+  'R-0925b-2': '▲ covers 5 of 7 tasks',
+  'R-0921a-1': 'jobs 2 · energy not divided',
+  'R-0921a-2': 'no usage reported · no estimate',
+  'R-0924lab-1': 'Claude Code 3.4.0 · complete',
+  'R-0924lab-2': 'jobs 3 · energy not divided',
+  'R-0924lab-3': 'openai.com/api/pricing 09-20',
+  'R-0919lab-1': '80.7 Wh × $0.18/kWh · CPU+GPU',
+};
+const BASIS_WORD = { reported: 'reported', estimate: 'estimate', energy: 'energy estimate', unknown: 'unknown' };
+// R3-1 · billing kind frozen at launch: from the harness's status output, declared by the user in the catalog, or unknown.
+const billingCell = (r) => {
+  const [k, src] = BILLING[r.id];
+  if (src === 'declared') return { t: `${k} · declared by user`, f: 'bd' };
+  if (src === 'status') return `${k} · harness status`;
+  return k === 'local' ? 'local endpoint · no account' : { t: 'unknown · not stated', f: 'it' };
 };
 
 export function costBasis(sz, focus = 'table') {
   const g = results(sz, 'none');
-  const m = modal(g, 86, 28, 'Cost basis · 12 results of r1', { sel: '#cost-basis' });
+  const m = modal(g, 112, 37, 'Cost basis · 12 results of r1', { sel: '#cost-basis' });
   let y = m.y;
   const tf = focus === 'table';
-  table(g, m.x, y, m.w, [{ l: 'Result', w: 12 }, { l: 'Model', w: 19 }, { l: 'Cost', w: 9, al: 'right' }, { l: 'Basis', w: 22 }, { l: 'Coverage', w: m.w - 62 }],
+  table(g, m.x, y, m.w, [{ l: 'Result', w: 15 }, { l: 'Cost', w: 9, al: 'right' }, { l: 'Basis', w: 17 }, { l: 'Billing at launch', w: 33 }, { l: 'Source · scope · coverage', w: m.w - 74 }],
     RESULTS.map((r) => {
-      const [b, c] = BASIS[r.id];
-      return { v: [r.id, `${r.src === 'imported' ? '↓' : ' '} ${r.model}`, r.cost == null ? { t: 'unknown', f: 'it' } : usd(r.cost), b.startsWith('unknown') ? { t: b, f: 'it' } : b, c.startsWith('▲') ? { t: c, f: 'bd' } : c] };
+      const b = BASIS_WORD[r.basis] + (r.local && r.basis === 'unknown' ? ' · local' : '');
+      const c = SOURCE[r.id];
+      return { v: [`${r.id}${r.src === 'imported' ? ' ↓' : ''}`, r.cost == null ? { t: 'unknown', f: 'it' } : r.partial?.cost ? { t: `${usd(r.cost)} ▲`, f: 'bd' } : usd(r.cost), r.basis === 'unknown' ? { t: b, f: 'it' } : b, billingCell(r), c.startsWith('▲') ? { t: c, f: 'bd' } : c] };
     }), { cursor: 0, focused: tf });
   g.region(m.x, y, m.w, 13, 'DataTable', '#basis-table');
   y += 14;
-  y = kv(g, m.x, y, 13, m.w, [
+  y = kv(g, m.x, y, 16, m.w, [
     ['Reported', 'the harness or provider stated the charge · always preferred'],
-    ['Estimate', 'known usage × recorded rates · labelled API-equivalent everywhere'],
-    ['Subscription', 'not $0 · estimated from usage when it is known'],
-    ['$0 verified', 'local endpoint with no provider charge · energy is separate'],
-    ['Unknown', 'no usage or no rate · shown as unknown, sorted last, never $0'],
+    ['Estimate', 'known usage × price table at launch · source and date · subscriptions labelled'],
+    ['Energy estimate', 'local endpoint in a sequential run · kWh in its windows × tariff'],
+    ['Verified $0', 'reported $0, complete usage, billing not subscription or unknown · none here'],
+    ['Unknown', 'no usage or price · local endpoint in a parallel run · never $0'],
+    ['Billing', 'frozen at launch · harness status output, or “declared by user” in the catalog (M04)'],
   ]);
   y++;
-  para(g, m.x, y, m.w, 'An estimate is never added to a reported amount for the same usage. Rankings and the report keep these labels next to every cost.', 'mu');
+  g.text(m.x, y++, 'Currency · costs are computed and ranked in USD', 'bd');
+  y = kv(g, m.x, y, 16, m.w, [
+    ['Display', 'each run’s frozen display currency · all four runs froze USD, so values show as $'],
+    ['Rates', 'from each run’s RateSnapshot · every r1 price was in USD, so nothing needed converting'],
+    ['No rate', ['e.g. a price in EUR launched without an EUR rate → unknown · no_rate_conversion', 'never estimated with a guessed or later rate · out of cost-weighted rankings']],
+  ]);
+  g.paint(m.x + 16, y - 2, m.w - 16, 1, { f: 'it' });
+  g.region(m.x, y - 4, m.w, 4, 'Static', '#basis-currency.kv');
+  y++;
+  y = para(g, m.x, y, m.w, 'A subscription, unknown billing or a missing price or rate is never $0. In a parallel run shared energy is never divided, so a local configuration has no cost to rank: it stays unknown, sorted last and out of cost-weighted rankings (M06).', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Currency and energy…', go: 'CurrencyEnergy' }, { label: 'Close', v: 'primary', go: 'Results', focus: focus === 'close' }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'Results' }, { k: 'enter', d: 'Open measurements', go: 'Measurements' }, { k: 'u', d: 'Currency and energy', go: 'CurrencyEnergy' }], '');
   return g;
@@ -260,34 +282,139 @@ export function costBasis(sz, focus = 'table') {
 
 // ---------------------------------------------------------------- currency and energy (Setup, recorded at launch)
 
-export function currencyEnergy(sz, focus = 'rate') {
+// R3-2 · rates to USD held by the catalog (M04, CatalogRates), as units per 1 USD. Collected during an explicit catalog
+// refresh, never during a run; the user's rate overrides the collected one and is labelled. Same values as the catalog.
+const SETUP_RATES = [
+  ['USD', '1', 'fixed', '—', { t: '✓ frozen · needed', f: '' }],
+  ['EUR', '0.9226', 'open.er-api.com · collected', '2026-10-01 16:00', 'available'],
+  ['GBP', '0.7870', 'open.er-api.com · collected', '2026-10-01 16:00', 'available'],
+  ['CNY', '7.1891', 'open.er-api.com · collected', '2026-10-01 16:00', 'available'],
+  ['COP', '4000.00', { t: '▲ supplied by you · collected 4016.06', f: 'bd' }, '2026-10-02 09:12', 'available · labelled'],
+];
+
+// st.analysis: opened from Results (e) after the runs; the tariff is then an analysis setting, labelled alternative.
+// There is no analysis-time display currency: values keep each run's frozen display currency (R3-2).
+export function currencyEnergy(sz, focus = 'currency', st = {}) {
+  if (st.analysis) return tariffAnalysis(sz, focus);
   const g = setup(sz, 'none');
-  const m = modal(g, 86, 27, 'Currency and energy · recorded with the benchmark', { sel: '#currency-energy' });
+  const m = modal(g, 100, 37, 'Currency and energy · frozen with the run at launch', { sel: '#currency-energy' });
   let y = m.y;
-  g.text(m.x, y, 'Primary', 'mu'); g.text(m.x + 14, y++, fit('USD · every cost is shown in USD first', m.w - 14), 'bd');
+  const L = 18;
+  g.text(m.x, y, 'Display currency', 'mu'); select(g, m.x + L, y, 9, 'USD', { focus: focus === 'currency' });
+  g.region(m.x + L, y, 9, 1, 'Select', '#display-currency');
+  g.text(m.x + L + 10, y++, fit('default USD · display only · costs are computed and ranked in USD', m.w - L - 10), 'mu');
   y++;
-  check(g, m.x, y++, 'Also show COP', true, { focus: focus === 'cop' });
-  g.text(m.x + 2, y, 'Rate', 'mu'); input(g, m.x + 14, y, 16, '4012.50', { focus: focus === 'rate' }); g.text(m.x + 31, y++, fit('COP per USD · supplied by you', m.w - 31), 'mu');
-  g.text(m.x + 2, y, 'As of', 'mu'); input(g, m.x + 14, y, 16, '2026-10-01', { focus: focus === 'date' }); g.text(m.x + 31, y++, fit('stored with the run and its exports', m.w - 31), 'mu');
-  g.region(m.x, y - 3, m.w, 3, 'Vertical', '#cop');
-  y = notice(g, m.x + 2, y, m.w - 2, 'warning', 'The README’s exchange rate is historical', 'It is never used for new runs. Without a supplied rate, COP is not shown.');
+  g.text(m.x, y++, fit('Exchange rates · units per 1 USD · catalog refresh 2026-10-01 21:38 (M04)', m.w), 'bd');
+  const rf = focus === 'rates';
+  table(g, m.x, y, m.w, [{ l: 'Cur', w: 5 }, { l: '1 USD =', w: 10, al: 'right' }, { l: 'Source', w: 39 }, { l: 'Date', w: 18 }, { l: 'At launch', w: m.w - 72 }],
+    SETUP_RATES.map((v) => ({ v })), { cursor: rf ? 0 : -1, focused: rf });
+  g.region(m.x, y, m.w, SETUP_RATES.length + 1, 'DataTable', '#rate-table');
+  y += SETUP_RATES.length + 2;
+  y = kv(g, m.x, y, L, m.w, [
+    ['RateSnapshot', 'prices USD (Anthropic, OpenAI, xAI) · display USD · tariff USD → only USD 1'],
+    ['', 'other currencies add their rate, source and date · beside PriceSnapshot'],
+    ['No rate', ['a currency without a rate at launch is frozen as missing: its values show', '“unknown · no_rate_conversion”, never a guess']],
+    ['Refresh', 'rates change only by a catalog refresh (F5 there), never during a run'],
+  ]);
+  g.region(m.x, y - 5, m.w, 5, 'Static', '#rate-snapshot.kv');
   y++;
-  check(g, m.x, y++, 'Estimate electricity cost', true, { focus: focus === 'tariff-on' });
-  g.text(m.x + 2, y, 'Tariff', 'mu'); input(g, m.x + 14, y, 16, '0.18', { focus: focus === 'tariff' }); g.text(m.x + 31, y++, fit('USD per kWh · supplied by you', m.w - 31), 'mu');
-  g.region(m.x, y - 2, m.w, 2, 'Vertical', '#tariff');
+  check(g, m.x, y++, 'Electricity tariff · optional', true, { focus: focus === 'tariff-on' });
+  g.text(m.x + 2, y, 'Tariff', 'mu'); input(g, m.x + L, y, 16, '0.18', { focus: focus === 'tariff' }); select(g, m.x + L + 17, y, 9, 'USD', { focus: focus === 'tariff-currency' }); g.text(m.x + L + 27, y++, fit('per kWh · its currency’s rate is frozen too', m.w - L - 27), 'mu');
+  g.region(m.x + L, y - 1, 16, 1, 'Input', '#tariff-per-kwh');
+  g.region(m.x + L + 17, y - 1, 9, 1, 'Select', '#tariff-currency');
+  g.text(m.x + L, y++, fit('can be changed later in Results as an analysis tariff, labelled alternative', m.w - L), 'mu');
+  g.region(m.x, y - 3, m.w, 3, 'Vertical', '#tariff');
   y++;
   g.text(m.x, y++, 'What the energy estimate can cover on mike-mbp-m4 (M18)', 'bd');
-  y = kv(g, m.x, y, 14, m.w, [
-    ['Measured', 'CPU package and GPU · powermetrics · needs root'],
+  y = kv(g, m.x, y, L, m.w, [
+    ['Measured', 'CPU package and GPU · powermetrics · ▲ no permission yet'],
     ['Not measured', 'display, memory, storage, cloud inference hardware'],
     ['Scope label', 'CPU package + GPU only · never “whole-system”'],
-    ['Concurrency', 'shared by the whole experiment · not split per configuration'],
-    ['Provider cost', 'kept apart · energy is never added to a provider charge'],
+    ['Sequential', 'local cost = kWh in its windows × tariff · ranked as “energy estimate”'],
+    ['Parallel', 'shared energy is never divided · a local configuration’s cost stays unknown'],
+    ['Provider cost', 'kept apart · energy is never added to an API charge'],
   ]);
   y++;
-  para(g, m.x, y, m.w, 'Converting to COP does not turn an estimate into a charge or fill partial coverage. Missing energy data stays partial or unknown in the estimate.', 'mu');
+  para(g, m.x, y, m.w, 'Converting does not turn an estimate into a charge or fill partial coverage. The README’s historical exchange rate is never used.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'Setup' }, { label: 'Save', v: 'primary', go: 'Setup', focus: focus === 'save' }]);
   footer(g, [{ k: 'esc', d: 'Cancel', go: 'Setup' }, { k: 'tab', d: 'Next', do: 'next' }, { k: '^s', d: 'Save', go: 'Setup' }], '');
+  return g;
+}
+
+// Analysis mode (over Results): change the tariff after the fact. Only energy estimates are recalculated, the result is
+// labelled alternative like alternative weights, and the recorded tariff stays in every original record.
+function tariffAnalysis(sz, focus = 'tariff') {
+  const g = results(sz, 'none');
+  const m = modal(g, 86, 25, 'Electricity tariff · analysis setting', { sel: '#currency-energy' });
+  const r = byId['R-0919lab-1'];
+  const alt = 0.22;
+  let y = m.y;
+  y = kv(g, m.x, y, 14, m.w, [
+    ['Recorded', '0.18 USD/kWh · frozen with runs 2026-09-19-lab and 09-24-lab'],
+    ['', 'no tariff recorded for the mike-mbp-m4 runs'],
+  ]);
+  y++;
+  g.text(m.x, y, 'Tariff', 'mu'); input(g, m.x + 14, y, 16, String(alt), { focus: focus === 'tariff' }); select(g, m.x + 31, y, 9, 'USD', { focus: focus === 'tariff-currency' }); g.text(m.x + 41, y++, fit('per kWh · ▲ alternative', m.w - 41), 'bd');
+  g.region(m.x + 14, y - 1, 16, 1, 'Input', '#tariff-per-kwh');
+  g.region(m.x + 31, y - 1, 9, 1, 'Select', '#tariff-currency');
+  y++;
+  g.text(m.x, y++, 'What it recalculates', 'bd');
+  table(g, m.x, y, m.w, [{ l: 'Result', w: 15 }, { l: 'Energy', w: 10, al: 'right' }, { l: 'Recorded', w: 11, al: 'right' }, { l: 'Alternative', w: 13, al: 'right' }, { l: 'Basis', w: m.w - 49 }], [
+    { v: ['R-0919lab-1 ↓', `${(r.kwh * 1000).toFixed(1)} Wh`, usd(r.cost), { t: usd(r.kwh * alt), f: 'bd' }, 'energy estimate · sequential'] },
+    { v: ['R-0924lab-2 ↓', '—', 'unknown', { t: 'unknown', f: 'it' }, 'parallel · energy not divided'] },
+    { v: ['R-0928a-4', '—', 'unknown', { t: 'unknown', f: 'it' }, 'parallel · no energy measured'] },
+  ], { cursor: -1 });
+  g.region(m.x, y, m.w, 4, 'DataTable', '#tariff-effect');
+  y += 5;
+  para(g, m.x, y, m.w, 'Applying relabels Results, Rankings and the report “alternative” until you reset. Provider costs, measurements and every original record are unchanged; nothing is rerun.', 'mu');
+  const x0 = buttons(g, m.right, m.bottom, [{ label: 'Reset to recorded', focus: focus === 'reset' }, { label: 'Cancel', go: 'Results' }, { label: 'Apply as alternative', v: 'primary', go: 'ResultsAnalysisTariff', focus: focus === 'apply' }]);
+  g.region(x0, m.bottom, 19, 1, 'Button', '#reset');
+  footer(g, [{ k: 'esc', d: 'Cancel', go: 'Results' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'r', d: 'Reset to recorded' }, { k: '^s', d: 'Apply as alternative', go: 'ResultsAnalysisTariff' }], '');
+  return g;
+}
+
+// ---------------------------------------------------------------- MeasurementsScreen · configurations with trials (D7)
+
+export function measurementsTrials(sz, focus = 'codex') {
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
+  const R = TRIAL_RUN;
+  header(g, 'AxBenchmark', `Run ${R.run} · ${R.template} · measurements per trial`);
+  g.fill(0, 1, W, 1, 'B1');
+  g.text(1, 1, fit(`● ${R.machine} · ${R.template} · 2 configurations × ${R.trials} trials · jobs ${R.jobs} · trials in turn, each from a fresh baseline`, W - 2));
+  g.region(0, 1, W, 1, 'Static', '#result-bar');
+  const cols = [{ l: 'Trial', w: 9 }, { l: 'Result', w: 11 }, { l: 'Process', w: 10 }, { l: 'Checks', w: 10 }, { l: 'Elapsed', w: 13, al: 'right' }, { l: 'Input', w: 8, al: 'right' }, { l: 'Output', w: 8, al: 'right' }, { l: 'Cost', w: 12, al: 'right' }, { l: 'Quality', w: 11, al: 'right' }];
+  cols.push({ l: 'Basis · eligibility', w: W - 2 - cols.reduce((n, c) => n + c.w, 0) });
+  const k1 = (n) => `${(n / 1000).toFixed(2)}M`;
+  const box = (c, y, key) => {
+    const f = focus === key, gates = trialGates(c);
+    g.box(0, y, W, 9, { f: f ? 'ac' : 'ln', title: `${c.h} · ${c.model} · ${c.effort} · ${c.trials.length} trials`, sub: gates.length ? '✗ not eligible · a trial failed a gate' : '✓ eligible · every trial passed' });
+    const S = (k) => stats(c.trials.map(k));
+    const st = { s: S((t) => t.time), i: S((t) => t.inp), o: S((t) => t.out), c: S((t) => t.cost), q: S((t) => quality(t.g)) };
+    const basis = c.basis === 'reported' ? 'reported' : 'estimate · price table';
+    table(g, 1, y + 1, W - 2, cols, [
+      ...c.trials.map((t) => ({ v: [`${t.trial} of ${c.trials.length}`, t.id, '✓ exit 0', t.checks.f ? { t: checksText(t.checks), f: 'bd' } : checksText(t.checks), dur(t.time), k1(t.inp), `${t.out}k`, usd(t.cost), f2(quality(t.g)), t.checks.f ? { t: `✗ T4.2 failed · spec ${t.g[3]}`, f: 'bd' } : basis] })),
+      { v: ['Mean', '', '', '', dur(Math.round(st.s.mean)), k1(Math.round(st.i.mean)), `${Math.round(st.o.mean)}k`, usd(st.c.mean), f2(st.q.mean), gates.length ? { t: '✗ not ranked · trial 2', f: 'bd' } : '✓ used by rankings'], f: 'bd' },
+      { v: ['Min–max', '', '', '', `${dur(st.s.min)}–${dur(st.s.max)}`, '', '', `${usd(st.c.min)}–${f2(st.c.max)}`, `${f2(st.q.min)}–${f2(st.q.max)}`, 'range of the 3 trials'], f: 'mu' },
+    ], { cursor: key === 'codex' ? 0 : 1, focused: f });
+    g.region(1, y + 1, W - 2, 4, 'DataTable', key === 'codex' ? '#measurements' : '#measurements-2');
+    g.region(1, y + 5, W - 2, 2, 'Static', key === 'codex' ? '#trial-summary' : '#trial-summary-2');
+  };
+  box(TRIAL_CONFIGS[0], 2, 'codex');
+  box(TRIAL_CONFIGS[1], 11, 'claude');
+  const rf = focus === 'rules';
+  g.box(0, 20, W, H - 22, { f: rf ? 'ac' : 'ln', title: 'How trials are combined' });
+  g.region(0, 20, W, H - 22, 'Static', '#trial-rules.kv');
+  let y = kv(g, 2, 21, 14, W - 4, [
+    ['Each trial', 'a separate result, linked to its configuration and trial index · own baseline, own judge session'],
+    ['Order', 'trials of one configuration run one after another; configurations follow the scheduling policy'],
+    ['Shown', 'every trial, then the mean of cost, time and quality and the min–max range · a gap leaves both empty'],
+    ['Rankings', 'use the means · a configuration is eligible only when every one of its trials is eligible (M06)'],
+    ['Claude Code', 'trial 2 failed check T4.2 and graded spec 3.5 → listed with that reason, not ranked'],
+    ['Prices', 'Claude Code estimates use anthropic.com/pricing, retrieved 2026-09-26 · Codex reports its cost'],
+    ['Default', '1 trial · Inventory r1 results have one trial each: a single row and no range'],
+  ]);
+  para(g, 2, y + 1, W - 4, 'Elapsed is the sum of each trial’s task processes; the time between trials (a fresh baseline copy) is not part of any trial.', 'mu');
+  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: 'enter', d: 'Open trial' }, { k: 't', d: 'Timing' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 

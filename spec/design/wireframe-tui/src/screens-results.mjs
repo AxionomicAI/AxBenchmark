@@ -3,7 +3,7 @@
 // Scores and shortlists are computed by results-data.mjs from raw grades and measurements.
 import { Grid, fit, len, wrap, header, footer, table, tabs, button, buttons, input, check, para, kv, notice, toast, modal, scrollbar, select, selects } from './lib.mjs';
 import { SHA, s8, mid, step } from './screens.mjs';
-import { RESULTS, byId, JUDGES, QCATS, QW, SPEC, dur, usd, checksText, statusText, f1, f2, quality, normalize, gates, combined, shortlists, byCost, validate } from './results-data.mjs';
+import { RESULTS, byId, JUDGES, QCATS, QW, SPEC, dur, usd, checksText, statusText, f1, f2, quality, normalize, gates, combined, shortlists, byCost, validate, basisText, BACKEND_CATS, TRIAL_RUN, TRIAL_CONFIGS, stats, trialGates, BILLING, billingText } from './results-data.mjs';
 
 const pct = (x) => `${(x * 100).toFixed(1)}%`;
 const modelEffort = (r) => `${r.model} ${r.effort}`;
@@ -13,15 +13,16 @@ const machineCell = (r) => `${r.src === 'imported' ? '↓' : ' '} ${r.machine}`;
 
 function resultsChrome(g, sz, tab, st = {}) {
   const W = g.w, compact = sz.id === 'compact';
-  header(g, 'AxBenchmark', compact ? 'Results · r1' : 'Results · Inventory web app r1');
+  header(g, 'AxBenchmark', st.title ?? (compact ? 'Results · r1' : 'Results · Inventory web app r1'));
   g.fill(0, 1, W, 1, 'B1');
-  g.text(1, 1, fit(compact
+  g.text(1, 1, fit(st.bar ?? (compact
     ? `★ r1 · sha256 ${s8(SHA.inv1)}…${SHA.inv1.slice(-8)} · 12 results · 8 local · 4 ↓`
-    : `★ Inventory web app · r1 · sha256 ${mid(SHA.inv1)} · 12 results · 8 local · 4 imported · same SHA-256 only`, W - 2));
+    : `★ Inventory web app · r1 · sha256 ${mid(SHA.inv1)} · 12 results · 8 local · 4 imported · same SHA-256 only`), W - 2));
   g.region(0, 1, W, 1, 'Static', '#identity-bar');
   tabs(g, 0, 2, W, ['Results', 'Rankings'], tab, { go: ['Results', 'Rankings'] });
-  const wl = st.alt ? '▲ alternative weights' : '● original weights';
-  g.text(W - 1 - len(wl), 2, wl, st.alt ? 'bd' : 'mu');
+  const wl = st.alt ? '▲ alternative weights' : st.profile ? '▲ profile defaults' : '● original weights';
+  g.text(W - 1 - len(wl), 2, wl, st.alt || st.profile ? 'bd' : 'mu');
+  if (st.tariff) { const tl = '▲ analysis tariff 0.22 USD/kWh · alternative'; g.text(W - 4 - len(wl) - len(tl), 2, tl, 'bd'); }
   g.region(0, 2, W, 2, 'TabbedContent', '#results-tabs');
 }
 
@@ -29,9 +30,24 @@ function resultsChrome(g, sz, tab, st = {}) {
 
 const SEL = byId['R-0924lab-1'];
 
-export function results(sz, focus = 'results') {
+// Run 2026-10-01-a halted when the first check after T2-data.md changed on disk detected a different SHA-256 (D9).
+const HALTED = [
+  ['R-1001a-1', 'Claude Code', 'claude-opus-5-5 medium', '13✓ 8○', 2.71, 2472],
+  ['R-1001a-2', 'Codex', 'gpt-6-sol medium', '13✓ 8○', 1.64, 2472],
+  ['R-1001a-3', 'Grok CLI', 'grok-4.7-fast default', '11✓ 10○', 0.48, 2472],
+  ['R-1001a-4', 'Pi', 'qwen3.5-35b-a3b default', '6✓ 15○', null, 2472],
+];
+const TARIFF = 0.22;
+const costCell = (r, st) => {
+  if (st.tariff && r.basis === 'energy') return { t: `▲ ${usd(r.kwh * TARIFF)}`, f: 'bd' };
+  return r.partial?.cost ? { t: `▲ ${usd(r.cost)}`, f: 'bd' } : usd(r.cost);
+};
+
+export function results(sz, focus = 'results', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
-  resultsChrome(g, sz, 0);
+  resultsChrome(g, sz, 0, st.halted
+    ? { bar: `★ Inventory web app · r1 · sha256 ${mid(SHA.inv1)} · 12 comparable results · 4 interrupted, not comparable` }
+    : st.tariff ? { tariff: true } : {});
   const ff = focus === 'filters';
   if (compact) {
     const x = selects(g, 1, 4, W - 2, [{ l: 'Machine', w: 12, v: 'all · 2', focus: ff, sel: '#filter-machine' }, { l: 'Judge', w: 18, v: 'all · 2 groups', sel: '#filter-judge' }]);
@@ -39,26 +55,32 @@ export function results(sz, focus = 'results') {
   } else {
     selects(g, 1, 4, W - 2, [
       { l: 'Machine', w: 15, v: 'all · 2', focus: ff, sel: '#filter-machine' },
-      { l: 'Config', w: 22, v: 'all · 9', sel: '#filter-config' },
+      { l: 'Config', w: 22, v: st.halted ? 'Four harnesses · defa…' : 'all · 9', sel: '#filter-config' },
       { l: 'Env', w: 11, v: 'all', sel: '#filter-env' },
       { l: 'Jobs', w: 7, v: 'all', sel: '#filter-jobs' },
       { l: 'Judge', w: 18, v: 'all · 2 groups', sel: '#filter-judge' },
     ]);
   }
   g.region(0, 4, W, 1, 'Horizontal', '#filters');
-  const rows = byCost(RESULTS);
-  const cur = rows.indexOf(SEL);
+  const rows = st.halted ? byCost(RESULTS.filter((r) => r.run === '2026-09-28-a')) : byCost(RESULTS);
+  const cur = st.halted ? rows.length + 2 : rows.indexOf(SEL);
   const tf = focus === 'results';
   const th = compact ? 12 : 15;
-  g.box(0, 5, W, th, { f: tf ? 'ac' : 'ln', title: 'Results · 12 of 12', sub: 'highest known cost first · unknown last' });
+  g.box(0, 5, W, th, { f: tf ? 'ac' : 'ln', title: st.halted ? 'Results · Four harnesses · defaults · 8' : 'Results · 12 of 12', sub: st.halted ? 'comparable first · interrupted last' : 'highest known cost first · unknown last' });
   const status = (r) => ({ t: statusText(r), f: r.status === 'complete' ? '' : 'bd' });
   if (compact) {
     table(g, 1, 6, W - 3, [{ l: 'Result', w: 12 }, { l: 'Harness', w: 12 }, { l: 'Model · effort', w: 28 }, { l: 'Jdg', w: 4 }, { l: 'Status', w: 12 }, { l: 'Cost', w: 9, al: 'right' }],
-      rows.map((r) => ({ v: [r.id, r.h, modelEffort(r), r.judge, status(r), usd(r.cost)], go: 'ResultOrigin' })), { cursor: cur, focused: tf, max: 9 });
+      rows.map((r) => ({ v: [r.id, r.h, modelEffort(r), r.judge, status(r), costCell(r, st)], go: 'ResultOrigin' })), { cursor: cur, focused: tf, max: 9 });
     scrollbar(g, W - 2, 7, 9, 0, 7);
   } else {
-    table(g, 1, 6, W - 2, [{ l: 'Result', w: 12 }, { l: 'Machine', w: 17 }, { l: 'Harness', w: 12 }, { l: 'Model · effort', w: 26 }, { l: 'Env', w: 8 }, { l: 'Judge', w: 6 }, { l: 'Status', w: 12 }, { l: 'Checks', w: 8 }, { l: 'Cost', w: 9, al: 'right' }, { l: 'Time', w: 8, al: 'right' }],
-      rows.map((r) => ({ v: [r.id, machineCell(r), r.h, modelEffort(r), r.env, r.judge, status(r), checksText(r.checks), usd(r.cost), dur(r.time)], go: 'ResultOrigin' })), { cursor: cur, focused: tf });
+    const trs = rows.map((r) => ({ v: [r.id, machineCell(r), r.h, modelEffort(r), r.env, r.judge, status(r), checksText(r.checks), costCell(r, st), dur(r.time)], go: 'ResultOrigin' }));
+    if (st.halted) {
+      trs.push({ v: [] });
+      HALTED.forEach(([id, h, me, ch, c, t]) => trs.push({ v: [id, '  mike-mbp-m4', h, me, 'clean', '—', { t: '✗ interrupted', f: 'bd' }, ch, c == null ? 'unknown' : { t: `▲ ${usd(c)}`, f: 'bd' }, { t: `▲ ${dur(t)}`, f: 'bd' }], go: 'ResultOrigin' }));
+    }
+    table(g, 1, 6, W - 2, [{ l: 'Result', w: 12 }, { l: 'Machine', w: 17 }, { l: 'Harness', w: 12 }, { l: 'Model · effort', w: 25 }, { l: 'Env', w: 8 }, { l: 'Jdg', w: 4 }, { l: 'Status', w: 15 }, { l: 'Checks', w: 8 }, { l: 'Cost', w: 9, al: 'right' }, { l: 'Time', w: 8, al: 'right' }],
+      trs, { cursor: cur, focused: tf });
+    if (st.halted) g.text(2, 7 + rows.length, fit('── run 2026-10-01-a · halted 21:44 · template identity invalidated · not comparable ──', W - 4), 'mu');
   }
   g.region(1, 6, W - 2, th - 2, 'DataTable', '#results');
 
@@ -74,11 +96,33 @@ export function results(sz, focus = 'results') {
     for (const [k, d, go] of [['o', 'Open', 'ResultOrigin'], ['j', 'Review again', 'Rejudge'], ['x', 'Export ZIP', 'ExportResult']]) {
       g.text(x, y + 4, k, 'ac bd'); g.text(x + 2, y + 4, d); g.link(x, y + 4, len(d) + 2, 1, 'go:' + go); x += len(d) + 5;
     }
-    footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateResults' }, { k: 'f', d: 'Filter' }, { k: 'o', d: 'Open', go: 'ResultOrigin' }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }]);
+    footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateResults' }, { k: 'f', d: 'Filter' }, { k: 'o', d: 'Open', go: 'ResultOrigin' }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'e', d: 'Tariff', go: 'TariffAnalysis' }]);
     return g;
   }
 
   const y0 = 5 + th, bh = H - 2 - y0;
+  const resFooter = [{ k: 'esc', d: 'Back', go: 'TemplateResults' }, { k: '1-2', d: 'Tab' }, { k: 'f', d: 'Filter' }, { k: 'o', d: 'Open', go: 'ResultOrigin' }, { k: 'j', d: 'Rejudge', go: 'Rejudge' }, { k: 'i', d: 'Import', go: 'ResultImport' }, { k: 'x', d: 'Export', go: 'ExportResult' }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'e', d: 'Tariff', go: 'TariffAnalysis' }];
+  if (st.halted) {
+    g.box(0, y0, 60, bh, { title: 'Selected · R-1001a-2 · interrupted', f: 'ln' });
+    g.region(0, y0, 60, bh, 'VerticalScroll', '#result-summary.pane');
+    kv(g, 2, y0 + 1, 12, 56, [
+      ['Status', '✗ interrupted · identity invalidated', 'bd'],
+      ['Detected', '21:44:09 · first identity check after T4'],
+      ['Approved', [SHA.inv1.slice(0, 32), SHA.inv1.slice(32)]],
+      ['Computed', [SHA.changed.slice(0, 32), SHA.changed.slice(32)], 'bd'],
+      ['Changed', 'tasks/T2-data.md'],
+      ['Halted', 'whole run · explicit-stop cleanup'],
+      ['Comparable', '✗ never · not rebound to any revision', 'bd'],
+      ['Evidence', 'kept · snapshots T1–T4, logs, checks'],
+    ]);
+    g.box(60, y0, 60, bh, { title: 'Why these results are excluded', f: 'ln' });
+    g.region(60, y0, 60, bh, 'Static', '#retained');
+    let y = notice(g, 62, y0 + 1, 56, 'error', 'Template identity invalidated', 'r1’s files changed on disk while run 2026-10-01-a was running, so the whole run stopped at the first detection. Its 4 results are recorded as interrupted, are never compared or ranked, and are never relabelled with another identity.');
+    para(g, 62, y + 1, 56, 'Approved revisions are written read-only; a changed file means something outside AxBenchmark edited it. Save the edit as a new revision (e on the template) and run again.', 'mu');
+    buttons(g, W - 1, H - 2, [{ label: 'Open result', go: 'ResultOrigin', focus: focus === 'open' }, { label: 'Open evidence', go: 'EvidenceViewer' }, { label: 'Export result ZIP', go: 'ExportResult' }]);
+    footer(g, resFooter);
+    return g;
+  }
   g.box(0, y0, 60, bh, { title: `Selected · ${r.id}`, f: 'ln' });
   g.region(0, y0, 60, bh, 'VerticalScroll', '#result-summary.pane');
   kv(g, 2, y0 + 1, 12, 56, [
@@ -92,7 +136,8 @@ export function results(sz, focus = 'results') {
     ['Env · jobs', 'clean · 3 configurations at once'],
     ['Judge', `B · ${JUDGES.B.long} · original`],
     ['Weights', 'original · web v1 · ranking 1:1:1'],
-    ['Cost basis', 'API list price · 2026-09 table'],
+    ['Cost basis', fit(basisText(r), 44)],
+    ['Billing', `${billingText(r)}${BILLING[r.id][1] === 'status' ? ' · from the harness status' : ''}`],
     ['Source id', `${r.id} · kept on re-export`],
   ]);
   g.box(60, y0, 60, bh, { title: 'Retained for this result', f: 'ln' });
@@ -107,10 +152,77 @@ export function results(sz, focus = 'results') {
     g.text(62, y, '✓', 'ac'); g.text(64, y++, t, 'bd');
     y = para(g, 64, y, 54, d, 'mu');
   }
-  notice(g, 62, y + 1, 56, 'warning', 'Validated, not certified', 'The SHA-256 proves the benchmark definition and the payload manifest proves the package is intact. Neither proves how lab-linux-4090 ran it.');
-  buttons(g, W - 1, H - 2, [{ label: 'Open result', go: 'ResultOrigin', focus: focus === 'open' }, { label: 'Review again…', go: 'Rejudge' }, { label: 'Import results…', go: 'ResultImport' }, { label: 'Export result ZIP', go: 'ExportResult' }, { label: 'HTML report', v: 'primary', go: 'ReportReady' }]);
+  if (st.tariff) {
+    const e = byId['R-0919lab-1'];
+    const ny = y + 1;
+    y = notice(g, 62, ny, 56, 'warning', `Analysis tariff ${TARIFF.toFixed(2)} USD/kWh · alternative`, 'Energy estimates only (1 of 12). Records keep the tariff frozen at launch; nothing is rewritten.');
+    g.region(62, ny, 56, y - ny, 'Static', '#analysis-tariff.notice.-warning');
+    kv(g, 62, y + 1, 12, 56, [['R-0919lab-1', `${(e.kwh * 1000).toFixed(1)} Wh × ${TARIFF.toFixed(2)} = $${(e.kwh * TARIFF).toFixed(4)}`], ['Frozen', `× ${e.tariff.toFixed(2)} = $${e.cost.toFixed(4)} · unchanged`]]);
+  } else notice(g, 62, y + 1, 56, 'warning', 'Validated, not certified', 'The SHA-256 proves the benchmark definition and the payload manifest proves the package is intact. Neither proves how lab-linux-4090 ran it.');
+  buttons(g, W - 1, H - 2, st.tariff
+    ? [{ label: 'Open result', go: 'ResultOrigin' }, { label: 'Change tariff…', go: 'TariffAnalysis' }, { label: 'Reset to frozen tariff', v: 'primary', go: 'Results', focus: focus === 'reset' }]
+    : [{ label: 'Open result', go: 'ResultOrigin', focus: focus === 'open' }, { label: 'Review again…', go: 'Rejudge' }, { label: 'Import results…', go: 'ResultImport' }, { label: 'Export result ZIP', go: 'ExportResult' }, { label: 'HTML report', v: 'primary', go: 'ReportReady' }]);
   g.region(0, H - 2, W, 1, 'Horizontal', '.actions');
-  footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateResults' }, { k: '1-2', d: 'Tab' }, { k: 'f', d: 'Filter' }, { k: 'o', d: 'Open', go: 'ResultOrigin' }, { k: 'j', d: 'Rejudge', go: 'Rejudge' }, { k: 'i', d: 'Import', go: 'ResultImport' }, { k: 'x', d: 'Export', go: 'ExportResult' }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  footer(g, resFooter);
+  return g;
+}
+
+// ---------------------------------------------------------------- M02 · Results tab · configurations with several trials (D7)
+
+// Shared fixture from results-data.mjs: Orders REST API r3, run 2026-09-27-t, 2 configurations × 3 trials, judge group A.
+const BW = BACKEND_CATS.map((c) => c[3]);
+const tq = (t) => quality(t.g, BW);
+export const trialRows = (opts = {}) => {
+  const rows = [];
+  TRIAL_CONFIGS.forEach((c) => {
+    const cs = stats(c.trials.map((t) => t.cost)), ts = stats(c.trials.map((t) => t.time)), qs = stats(c.trials.map(tq));
+    const bad = trialGates(c);
+    c.trials.forEach((t, i) => rows.push({ v: [t.id, `${t.trial} of ${TRIAL_RUN.trials}`, i === 0 ? c.h : '', i === 0 ? `${c.model} ${c.effort}` : '', t.checks.f ? { t: '✓ complete', f: '' } : '✓ complete', { t: checksText(t.checks), f: t.checks.f ? 'bd' : '' }, usd(t.cost), dur(t.time), f2(tq(t))], go: opts.go ?? 'ResultOrigin' }));
+    rows.push({ v: ['', 'mean', '', '', bad.length ? { t: '✗ trial ineligible', f: 'bd' } : '✓ eligible', '', usd(cs.mean), dur(Math.round(ts.mean)), f2(qs.mean)], f: 'bd' });
+    rows.push({ v: ['', 'min–max', '', '', '', '', `${cs.min.toFixed(2)}–${cs.max.toFixed(2)}`, `${dur(ts.min)}–${dur(ts.max)}`, `${f2(qs.min)}–${f2(qs.max)}`], f: 'mu' });
+  });
+  return rows;
+};
+
+export function resultsTrials(sz, focus = 'results') {
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
+  resultsChrome(g, sz, 0, { title: 'Results · Orders REST API r3', bar: `◆ Orders REST API · r3 · sha256 ${mid(SHA.orders)} · 6 results · run ${TRIAL_RUN.run} · 2 configurations × 3 trials` });
+  selects(g, 1, 4, W - 2, [
+    { l: 'Machine', w: 15, v: 'all · 1', focus: focus === 'filters', sel: '#filter-machine' },
+    { l: 'Config', w: 22, v: 'all · 2', sel: '#filter-config' },
+    { l: 'Env', w: 11, v: 'all', sel: '#filter-env' },
+    { l: 'Jobs', w: 7, v: 'all', sel: '#filter-jobs' },
+    { l: 'Judge', w: 18, v: 'all · 1 group', sel: '#filter-judge' },
+  ]);
+  g.region(0, 4, W, 1, 'Horizontal', '#filters');
+  const rows = trialRows();
+  const tf = focus === 'results';
+  const th = rows.length + 3;
+  g.box(0, 5, W, th, { f: tf ? 'ac' : 'ln', title: 'Results · 6 trials of 2 configurations', sub: 'every trial, then mean and min–max' });
+  table(g, 1, 6, W - 2, [{ l: 'Result', w: 12 }, { l: 'Trial', w: 9 }, { l: 'Harness', w: 12 }, { l: 'Model · effort', w: 25 }, { l: 'Status', w: 19 }, { l: 'Checks', w: 8 }, { l: 'Cost', w: 11, al: 'right' }, { l: 'Time', w: 12, al: 'right' }, { l: 'Q', w: 10, al: 'right' }], rows, { cursor: 8, focused: tf });
+  g.region(1, 6, W - 2, th - 2, 'DataTable', '#results');
+
+  const c = TRIAL_CONFIGS[1];
+  const cs = stats(c.trials.map((t) => t.cost)), ts = stats(c.trials.map((t) => t.time)), qs = stats(c.trials.map(tq));
+  const y0 = 5 + th, bh = H - 2 - y0;
+  g.box(0, y0, 60, bh, { title: `Selected · ${c.h} · ${c.model} · mean of 3`, f: focus === 'summary' ? 'ac' : 'ln' });
+  g.region(0, y0, 60, bh, 'VerticalScroll', '#result-summary.pane');
+  kv(g, 2, y0 + 1, 12, 56, [
+    ['Mean', `cost ${usd(cs.mean)} · time ${dur(Math.round(ts.mean))} · Q ${f2(qs.mean)}`],
+    ['Min–max', `${usd(cs.min)}–${usd(cs.max)} · ${dur(ts.min)}–${dur(ts.max)} · Q ${f2(qs.min)}–${f2(qs.max)}`],
+    ['Cost basis', fit(`estimate · ${c.price}`, 44)],
+    ['Judging', '3 sessions · judge A · one per trial'],
+    ['Rankings', 'use the means, never a single trial'],
+    ['Eligible', ['✗ trial ineligible · every trial must be', `eligible: ${trialGates(c)[0]}`], 'bd'],
+  ]);
+  g.box(60, y0, 60, bh, { title: 'How trials run', f: 'ln' });
+  g.region(60, y0, 60, bh, 'Static', '#retained');
+  let y = y0 + 1;
+  for (const t of ['Trials of one configuration run one after another, each from a fresh copy of the baseline.', 'Each trial is its own result, linked to its configuration and trial index, with its own review.', 'Default 1 trial; set in Setup and frozen at launch.']) {
+    g.text(62, y, '●', 'ac'); y = para(g, 64, y, 54, t, 'mu');
+  }
+  buttons(g, W - 1, H - 2, [{ label: 'Open trial', go: 'ResultOrigin', focus: focus === 'open' }, { label: 'Rankings', go: 'RankingsTrials' }, { label: 'Export result ZIP', go: 'ExportResult' }, { label: 'HTML report', v: 'primary', go: 'ReportReady' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateResults' }, { k: '1-2', d: 'Tab', go: 'RankingsTrials' }, { k: 'f', d: 'Filter' }, { k: 'o', d: 'Open trial', go: 'ResultOrigin' }, { k: 'j', d: 'Rejudge', go: 'Rejudge' }, { k: 'x', d: 'Export', go: 'ExportResult' }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'e', d: 'Tariff', go: 'TariffAnalysis' }]);
   return g;
 }
 
@@ -131,8 +243,8 @@ function resultChrome(g, sz, r, tab) {
   g.region(0, 2, W, 2, 'TabbedContent', '#result-tabs');
 }
 const resultFooter = (compact) => (compact
-  ? [{ k: 'esc', d: 'Back', go: 'Results' }, { k: '1-3', d: 'Tab' }, { k: 'j', d: 'Rejudge', go: 'Rejudge' }, { k: 'x', d: 'Export', go: 'ExportResult' }]
-  : [{ k: 'esc', d: 'Back', go: 'Results' }, { k: '1-3', d: 'Tab' }, { k: 'j', d: 'Review again', go: 'Rejudge' }, { k: 'x', d: 'Export ZIP', go: 'ExportResult' }, { k: 'l', d: 'Logs' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  ? [{ k: 'esc', d: 'Back', go: 'Results' }, { k: '1-3', d: 'Tab' }, { k: 'j', d: 'Rejudge', go: 'Rejudge' }, { k: 'x', d: 'Export', go: 'ExportResult' }, { k: 'l', d: 'Logs', go: 'EvidenceViewer' }]
+  : [{ k: 'esc', d: 'Back', go: 'Results' }, { k: '1-3', d: 'Tab' }, { k: 'j', d: 'Review again', go: 'Rejudge' }, { k: 'x', d: 'Export ZIP', go: 'ExportResult' }, { k: 'l', d: 'Logs', go: 'EvidenceViewer' }, { k: 'tab', d: 'Focus', do: 'next' }]);
 
 export function resultOrigin(sz, focus = 'definition') {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
@@ -150,6 +262,8 @@ export function resultOrigin(sz, focus = 'definition') {
     ['Entry', 'Claude Code · Anthropic'],
     ['Model', 'claude-sonnet-5-5 · medium (known effort)'],
     ['Catalog', ['bundled 2026.09.2 + discovered 2026-09-24', 'for Claude Code 3.4.1 · account lab']],
+    ['Billing', `${billingText(r)} · harness status, frozen at launch`],
+    ['Currency', 'display USD · rate snapshot USD 1'],
     ['Quality wts', 'web v1 · 25 15 20 25 10 5 · original'],
     ['Ranking wts', 'cost 1 · time 1 · quality 1 · original'],
     ['Judge', JUDGES.B.long],
@@ -177,6 +291,7 @@ export function resultOrigin(sz, focus = 'definition') {
     ['Effort', 'medium requested · effective unverified'],
     ['Environment', 'clean · managed settings · no limitations'],
     ['Concurrency', '3 configurations at once (--jobs 3)'],
+    ['Trial', '1 of 1 · fresh baseline · own review'],
     ['Credentials', 'ANTHROPIC_API_KEY · value never stored'],
   ]);
   notice(g, 1, 4 + bh + 1, W - 2, 'warning', 'Imported results are validated, not certified',
@@ -235,18 +350,18 @@ export function resultOutcomes(sz, focus = 'tasks') {
   g.box(60, 15, 60, 16, { f: focus === 'coverage' ? 'ac' : 'ln', title: 'Measurements · sources and coverage' });
   g.region(60, 15, 60, 16, 'Static', '#coverage.kv');
   kv(g, 62, 16, 15, 56, [
-    ['Cost basis', 'API list price · xAI table 2026-09-15'],
+    ['Cost basis', fit(basisText(r), 41)],
     ['Tokens', 'harness-reported · 7 of 7 tasks'],
     ['Cache tokens', '✗ not exposed by Grok CLI 1.9.2'],
     ['Effect', 'may overstate cost (no cache discount)'],
     ['Elapsed', 'wall clock per task · 7 of 7'],
     ['CPU', 'psutil · 1 s samples · 100% of the run'],
-    ['GPU', 'not sampled · powermetrics needs root'],
+    ['GPU', 'not sampled · insufficient permission'],
     ['Power', 'unavailable · same cause'],
     ['Telemetry', 'limits travel with exports and reports'],
   ]);
   para(g, 1, 32, W - 2, 'Process outcome (exit status), acceptance checks (✓ passed · ✗ failed · ? unverified · ○ not run) and quality grades are recorded separately. A zero exit never implies a passed check, and neither implies a grade.', 'mu');
-  buttons(g, W - 1, H - 2, [{ label: 'Open check log', focus: focus === 'log' }, { label: 'Open snapshot' }, { label: 'Review again…', go: 'Rejudge' }]);
+  buttons(g, W - 1, H - 2, [{ label: 'Open check log', go: 'EvidenceViewer', focus: focus === 'log' }, { label: 'Open snapshot', go: 'EvidenceViewer' }, { label: 'Review again…', go: 'Rejudge' }]);
   footer(g, resultFooter(false));
   return g;
 }
@@ -289,7 +404,7 @@ export function resultReviews(sz, focus = 'grades') {
   let y = para(g, 62, 15, 56, 'Imported reviews keep their original judge, grades and evidence. To compare this result under judge group A, request a fresh review explicitly; the original stays beside it and its cost is recorded as judging cost.', 'mu');
   button(g, 62, y + 1, 'Review again…', { go: 'Rejudge', focus: focus === 'additional' });
   para(g, 1, 30, W - 2, 'Grades from different judge configurations are never merged. This result ranks in judge group B with its original review.', 'mu');
-  buttons(g, W - 1, H - 2, [{ label: 'Open evidence' }, { label: 'Score breakdown', go: 'ScoreBreakdown' }]);
+  buttons(g, W - 1, H - 2, [{ label: 'Open evidence', go: 'EvidenceViewer' }, { label: 'Score breakdown', go: 'ScoreBreakdown' }]);
   footer(g, resultFooter(false));
   return g;
 }
@@ -433,12 +548,12 @@ export function rankings(sz, focus = 'combined', st = {}) {
   const gf = focus === 'group';
   if (compact) {
     g.text(1, 4, 'Group', 'mu'); select(g, 7, 4, 24, `A · ${JUDGES.A.short}`, { focus: gf });
-    g.text(33, 4, fit(`weights ${rw.join(':')} · ${st.alt ? 'alternative' : 'original'}`, W - 34), st.alt ? 'bd' : 'mu');
+    g.text(33, 4, fit(`weights ${rw.join(':')} · ${st.alt ? 'alternative' : st.profile ? 'profile defaults' : 'original'}`, W - 34), st.alt || st.profile ? 'bd' : 'mu');
   } else {
     g.text(1, 4, 'Judge group', 'mu'); select(g, 13, 4, 44, `A · ${JUDGES.A.long}`, { focus: gf });
     g.region(13, 4, 44, 1, 'Select', '#judge-group');
     g.text(59, 4, 'Weights', 'mu');
-    g.text(67, 4, fit(st.alt ? `alternative · quality web v1 · ranking ${rw.join(':')}` : 'original · quality web v1 · ranking 1:1:1', 44), st.alt ? 'bd' : '');
+    g.text(67, 4, fit(st.alt ? `alternative · quality web v1 · ranking ${rw.join(':')}` : st.profile ? 'profile defaults · web v1 · ranking 1:1:1' : 'original · quality web v1 · ranking 1:1:1', 44), st.alt || st.profile ? 'bd' : '');
     g.text(W - 7, 4, 'w', 'ac bd'); g.text(W - 5, 4, 'Edit'); g.link(W - 7, 4, 6, 1, 'go:WeightsEditor');
   }
   const cf = focus === 'combined';
@@ -490,15 +605,54 @@ export function rankings(sz, focus = 'combined', st = {}) {
   g.region(1, y + 1, W - 2, GROUP_A.length + 1, 'DataTable', '#all-entries');
   y += GROUP_A.length + 3;
   const minR = res.rows.find((x) => x.r.time === res.minT).r;
-  y = para(g, 1, y, W - 2, wc > 0 && res.minC === 0
+  y = para(g, 1, y, W - 2, st.profile
+    ? 'R-0925b-1 and R-0925b-2 froze ranking 2:1:1 (Claude effort sweep); the other 6 froze 1:1:1, so the profile’s default weights rank the group. Quality uses the same web v1 category weights for every entry. w: any result’s original weights, or custom.'
+    : wc > 0 && res.minC === 0
     ? `Minimums from the ${res.rows.length} combined-eligible entries: verified cost $0.00, so each verified $0 entry earns the full ${f1(100 * wc)} cost points and positive costs earn 0. Time minimum ${dur(res.minT)} (${minR.id}). Unknown cost is never treated as 0.`
     : `Minimums from the ${res.rows.length} combined-eligible entries: cost ${usd(res.minC)} · time ${dur(res.minT)}.`, 'mu');
   if (st.alt) notice(g, 1, y, W - 2, 'warning', 'Alternative weights · nothing original was changed', null);
+  else if (st.profile) {
+    notice(g, 1, y, W - 2, 'warning', 'Profile defaults: original weights differ across results', null);
+    g.region(1, y, W - 2, 1, 'Static', '#weights-label.-profile');
+  }
   else g.text(1, y, fit('Judge group B (4 imported, gpt-6-astra) ranks separately · g switches. Full precision; exact ties break by result id.', W - 2), 'mu');
   buttons(g, W - 1, H - 2, st.alt
-    ? [{ label: 'Reset to original', v: 'primary', go: 'Rankings', focus: focus === 'reset' }, { label: 'Save preset…' }, { label: 'Export configuration' }, { label: 'HTML report', go: 'ReportReady' }]
+    ? [{ label: 'Reset to original', v: 'primary', go: 'Rankings', focus: focus === 'reset' }, { label: 'Save preset…', go: 'PromptSavePreset' }, { label: 'Export configuration', go: 'PromptExportConfig' }, { label: 'HTML report', go: 'ReportReady' }]
+    : st.profile
+    ? [{ label: 'Score breakdown', go: 'ScoreBreakdown' }, { label: 'Use a result’s original weights…', go: 'WeightsEditor', focus: focus === 'originals' }, { label: 'HTML report', v: 'primary', go: 'ReportReady' }]
     : [{ label: 'Score breakdown', go: 'ScoreBreakdown', focus: focus === 'breakdown' }, { label: 'Edit weights…', go: 'WeightsEditor' }, { label: 'HTML report', v: 'primary', go: 'ReportReady' }]);
   footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateResults' }, { k: '1-2', d: 'Tab', go: 'Results' }, { k: 'g', d: 'Group' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'b', d: 'Breakdown', go: 'ScoreBreakdown' }, { k: 'r', d: 'Reset', go: 'Rankings', off: !st.alt }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  return g;
+}
+
+// ---------------------------------------------------------------- M06 · Rankings with trials (means, per-trial ranges)
+
+export function rankingsTrials(sz, focus = 'combined') {
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
+  resultsChrome(g, sz, 1, { title: 'Results · Orders REST API r3', bar: `◆ Orders REST API · r3 · sha256 ${mid(SHA.orders)} · 6 results · run ${TRIAL_RUN.run} · 2 configurations × 3 trials` });
+  g.text(1, 4, 'Judge group', 'mu'); select(g, 13, 4, 44, `A · ${JUDGES.A.long}`, { focus: focus === 'group' });
+  g.region(13, 4, 44, 1, 'Select', '#judge-group');
+  g.text(59, 4, 'Weights', 'mu'); g.text(67, 4, fit('original · backend v1 · ranking 1:1:1', 44));
+  const S2 = TRIAL_CONFIGS.map((c) => ({ c, cs: stats(c.trials.map((t) => t.cost)), ts: stats(c.trials.map((t) => t.time)), qs: stats(c.trials.map(tq)), bad: trialGates(c) }));
+  const ok = S2.filter((x) => !x.bad.length);
+  const minC = Math.min(...ok.map((x) => x.cs.mean)), minT = Math.min(...ok.map((x) => x.ts.mean));
+  const third = 100 / 3;
+  const scored = ok.map((x) => ({ ...x, score: third * minC / x.cs.mean + third * minT / x.ts.mean + third * x.qs.mean / 5 }));
+  const cf = focus === 'combined';
+  g.box(0, 5, W, scored.length + 3, { f: cf ? 'ac' : 'ln', title: 'Combined · cost 33.3% · time 33.3% · quality 33.3% · means of 3 trials', sub: `${scored.length} of ${S2.length} qualify` });
+  const cols = [{ l: '#', w: 4 }, { l: 'Configuration', w: 30 }, { l: 'Trials', w: 7 }, { l: 'Score', w: 8, al: 'right' }, { l: 'Cost', w: 8, al: 'right' }, { l: 'range', w: 12, al: 'right' }, { l: 'Time', w: 8, al: 'right' }, { l: 'range', w: 14, al: 'right' }, { l: 'Q', w: 7, al: 'right' }, { l: 'range', w: 11, al: 'right' }, { l: '', w: 9 }];
+  table(g, 1, 6, W - 2, cols, scored.map((x, i) => ({ v: [String(i + 1), `${x.c.h} · ${x.c.model} ${x.c.effort}`, '3 of 3', { t: f1(x.score), f: 'bd' }, usd(x.cs.mean), `${x.cs.min.toFixed(2)}–${x.cs.max.toFixed(2)}`, dur(Math.round(x.ts.mean)), `${dur(x.ts.min)}–${dur(x.ts.max)}`, f2(x.qs.mean), `${f2(x.qs.min)}–${f2(x.qs.max)}`, ''] })), { cursor: 0, focused: cf });
+  g.region(1, 6, W - 2, scored.length + 1, 'DataTable', '#combined');
+  let y = 5 + scored.length + 3;
+  const af = focus === 'all';
+  g.box(0, y, W, S2.length + 3, { f: af ? 'ac' : 'ln', title: `All configurations · judge group A · ${S2.length}`, sub: 'excluded stay listed with their reason' });
+  table(g, 1, y + 1, W - 2, [{ l: 'Configuration', w: 39 }, { l: 'Trials', w: 7 }, { l: 'Cost', w: 8, al: 'right' }, { l: 'Time', w: 8, al: 'right' }, { l: 'Q', w: 6, al: 'right' }, { l: '', w: 2 }, { l: 'Combined ranking', w: W - 2 - 70 }],
+    S2.map((x) => ({ v: [`${x.c.h} · ${x.c.model} ${x.c.effort}`, '3 of 3', usd(x.cs.mean), dur(Math.round(x.ts.mean)), f2(x.qs.mean), '', x.bad.length ? { t: `✗ trial ineligible · ${x.bad[0]}${x.bad.length > 1 ? ` +${x.bad.length - 1}` : ''}`, f: 'mu' } : '✓ ranked'] })), { cursor: af ? 1 : -1, focused: af });
+  g.region(1, y + 1, W - 2, S2.length + 1, 'DataTable', '#all-entries');
+  y += S2.length + 4;
+  y = para(g, 1, y, W - 2, 'Each configuration ranks by the mean of its trials; the ranges show the spread and never change the order. A configuration qualifies only when every trial does, so one failed check in one trial excludes it. Minimums come from the qualifying means.', 'mu');
+  buttons(g, W - 1, H - 2, [{ label: 'Score breakdown', go: 'ScoreBreakdown' }, { label: 'Edit weights…', go: 'WeightsEditor' }, { label: 'HTML report', v: 'primary', go: 'ReportReady' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultsTrials' }, { k: '1-2', d: 'Tab', go: 'ResultsTrials' }, { k: 'g', d: 'Group' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'b', d: 'Breakdown', go: 'ScoreBreakdown' }, { k: 'h', d: 'Report', go: 'ReportGenerate' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 

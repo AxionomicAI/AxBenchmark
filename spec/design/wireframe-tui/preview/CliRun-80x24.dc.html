@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 900px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1320px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>run --no-tui</b> · axbenchmark run --no-tui · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -73,7 +73,7 @@ body{margin:0}
 <div class="r"><span class="B0"> Validating benchmark.yaml · 5 entries                                          </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> template r1 · sha256 3f9c2e71… recomputed                                  </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> entries ready · efforts known · judge set · weights                        </span></div>
-<div class="r"><span class="B0"> Frozen → runs/2026-10-02-a/  (template, config, weights)                       </span></div>
+<div class="r"><span class="B0"> Frozen → runs/2026-10-02-a/ · template, config, weights, prices, rates         </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">jobs 4 · one per harness · tasks sequential · 3:00:00/task                    </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                </span></div>
 <div class="r"><span class="B0"> 09:12:06  start  #1 claude #3 codex #4 grok #5 pi                              </span></div>
@@ -106,18 +106,18 @@ body{margin:0}
 ├─ --no-tui          plain progress
 └─ --jobs N          default: per harness, ≤ 4</pre>
 <h3>Output contract</h3>
-<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>never prompts; a missing choice is an error</td></tr></table>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
 <h3>Arguments and exit codes</h3>
-<table><tr><td><kbd>--config FILE</kbd></td><td><span class="mut">template SHA-256, entries, policy, judge, both weight sets</span></td></tr><tr><td><kbd>--jobs 1</kbd></td><td><span class="mut">one configuration at a time (M11)</span></td></tr><tr><td><kbd>Ctrl-C</kbd></td><td><span class="mut">stops watching only; the run continues</span></td></tr></table>
+<table><tr><td><kbd>--config FILE</kbd></td><td><span class="mut">template SHA-256, entries, policy, judge, both weight sets</span></td></tr><tr><td><kbd>--jobs 1</kbd></td><td><span class="mut">one configuration at a time (M11)</span></td></tr><tr><td><kbd>Ctrl-C</kbd></td><td><span class="mut">stops watching only; the run continues</span></td></tr><tr><td><kbd>exit 0 · 1</kbd></td><td><span class="mut">followed to the end: 0 completed (even with failed tasks) · 1 stopped or interrupted, with the reason</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun-80x24.dc.html">run --no-tui</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview-80x24.dc.html">TUI run</a></div>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun-80x24.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>Validation and freezing are the same as interactive launch (R050, R067).</li><li>Run 2026-10-02-a is the queued run drawn on the M11 page (R045, R138).</li><li>All model work runs headlessly; nothing waits for input (R060).</li></ul>
+<ul><li>Validation and freezing are the same as interactive launch (R050, R067).</li><li>Pi runs on a local endpoint in a parallel run, so its cost is printed as unknown (D4).</li><li>Run 2026-10-02-a is the queued run drawn on the M11 page (R045, R138).</li><li>All model work runs headlessly; nothing waits for input (R060).</li><li>R3-2: the frozen records include the price snapshot and the rate snapshot with the display currency (USD here).</li><li>R3-3: followed to its end, run waits for the completion report and prints its path (CliRunReport); --no-wait-report skips the wait.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1320}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

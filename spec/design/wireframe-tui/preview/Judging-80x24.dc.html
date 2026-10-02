@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1060px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Judging · in progress</b> · JudgingScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -80,7 +80,7 @@ body{margin:0}
 <div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> This session gets · never gets </span><span class="B0 ln">─────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> artifact C · spec, prompts, source · rubric web v1                         </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> check outcomes · 14 screenshots · console errors                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> check outcomes · 14 shots from the final regression                        </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">✗</span><span class="B0"> </span><span class="B0 mu">cost, time, tokens · other reviews · names                                </span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">✗</span><span class="B0"> </span><span class="B0 mu">which configuration made artifact C                                       </span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
@@ -106,7 +106,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
 <div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> This session gets · never gets </span><span class="B0 ac">─────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> artifact C · spec, prompts, source · rubric web v1                         </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> check outcomes · 14 screenshots · console errors                           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> check outcomes · 14 shots from the final regression                        </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">✗</span><span class="B0"> </span><span class="B0 mu">cost, time, tokens · other reviews · names                                </span><span class="B0"> </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">✗</span><span class="B0"> </span><span class="B0 mu">which configuration made artifact C                                       </span><span class="B0"> </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
@@ -135,7 +135,8 @@ body{margin:0}
 <h3>Widget tree</h3>
 <pre>JudgingScreen(Screen)          after the last configuration
 ├─ Header · Static #judging-bar
-├─ DataTable #reviews .bordered   label · status · grades · cost
+├─ DataTable #reviews .bordered   label · status · grades · cost · one row per trial
+├─ DataTable #trial-quality       mean · min–max, N trials only
 ├─ Horizontal
 │  ├─ Vertical #current .pane      fresh session, read-only copy
 │  │  └─ ProgressBar
@@ -143,18 +144,18 @@ body{margin:0}
 ├─ Static .notice.-error          ungraded (finished state)
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
-<table><tr><td><code>#reviews</code></td><td>height: 6;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#current, #inputs</code></td><td>width: 1fr; height: 17;</td></tr><tr><td><code>#inputs .-withheld</code></td><td>color: $foreground 60%;</td></tr><tr><td><code>Screen.-compact #current</code></td><td>display: none;</td></tr></table>
+<table><tr><td><code>#reviews</code></td><td>height: 6;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#current, #inputs</code></td><td>width: 1fr; height: 17;</td></tr><tr><td><code>#inputs .-withheld</code></td><td>color: $foreground 60%;</td></tr><tr><td><code>#trial-quality</code></td><td>height: 5;  display: none with 1 trial</td></tr><tr><td><code>Screen.-compact #current</code></td><td>display: none;</td></tr></table>
 <h3>Key bindings</h3>
 <table><tr><td><kbd>enter</kbd></td><td><code>open_review</code><br><span class="mut">ReviewScreen for a graded or ungraded artifact</span></td></tr><tr><td><kbd>p</kbd></td><td><code>profiles</code><br><span class="mut">Grading profiles and anchors</span></td></tr><tr><td><kbd>d</kbd></td><td><code>detach</code><br><span class="mut">Leave; judging continues</span></td></tr><tr><td><kbd>s</kbd></td><td><code>stop_judging</code><br><span class="mut">Stop judging; unreviewed artifacts stay not judged</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>DataTable #reviews</li><li>Static #inputs</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="Judging-80x24.dc.html">In progress</a><a href="JudgingDone.dc.html">Finished · 1 ungraded</a><a href="ReviewUngraded.dc.html">Ungraded review</a><a href="ReviewDetail.dc.html">Complete review</a><a href="RubricProfiles.dc.html">Profiles</a><a href="JudgeCapability.dc.html">No screenshot support</a><a href="JudgeHandoff.dc.html">Judge input (M08)</a></div>
+<div class="rel"><a href="Judging-80x24.dc.html">In progress</a><a href="JudgingDone.dc.html">Finished · 1 ungraded</a><a href="JudgingTrials.dc.html">3 trials</a><a href="RankingsTrials.dc.html">Trials ranked (M06)</a><a href="ReviewUngraded.dc.html">Ungraded review</a><a href="ReviewDetail.dc.html">Complete review</a><a href="RubricProfiles.dc.html">Profiles</a><a href="JudgeCapability.dc.html">No screenshot support</a><a href="JudgeHandoff.dc.html">Judge input (M08)</a></div>
 <h3>Notes</h3>
-<ul><li>One fresh session per artifact, in sequence; no earlier conversation or review is carried over (R083).</li><li>Labels are anonymous to the judge; the label → result mapping stays with AxBenchmark (R083).</li><li>Judging cost is its own column and is recorded through M10, apart from competitor cost (R082).</li></ul>
+<ul><li>One fresh session per artifact, in sequence; no earlier conversation or review is carried over (R083).</li><li>Labels are anonymous to the judge; the label → result mapping stays with AxBenchmark (R083).</li><li>Judging cost is its own column and is recorded through M10, apart from competitor cost (R082).</li><li>D12: the screenshots given are the 14 of the final regression on the delivered artifact, at 1440×1000 and 390×844; per-task screenshots stay in evidence, results and the report.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1060}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1200}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

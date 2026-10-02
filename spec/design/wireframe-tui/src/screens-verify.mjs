@@ -86,9 +86,9 @@ export function taskChecks(sz, focus = 'checks') {
     ['Log', 'verify/T5/T5.3.log · 2.1 s'],
   ]);
   y++;
-  para(g, dx, y, dw, 'Screenshots help inspection; they never establish a pass. The failure stays even if the judge grades the app well.', 'mu');
+  para(g, dx, y, dw, 'Task screenshots help inspection and stay in evidence and the report. They never establish a pass and are not judge input: the judge gets the final regression’s screenshots.', 'mu');
   buttons(g, W - 1, H - 2, [{ label: 'Screenshots', go: 'Screenshots', focus: focus === 'shots' }, { label: 'Final regression', go: 'FinalRegression' }, { label: 'Judge input', go: 'JudgeHandoff' }]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: '←→', d: 'Task' }, { k: 's', d: 'Screenshots', go: 'Screenshots' }, { k: 'f', d: 'Final regression', go: 'FinalRegression' }, { k: 'j', d: 'Judge input', go: 'JudgeHandoff' }, { k: 'l', d: 'Log' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: '←→', d: 'Task' }, { k: 's', d: 'Screenshots', go: 'Screenshots' }, { k: 'f', d: 'Final regression', go: 'FinalRegression' }, { k: 'j', d: 'Judge input', go: 'JudgeHandoff' }, { k: 'l', d: 'Log', go: 'EvidenceViewer' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 
@@ -226,7 +226,7 @@ export function verifyProgress(sz) {
 
 export function judgeHandoff(sz) {
   const g = taskChecks(sz, 'none');
-  const m = modal(g, 86, 25, 'Judge input · R-0928a-4', { sel: '#judge-input' });
+  const m = modal(g, 86, 27, 'Judge input · R-0928a-4', { sel: '#judge-input' });
   let y = m.y;
   g.text(m.x, y++, fit('Prepared by verification for judge A · Claude Code · claude-opus-5-5 · high', m.w), 'bd');
   y++;
@@ -235,16 +235,97 @@ export function judgeHandoff(sz) {
     `Delivered artifact · T7 snapshot ${COMMITS.T7}`,
     'Specification, the seven task prompts and rubric web v1',
     'Check outcomes · per task and final regression · 18✓ 3✗ each',
-    '14 screenshots (one desktop and one mobile per task) · keyboard traces',
+    '14 screenshots from the final regression · desktop + mobile per task area',
+    'Keyboard traces from the final regression',
     'Browser console errors · 2',
   ]) { g.text(m.x, y, '✓', 'ac'); g.text(m.x + 2, y++, fit(t, m.w - 2)); }
   y++;
   g.text(m.x, y++, 'Kept apart · measured statistics travel separately (M10)', 'bd');
-  for (const t of ['Cost, token counts and pricing basis', 'Elapsed time per task', 'CPU and GPU samples']) { g.text(m.x, y, '✗', 'mu'); g.text(m.x + 2, y++, fit(t, m.w - 2), 'mu'); }
+  for (const t of ['Cost, token counts and pricing basis', 'Elapsed time per task', 'CPU and GPU samples', 'Per-task screenshots · kept in evidence, results and the report']) { g.text(m.x, y, '✗', 'mu'); g.text(m.x + 2, y++, fit(t, m.w - 2), 'mu'); }
   y++;
   para(g, m.x, y, m.w, 'The judge never changes a check outcome: grades and outcomes are stored separately and shown side by side.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Open folder' }, { label: 'Close', v: 'primary', go: 'TaskChecks', focus: true }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'TaskChecks' }], '');
+  return g;
+}
+
+// ---------------------------------------------------------------- evidence viewer (l, Open log / snapshot / evidence)
+
+const EV_LOG = [
+  ['18:41:02', 'verify', 'T7.1 The site works end to end in a real browser'],
+  ['18:41:02', 'verify', `disposable copy of T7 snapshot 9e41c07 → /tmp/axb-verify-7f3a/ws`],
+  ['18:41:02', 'verify', 'tooling outside the copy · Playwright for Python 1.52'],
+  ['18:41:02', 'browser', 'launch chromium (headless) …'],
+  ['18:41:03', 'browser', '✗ Executable doesn’t exist at ~/Library/Caches/ms-playwright/chromium-1161/'],
+  ['18:41:03', 'browser', '  chrome-mac/Chromium.app/Contents/MacOS/Chromium'],
+  ['18:41:03', 'browser', '  the browser was not installed on this machine at verification time'],
+  ['18:41:03', 'verify', 'exit 127 after 0.4 s · no step ran'],
+  ['18:41:03', 'verify', 'outcome ? unverified · cause: missing prerequisite (browser)'],
+  ['18:41:03', 'verify', 'never recorded as passed or failed · no repair attempted'],
+  ['18:41:03', 'verify', 'copy discarded · T7 snapshot 9e41c07 unchanged'],
+];
+
+const EV_FILES = [
+  ['checks/T7.1.log', 'check log', '1.2 KB'],
+  ['checks/final-regression.log', 'check log', '18 KB'],
+  ['logs/T7.log', 'task log', '412 KB'],
+  ['snapshots/T7 @ 9e41c07', 'snapshot', '38 files'],
+  ['screenshots/T7.1-desktop.png', 'image', '—'],
+  ['review/judge-A.json', 'review', '6.1 KB'],
+  ['measurements/cost.json', 'measure', '3.4 KB'],
+  ['record.yaml', 'record', '9.8 KB'],
+];
+
+export function evidenceViewer(sz, focus = 'text') {
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
+  header(g, 'AxBenchmark', compact ? 'R-0928a-3 · evidence' : 'Result R-0928a-3 · evidence');
+  g.fill(0, 1, W, 1, 'B1');
+  g.text(1, 1, fit(compact
+    ? 'R-0928a-3 · Grok CLI · checks/T7.1.log · read-only'
+    : '● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · read-only · ~/.axbenchmark/results/R-0928a-3/', W - 2));
+  g.region(0, 1, W, 1, 'Static', '#evidence-bar');
+  const lw = compact ? 0 : 44;
+  if (!compact) {
+    const ff = focus === 'files';
+    g.box(0, 2, lw, 12, { f: ff ? 'ac' : 'ln', title: 'Evidence files · 8' });
+    table(g, 1, 3, lw - 2, [{ l: 'File', w: 23 }, { l: 'Kind', w: 10 }, { l: 'Size', w: 9, al: 'right' }], EV_FILES.map((v) => ({ v })), { cursor: 0, focused: ff });
+    g.region(1, 3, lw - 2, 9, 'DataTable', '#evidence-files');
+    g.box(0, 14, lw, H - 16, { f: 'ln', title: 'File' });
+    g.region(0, 14, lw, H - 16, 'Static', '#evidence-meta.kv');
+    let y = kv(g, 2, 15, 9, lw - 4, [
+      ['Path', 'checks/T7.1.log'],
+      ['Task', 'T7 Test and fix · check T7.1'],
+      ['Size', '1.2 KB · 11 lines · text'],
+      ['SHA-256', '5c1e09d2…a77b40e3'],
+      ['Payload', '✓ listed in the manifest'],
+      ['Written', '2026-09-28 18:41:03'],
+    ]);
+    para(g, 2, y + 1, lw - 4, 'Read-only evidence retained with the result. Opening a file never changes its outcomes or grades. Long files are paged.', 'mu');
+  }
+  const tf = focus === 'text', x = lw, w = W - lw, th = H - 4;
+  g.box(x, 2, w, th, { f: tf ? 'ac' : 'ln', title: 'checks/T7.1.log', sub: 'lines 1–11 of 11 · end' });
+  g.region(x, 2, w, th, 'TextArea', '#evidence-text  read_only=True');
+  EV_LOG.forEach(([t, src, m], i) => {
+    const yy = 3 + i, bad = m.startsWith('✗') || m.includes('unverified');
+    if (compact) {
+      g.text(x + 2, yy, fit(t.slice(3), 6), 'mu');
+      g.text(x + 8, yy, fit(m, w - 10), bad ? 'bd' : '');
+    } else {
+      g.text(x + 2, yy, fit(String(i + 1), 3, 'right'), 'ln');
+      g.text(x + 6, yy, fit(t, 9), 'mu');
+      g.text(x + 15, yy, fit(src, 8), 'mu');
+      g.text(x + 23, yy, fit(m, w - 25), bad ? 'bd' : '');
+    }
+  });
+  if (!compact) notice(g, x + 2, 3 + EV_LOG.length + 1, w - 4, 'info', 'Opened from Outcomes · T7.1 · ? unverified', 'Snapshots open as a read-only file list at their commit; images and other binary files open in the system viewer (o).');
+  if (compact) {
+    footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: 'e', d: 'Files' }, { k: 'o', d: 'Open' }, { k: 'f', d: 'Reveal' }, { k: 'end', d: 'End' }]);
+    return g;
+  }
+  const bx = buttons(g, W - 1, H - 2, [{ label: 'Open externally', focus: focus === 'open' }, { label: 'Reveal in folder' }, { label: 'Back to outcomes', v: 'primary', go: 'ResultOutcomes' }]);
+  g.region(bx, H - 2, 17, 1, 'Button', '#open-external');
+  g.region(bx + 19, H - 2, 18, 1, 'Button', '#reveal');
+  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: '↑↓', d: 'Scroll' }, { k: 'enter', d: 'Show file' }, { k: 'o', d: 'Open externally' }, { k: 'f', d: 'Reveal in folder' }, { k: 'end', d: 'End' }, { k: 'tab', d: 'Pane', do: 'next' }]);
   return g;
 }
 

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 900px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1280px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>axbenchmark --help</b> · axbenchmark --help · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -88,23 +88,23 @@ body{margin:0}
 <div class="r"><span class="B0"> </span><a class="B0 k" href="CliExchange.dc.html">  axbenchmark results import results.zip --template TEMPLATE_SHA     </a><span class="B0"> </span><span class="B0 mu">validate identities and digests, then add      </span><span class="B0">  </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Options for run                                                                                                       </span><span class="B0"> </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  --jobs N       </span><span class="B0"> configurations at once · default: one per harness, up to 4 · --jobs 1 runs them one at a time        </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  --no-tui       </span><span class="B0"> plain progress lines · never asks a question                                                         </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  --config FILE  </span><span class="B0"> a complete configuration: template SHA-256, entries, policy, judge, both weight sets                 </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  --jobs N         </span><span class="B0"> configurations at once · default: one per harness, up to 4 · --jobs 1 runs them one at a time      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  --no-tui         </span><span class="B0"> plain progress, never asks · waits for the completion report and prints its path                   </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  --no-wait-report </span><span class="B0"> exit after the outcome · the report is still written · prints the regeneration command             </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  --config FILE    </span><span class="B0"> a complete configuration: template SHA-256, entries, policy, judge, both weight sets               </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Options for doctor                                                                                                    </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  --verify         </span><span class="B0"> one minimal model call per harness, after a [y/N] prompt listing them · nothing is called on No    </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  --yes            </span><span class="B0"> consent without a prompt · required when there is no terminal (otherwise exit 2)                   </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Exit codes                                                                                                            </span><span class="B0"> </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  0              </span><span class="B0"> success                                                                                              </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  1              </span><span class="B0"> the run finished with failed tasks or configurations (saved in its status)                           </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  2              </span><span class="B0"> invalid or incomplete input · nothing was started or changed                                         </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  3              </span><span class="B0"> package rejected · nothing was added                                                                 </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  4              </span><span class="B0"> run or template not found                                                                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  0              </span><span class="B0"> success · includes a run that completed with failed or unverified tasks (see status --json)          </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  1              </span><span class="B0"> typed error · rejected package, not found, incomplete config, followed run stopped/interrupted       </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  2              </span><span class="B0"> usage · unknown command, option or argument · doctor --verify without a terminal and without --yes   </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  3              </span><span class="B0"> engine unreachable or incompatible · nothing was started or changed                                  </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Every command uses the same validation and lifecycle as the TUI. Closing a terminal never stops a run.                </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 rv"> </span><span class="B0">                                                                                                                    </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
@@ -128,18 +128,18 @@ body{margin:0}
 ├─ templates export · import  → M01 + M17
 └─ results export · import    → M02 + M17</pre>
 <h3>Output contract</h3>
-<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>never prompts; a missing choice is an error</td></tr></table>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
 <h3>Arguments and exit codes</h3>
-<table><tr><td><kbd>--help</kbd></td><td><span class="mut">This screen</span></td></tr><tr><td><kbd>0 · 1 · 2 · 3 · 4</kbd></td><td><span class="mut">success · finished with failures · invalid input · package rejected · not found</span></td></tr></table>
+<table><tr><td><kbd>--help</kbd></td><td><span class="mut">This screen</span></td></tr><tr><td><kbd>exit 0</kbd></td><td><span class="mut">success · includes a run that completed with failed or unverified tasks</span></td></tr><tr><td><kbd>exit 1</kbd></td><td><span class="mut">typed error · package rejected, not found, incomplete configuration, followed run stopped or interrupted</span></td></tr><tr><td><kbd>exit 2</kbd></td><td><span class="mut">usage · unknown command, option or argument</span></td></tr><tr><td><kbd>exit 3</kbd></td><td><span class="mut">engine unreachable or incompatible</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>All twelve required signatures are listed with their placeholders (R048–R059).</li><li>Exit codes are a proposal; the spec defines behaviour, not numbers.</li></ul>
+<ul><li>All twelve required signatures are listed with their placeholders (R048–R059).</li><li>Exit codes 0–3 are settled (D1, W8). Task failures never change the exit code of a completed run; scripts read them from status RUN_ID --json.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1280}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

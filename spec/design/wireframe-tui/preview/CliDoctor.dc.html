@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1260px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>doctor · models refresh</b> · axbenchmark doctor · models refresh · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -79,9 +79,15 @@ body{margin:0}
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> Python 3.13.1 · ✓ Node.js 22.11 · ✓ Git 2.47 · ✓ Playwright for Python 1.52.0 · ✓ Chromium 140.0                   </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">Hardware collectors · optional, never block a run                                                                     </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> CPU utilisation     psutil 6.1 · 1 s samples                                                                       </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 bd">  ▲ GPU and power       insufficient permission · powermetrics needs root                                             </span><span class="B0"> </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">                        run &quot;sudo axbenchmark doctor --collectors&quot; to check, or continue without them                 </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ▲ GPU and power       insufficient permission · powermetrics is readable by root only                               </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">                        fix: grant read access as in docs/collectors/macos-powermetrics.md, then run doctor again     </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">                        or continue without them · AxBenchmark never asks for or runs as root                         </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">  ○ NVIDIA GPU          unsupported hardware · Apple silicon has no NVIDIA GPU (nothing to install)                   </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Approved revisions · read-only modes (files 0444, folders 0555)                                                       </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ▲ Billing service refactor r1 · revisions/927b6a7d…/ · 3 entries changed · doctor changes nothing                   </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">      tasks/ 0755 (expected 0555) · tasks/T2.md 0644 (0444) · deps.yaml 0644 (0444)                                   </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">      fix: axbenchmark templates restore 927b6a7d… --yes · rewrites it read-only from the stored content              </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">      or delete the template (templates delete … --yes), which restores write permission only for the removal         </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">3 of 4 harnesses ready · planning and runs available with Claude Code, Codex and Pi                                   </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="CatalogRefreshFailed.dc.html">axbenchmark models refresh</a><span class="B0 bd">                                                                                          </span><span class="B0"> </span></div>
@@ -91,21 +97,15 @@ body{margin:0}
 <div class="r"><span class="B0"> </span><span class="B0 bd">  ✗ Grok CLI · xAI · refresh failed (401) · kept the last valid entries from 2026-09-28 (3 days old)                  </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> Pi · local endpoint · 2 models · efforts unknown → harness default only                                            </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">●</span><span class="B0"> overrides kept · 1 · claude-fable-5-1 (your metadata, never replaced by discovery)                                 </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">Catalog 2026.10.01-2214 · 1 source failed · no model was assumed compatible                                           </span><span class="B0"> </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">echo $?                                                                                                             </span><span class="B0"> </span></div>
-<div class="r"><span class="B0"> 0                                                                                                                      </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> prices Anthropic · anthropic.com/pricing · retrieved 2026-10-01                                                    </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> prices OpenAI · openai.com/api/pricing · retrieved 2026-10-01                                                      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ▲ prices xAI · x.ai/api could not be read · kept last valid prices from 2026-09-15                                  </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">  ○ prices local endpoint · none · no API charge · cost from energy only in sequential runs                           </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> rates open.er-api.com/v6/latest/USD · EUR GBP CNY to USD · source date 2026-10-01 · retrieved 2026-10-01 21:38     </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">●</span><span class="B0"> rates COP · supplied by you (4000.00 per USD, 2026-10-02) · kept, labelled · overrides the collected 4016.06       </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Catalog 2026.10.01-2214 · 1 source and 1 price page failed · no model was assumed compatible · exit 0                 </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 rv"> </span><span class="B0">                                                                                                                    </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
-<div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
 <sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
@@ -118,20 +118,21 @@ body{margin:0}
 <div class="lg-h"><b>axbenchmark doctor · models refresh</b><span class="mut">axbenchmark/cli.py</span></div>
 <h3>Widget tree</h3>
 <pre>doctor          readiness (M03)
-models refresh  discovery (M04)</pre>
+└─ approved revisions with changed read-only modes (M01 audit)
+models refresh  discovery + prices + exchange rates (M04)</pre>
 <h3>Output contract</h3>
-<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>never prompts; a missing choice is an error</td></tr></table>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
 <h3>Arguments and exit codes</h3>
-<table><tr><td><kbd>exit 0</kbd></td><td><span class="mut">checks ran; problems are reported, not fatal</span></td></tr></table>
+<table><tr><td><kbd>exit 0</kbd></td><td><span class="mut">checks ran; problems are reported, not fatal</span></td></tr><tr><td><kbd>exit 3</kbd></td><td><span class="mut">engine unreachable or incompatible</span></td></tr></table>
 
 <h3>States and related frames</h3>
-<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>Collector problems name their cause and never block a run (R054, R103).</li><li>A failed provider keeps the last valid catalog and all overrides (R053, R063, R064).</li></ul>
+<ul><li>Collector problems name their cause and never block a run (R054, R103). D5: an insufficient permission points to the collector guide; there is no root mode and no sudo suggestion.</li><li>A failed provider keeps the last valid catalog and all overrides (R053, R063, R064).</li><li>D4: refresh prints one price line per provider with source and retrieval date, or “kept last valid prices”. Prices are never fetched during a run. R3-5: first-version price sources are Anthropic, OpenAI and xAI; other providers use bundled prices and overrides.</li><li>R3-2: the same refresh prints one line per rate source (source URL, source date, retrieval date, currencies collected to USD) and lists user-supplied rates as kept and labelled. Rates are never fetched during a run.</li><li>R3-6: approved revision files stay read-only (files 0444, folders 0555). doctor lists each revision folder whose modes were changed, with expected and found modes and the restore remedy; it never offers chmod or sudo and the CLI never changes modes.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1260}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

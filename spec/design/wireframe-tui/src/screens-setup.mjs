@@ -1,7 +1,7 @@
 // M07 · Run configuration and launch validation.
 // SetupScreen edits a revision-scoped configuration (entries, policy, judge, weights, execution);
 // ReviewLaunchScreen shows exactly what will be frozen; LaunchRecordScreen shows what was frozen. All data is fictional.
-import { Grid, fit, len, header, footer, table, button, buttons, radios, para, kv, notice, modal, select, loading } from './lib.mjs';
+import { Grid, fit, len, header, footer, table, button, buttons, input, radios, para, kv, notice, modal, select, loading } from './lib.mjs';
 import { SHA, s8, mid } from './screens.mjs';
 import { runConfig } from './screens-execution.mjs';
 
@@ -65,10 +65,11 @@ export function setup(sz, focus = 'entries', st = {}) {
     line('Rubric', 'web v1 · from the template · same for every entry');
     line('Weights', 'quality web v1 · ranking equal thirds · resolved at launch', 'w', 'WeightsEditor');
     line('Run', 'one per harness, up to 4 · Claude Code #2 waits for #1');
-    g.region(1, 11, W - 2, 4, 'Static', '#setup-summary.kv');
+    line('Trials', '1 per configuration · sampling 1 s · display USD · 0.18 USD/kWh', 'c', 'CurrencyEnergy');
+    g.region(1, 11, W - 2, 5, 'Static', '#setup-summary.kv');
     y++;
     if (inv) notice(g, 1, y, W - 2, 'error', '3 issues block launch', 'Codex effort, Grok CLI authentication, ranking preset. Press v to list them.');
-    else notice(g, 1, y, W - 2, 'warning', 'CPU and GPU power unavailable', 'Optional metrics (permission). The run is unaffected.');
+    else notice(g, 1, y, W - 2, 'warning', 'CPU and GPU power unavailable', 'Optional metrics (insufficient permission). The run is unaffected.');
     buttons(g, W - 1, H - 2, [{ label: 'Save' }, { label: 'Review and launch ▸', v: 'primary', off: inv, go: inv ? undefined : 'ReviewLaunch', focus: focus === 'review' }]);
     footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateConfigs' }, { k: 'a', d: 'Add', go: 'ModelPicker' }, { k: 'j', d: 'Judge', go: 'JudgePicker' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'enter', d: 'Review', go: inv ? undefined : 'ReviewLaunch', off: inv }]);
     return g;
@@ -98,32 +99,45 @@ export function setup(sz, focus = 'entries', st = {}) {
   button(g, 62, 21, 'Edit weights…', { go: 'WeightsEditor', focus: wf });
 
   const xf = focus === 'execution';
-  g.box(0, 23, W, 7, { f: xf ? 'ac' : 'ln', title: 'Execution' });
-  g.region(0, 23, W, 7, 'Vertical', '#execution-pane.pane');
+  g.box(0, 23, W, 9, { f: xf ? 'ac' : 'ln', title: 'Execution' });
+  g.region(0, 23, W, 9, 'Vertical', '#execution-pane.pane');
   g.text(2, 24, fit('Concurrency', 15), 'mu');
   g.text(17, 24, '● One configuration per harness, up to 4 at once', xf ? 'bd' : '', xf ? { b: 'BT' } : {});
   g.text(17, 25, '○ Sequential (same as --jobs 1)', 'mu');
   g.region(17, 24, 50, 2, 'RadioSet', '#concurrency');
   kv(g, 2, 26, 15, W - 4, [
     ['Same harness', 'entries of one harness run one after another · Claude Code #2 starts after #1'],
-    ['Tasks', 'sequential within each configuration · T1 → T7'],
-    ['Timeouts', 'execution protocol v1 defaults (M11)'],
+    ['Tasks', 'sequential within each configuration · T1 → T7 · timeouts: execution protocol v1 defaults (M11)'],
   ]);
+  g.text(2, 28, fit('Trials', 15), 'mu'); input(g, 17, 28, 5, '1', { focus: focus === 'trials' });
+  g.text(23, 28, fit('per configuration (default 1, no upper limit) · over 5 asks to confirm the budget at launch', W - 26), 'mu');
+  g.region(17, 28, 5, 1, 'Input', '#trials');
+  g.text(2, 29, fit('Monitoring', 15), 'mu'); g.text(17, 29, 'automatic · sample every', '');
+  input(g, 42, 29, 7, '1 s', { focus: focus === 'interval' });
+  g.text(50, 29, fit('0.5–10 s · a slower collector records its own interval', W - 53), 'mu');
+  g.region(42, 29, 7, 1, 'Input', '#sampling-interval');
+  // R3-2 · display currency (default USD); the rates it and every price currency need are frozen at launch as a RateSnapshot.
+  g.text(2, 30, fit('Currency', 15), 'mu');
+  select(g, 17, 30, 9, 'USD', { focus: focus === 'currency' });
+  g.region(17, 30, 9, 1, 'Select', '#display-currency');
+  g.text(27, 30, fit('display · rates frozen at launch (catalog 2026-10-01) · electricity 0.18 USD/kWh', W - 37));
+  g.text(W - 8, 30, 'c', 'ac bd'); g.text(W - 6, 30, 'Edit'); g.link(W - 8, 30, 6, 1, 'go:CurrencyEnergy');
+  g.region(27, 30, W - 29, 1, 'Static', '#cost-energy');
 
   if (inv) {
-    y = notice(g, 1, 31, W - 2, 'error', '3 issues block launch — nothing is substituted', null);
+    y = notice(g, 1, 33, W - 2, 'error', '3 issues block launch — nothing is substituted', null);
     [['Entry 3 · Codex', 'effort max is not supported for gpt-6-sol on Codex 0.98.0 · choose low, medium or high', 'e'],
       ['Entry 4 · Grok CLI', 'authentication failed (401) · fix in Environment or remove the entry', 'F2'],
       ['Ranking weights', 'preset “Team preset” no longer exists · weights cannot stay unresolved', 'w']].forEach(([a, b, k]) => {
       g.text(3, y, fit(a, 19), 'bd'); g.text(22, y, fit(b, W - 30)); g.text(W - 6, y, k, 'ac bd'); y++;
     });
-    g.region(1, 31, W - 2, 4, 'Static', '#validation.notice.-error');
+    g.region(1, 33, W - 2, 4, 'Static', '#validation.notice.-error');
   } else {
-    notice(g, 1, 31, W - 2, 'warning', 'CPU and GPU power unavailable on mike-mbp-m4', 'Optional metrics (powermetrics needs root). The run is unaffected and the results say why the metric is missing.');
-    g.region(1, 31, W - 2, 3, 'Static', '#limitations.notice.-warning');
+    notice(g, 1, 33, W - 2, 'warning', 'CPU and GPU power unavailable on mike-mbp-m4', 'Optional metrics (insufficient permission · see the collector guide). The run is unaffected and the results say why the metric is missing; without power data, local entries have no energy estimate.');
+    g.region(1, 33, W - 2, 3, 'Static', '#limitations.notice.-warning');
   }
   buttons(g, W - 1, H - 2, [{ label: 'Save configuration' }, { label: 'Save as…' }, { label: 'Review and launch ▸', v: 'primary', off: inv, go: inv ? undefined : 'ReviewLaunch', focus: focus === 'review' }]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateConfigs' }, { k: 'a', d: 'Add entry', go: 'ModelPicker' }, { k: 'p', d: 'Policy', go: 'EnvPolicy' }, { k: 'j', d: 'Judge', go: 'JudgePicker' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: '^s', d: 'Save' }, { k: 'enter', d: 'Review', go: inv ? undefined : 'ReviewLaunch', off: inv }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'TemplateConfigs' }, { k: 'a', d: 'Add entry', go: 'ModelPicker' }, { k: 'p', d: 'Policy', go: 'EnvPolicy' }, { k: 'j', d: 'Judge', go: 'JudgePicker' }, { k: 'w', d: 'Weights', go: 'WeightsEditor' }, { k: 'c', d: 'Currency', go: 'CurrencyEnergy' }, { k: '^s', d: 'Save' }, { k: 'enter', d: 'Review', go: inv ? undefined : 'ReviewLaunch', off: inv }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 
@@ -170,8 +184,13 @@ export function judgePicker(sz, focus = 'model', st = {}) {
 
 // ---------------------------------------------------------------- review before launch
 
-export function reviewLaunch(sz, focus = 'launch') {
+// R3-7 · totals: configurations × trials × tasks task runs, and one judge session per configuration and trial.
+const TASKS = 7;
+export const trialTotals = (trials, configs = ENTRIES.length) => ({ runs: configs * trials * TASKS, judge: configs * trials, text: `${configs} configurations × ${trials} trial${trials === 1 ? '' : 's'} × ${TASKS} tasks = ${configs * trials * TASKS} task runs · ${configs * trials} judge sessions` });
+
+export function reviewLaunch(sz, focus = 'launch', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
+  const trials = st.trials ?? 1, tot = trialTotals(trials);
   header(g, 'AxBenchmark', 'Review before launch');
   g.fill(0, 1, W, 1, 'B1');
   g.text(1, 1, '●', 'ac'); g.text(3, 1, fit(compact ? 'This is what will be frozen · nothing runs yet' : 'Everything below is exactly what will be frozen and run · nothing starts until Launch', W - 4));
@@ -188,7 +207,8 @@ export function reviewLaunch(sz, focus = 'launch') {
     y += 8;
     line('Judge', 'Claude Code · claude-opus-5-5 · high · rubric web v1');
     line('Weights', 'quality 25 15 20 25 10 5 · ranking 1:1:1');
-    line('Run', 'up to 4 at once · clean for all 5');
+    line('Run', `up to 4 at once · ${trials} trial${trials === 1 ? '' : 's'} · ${tot.runs} task runs · ${tot.judge} judge sessions`);
+    line('Measure', 'sample 1 s · display USD · 0.18 USD/kWh · prices + rates at launch', 'mu');
     line('Recorded', 'mike-mbp-m4 · catalog 2026.09.2 · credentials redacted', 'mu');
     buttons(g, W - 1, H - 2, [{ label: 'Back', go: 'Setup' }, { label: 'Launch ▸', v: 'primary', go: 'LaunchCheck', focus: focus === 'launch' }]);
     footer(g, [{ k: 'esc', d: 'Back', go: 'Setup' }, { k: 'c', d: 'Copy CLI' }, { k: '^l', d: 'Launch', go: 'LaunchCheck' }]);
@@ -221,9 +241,12 @@ export function reviewLaunch(sz, focus = 'launch') {
   sec('Execution and environment');
   y = kv(g, 1, y, 14, W - 2, [
     ['Concurrency', 'one configuration per harness, up to 4 at once · Claude Code #2 after #1 · tasks sequential'],
+    ['Trials', `${trials} per configuration · ${tot.text}`, trials > 5 ? 'bd' : ''],
     ['Policy', 'clean for all 5 entries · managed settings · no isolation limitations'],
-    ['Timeouts', 'execution protocol v1 defaults (M11)'],
-    ['Optional', '▲ CPU and GPU power unavailable (permission) · run unaffected'],
+    ['Monitoring', 'automatic · requested interval 1 s · each collector records its actual interval'],
+    ['Currency', 'display USD · rate snapshot: USD 1 (all 4 priced entries use USD prices) · catalog rates 2026-10-01'],
+    ['Cost, energy', 'tariff 0.18 USD/kWh · catalog price table at launch · billing #1 #2 subscription (declared by user)'],
+    ['Optional', '▲ CPU and GPU power unavailable (insufficient permission) · run unaffected · no energy estimate'],
   ]);
   y++;
   sec('Recorded with every result');
@@ -232,8 +255,46 @@ export function reviewLaunch(sz, focus = 'launch') {
     ['Catalog', 'catalog 2026.09.2 · discovered 21:38 for each harness version'],
     ['Credentials', 'never recorded · keys appear as “set” in exports, logs and reports'],
   ]);
-  buttons(g, W - 1, H - 2, [{ label: 'Back to setup', go: 'Setup' }, { label: 'Copy as CLI command' }, { label: 'Launch ▸', v: 'primary', go: 'LaunchCheck', focus: focus === 'launch' }]);
-  footer(g, [{ k: 'esc', d: 'Back to setup', go: 'Setup' }, { k: 'c', d: 'Copy CLI command' }, { k: '^l', d: 'Launch', go: 'LaunchCheck' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  const launchGo = trials > 5 ? 'TrialBudgetWarning' : 'LaunchCheck';
+  buttons(g, W - 1, H - 2, [{ label: 'Back to setup', go: 'Setup' }, { label: 'Copy as CLI command' }, { label: 'Launch ▸', v: 'primary', go: launchGo, focus: focus === 'launch' }]);
+  footer(g, [{ k: 'esc', d: 'Back to setup', go: 'Setup' }, { k: 'c', d: 'Copy CLI command' }, { k: '^l', d: 'Launch', go: launchGo }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  return g;
+}
+
+// ---------------------------------------------------------------- trial budget warning (R3-7)
+
+// Shown by Launch when M07's launch validation returns trial_budget_warning: more than 5 trials for a configuration
+// that is not on a local endpoint. Not shown when every such configuration is local. Unattended runs print it and continue.
+export function trialBudget(sz, focus = 'back') {
+  const trials = 6, tot = trialTotals(trials), metered = trialTotals(trials, 4), local = trialTotals(trials, 1);
+  const g = reviewLaunch(sz, 'none', { trials });
+  const m = modal(g, 86, 27, `${trials} trials · budget and subscription usage`, { sel: '#confirm' });
+  let y = m.y;
+  g.text(m.x, y++, fit(`More than 5 trials per configuration will consume budget and subscription usage.`, m.w), 'bd');
+  y = para(g, m.x, y, m.w, 'Each trial reruns all 7 tasks from a fresh baseline and is judged in its own session. Check your API budget and subscription limits before launching.', 'mu');
+  y++;
+  const L = 16;
+  y = kv(g, m.x, y, L, m.w, [
+    ['Task runs', `${tot.runs} · 5 configurations × ${trials} trials × 7 tasks`],
+    ['Judge sessions', `${tot.judge} · Claude Code · claude-opus-5-5 · high · one per trial`],
+  ]);
+  g.region(m.x, y - 2, m.w, 2, 'Static', '#budget-totals.kv');
+  y++;
+  g.text(m.x, y++, 'Uses budget or subscription', 'bd');
+  table(g, m.x, y, m.w, [{ l: '#', w: 3 }, { l: 'Harness · model', w: 37 }, { l: 'Billing', w: 32 }, { l: 'Runs', w: m.w - 72, al: 'right' }], [
+    { v: ['1', 'Claude Code · claude-opus-5-5 medium', 'subscription · declared by user', String(TASKS * trials)] },
+    { v: ['2', 'Claude Code · claude-opus-5-5 high', 'subscription · declared by user', String(TASKS * trials)] },
+    { v: ['3', 'Codex · gpt-6-sol medium', 'api · harness status', String(TASKS * trials)] },
+    { v: ['4', 'Grok CLI · grok-4.7-fast default', 'api · harness status', String(TASKS * trials)] },
+  ]);
+  g.region(m.x, y, m.w, 5, 'DataTable', '#budget-entries');
+  y += 5;
+  g.text(m.x, y, '○', 'mu'); g.text(m.x + 2, y++, fit(`5 · Pi · qwen3.5-35b-a3b · local endpoint · ${local.runs} task runs, no budget used`, m.w - 2), 'mu');
+  g.text(m.x, y, 'Σ', 'bd'); g.text(m.x + 2, y++, fit(`${metered.runs} task runs and ${tot.judge} judge sessions on provider accounts`, m.w - 2), 'bd');
+  y++;
+  para(g, m.x, y, m.w, 'There is no upper limit on trials. With every configuration above 5 trials on a local endpoint, this dialog is not shown.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Back to review', go: 'ReviewLaunch', focus: focus === 'back' }, { label: `Launch ${trials} trials`, v: 'primary', go: 'LaunchCheck', focus: focus === 'ok' }]);
+  footer(g, [{ k: 'esc', d: 'Back to review', go: 'ReviewLaunch' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'enter', d: 'Activate focused button' }], '');
   return g;
 }
 
@@ -241,7 +302,7 @@ export function reviewLaunch(sz, focus = 'launch') {
 
 export function launchRecord(sz) {
   const g = runConfig(sz, 'none');
-  const m = modal(g, 86, 28, 'Launch record · run 2026-10-01-a', { sel: '#launch-record' });
+  const m = modal(g, 86, 31, 'Launch record · run 2026-10-01-a', { sel: '#launch-record' });
   let y = m.y;
   g.text(m.x, y++, fit('Frozen at 20:58:47 before the first task · read-only', m.w), 'bd');
   y++;
@@ -253,6 +314,7 @@ export function launchRecord(sz) {
   rec('Resolved configuration', `cfg ${s8(SHA.cfg)}…`, ['4 entries · policy clean · judge Claude Code · claude-opus-5-5 · high']);
   rec('Original weights', `wts ${s8(SHA.billing)}…`, ['quality web v1 25 15 20 25 10 5 · ranking 1:1:1']);
   rec('Machine and catalog', 'captured', ['mike-mbp-m4 · macOS 26.0 · catalog 2026.09.2 + discovered 20:57']);
+  rec('Prices and rates', 'captured', ['PriceSnapshot · RateSnapshot USD 1 · display USD · catalog rates 2026-10-01']);
   y++;
   g.text(m.x, y++, 'configuration.resolved.yaml · excerpt', 'bd');
   g.box(m.x, y, m.w, 7, { fill: 'B0', f: 'ln' });
