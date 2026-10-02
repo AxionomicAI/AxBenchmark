@@ -31,29 +31,29 @@ Cloud agents also ran T7 (test in a real browser and fix). Context sizes and the
 - Exchange rate: **$1 USD** = COP 3,341.23 (Banco de la República, 2026-09-30). CPU USD estimates use this historical rate and four decimal places; other USD amounts retain the recorded figures. Per-task detail: `RESULTS.md` in each folder.
 - Gemma ran before context checkpoints and 8k compaction; Qwen3.6 got compaction from T5, Qwen3.8 from T4.
 
-## Cost vs time vs quality — weighted top 5
+## Cost vs time vs quality — equal-weight top 5
 
-Priority: **cost first, time second, quality third**. The working weights are **50% cost, 30% time and 20% quality**; these percentages are an explicit interpretation of that priority and can be adjusted. Quality grades remain those in [QUALITY_COMPARISON.md](QUALITY_COMPARISON.md).
+**More is better:** cost, time and quality each contribute up to **33.3 points**, so a higher score ranks higher. The three factors carry **equal weight**; these percentages are an explicit choice and can be adjusted. Quality grades remain those in [QUALITY_COMPARISON.md](QUALITY_COMPARISON.md).
 
 Eligibility requires a business rules/spec grade of at least **4/5**, used here as the minimum for a usable result. This includes 11 applications and excludes the four with major required-workflow defects: CPU Gemma, CPU Qwen 3.6, CPU Qwen 3.8 and GPU Qwen 3.5. Among eligible applications, DeepSeek cloud has the lowest recorded cost at **$0.45** (COP 1,504), and Sonnet has the shortest time at **425 seconds**.
 
-**Score /100 = 50 × (minimum eligible cost / run cost) + 30 × (425 / elapsed seconds) + 20 × (unrounded quality / 5).** Cost ratios use the original COP amounts, equivalently their unrounded USD conversions. Lower cost and shorter time earn more points; doubling either halves its contribution. This is a decision aid using the recorded run figures and reviewer grades, not a new model benchmark or a quality percentage.
+**Score /100 = 33.3 × (minimum eligible cost / run cost) + 33.3 × (425 / elapsed seconds) + 33.3 × (unrounded quality / 5).** Cost ratios use the original COP amounts, equivalently their unrounded USD conversions. Lower cost and shorter time earn more points; doubling either halves its contribution. This is a decision aid using the recorded run figures and reviewer grades, not a new model benchmark or a quality percentage.
 
-Under these assumptions, **DeepSeek wins on cost-weighted value**, **cloud GLM ranks second because of its low cost**, and **Sonnet ranks third while remaining the fastest eligible choice**. Sonnet can be the preferred choice when fast turnaround matters more than this formula captures; its 3.65/5 quality grade is unchanged. The main table above remains sorted by cost descending; this weighted table is ordered by score.
+Under equal weights, **Sonnet ranks first because its speed earns the full time contribution**, **DeepSeek ranks second on the strength of the lowest cost**, and **cloud GLM ranks third because of its low cost**. The gap between Sonnet and DeepSeek is under three points, so either is a reasonable pick depending on whether turnaround or cost matters more. The main table above remains sorted by cost descending; this weighted table is ordered by score.
 
-| Rank | Model | Cost (USD / COP) | Time | Quality /5 | Weighted score /100 | Tradeoff |
+| Rank | Model | Cost (USD / COP) | Time | Quality /5 | Equal-weight score /100 (more is better) | Tradeoff |
 |---:|---|---:|---|---:|---:|---|
-| 1 | [DeepSeek Flash (cloud)](quality-review/deepseek-cloud-deepseek-flash.md) | **$0.45** (COP 1,504) | 51 min 20 s | 3.93 | 69.84 | Cost-led winner: cheapest eligible run with solid quality. Longer turnaround and storage-failure defects remain. |
-| 2 | [GLM-5.3 Flash (cloud)](quality-review/zai-cloud-glm-5.3-flash.md) | **$0.51** (COP 1,704) | 1 h 10 min | 3.33 | 60.47 | Very low cost drives its rank despite the longest run and lowest quality in this shortlist; stale cart controls and failed-save defects matter. |
-| 3 | [Claude Sonnet 5.5 (medium)](quality-review/anthropic-cloud-sonnet-5.5-medium.md) | **$1.65** (COP 5,513) | 7 min 05 s | 3.65 | 58.24 | Fastest eligible run and still inexpensive. Strong choice for rapid iteration; mobile and failed-save weaknesses lower its quality grade. |
-| 4 | [Codex GPT-6 Sol (medium)](quality-review/openai-cloud-gpt-6-sol-medium.md) | **$1.06** (COP 3,542) | 32 min 34 s | 3.93 | 43.46 | Cheaper and higher quality than Sonnet, but takes 25 min 29 s longer. A low-cost option when turnaround is less urgent. |
-| 5 | [Claude Opus 5.5 (medium)](quality-review/anthropic-cloud-opus-5.5-medium.md) | **$6.50** (COP 21,718) | 20 min 02 s | 4.10 | 30.47 | Highest quality in this shortlist and second-fastest, but its higher cost limits its weighted score. |
+| 1 | [Claude Sonnet 5.5 (medium)](quality-review/anthropic-cloud-sonnet-5.5-medium.md) | **$1.65** (COP 5,513) | 7 min 05 s | 3.65 | 66.76 | Fastest eligible run and still inexpensive. Strong choice for rapid iteration; mobile and failed-save weaknesses lower its quality grade. |
+| 2 | [DeepSeek Flash (cloud)](quality-review/deepseek-cloud-deepseek-flash.md) | **$0.45** (COP 1,504) | 51 min 20 s | 3.93 | 64.10 | Cheapest eligible run with solid quality. Longer turnaround and storage-failure defects remain. |
+| 3 | [GLM-5.3 Flash (cloud)](quality-review/zai-cloud-glm-5.3-flash.md) | **$0.51** (COP 1,704) | 1 h 10 min | 3.33 | 54.96 | Very low cost drives its rank despite the longest run and lowest quality in this shortlist; stale cart controls and failed-save defects matter. |
+| 4 | [Codex GPT-6 Sol (medium)](quality-review/openai-cloud-gpt-6-sol-medium.md) | **$1.06** (COP 3,542) | 32 min 34 s | 3.93 | 47.57 | Cheaper and higher quality than Sonnet, but takes 25 min 29 s longer. A low-cost option when turnaround is less urgent. |
+| 5 | [Claude Opus 5.5 (medium)](quality-review/anthropic-cloud-opus-5.5-medium.md) | **$6.50** (COP 21,718) | 20 min 02 s | 4.10 | 41.43 | Highest quality in this shortlist and second-fastest, but its higher cost limits its score. |
 
 <!-- BEGIN GENERATED PRIORITY TABLES -->
 
 ## Top 3 by primary driver
 
-These three tables rank directly by the named metric, separately from the weighted top five above. They use the same 11 eligible applications (business rules/spec grade at least 4/5). Cost and time sort ascending; quality sorts descending using unrounded grades. Ties favor lower cost, then shorter time; cost ties favor shorter time, then higher quality. The chart versions are embedded in [README.md](README.md).
+These three tables rank directly by the named metric, separately from the equal-weight top five above. They use the same 11 eligible applications (business rules/spec grade at least 4/5). Cost and time sort ascending; quality sorts descending using unrounded grades. Ties favor lower cost, then shorter time; cost ties favor shorter time, then higher quality. The chart versions are embedded in [README.md](README.md).
 
 ### Cost driver — lowest cost
 

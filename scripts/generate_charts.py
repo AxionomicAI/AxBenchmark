@@ -31,7 +31,7 @@ GRID = "#dce3eb"
 COST = "#15846d"
 TIME = "#c67b12"
 QUALITY = "#4268b3"
-WEIGHTS = {"cost": 50, "time": 30, "quality": 20}
+WEIGHTS = {"cost": 100 / 3, "time": 100 / 3, "quality": 100 / 3}
 COP_PER_USD = 3341.23
 NAMES = {
     "deepseek-cloud-deepseek-flash": "DeepSeek Flash · cloud",
@@ -115,7 +115,7 @@ def write_tables(rankings):
         "",
         "## Top 3 by primary driver",
         "",
-        "These three tables rank directly by the named metric, separately from the weighted top five above. "
+        "These three tables rank directly by the named metric, separately from the equal-weight top five above. "
         "They use the same 11 eligible applications (business rules/spec grade at least 4/5). "
         "Cost and time sort ascending; quality sorts descending using unrounded grades. "
         "Ties favor lower cost, then shorter time; cost ties favor shorter time, then higher quality. "
@@ -251,8 +251,8 @@ def chart_weighted(data):
     rows = sorted(data, key=lambda row: row["weighted_score"], reverse=True)[:5]
     fig, axis = plt.subplots(figsize=(14, 7.8))
     fig.patch.set_facecolor(BACKGROUND)
-    fig.subplots_adjust(left=0.27, right=0.94, bottom=0.19, top=0.79)
-    heading(fig, "Why the cost-weighted shortlist ranks this way", "50% cost · 30% time · 20% quality · Each colored segment is its contribution to the total")
+    fig.subplots_adjust(left=0.27, right=0.94, bottom=0.14, top=0.73)
+    heading(fig, "Why the equal-weight shortlist ranks this way", "Equal weights: ⅓ cost · ⅓ time · ⅓ quality · Each colored segment is its contribution to the total")
     style_axis(axis)
     for index, row in enumerate(rows):
         y = len(rows) - index - 1
@@ -265,9 +265,10 @@ def chart_weighted(data):
             left += value
         axis.text(left + 1.2, y, rounded(row["weighted_score"]), va="center", fontsize=12, weight="bold", color=INK)
     axis.set_yticks(list(range(4, -1, -1)), labels=[f"{i + 1}. {row['label']}" for i, row in enumerate(rows)])
-    axis.set(xlim=(0, 100), ylim=(-0.65, 4.65), xlabel="Weighted decision score /100")
-    axis.legend(handles=[Line2D([0], [0], color=color, lw=9, label=label) for label, color in [("Cost · up to 50 points", COST), ("Time · up to 30 points", TIME), ("Quality · up to 20 points", QUALITY)]], loc="upper left", bbox_to_anchor=(0, -0.12), ncol=3, frameon=False, fontsize=10)
-    footer(fig, "Score = 50 × (minimum cost / run cost) + 30 × (425 / seconds) + 20 × (quality / 5). Uses unrounded cost ratios; quality grades remain unchanged.")
+    axis.set(xlim=(0, 100), ylim=(-0.65, 4.65), xlabel="Equal-weight decision score /100 (higher is better)")
+    legend = axis.legend(handles=[Line2D([0], [0], color=color, lw=9, label=label) for label, color in [("Cost · cheaper earns more, up to 33.3", COST), ("Time · faster earns more, up to 33.3", TIME), ("Quality · higher grade earns more, up to 33.3", QUALITY)]], title="More is better: longer bars and higher scores rank higher", loc="upper left", bbox_to_anchor=(0.048, 0.875), bbox_transform=fig.transFigure, ncol=3, frameon=False, fontsize=10, alignment="left")
+    legend.get_title().set(fontsize=11.5, weight="bold", color=INK)
+    footer(fig, "Score = 33.3 × (minimum cost / run cost) + 33.3 × (425 / seconds) + 33.3 × (quality / 5). Uses unrounded cost ratios; quality grades remain unchanged.")
     save(fig, "weighted-value")
 
 

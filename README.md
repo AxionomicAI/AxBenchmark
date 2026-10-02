@@ -22,19 +22,19 @@ Lower and farther left means a faster, cheaper run. Color represents the quality
 
 [All recorded costs and times](COMPARISON.md) · [Vector image](assets/charts/cost-time-quality.svg)
 
-## Cost-weighted top five
+## Equal-weight top five
 
-The working priority is **50% cost, 30% time and 20% quality**. Cheaper and faster runs earn more points, using the cheapest and fastest eligible runs as references. These weights are assumptions for a decision aid, not additional quality grades.
+**More is better:** every run earns up to **33.3 points each for cost, time and quality**, so higher scores rank higher. Cheaper and faster runs earn more points, using the cheapest and fastest eligible runs as references; higher quality grades earn more quality points. The three factors carry **equal weight**. These weights are assumptions for a decision aid, not additional quality grades.
 
-**Score /100 = 50 × (minimum eligible cost / run cost) + 30 × (425 / elapsed seconds) + 20 × (unrounded quality / 5).**
+**Score /100 = 33.3 × (minimum eligible cost / run cost) + 33.3 × (425 / elapsed seconds) + 33.3 × (unrounded quality / 5).**
 
 The minimum eligible cost is **$0.45** (COP 1,504). Calculations preserve the original COP ratios, equivalent to unrounded USD conversions.
 
-DeepSeek leads this formula, followed by cloud GLM, Sonnet, GPT-6 Sol and Opus. Sonnet earns the maximum time contribution; DeepSeek earns the maximum cost contribution. The chart shows why cost-first weighting can favor a slower result.
+Sonnet leads this formula, followed by DeepSeek cloud, cloud GLM, GPT-6 Sol and Opus. Sonnet earns the maximum time contribution; DeepSeek earns the maximum cost contribution. With equal weights, Sonnet's speed outweighs DeepSeek's lower cost, while quality differences between the leaders are small.
 
-![Stacked contributions to the weighted top-five scores: DeepSeek 69.84, cloud GLM 60.47, Sonnet 58.24, GPT-6 Sol 43.46 and Opus 30.47, out of 100.](assets/charts/weighted-value.png)
+![Stacked contributions to the equal-weight top-five scores, where more is better: Sonnet 66.76, DeepSeek cloud 64.10, cloud GLM 54.96, GPT-6 Sol 47.57 and Opus 41.43, out of 100.](assets/charts/weighted-value.png)
 
-[Weighted ranking and tradeoffs](COMPARISON.md#cost-vs-time-vs-quality--weighted-top-5) · [Vector image](assets/charts/weighted-value.svg)
+[Equal-weight ranking and tradeoffs](COMPARISON.md#cost-vs-time-vs-quality--equal-weight-top-5) · [Vector image](assets/charts/weighted-value.svg)
 
 ## Methodology
 
@@ -68,7 +68,7 @@ Browser verification checks direct-file loading, page errors, seeded stock, prod
 
 After generation, each application received a fresh review subagent, strictly one at a time. Reviewers read the implementation and specification, opened the actual `file://` site in an isolated Chrome context, exercised user workflows, and captured and viewed desktop **1440×1000** and mobile **390×844** screenshots. They ran supplied tests where feasible and recorded skips or missing dependencies. Targeted probes examined validation, focus, rendering and storage failures; simulated failure cases are identified separately from normal user actions.
 
-The quality grade combines **UX 25%, visuals 15%, code quality 20%, business rules/spec adherence 25%, robustness 10% and accessibility 5%**, each graded from 1 to 5. Test counts are reported separately. The [review protocol](quality-review/REVIEW_PROTOCOL.md) and [individual evidence reports](quality-review/) document findings and limits. These quality weights are separate from the **50% cost / 30% time / 20% quality** decision score used above.
+The quality grade combines **UX 25%, visuals 15%, code quality 20%, business rules/spec adherence 25%, robustness 10% and accessibility 5%**, each graded from 1 to 5. Test counts are reported separately. The [review protocol](quality-review/REVIEW_PROTOCOL.md) and [individual evidence reports](quality-review/) document findings and limits. These quality weights are separate from the **equal-weight (⅓ cost / ⅓ time / ⅓ quality)** decision score used above.
 
 ### Differences between runs
 

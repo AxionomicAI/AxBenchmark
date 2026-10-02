@@ -6,9 +6,9 @@
   ],
   "eligibility_min_spec_grade": 4,
   "weights": {
-    "cost": 50,
-    "time": 30,
-    "quality": 20
+    "cost": 33.333333333333336,
+    "time": 33.333333333333336,
+    "quality": 33.333333333333336
   },
   "exchange_rate_cop_per_usd": 3341.23,
   "minimum_eligible_cost_cop": 1504.0,
@@ -47,11 +47,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 0.5062234518784794,
-        "time": 2.236842105263158,
-        "quality": 17.3
+        "cost": 0.33748230125231965,
+        "time": 2.4853801169590644,
+        "quality": 28.833333333333336
       },
-      "weighted_score": 20.043065557141638
+      "weighted_score": 31.65619575154472
     },
     {
       "folder": "openai-cloud-gpt-6-astra-high",
@@ -68,11 +68,11 @@
       "spec": 5,
       "eligible": true,
       "contributions": {
-        "cost": 2.163655196225112,
-        "time": 4.140954855472556,
-        "quality": 17.4
+        "cost": 1.4424367974834083,
+        "time": 4.601060950525063,
+        "quality": 29.0
       },
-      "weighted_score": 23.704610051697667
+      "weighted_score": 35.04349774800847
     },
     {
       "folder": "anthropic-cloud-opus-5.5-medium",
@@ -89,11 +89,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 3.462565613776591,
-        "time": 10.607321131447588,
-        "quality": 16.4
+        "cost": 2.3083770758510607,
+        "time": 11.785912368275097,
+        "quality": 27.333333333333332
       },
-      "weighted_score": 30.469886745224176
+      "weighted_score": 41.42762277745949
     },
     {
       "folder": "xai-cloud-grok-4.7-fast-500k-medium",
@@ -110,11 +110,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 3.5668548119337857,
-        "time": 5.495689655172414,
-        "quality": 15.4
+        "cost": 2.3779032079558573,
+        "time": 6.106321839080461,
+        "quality": 25.666666666666668
       },
-      "weighted_score": 24.4625444671062
+      "weighted_score": 34.15089171370298
     },
     {
       "folder": "4x-rtxpro6000-glm-5.3-flash-q4kxl",
@@ -131,11 +131,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 5.107654689940909,
-        "time": 3.953488372093023,
-        "quality": 14.5
+        "cost": 3.4051031266272727,
+        "time": 4.392764857881137,
+        "quality": 24.166666666666668
       },
-      "weighted_score": 23.56114306203393
+      "weighted_score": 31.96453465117508
     },
     {
       "folder": "4x-rtxpro6000-deepseek-v4-flash-q8kxl",
@@ -152,11 +152,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 6.439458811440315,
-        "time": 4.98436278342455,
-        "quality": 12.4
+        "cost": 4.292972540960211,
+        "time": 5.538180870471723,
+        "quality": 20.666666666666668
       },
-      "weighted_score": 23.823821594864867
+      "weighted_score": 30.497820078098602
     },
     {
       "folder": "openai-cloud-gpt-5.6-sol-medium",
@@ -173,11 +173,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 8.125337655321449,
-        "time": 4.5995670995671,
-        "quality": 15.8
+        "cost": 5.416891770214299,
+        "time": 5.110630110630111,
+        "quality": 26.333333333333336
       },
-      "weighted_score": 28.52490475488855
+      "weighted_score": 36.86085521417775
     },
     {
       "folder": "anthropic-cloud-sonnet-5.5-medium",
@@ -194,11 +194,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 13.6404861237076,
-        "time": 30.0,
-        "quality": 14.6
+        "cost": 9.093657415805067,
+        "time": 33.333333333333336,
+        "quality": 24.333333333333336
       },
-      "weighted_score": 58.2404861237076
+      "weighted_score": 66.76032408247174
     },
     {
       "folder": "openai-cloud-gpt-6-sol-medium",
@@ -215,11 +215,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 21.230942970073404,
-        "time": 6.525076765609007,
-        "quality": 15.7
+        "cost": 14.153961980048937,
+        "time": 7.25008529512112,
+        "quality": 26.166666666666668
       },
-      "weighted_score": 43.45601973568241
+      "weighted_score": 47.57071394183672
     },
     {
       "folder": "zai-cloud-glm-5.3-flash",
@@ -236,11 +236,11 @@
       "spec": 4,
       "eligible": true,
       "contributions": {
-        "cost": 44.13145539906103,
-        "time": 3.0357142857142856,
-        "quality": 13.3
+        "cost": 29.42097026604069,
+        "time": 3.3730158730158735,
+        "quality": 22.166666666666668
       },
-      "weighted_score": 60.46716968477532
+      "weighted_score": 54.96065280572323
     },
     {
       "folder": "deepseek-cloud-deepseek-flash",
@@ -257,11 +257,11 @@
       "spec": 4.5,
       "eligible": true,
       "contributions": {
-        "cost": 50.0,
-        "time": 4.1396103896103895,
-        "quality": 15.7
+        "cost": 33.333333333333336,
+        "time": 4.5995670995671,
+        "quality": 26.166666666666668
       },
-      "weighted_score": 69.83961038961039
+      "weighted_score": 64.09956709956711
     },
     {
       "folder": "4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl",
