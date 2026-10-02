@@ -10,23 +10,23 @@ Different priorities produce different winners: **DeepSeek Flash cloud has the l
 
 Sorted by cost, highest first. Prices show **USD first**, with COP in parentheses. Cloud costs are reported or API-list costs, CPU costs are package energy only, and GPU costs are machine rental time, so the cost bases differ. Each folder links to that model's code and screenshots.
 
-| Model | Where | Tasks passed | Time | Output tokens | Cost (USD / COP) | Folder |
+| Folder | Model | Where | Tasks passed | Time | Output tokens | Cost (USD / COP) |
 |---|---|---|---|---|---|---|
-| Claude Fable 5.1 (high) | Anthropic cloud | 7/7 | 1 h 35 min | 380,670 | **$44.46** (COP 148,551) | [`anthropic-cloud-fable-5.1-high`](anthropic-cloud-fable-5.1-high/) |
-| Codex GPT-6 Astra (high) | OpenAI cloud | 7/7 | 51 min 19 s | 59,148 | **$10.40** (COP 34,756) | [`openai-cloud-gpt-6-astra-high`](openai-cloud-gpt-6-astra-high/) |
-| Claude Opus 5.5 (medium) | Anthropic cloud | 7/7 | 20 min 02 s | 118,640 | **$6.50** (COP 21,718) | [`anthropic-cloud-opus-5.5-medium`](anthropic-cloud-opus-5.5-medium/) |
-| Grok 4.7 Fast, 500k context (medium) | xAI cloud | 7/7 | 38 min 40 s | 273,254 | **$6.31** (COP 21,083) | [`xai-cloud-grok-4.7-fast-500k-medium`](xai-cloud-grok-4.7-fast-500k-medium/) |
-| GLM-5.3-Flash UD-Q4_K_XL, 1M context, own minimal harness, one conversation for all tasks | 4× RTX PRO 6000 Blackwell, GPU | 6/6 | 53 min 45 s | 130,757 | **$4.41** (COP 14,723; rental; 542.1 Wh GPU) | [`4x-rtxpro6000-glm-5.3-flash-q4kxl`](4x-rtxpro6000-glm-5.3-flash-q4kxl/) |
-| DeepSeek-V4-Flash UD-Q8_K_XL, 1M context, via Claude Code | 4× RTX PRO 6000 Blackwell, GPU | 6/6 | 42 min 38 s | 32,736 | **$3.50** (COP 11,678; rental; 552.3 Wh GPU) | [`4x-rtxpro6000-deepseek-v4-flash-q8kxl`](4x-rtxpro6000-deepseek-v4-flash-q8kxl/) |
-| Codex GPT-5.6 Sol (medium) | OpenAI cloud | 7/7 | 46 min 12 s | 53,528 | **$2.77** (COP 9,255) | [`openai-cloud-gpt-5.6-sol-medium`](openai-cloud-gpt-5.6-sol-medium/) |
-| Claude Sonnet 5.5 (medium) | Anthropic cloud | 7/7 | 7 min 05 s | 56,470 | **$1.65** (COP 5,513) | [`anthropic-cloud-sonnet-5.5-medium`](anthropic-cloud-sonnet-5.5-medium/) |
-| Codex GPT-6 Sol (medium) | OpenAI cloud | 7/7 | 32 min 34 s | 35,657 | **$1.06** (COP 3,542) | [`openai-cloud-gpt-6-sol-medium`](openai-cloud-gpt-6-sol-medium/) |
-| GLM-5.3 Flash via Claude Code (claudeg) | z.ai cloud | 7/7 | 1 h 10 min | 187,466 | **$0.51** (COP 1,704) | [`zai-cloud-glm-5.3-flash`](zai-cloud-glm-5.3-flash/) |
-| DeepSeek flash via Claude Code (clauded) | DeepSeek cloud | 7/7 | 51 min 20 s | 407,464 | **$0.45** (COP 1,504) | [`deepseek-cloud-deepseek-flash`](deepseek-cloud-deepseek-flash/) |
-| Qwen3.5-35B-A3B UD-Q5_K_XL, 262k context, via Claude Code | 4× RTX PRO 6000 Blackwell, GPU | 5/6 | 2 min 30 s | 25,165 | **$0.20** (COP 685; rental; 25.7 Wh GPU) | [`4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl`](4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/) |
-| Qwen3.8-27B GSQ-RCO IQ3_S (+ MTP draft) | Ryzen 7 8745HS, CPU | 5/6 | 8 h 46 min | 38,604 | **$0.1031** (COP 344.6; 423.0 Wh) | [`ryzen7-8745hs-qwen38-27b-iq3`](ryzen7-8745hs-qwen38-27b-iq3/) |
-| Qwen3.6-35B-A3B Q4_K_S | Ryzen 7 8745HS, CPU | 4/6 | 3 h 39 min | 83,433 | **$0.0383** (COP 128.0; 157.1 Wh) | [`ryzen7-8745hs-qwen36-35b`](ryzen7-8745hs-qwen36-35b/) |
-| Gemma 4 26B-A4B QAT Q4_K_XL | Ryzen 7 8745HS, CPU | 6/6 | 1 h 30 min | 50,975 | **$0.0176** (COP 58.9; 72.3 Wh) | [`ryzen7-8745hs-gemma4-26b`](ryzen7-8745hs-gemma4-26b/) |
+| [`anthropic-cloud-fable-5.1-high`](anthropic-cloud-fable-5.1-high/) | Claude Fable 5.1 (high) | Anthropic cloud | 7/7 | 1 h 35 min | 380,670 | **$44.46** (COP 148,551) |
+| [`openai-cloud-gpt-6-astra-high`](openai-cloud-gpt-6-astra-high/) | Codex GPT-6 Astra (high) | OpenAI cloud | 7/7 | 51 min 19 s | 59,148 | **$10.40** (COP 34,756) |
+| [`anthropic-cloud-opus-5.5-medium`](anthropic-cloud-opus-5.5-medium/) | Claude Opus 5.5 (medium) | Anthropic cloud | 7/7 | 20 min 02 s | 118,640 | **$6.50** (COP 21,718) |
+| [`xai-cloud-grok-4.7-fast-500k-medium`](xai-cloud-grok-4.7-fast-500k-medium/) | Grok 4.7 Fast, 500k context (medium) | xAI cloud | 7/7 | 38 min 40 s | 273,254 | **$6.31** (COP 21,083) |
+| [`4x-rtxpro6000-glm-5.3-flash-q4kxl`](4x-rtxpro6000-glm-5.3-flash-q4kxl/) | GLM-5.3-Flash UD-Q4_K_XL, 1M context, own minimal harness, one conversation for all tasks | 4× RTX PRO 6000 Blackwell, GPU | 6/6 | 53 min 45 s | 130,757 | **$4.41** (COP 14,723; rental; 542.1 Wh GPU) |
+| [`4x-rtxpro6000-deepseek-v4-flash-q8kxl`](4x-rtxpro6000-deepseek-v4-flash-q8kxl/) | DeepSeek-V4-Flash UD-Q8_K_XL, 1M context, via Claude Code | 4× RTX PRO 6000 Blackwell, GPU | 6/6 | 42 min 38 s | 32,736 | **$3.50** (COP 11,678; rental; 552.3 Wh GPU) |
+| [`openai-cloud-gpt-5.6-sol-medium`](openai-cloud-gpt-5.6-sol-medium/) | Codex GPT-5.6 Sol (medium) | OpenAI cloud | 7/7 | 46 min 12 s | 53,528 | **$2.77** (COP 9,255) |
+| [`anthropic-cloud-sonnet-5.5-medium`](anthropic-cloud-sonnet-5.5-medium/) | Claude Sonnet 5.5 (medium) | Anthropic cloud | 7/7 | 7 min 05 s | 56,470 | **$1.65** (COP 5,513) |
+| [`openai-cloud-gpt-6-sol-medium`](openai-cloud-gpt-6-sol-medium/) | Codex GPT-6 Sol (medium) | OpenAI cloud | 7/7 | 32 min 34 s | 35,657 | **$1.06** (COP 3,542) |
+| [`zai-cloud-glm-5.3-flash`](zai-cloud-glm-5.3-flash/) | GLM-5.3 Flash via Claude Code (claudeg) | z.ai cloud | 7/7 | 1 h 10 min | 187,466 | **$0.51** (COP 1,704) |
+| [`deepseek-cloud-deepseek-flash`](deepseek-cloud-deepseek-flash/) | DeepSeek flash via Claude Code (clauded) | DeepSeek cloud | 7/7 | 51 min 20 s | 407,464 | **$0.45** (COP 1,504) |
+| [`4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl`](4x-rtxpro6000-qwen3.5-35b-a3b-q5kxl/) | Qwen3.5-35B-A3B UD-Q5_K_XL, 262k context, via Claude Code | 4× RTX PRO 6000 Blackwell, GPU | 5/6 | 2 min 30 s | 25,165 | **$0.20** (COP 685; rental; 25.7 Wh GPU) |
+| [`ryzen7-8745hs-qwen38-27b-iq3`](ryzen7-8745hs-qwen38-27b-iq3/) | Qwen3.8-27B GSQ-RCO IQ3_S (+ MTP draft) | Ryzen 7 8745HS, CPU | 5/6 | 8 h 46 min | 38,604 | **$0.1031** (COP 344.6; 423.0 Wh) |
+| [`ryzen7-8745hs-qwen36-35b`](ryzen7-8745hs-qwen36-35b/) | Qwen3.6-35B-A3B Q4_K_S | Ryzen 7 8745HS, CPU | 4/6 | 3 h 39 min | 83,433 | **$0.0383** (COP 128.0; 157.1 Wh) |
+| [`ryzen7-8745hs-gemma4-26b`](ryzen7-8745hs-gemma4-26b/) | Gemma 4 26B-A4B QAT Q4_K_XL | Ryzen 7 8745HS, CPU | 6/6 | 1 h 30 min | 50,975 | **$0.0176** (COP 58.9; 72.3 Wh) |
 
 [Cost notes, exchange rate and run differences](COMPARISON.md)
 
