@@ -6,38 +6,6 @@ Different priorities produce different winners: **DeepSeek Flash cloud has the l
 
 [Full cost/time comparison and ranking tables](COMPARISON.md) · [Quality grades and review evidence](QUALITY_COMPARISON.md) · [Methodology](#methodology) · [Why the GLM harness was created](#why-the-glm-harness-was-created)
 
-## Top three by cost, time and quality
-
-These are direct rankings by each metric, separate from the weighted shortlist below. All three use the same **11 eligible applications**, requiring a business rules/spec grade of at least **4/5**. The four applications with major required-workflow defects remain in the full comparison but are excluded from these shortlists. Eligibility does not mean an application is defect-free.
-
-![Three direct rankings: lowest cost is DeepSeek cloud, cloud GLM, then GPT-6 Sol; shortest time is Sonnet, Opus, then GPT-6 Sol; highest quality is Astra, Fable, then Opus.](assets/charts/top-three-by-priority.png)
-
-[Exact top-three tables](COMPARISON.md#top-3-by-primary-driver) · [Vector image](assets/charts/top-three-by-priority.svg)
-
-## Cost, time and quality together
-
-Lower and farther left means a faster, cheaper run. Color represents the quality grade; circles are cloud runs and diamonds are rented-GPU runs. USD is the primary cost axis, with COP as a secondary reference. The cost axis is logarithmic, so equal horizontal distances represent cost multiples. Sonnet stands out for turnaround, while DeepSeek and cloud GLM are cheaper but take much longer.
-
-![Cost-versus-time plot for 11 eligible applications, colored by quality. Sonnet finishes in 7 minutes 5 seconds; DeepSeek cloud costs $0.45 (COP 1,504); Astra and Fable have the highest quality grades.](assets/charts/cost-time-quality.png)
-
-[All recorded costs and times](COMPARISON.md) · [Vector image](assets/charts/cost-time-quality.svg)
-
-## Cost vs Time vs Quality top 5
-
-The working priority is **33% cost, 33% time and 33% quality**.
-
-**More is better:** every run earns up to **33.3 points each for cost, time and quality**, so higher scores rank higher. Cheaper and faster runs earn more points, using the cheapest and fastest eligible runs as references; higher quality grades earn more quality points. The three factors carry **equal weight**. These weights are assumptions for a decision aid, not additional quality grades.
-
-**Score /100 = 33.3 × (minimum eligible cost / run cost) + 33.3 × (425 / elapsed seconds) + 33.3 × (unrounded quality / 5).**
-
-The minimum eligible cost is **$0.45** (COP 1,504). Calculations preserve the original COP ratios, equivalent to unrounded USD conversions.
-
-Sonnet leads this formula, followed by DeepSeek cloud, cloud GLM, GPT-6 Sol and Opus. Sonnet earns the maximum time contribution; DeepSeek earns the maximum cost contribution. With equal weights, Sonnet's speed outweighs DeepSeek's lower cost, while quality differences between the leaders are small.
-
-![Stacked contributions to the equal-weight top-five scores, where more is better: Sonnet 66.76, DeepSeek cloud 64.10, cloud GLM 54.96, GPT-6 Sol 47.57 and Opus 41.43, out of 100.](assets/charts/weighted-value.png)
-
-[Equal-weight ranking and tradeoffs](COMPARISON.md#cost-vs-time-vs-quality--equal-weight-top-5) · [Vector image](assets/charts/weighted-value.svg)
-
 ## Cost and time — all 15 runs
 
 Sorted by cost, highest first. Prices show **USD first**, with COP in parentheses. Cloud costs are reported or API-list costs, CPU costs are package energy only, and GPU costs are machine rental time, so the cost bases differ. Each folder links to that model's code and screenshots.
@@ -85,6 +53,38 @@ Every category is graded **1–5**: 1 = missing or largely broken, 3 = usable wi
 | [Qwen 3.6 35B · CPU](quality-review/ryzen7-8745hs-qwen36-35b.md) | 2 | 2.5 | 2 | 2.5 | 1.5 | 2.5 | 2.18 |
 
 [Reviewer comments and evidence by codebase](QUALITY_COMPARISON.md)
+
+## Top three by cost, time and quality
+
+These are direct rankings by each metric, separate from the weighted shortlist below. All three use the same **11 eligible applications**, requiring a business rules/spec grade of at least **4/5**. The four applications with major required-workflow defects remain in the full comparison but are excluded from these shortlists. Eligibility does not mean an application is defect-free.
+
+![Three direct rankings: lowest cost is DeepSeek cloud, cloud GLM, then GPT-6 Sol; shortest time is Sonnet, Opus, then GPT-6 Sol; highest quality is Astra, Fable, then Opus.](assets/charts/top-three-by-priority.png)
+
+[Exact top-three tables](COMPARISON.md#top-3-by-primary-driver) · [Vector image](assets/charts/top-three-by-priority.svg)
+
+## Cost, time and quality together
+
+Lower and farther left means a faster, cheaper run. Color represents the quality grade; circles are cloud runs and diamonds are rented-GPU runs. USD is the primary cost axis, with COP as a secondary reference. The cost axis is logarithmic, so equal horizontal distances represent cost multiples. Sonnet stands out for turnaround, while DeepSeek and cloud GLM are cheaper but take much longer.
+
+![Cost-versus-time plot for 11 eligible applications, colored by quality. Sonnet finishes in 7 minutes 5 seconds; DeepSeek cloud costs $0.45 (COP 1,504); Astra and Fable have the highest quality grades.](assets/charts/cost-time-quality.png)
+
+[All recorded costs and times](COMPARISON.md) · [Vector image](assets/charts/cost-time-quality.svg)
+
+## Cost vs Time vs Quality top 5
+
+The working priority is **33% cost, 33% time and 33% quality**.
+
+**More is better:** every run earns up to **33.3 points each for cost, time and quality**, so higher scores rank higher. Cheaper and faster runs earn more points, using the cheapest and fastest eligible runs as references; higher quality grades earn more quality points. The three factors carry **equal weight**. These weights are assumptions for a decision aid, not additional quality grades.
+
+**Score /100 = 33.3 × (minimum eligible cost / run cost) + 33.3 × (425 / elapsed seconds) + 33.3 × (unrounded quality / 5).**
+
+The minimum eligible cost is **$0.45** (COP 1,504). Calculations preserve the original COP ratios, equivalent to unrounded USD conversions.
+
+Sonnet leads this formula, followed by DeepSeek cloud, cloud GLM, GPT-6 Sol and Opus. Sonnet earns the maximum time contribution; DeepSeek earns the maximum cost contribution. With equal weights, Sonnet's speed outweighs DeepSeek's lower cost, while quality differences between the leaders are small.
+
+![Stacked contributions to the equal-weight top-five scores, where more is better: Sonnet 66.76, DeepSeek cloud 64.10, cloud GLM 54.96, GPT-6 Sol 47.57 and Opus 41.43, out of 100.](assets/charts/weighted-value.png)
+
+[Equal-weight ranking and tradeoffs](COMPARISON.md#cost-vs-time-vs-quality--equal-weight-top-5) · [Vector image](assets/charts/weighted-value.svg)
 
 ## Methodology
 
