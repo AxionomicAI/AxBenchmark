@@ -2,7 +2,7 @@
 
 This ledger maps every non-heading source paragraph, list item, and substantive table row in [the product specification](../SPEC.md) to its responsible module(s). IDs identify source units; a unit can contain several obligations, all of which remain required. Shared ownership identifies an integration contract, not permission to omit a clause. Source wording remains authoritative.
 
-Source snapshot SHA-256: 54d1b19a2a23624b50d65fb552d59e968dde02c81e4e4d813ca0e063be1e8dc7. This is a documentation snapshot digest, not a benchmark template identity.
+Source snapshot SHA-256: d95bb1b6bddf3a99cfdff6d8fa052bb0a082f75beceb44636216c21efc363993. This is a documentation snapshot digest, not a benchmark template identity.
 
 The locator is an excerpt, not a replacement for the complete source requirement. Each module cites its assigned IDs alongside the corresponding contracts.
 
@@ -49,9 +49,9 @@ The locator is an excerpt, not a replacement for the complete source requirement
 | R039 | 3. TUI and execution interaction |  /  Home/library  /  Choose the default inventory benchmark, create or import templates, manage revisions and saved configurations, reconnect to active run… | [M15](15-terminal-interface.md) |
 | R040 | 3. TUI and execution interaction |  /  Environment  /  Show discovered capabilities, unavailable prerequisites, installation/setup guidance, and a recheck action.  /  | [M15](15-terminal-interface.md) |
 | R041 | 3. TUI and execution interaction |  /  Setup  /  Edit a template's run configurations and judge/weight selections; create or revise task templates separately.  /  | [M15](15-terminal-interface.md) |
-| R042 | 3. TUI and execution interaction |  /  Execution  /  Show harness panels, queued/running/completed states, current tasks, elapsed time, logs, and available measurements.  /  | [M15](15-terminal-interface.md) |
+| R042 | 3. TUI and execution interaction |  /  Execution  /  Show harness panels, queued/running/completed states, current tasks, elapsed time, logs, and available measurements, plus a live view of … | [M15](15-terminal-interface.md) |
 | R043 | 3. TUI and execution interaction |  /  Results  /  Inspect local/imported results, machine and judge filters, evidence, rankings, alternative weights, and ZIP/HTML export actions.  /  | [M15](15-terminal-interface.md) |
-| R044 | 3. TUI and execution interaction | When all four harnesses are selected, show four live panels in a 2×2 arrangement on sufficiently large terminals. Use a list/detail layout on smaller termi… | [M15](15-terminal-interface.md) |
+| R044 | 3. TUI and execution interaction | When all four harnesses are selected, show four live panels in a 2×2 arrangement on sufficiently large terminals. Use a list/detail layout on smaller termi… | [M15](15-terminal-interface.md), [M11](11-run-orchestration.md), [M05](05-harness-execution-isolation.md), [M10](10-measurements-cost.md) |
 | R045 | 3. TUI and execution interaction | Default scheduling runs one configuration per selected harness concurrently, up to four. Additional configurations within a harness queue sequentially, and… | [M11](11-run-orchestration.md) |
 | R046 | 3. TUI and execution interaction | Execution must continue independently of the TUI. Closing or detaching the interface leaves the benchmark running. Reconnecting observes existing work with… | [M11](11-run-orchestration.md) |
 | R047 | 3. TUI and execution interaction | During execution, users may inspect, detach, reconnect, and stop work. They cannot alter the frozen prompts, selected models, original weights, or inject i… | [M11](11-run-orchestration.md), [M15](15-terminal-interface.md) |

@@ -2,7 +2,7 @@
 // Same legend shape as boards-modules.mjs. CLI frames (M14) are plain terminal output, so their legend names the
 // output contract and arguments instead of TCSS and key bindings.
 import { measurements, measurementsPartial, timingPhases, costBasis, currencyEnergy } from './screens-measure.mjs';
-import { runOverview, runDetach, stopConfirm, stopCleanup, activeLocked } from './screens-run.mjs';
+import { runOverview, runDetach, stopConfirm, stopCleanup, activeLocked, harnessLive } from './screens-run.mjs';
 import { judging, reviewDetail, reviewUngraded, judgeCapability, rubricProfiles } from './screens-judging.mjs';
 import { reportGenerate, reportProgress } from './screens-report.mjs';
 import { cliHelp, cliRun, cliInvalid, cliStatusStop, cliDoctor, cliExchange } from './screens-cli.mjs';
@@ -119,7 +119,7 @@ const RUN_TREE = `RunScreen(Screen)              pushed at launch · ^r from Lib
 │     ├─ Static .lane-state
 │     ├─ Static .task-strip       T1 … T7 glyphs
 │     ├─ ProgressBar
-│     └─ Static .kv               now · elapsed · cost · queue
+│     └─ Static .kv               now · elapsed · cost · queue · live
 ├─ RichLog #events .bordered
 ├─ DataTable #lanes-table         .-compact only
 └─ Footer`;
@@ -136,13 +136,45 @@ const RUN_KEYS = [
   ['enter', 'open_configuration', 'RunConfigScreen for the focused lane (M05)'],
   ['s', 'stop_configuration', 'Stop the focused configuration, with cleanup'],
   ['S', 'stop_run', 'Stop the whole run, with cleanup'],
+  ['v', 'live_view', 'HarnessLiveScreen for the focused lane: code, thinking, tok/s, context'],
   ['d', 'detach', 'Leave; the run keeps going'],
   ['e', 'edit', 'Dimmed: frozen while running (check_action)'],
   ['tab', 'focus_next', 'Next lane, then events'],
 ];
-const RUN_STATES = [['Running', 'RunOverview'], ['Queued', 'RunQueued'], ['Sequential', 'RunSequential'], ['Failures', 'RunFailures'], ['Detach', 'RunDetach'], ['Reattached', 'RunReattached'], ['Stop', 'StopConfirm'], ['Locked', 'ActiveLocked']];
+const RUN_STATES = [['Running', 'RunOverview'], ['Live view', 'HarnessLive'], ['Queued', 'RunQueued'], ['Sequential', 'RunSequential'], ['Failures', 'RunFailures'], ['Detach', 'RunDetach'], ['Reattached', 'RunReattached'], ['Stop', 'StopConfirm'], ['Locked', 'ActiveLocked']];
 const LANES = { wide: [['lane1', 'Vertical #lane-2'], ['lane0', 'Vertical #lane-1'], ['lane2', 'Vertical #lane-3'], ['lane3', 'Vertical #lane-4'], ['events', 'RichLog #events']] };
 const runLegend = (notes) => ({ screen: 'RunScreen', file: 'tui/screens/run.py', tree: RUN_TREE, sel: RUN_SEL, keys: RUN_KEYS, states: RUN_STATES, notes });
+
+const LIVE_TREE = `HarnessLiveScreen(Screen)      v on a lane · v in RunConfigScreen
+├─ Header
+├─ Static #live-task             task · model · effort · harness
+├─ Vertical #live-meters .pane   tok/s · context · task tokens
+│  ├─ Sparkline #live-rate
+│  └─ ProgressBar #live-context
+├─ Horizontal
+│  ├─ RichLog #live-activity     thinking (Collapsible) · actions
+│  └─ Vertical #live-code .pane
+│     ├─ Tabs #live-files        files changed in this task
+│     └─ TextArea #live-diff     read_only · follows the stream
+└─ Footer`;
+const LIVE_SEL = [
+  ['#live-task', 'height: 1; padding: 0 1; background: $surface;'],
+  ['#live-meters', 'height: 5;'],
+  ['#live-activity', 'width: 52;  auto_scroll = True'],
+  ['#live-code', 'width: 1fr;'],
+  ['#live-diff .-added', 'background: $primary 24%;'],
+  ['Screen.-compact #live-activity', 'display: none;  a toggles it as an overlay'],
+];
+const LIVE_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to the run; nothing in the run changes'],
+  ['t', 'toggle_thinking', 'Show or hide thinking; dimmed when the harness exposes none'],
+  ['f', 'toggle_follow', 'Pause or resume following the stream'],
+  ['[ · ]', 'previous_file / next_file', 'Files changed in this task'],
+  ['/', 'search', 'Search thinking and actions'],
+  ['enter', 'open_configuration', 'RunConfigScreen for this configuration (M05)'],
+  ['tab', 'focus_next', 'Code, then thinking and actions'],
+];
+const LIVE_STATES = [['Codex · thinking summarized', 'HarnessLive'], ['Edit streaming', 'HarnessLiveStreaming'], ['Less exposed · Grok CLI', 'HarnessLiveLimited'], ['Run overview', 'RunOverview'], ['Configuration', 'RunConfig']];
 
 const DETACH_TREE = `DetachScreen(ModalScreen[bool])
 ├─ Vertical #detach .dialog
@@ -179,7 +211,25 @@ const M11 = [
       'Pi T6 failed and T7 used the T6 workspace. One trial per configuration.',
     ]) }),
   ] },
-  { id: 'm11-lifecycle', page: 'm11', title: 'M11 · 2 · Detach, reconnect and stop', note: 'Execution outlives the interface. Detaching, closing the terminal or quitting only stops observing; reconnecting observes the same processes without restarting anything. Stopping is the one explicit action that ends work, for one configuration or the whole run, and it cleans up child processes and application services. Frozen inputs cannot be edited while the run is active.', boards: [
+  { id: 'm11-live', page: 'm11', title: 'M11 · 2 · Live view inside one harness', note: 'v on a lane (or in its configuration screen) watches the current task process of that configuration: the code being written as a live diff, the thinking as far as the harness exposes it, its actions, output tok/s and context use. It is observation only: it never sends input, pauses or slows the harness, and leaving it changes nothing in the run.', boards: [
+    S('HarnessLive', 'Live view · Codex', { sizes: ['wide', 'compact'], focus: { wide: [['code', 'Vertical #live-code'], ['activity', 'RichLog #live-activity']], compact: [['code', 'Vertical #live-code']] }, render: (sz, f) => harnessLive(sz, f), legend: { screen: 'HarnessLiveScreen', file: 'tui/screens/live.py', tree: LIVE_TREE, sel: LIVE_SEL, keys: LIVE_KEYS, states: LIVE_STATES, notes: [
+      'Opened with v from the focused lane of RunScreen or from RunConfigScreen; esc returns to the run. Observation only (R042, R044, R047).',
+      'The task line names the task, model and effort as requested and as observed: Codex does not expose effort, so it stays “? unverified” (M05).',
+      'tok/s is output tokens per second over the last second, measured from the stream when the harness reports no rate. Context is the current conversation’s use; every task is a new conversation, so it restarts per task.',
+      'Thinking is shown only as the harness gives it and is labelled “summarized” when it is a summary; it is never presented as the full reasoning.',
+      'Token figures keep the M10 rules: cached ⊂ input and reasoning ⊂ output are shown apart and never added.',
+    ] } }),
+    S('HarnessLiveStreaming', 'Live view · edit streaming', { sizes: ['wide'], focus: { wide: [['code', 'Vertical #live-code']] }, render: (sz, f) => harnessLive(sz, f, { adds: 2, rate: 58.6, ctx: 83.9 }), legend: { screen: 'HarnessLiveScreen', file: 'tui/screens/live.py', tree: LIVE_TREE, sel: LIVE_SEL, keys: LIVE_KEYS, states: LIVE_STATES, notes: [
+      'While the harness streams an edit, added lines appear as they arrive with a block caret on the newest; the pane follows unless f pauses it.',
+      'The file is final only when the harness saves it; the diff is against the previous task commit, which is the workspace this task started from.',
+    ] } }),
+    S('HarnessLiveLimited', 'Live view · less exposed', { sizes: ['wide'], focus: { wide: [['code', 'Vertical #live-code']] }, render: (sz, f) => harnessLive(sz, f, { who: 'grok' }), legend: { screen: 'HarnessLiveScreen', file: 'tui/screens/live.py', tree: LIVE_TREE, sel: LIVE_SEL, keys: LIVE_KEYS, states: LIVE_STATES, notes: [
+      'Grok CLI reports neither context nor reasoning while it runs: context stays “? not reported” with no bar, and t is dimmed through check_action.',
+      'Unknown is never estimated silently: each value names its source (harness, endpoint or measured from the stream).',
+      'The code pane works for every harness, because it is read from the configuration’s own workspace, not from the model stream.',
+    ] } }),
+  ] },
+  { id: 'm11-lifecycle', page: 'm11', title: 'M11 · 3 · Detach, reconnect and stop', note: 'Execution outlives the interface. Detaching, closing the terminal or quitting only stops observing; reconnecting observes the same processes without restarting anything. Stopping is the one explicit action that ends work, for one configuration or the whole run, and it cleans up child processes and application services. Frozen inputs cannot be edited while the run is active.', boards: [
     S('RunDetach', 'Detach', { sizes: ['wide'], focus: { wide: [['detach', 'Button #detach']] }, render: (sz, f) => runDetach(sz, f), legend: { screen: 'DetachScreen', file: 'tui/screens/run.py', tree: DETACH_TREE, sel: modalSel('DetachScreen', '#detach', 84), keys: MODAL_KEYS([['enter', 'detach', 'Return to the Library; the run continues']]), states: RUN_STATES, notes: ['Disconnecting is not an interruption and is never recorded as one (R046, R060, R139).', 'Reattach from the Library (ctrl+r) or with axbenchmark --attach RUN_ID (M14).'] } }),
     S('RunReattached', 'Reattached', { sizes: ['wide'], focus: LANES, render: (sz, f) => runOverview(sz, f, { reattached: true }), legend: runLegend([
       'Reattaching observes existing work; no task restarts and no new trial starts (R046, R138).',
@@ -323,7 +373,7 @@ const M15 = [
       'Bindings that cannot run are dimmed, never hidden; q with an active run only detaches (R046).',
       'Resizing switches layouts without losing focus or the selected configuration (R044).',
     ] } }),
-    S('RunListDetail', 'Run · list and detail', { sizes: ['compact'], focus: { compact: [['list', 'ListView #lane-list'], ['tasks', 'Vertical #lane-detail'], ['search', 'Input #log-search'], ['log', 'RichLog #log']] }, render: (sz, f) => runListDetail(sz, f), legend: { screen: 'RunScreen · -compact', file: 'tui/screens/run.py', tree: 'RunScreen(Screen)              Screen.-compact\n├─ Header · Static #run-bar\n├─ Horizontal\n│  ├─ ListView #lane-list .pane   one item per configuration\n│  └─ Vertical #detail\n│     ├─ Vertical #lane-detail .pane\n│     └─ RichLog #log .bordered\n│        └─ Input #log-search\n└─ Footer', sel: [['Screen.-compact #lanes', 'display: none;'], ['#lane-list', 'width: 26;'], ['#detail', 'width: 1fr;'], ['#log .-match', 'background: $primary 24%;']], keys: [['↑ ↓', 'cursor', 'Select a configuration; the detail follows'], ['enter', 'open_configuration', 'RunConfigScreen with all tasks'], ['/', 'focus("#log-search")', 'Search the log; n next match'], ['s · d', 'stop · detach', 'Same as the 2×2 layout']], states: [['2×2 layout', 'RunOverview'], ['Compact table', 'RunOverview'], ['Configuration', 'RunConfig']], notes: [
+    S('RunListDetail', 'Run · list and detail', { sizes: ['compact'], focus: { compact: [['list', 'ListView #lane-list'], ['tasks', 'Vertical #lane-detail'], ['search', 'Input #log-search'], ['log', 'RichLog #log']] }, render: (sz, f) => runListDetail(sz, f), legend: { screen: 'RunScreen · -compact', file: 'tui/screens/run.py', tree: 'RunScreen(Screen)              Screen.-compact\n├─ Header · Static #run-bar\n├─ Horizontal\n│  ├─ ListView #lane-list .pane   one item per configuration\n│  └─ Vertical #detail\n│     ├─ Vertical #lane-detail .pane\n│     └─ RichLog #log .bordered\n│        └─ Input #log-search\n└─ Footer', sel: [['Screen.-compact #lanes', 'display: none;'], ['#lane-list', 'width: 26;'], ['#detail', 'width: 1fr;'], ['#log .-match', 'background: $primary 24%;']], keys: [['↑ ↓', 'cursor', 'Select a configuration; the detail follows'], ['enter', 'open_configuration', 'RunConfigScreen with all tasks'], ['v', 'live_view', 'HarnessLiveScreen for the selected configuration'], ['/', 'focus("#log-search")', 'Search the log; n next match'], ['s · d', 'stop · detach', 'Same as the 2×2 layout']], states: [['2×2 layout', 'RunOverview'], ['Compact table', 'RunOverview'], ['Configuration', 'RunConfig']], notes: [
       'Below 100×30 the four panels become a list with the selected configuration’s detail (R044).',
       'Log search, scrolling and task detail work the same in both layouts (R038, R044).',
     ] } }),

@@ -28,7 +28,7 @@ The following are conceptual lifecycle boundaries, not required status names, st
 |---|---|
 | Launch | Work uses the recomputed template identity and separately frozen run configuration and original weights. [R067] |
 | Queue to execution | A configuration starts according to the selected concurrency policy; its tasks remain sequential. [R045] |
-| Active observation | Progress and measurements are visible while approved checks and evidence preservation participate in the execution workflow. [R034] |
+| Active observation | Progress and measurements are visible while approved checks and evidence preservation participate in the execution workflow. A selected configuration's current task can be watched live (workspace changes, exposed reasoning, actions, output rate, context use) without affecting its execution. [R034, R044] |
 | Detach or close | Execution continues independently of the TUI; disconnecting is not an interrupted benchmark. [R046, R060, R139] |
 | Reconnect | Attachment observes existing work without restarting tasks. Reconnection is observation, not a new trial. [R046, R138] |
 | Explicit stop | Stopping one configuration or the whole benchmark also cleans up its child processes and application services. [R046, R139] |
@@ -51,7 +51,7 @@ The orchestration result contract includes the bound template identity, frozen l
 | [M01 template identity](01-template-library-identity.md) and [M07 launch configuration](07-run-configuration.md) | Supply the immutable approved definition and separately frozen launch choices; orchestration recomputes and binds template identity before execution. [R067] |
 | [M05 harness execution](05-harness-execution-isolation.md) | Execute model work headlessly, expose task outcomes and observable internal retries, and support cleanup of child processes and application services on explicit stop. [R046, R077, R138] |
 | [M08 verification](08-verification-evidence.md), [M10 measurements](10-measurements-cost.md), and [M02 retained results](02-retained-results-comparability.md) | Execute approved checks, preserve evidence, expose measurements, and retain scheduling and actual execution failures. [R034, R045, R060, R139] |
-| [M15 TUI](15-terminal-interface.md) and [M14 CLI](14-command-line-interface.md) | Share scheduling and lifecycle behavior, including sequential mode, unattended execution, attachment without restart, restricted active controls, and explicit stopping. [R045, R046, R047, R060, R138] |
+| [M15 TUI](15-terminal-interface.md) and [M14 CLI](14-command-line-interface.md) | Share scheduling and lifecycle behavior, including sequential mode, unattended execution, attachment without restart, restricted active controls, and explicit stopping. Provide the live observations of each active task process to an attached interface; attaching, watching, or leaving a live view never changes execution. [R044, R045, R046, R047, R060, R138] |
 
 ## Acceptance criteria
 

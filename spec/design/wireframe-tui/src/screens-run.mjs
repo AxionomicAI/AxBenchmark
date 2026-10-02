@@ -2,7 +2,7 @@
 // RunScreen is the run overview: one lane per harness (2×2), the active configuration of each lane and its queue,
 // task progress, and an event log. RunConfigScreen (M05) is the per-configuration detail opened from a lane.
 // Detaching, reconnecting and stopping are separate actions. All data is fictional.
-import { Grid, fit, len, header, footer, table, buttons, para, kv, notice, toast, modal, progress, radios } from './lib.mjs';
+import { Grid, fit, len, wrap, header, footer, table, buttons, para, kv, notice, toast, modal, progress, radios } from './lib.mjs';
 import { SHA, s8, step } from './screens.mjs';
 
 // ---------------------------------------------------------------- data
@@ -19,9 +19,9 @@ const RUNS = {
     id: '2026-10-01-a', bar: '● 3 of 4 running · 1 complete · one configuration per harness, up to 4 at once (jobs 4) · tasks sequential',
     lanes: [
       L('Claude Code', { cfg: 'claude-opus-5-5 · medium', state: 'done', tasks: '✓✓✓✓✓✓✓', now: 'complete 21:35:37 · final regression 21✓', elapsed: '36:50', cost: '$4.61 · API-equivalent estimate', go: 'RunConfig' }),
-      L('Codex', { cfg: 'gpt-6-sol · medium', state: 'run', tasks: '✓✓✓✓●○○', now: 'T5 Shopping cart · 10:58 in this task', elapsed: '41:12', cost: '$1.92 · reported · T1–T4', go: 'RunConfig' }),
-      L('Grok CLI', { cfg: 'grok-4.7-fast · harness default', state: 'run', tasks: '✓✓✓●○○○', now: 'T4 Inventory lookup · 0:22 in this task', elapsed: '24:57', cost: '$0.41 · estimate · T1–T3', go: 'RunConfig' }),
-      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 14:05 in this task', elapsed: '39:31', cost: '$0.00 · local endpoint, no charge', go: 'RunConfig' }),
+      L('Codex', { cfg: 'gpt-6-sol · medium', state: 'run', tasks: '✓✓✓✓●○○', now: 'T5 Shopping cart · 10:58 in this task', elapsed: '41:12', cost: '$1.92 · reported · T1–T4', live: '46.3 tok/s · context 84.2k of 272k · 31%', go: 'RunConfig' }),
+      L('Grok CLI', { cfg: 'grok-4.7-fast · harness default', state: 'run', tasks: '✓✓✓●○○○', now: 'T4 Inventory lookup · 0:22 in this task', elapsed: '24:57', cost: '$0.41 · estimate · T1–T3', live: '112 tok/s · context ? not reported', go: 'RunConfig' }),
+      L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 14:05 in this task', elapsed: '39:31', cost: '$0.00 · local endpoint, no charge', live: '29.4 tok/s · context 21.4k of 32k · 65%', go: 'RunConfig' }),
     ],
     events: [
       ['20:58:47', 'run', 'frozen · template 3f9c2e71… · configuration and original weights · 4 configurations start together'],
@@ -105,6 +105,7 @@ function lane(g, x, y, w, h, d, n, focused) {
     ['Elapsed', d.elapsed === '—' ? '—' : `${d.elapsed} · sum of task processes`],
     ['Cost', d.cost],
     ['Queue', d.queue ?? 'none in this lane', d.queue ? 'bd' : 'mu'],
+    ...(d.live ? [['Live', d.live]] : []),
   ]);
   if (d.note) g.text(ix, yy, fit(d.note, iw), 'mu');
   if (d.go) g.link(x, y, w, 1, 'go:' + d.go);
@@ -114,7 +115,7 @@ function lane(g, x, y, w, h, d, n, focused) {
 
 export function runOverview(sz, focus = 'lane1', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
-  const run = RUNS[st.run ?? 'live'];
+  const run = st.data ?? RUNS[st.run ?? 'live'];
   header(g, 'AxBenchmark', compact ? `Run ${run.id}` : `Run ${run.id} · Inventory web app r1`);
   g.fill(0, 1, W, 1, 'B1');
   if (st.reattached) {
@@ -135,7 +136,7 @@ export function runOverview(sz, focus = 'lane1', st = {}) {
     g.region(0, 11, W, H - 12, 'RichLog', '#events');
     run.events.slice(-(H - 14)).forEach(([t, s, m], i) => { g.text(2, 12 + i, fit(t, 9), 'mu'); g.text(11, 12 + i, fit(s, 7), 'mu'); g.text(18, 12 + i, fit(m, W - 20), m.startsWith('✗') ? 'bd' : ''); });
     if (st.reattached) toast(g, '✓ Reattached', 'Observing 2026-10-01-a. No task was restarted.', 40);
-    footer(g, [{ k: 'enter', d: 'Open', go: 'RunConfig' }, { k: 's', d: 'Stop', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }, { k: 'e', d: 'Edit', off: true, go: 'ActiveLocked' }]);
+    footer(g, [{ k: 'enter', d: 'Open', go: 'RunConfig' }, { k: 'v', d: 'Live', go: 'HarnessLive' }, { k: 's', d: 'Stop', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }, { k: 'e', d: 'Edit', off: true, go: 'ActiveLocked' }]);
     return g;
   }
 
@@ -153,7 +154,176 @@ export function runOverview(sz, focus = 'lane1', st = {}) {
     g.text(20, ey + 1 + i, fit(m, W - 22), m.startsWith('✗') ? 'bd' : '');
   });
   if (st.reattached) toast(g, '✓ Reattached to 2026-10-01-a', 'Observing the existing processes. No task was restarted and no new trial was created.', 46);
-  footer(g, [{ k: 'enter', d: 'Open configuration', go: 'RunConfig' }, { k: 's', d: 'Stop configuration', go: 'StopConfirm' }, { k: 'S', d: 'Stop run', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }, { k: 'e', d: 'Edit', off: true, go: 'ActiveLocked' }, { k: 'tab', d: 'Lane', do: 'next' }]);
+  footer(g, [{ k: 'enter', d: 'Open configuration', go: 'RunConfig' }, { k: 's', d: 'Stop configuration', go: 'StopConfirm' }, { k: 'S', d: 'Stop run', go: 'StopConfirm' }, { k: 'v', d: 'Live view', go: 'HarnessLive' }, { k: 'd', d: 'Detach', go: 'RunDetach' }, { k: 'e', d: 'Edit', off: true, go: 'ActiveLocked' }, { k: 'tab', d: 'Lane', do: 'next' }]);
+  return g;
+}
+
+// ---------------------------------------------------------------- live view (v on a lane)
+// HarnessLiveScreen watches one configuration's current task process: the code it is writing, its thinking (as far as
+// the harness exposes it), its actions, output tok/s and context use. Read-only: it never sends input to the harness.
+
+const LIVE_CODE = [
+  [38, ' ', 'function recalcTotals() {'],
+  [39, ' ', '  let total = 0;'],
+  [40, ' ', '  for (const { qty, price } of cart.values()) {'],
+  [41, ' ', '    total += qty * price;'],
+  [42, ' ', '  }'],
+  [43, ' ', '  totals.subtotal = round2(total);'],
+  [44, ' ', '  totals.tax = round2(total * TAX_RATE);'],
+  [45, ' ', '  totals.total = round2(totals.subtotal + totals.tax);'],
+  [46, ' ', '  render.totals(totals);'],
+  [47, ' ', '}'],
+  [48, ' ', ''],
+  [49, ' ', 'export function getCart() {'],
+  [50, ' ', '  return [...cart.entries()];'],
+  [51, ' ', '}'],
+  [52, ' ', ''],
+  [53, ' ', 'export function addItem(id, qty = 1) {'],
+  [54, ' ', '  const item = inventory.get(id);'],
+  [55, ' ', '  if (!stock.reserve(id, qty)) return false;'],
+  [56, ' ', '  cart.set(id, { qty, price: item.price });'],
+  [57, ' ', '  recalcTotals();'],
+  [58, ' ', '  return true;'],
+  [59, ' ', '}'],
+  [60, ' ', ''],
+  [61, ' ', 'export function removeItem(id) {'],
+  [62, ' ', '  const line = cart.get(id);'],
+  [63, ' ', '  if (!line) return;'],
+  [64, '-', '  cart.delete(id);'],
+  [64, '+', '  cart.delete(id);'],
+  [65, '+', '  stock.release(id, line.qty);'],
+  [66, '+', '  recalcTotals();'],
+  [67, '+', '  badge.update(cart.size);'],
+  [68, '+', '  storage.save(cart);'],
+  [69, ' ', '}'],
+];
+const LIVE_THINK = 'The total must use the price at the moment an item is added. Spec §Cart: totals update on every quantity change and stock never goes below 0. removeItem does not release stock or recalculate — fix that path first, then add a test for it.';
+const LIVE = {
+  codex: {
+    harness: 'Codex 0.98.0', cfg: 'Codex · gpt-6-sol · medium', model: 'gpt-6-sol', effort: ['medium', '? unverified', 'it'], pid: 48211, task: 'T5 Shopping cart', inTask: '10:58',
+    rate: 46.3, spark: '▁▂▄▆▇▆▅▇█▆▅▃▄▆▇█▇▆', rateNote: 'avg 41.8 · peak 72.0 · measured from the stream',
+    ctx: [84.2, 272], ctxNote: 'reported by harness', usage: 'in 612.4k (cached 498.0k) · out 18.9k (reasoning 7.2k) · $0.41 reported',
+    thinking: 'summarized', thinkTok: '1.4k',
+  },
+  grok: {
+    harness: 'Grok CLI 1.9.3', cfg: 'Grok CLI · grok-4.7-fast · harness default', model: 'grok-4.7-fast', effort: ['harness default', '(no argument passed)', 'mu'], pid: 49820, task: 'T5 Shopping cart', inTask: '6:02',
+    rate: 112, spark: '▃▅▇█▇▆▇█▇▅▆▇█▇▆▅▇█', rateNote: 'measured from the stream · the harness reports no rate',
+    ctx: null, ctxNote: 'not reported by Grok CLI · no bar is drawn and no size is guessed', usage: 'in ? · out 11.2k so far (stream) · reasoning reported at task end only · estimate after the task',
+    thinking: 'none', thinkTok: '',
+  },
+};
+
+// st: { who: 'codex' | 'grok', adds: added lines streamed so far (0–5), thinking: false hides it, paused: follow off,
+//       rate / ctx overrides for animation frames }
+export function harnessLive(sz, focus = 'code', st = {}) {
+  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
+  const L = { ...LIVE[st.who ?? 'codex'] };
+  if (st.rate != null) L.rate = st.rate;
+  if (st.ctx != null && L.ctx) L.ctx = [st.ctx, L.ctx[1]];
+  const adds = st.adds ?? 5, showThink = st.thinking !== false && L.thinking !== 'none';
+  header(g, 'AxBenchmark', compact ? `Live · ${L.cfg.split(' · ')[0]}` : `Run 2026-10-01-a · ${L.cfg} · live view`);
+
+  // task line: the one place that says what is running, with which model and effort
+  g.fill(0, 1, W, 1, 'B1');
+  let x = g.text(1, 1, '●', 'ac') + 1;
+  x = g.text(x, 1, L.task, 'bd');
+  x = g.text(x, 1, ` · ${L.inTask} │ `, 'mu');
+  x = g.text(x, 1, L.model);
+  x = g.text(x, 1, ' · effort ', 'mu');
+  x = g.text(x, 1, L.effort[0]);
+  x = g.text(x + 1, 1, L.effort[1], L.effort[2]);
+  if (!compact) g.text(x, 1, fit(` │ ${L.harness} · pid ${L.pid} · clean · read-only`, W - x - 1), 'mu');
+  g.region(0, 1, W, 1, 'Static', '#live-task');
+
+  const rateTxt = `${L.rate.toFixed(L.rate >= 100 ? 0 : 1)} tok/s`;
+  const pct = L.ctx ? Math.round(L.ctx[0] / L.ctx[1] * 100) : null;
+  const ctxTxt = L.ctx ? `${L.ctx[0].toFixed(1)}k of ${L.ctx[1]}k` : '? not reported';
+  const bar = (bx, y, w) => { const n = Math.round(w * pct / 100); g.text(bx, y, '█'.repeat(n), 'ac'); g.text(bx + n, y, '░'.repeat(w - n), 'ln'); };
+
+  // code pane rows: unchanged and removed lines, then the added lines streamed so far, caret on the newest
+  const shown = LIVE_CODE.filter((c) => c[1] !== '+').slice(0, -1)
+    .concat(LIVE_CODE.filter((c) => c[1] === '+').slice(0, adds), adds >= 5 ? [LIVE_CODE.at(-1)] : []);
+  const codeRows = (cx, cy, cw, max) => {
+    shown.slice(-max).forEach(([n, k, t], i) => {
+      const y = cy + i, last = k === '+' && i === Math.min(shown.length, max) - 1 && adds < 5;
+      const live = k === '+' && adds < 5 && t === LIVE_CODE.filter((c) => c[1] === '+')[adds - 1]?.[2];
+      if (k === '+') g.fill(cx, y, cw, 1, 'BT');
+      const o = k === '+' ? { b: 'BT' } : {};
+      g.text(cx, y, fit(String(n), 4, 'right'), 'ln', o);
+      g.text(cx + 5, y, k === ' ' ? ' ' : k === '+' ? '+' : '−', k === '+' ? 'ac' : 'mu', o);
+      const body = live && !last ? t : live ? t.slice(0, Math.max(1, t.length - 4)) : t;
+      const ex = g.text(cx + 6, y, fit(body, cw - 7), k === '-' ? 'mu dm' : '', o);
+      if (live) g.text(ex, y, ' ', 'rv', o);
+    });
+  };
+
+  if (compact) {
+    g.text(1, 2, 'Out ', 'mu'); x = g.text(5, 2, rateTxt, 'bd'); g.text(x + 1, 2, L.spark.slice(0, 10), 'ac');
+    x = g.text(x + 12, 2, '│ Context ', 'mu');
+    if (L.ctx) { x = g.text(x, 2, ctxTxt, 'bd'); bar(x + 1, 2, 12); g.text(x + 14, 2, `${pct}%`, 'bd'); }
+    else g.text(x, 2, ctxTxt, 'bd');
+    g.region(0, 2, W, 1, 'Static', '#live-meters');
+    const ch = H - 1 - 3 - (showThink ? 5 : 0);
+    g.box(0, 3, W, ch, { f: 'ac', title: `Code being written · src/cart.js`, sub: adds >= 5 ? 'saved' : `+${adds} −1 so far` });
+    codeRows(1, 4, W - 2, ch - 2);
+    g.region(0, 3, W, ch, 'Vertical', '#live-code.pane');
+    if (showThink) {
+      const ty = 3 + ch;
+      g.box(0, ty, W, 5, { title: `Thinking · ${L.thinking} · ${L.thinkTok} tok` });
+      const tl = wrap(LIVE_THINK, W - 4);
+      tl.slice(0, 3).forEach((l, i) => g.text(2, ty + 1 + i, i === 2 && tl.length > 3 ? fit(l + ' …', W - 4) : l, 'mu it'));
+      g.region(0, ty, W, 5, 'Collapsible', '#live-thinking');
+    }
+    footer(g, [{ k: 'esc', d: 'Run', go: 'RunOverview' }, { k: 't', d: showThink ? 'Hide thinking' : 'Thinking' }, { k: 'a', d: 'Actions' }, { k: 'f', d: 'Follow' }, { k: '[ ]', d: 'File' }]);
+    return g;
+  }
+
+  // throughput and context
+  g.box(0, 2, W, 5, { title: 'Throughput and context', sub: 'updates every 1 s' });
+  g.region(0, 2, W, 5, 'Vertical', '#live-meters.pane');
+  g.text(2, 3, 'Output', 'mu'); x = g.text(11, 3, rateTxt, 'bd'); x = g.text(x + 2, 3, L.spark, 'ac');
+  g.text(x + 2, 3, fit(`last 60 s · ${L.rateNote}`, W - x - 4), 'mu');
+  g.text(2, 4, 'Context', 'mu');
+  if (L.ctx) { x = g.text(11, 4, ctxTxt, 'bd'); bar(x + 2, 4, 32); x = g.text(x + 35, 4, `${pct}%`, 'bd'); g.text(x + 2, 4, fit(`${L.ctxNote} · this conversation only`, W - x - 4), 'mu'); }
+  else { x = g.text(11, 4, ctxTxt, 'bd'); g.text(x + 2, 4, fit(L.ctxNote, W - x - 4), 'mu'); }
+  g.text(2, 5, 'Task', 'mu'); g.text(11, 5, fit(`${L.usage}${L.ctx ? ' · cached ⊂ in, reasoning ⊂ out' : ''}`, W - 13), 'mu');
+
+  // thinking and actions
+  const af = focus === 'activity', lw = 52, py = 7, ph = H - 1 - py;
+  g.box(0, py, lw, ph, { f: af ? 'ac' : 'ln', title: 'Thinking and actions', sub: st.paused ? 'paused · 3 new ↓' : 'following new lines' });
+  g.region(0, py, lw, ph, 'RichLog', '#live-activity');
+  let y = py + 1;
+  const act = (t, verb, what, f = '', note = '') => { g.text(2, y, t, 'mu'); x = g.text(11, y, verb, f === 'live' ? 'ac' : ''); x = g.text(x + 1, y, what, 'bd'); if (note) g.text(x + 1, y, fit(note, lw - 2 - x - 1), 'mu'); y++; };
+  act('21:41:47', '▸ run', 'npm test', '', '      ✓ 21 passed');
+  act('21:42:05', '▸ git', 'commit', '', '→ 8c2d417');
+  if (L.thinking === 'none') {
+    g.text(2, y, '21:42:06', 'mu'); g.text(11, y, '○', 'ln'); g.text(13, y++, fit('thinking not exposed by this harness', lw - 15), 'mu');
+    g.text(13, y++, fit('reasoning tokens come with the task total', lw - 15), 'mu');
+  } else {
+    g.text(2, y, '21:42:06', 'mu'); g.text(11, y, showThink ? '▾' : '▸', 'ac'); x = g.text(13, y, 'thinking', 'bd'); g.text(x, y++, ` · ${L.thinking} · ${L.thinkTok} tok`, 'mu');
+    if (showThink) y = para(g, 11, y, lw - 13, LIVE_THINK, 'mu it');
+  }
+  act('21:42:31', '▸ read', 'src/cart.js', '', '1–96');
+  act('21:42:38', '▸ read', 'src/stock.js', '', '1–40');
+  if (adds >= 5) act('21:43:02', '✓ edit', 'src/cart.js', '', '+5 −1 · saved');
+  else { g.text(2, y, '21:42:41', 'mu'); g.text(11, y, '●', 'ac'); x = g.text(13, y, 'edit src/cart.js', 'bd'); g.text(x, y++, ' · writing…', 'mu'); }
+  y++;
+  g.text(2, y++, 'Next in the plan the harness reported', 'mu');
+  [['○', 'add tests/cart.test.js · removeItem'], ['○', 'run npm test · commit']].forEach(([gl, t]) => { g.text(2, y, gl, 'ln'); g.text(4, y++, t); });
+  g.text(2, py + ph - 2, fit('Watching never sends input to the harness.', lw - 4), 'mu');
+
+  // code being written
+  const cf = focus === 'code', cx = lw, cw = W - lw;
+  g.box(cx, py, cw, ph, { f: cf ? 'ac' : 'ln', title: 'Code being written · src/cart.js', sub: adds >= 5 ? 'saved 21:43:02' : `+${adds} −1 so far` });
+  g.region(cx, py, cw, ph, 'Vertical', '#live-code.pane');
+  g.text(cx + 2, py + 1, 'Files', 'mu'); x = g.text(cx + 9, py + 1, '● src/cart.js', 'ac bd');
+  g.text(x + 2, py + 1, fit('~ index.html +22 −1  ~ src/inventory.js +12 −2  ↓ 11', cw - (x - cx) - 4), 'mu');
+  g.region(cx + 2, py + 1, cw - 4, 1, 'Tabs', '#live-files');
+  g.hline(cx + 1, py + 2, cw - 2);
+  codeRows(cx + 1, py + 3, cw - 2, ph - 6);
+  g.text(cx + 2, py + ph - 2, fit(adds >= 5 ? 'Saved · diff against the T4 commit 5b1e9a0.' : 'Streams as the harness writes; final when the file is saved.', cw - 4), 'mu');
+
+  footer(g, [{ k: 'esc', d: 'Run overview', go: 'RunOverview' }, { k: 't', d: showThink ? 'Hide thinking' : 'Show thinking', off: L.thinking === 'none' }, { k: 'f', d: st.paused ? 'Follow' : 'Pause follow' }, { k: '[ ]', d: 'File' }, { k: '/', d: 'Search' }, { k: 'enter', d: 'Configuration', go: 'RunConfig' }, { k: 'tab', d: 'Pane', do: 'next' }]);
   return g;
 }
 

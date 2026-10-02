@@ -100,6 +100,6 @@ export function runListDetail(sz, focus = 'list') {
     const o = hit ? { b: 'BT' } : {};
     g.text(x + 2, yy, t, 'mu', o); g.text(x + 11, yy, fit(s, 7), hit ? 'bd' : 'mu', o); g.text(x + 18, yy, fit(msg, w - 20), msg.startsWith('✗') ? 'bd' : '', o);
   });
-  footer(g, [{ k: '↑↓', d: 'Config' }, { k: 'enter', d: 'Tasks', go: 'RunConfig' }, { k: '/', d: 'Search' }, { k: 's', d: 'Stop', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }]);
+  footer(g, [{ k: '↑↓', d: 'Config' }, { k: 'enter', d: 'Tasks', go: 'RunConfig' }, { k: 'v', d: 'Live', go: 'HarnessLive' }, { k: '/', d: 'Search' }, { k: 's', d: 'Stop', go: 'StopConfirm' }, { k: 'd', d: 'Detach', go: 'RunDetach' }]);
   return g;
 }

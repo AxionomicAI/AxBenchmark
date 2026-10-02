@@ -75,10 +75,10 @@ The TUI is the central place for setup, observation, and results. It provides ke
 | Home/library | Choose the default inventory benchmark, create or import templates, manage revisions and saved configurations, reconnect to active runs, and inspect accumulated results. |
 | Environment | Show discovered capabilities, unavailable prerequisites, installation/setup guidance, and a recheck action. |
 | Setup | Edit a template's run configurations and judge/weight selections; create or revise task templates separately. |
-| Execution | Show harness panels, queued/running/completed states, current tasks, elapsed time, logs, and available measurements. |
+| Execution | Show harness panels, queued/running/completed states, current tasks, elapsed time, logs, and available measurements, plus a live view of one configuration's current task. |
 | Results | Inspect local/imported results, machine and judge filters, evidence, rankings, alternative weights, and ZIP/HTML export actions. |
 
-When all four harnesses are selected, show four live panels in a 2×2 arrangement on sufficiently large terminals. Use a list/detail layout on smaller terminals. Logs must be scrollable and searchable; selecting a configuration reveals its task-level details.
+When all four harnesses are selected, show four live panels in a 2×2 arrangement on sufficiently large terminals. Use a list/detail layout on smaller terminals. Logs must be scrollable and searchable; selecting a configuration reveals its task-level details. A live view of a selected configuration shows its current task with the model and effort, the code being written in its workspace, the reasoning the harness exposes, output tokens per second, and context use, each labelled with its source; anything the harness does not expose is shown as unavailable rather than estimated. Live rates and context use help observation only: they are not retained measurements and do not affect cost, time, or rankings. Watching never sends input to the harness.
 
 Default scheduling runs one configuration per selected harness concurrently, up to four. Additional configurations within a harness queue sequentially, and tasks within a configuration always execute sequentially. Provide a sequential mode through `--jobs 1` and the equivalent TUI setting. Record scheduling and concurrency in the results.
 

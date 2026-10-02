@@ -19,6 +19,8 @@ Accept available measurements, associate them with the relevant task, and derive
 
 Benchmark elapsed time is the sum of task process durations for the configuration. Each duration includes the harness's tool work. Queueing, planning, external verification, and independent judging are excluded from benchmark elapsed time; report each of those phases and total experiment duration separately. The configuration's summed task durations and the experiment's overall duration are distinct measures, including when configurations run concurrently. A competitor performing its own tool-based testing remains within its task process duration. [R079]
 
+Live output rates and context use shown while a task runs ([M15](15-terminal-interface.md)) are observation aids, not measurements of this module: they do not enter per-task records, aggregates, cost, elapsed time, or rankings, and a live stream count never replaces the harness's final usage report. [R044]
+
 Missing observations must remain unknown; usable but incomplete observations remain partial. Display their source and coverage at task and aggregate levels. An aggregate containing incomplete measurements cannot silently become a complete total. Failure, interruption, or unavailable reporting does not justify replacing missing time, usage, or cost with zero, and recorded execution status remains visible alongside the measurements. [R078, R080, R147]
 
 ## Cost basis and currency

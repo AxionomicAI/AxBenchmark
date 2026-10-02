@@ -143,7 +143,7 @@ export function runConfig(sz, focus = 'tasks', st = {}) {
     ['21:05:00', 'task', 'T1 started · new process 51020 · new conversation'],
     ['21:05:03', 'claude', 'exit 1 · error: model “claude-fable-5-1” not found for this account'],
     ['21:05:03', 'run', 'configuration stopped · process tree ended · no services were running'],
-  ] : blk ? LOG_T4 : LOG_T5;
+  ] : blk ? LOG_T4 : (st.log ?? LOG_T5);
   const vis = ly + lh - 1 - y;
   lines.slice(-vis).forEach(([t, s, m], i) => {
     const hit = m.includes('✗ blocked');
@@ -153,7 +153,7 @@ export function runConfig(sz, focus = 'tasks', st = {}) {
     g.text(20, y + i, fit(m, W - 23), hit ? 'bd' : '', hit ? { b: 'BT' } : {});
   });
   if (!rej) scrollbar(g, W - 2, ly + 2, lh - 3, lh - 6, 3);
-  footer(g, [{ k: 'esc', d: 'Run overview', go: 'RunOverview' }, { k: '/', d: 'Search' }, { k: 'i', d: 'Isolation', go: 'RunIsolation' }, { k: 's', d: 'Stop configuration', off: rej }, { k: 'd', d: 'Detach' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  footer(g, [{ k: 'esc', d: 'Run overview', go: 'RunOverview' }, { k: '/', d: 'Search' }, { k: 'i', d: 'Isolation', go: 'RunIsolation' }, { k: 'v', d: 'Live view', go: 'HarnessLive', off: rej }, { k: 's', d: 'Stop configuration', off: rej }, { k: 'd', d: 'Detach' }, { k: 'tab', d: 'Focus', do: 'next' }]);
   return g;
 }
 

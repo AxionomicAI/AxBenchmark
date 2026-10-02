@@ -799,7 +799,7 @@
       "x": 0,
       "y": 0,
       "w": 1456,
-      "h": 1360,
+      "h": 1420,
       "title": "RunOverview · Run overview",
       "page": "m11",
       "is_interactive": true
@@ -808,7 +808,7 @@
       "x": 1536,
       "y": 0,
       "w": 1456,
-      "h": 1340,
+      "h": 1400,
       "title": "RunQueued · Run · same-harness queue",
       "page": "m11",
       "is_interactive": true
@@ -817,7 +817,7 @@
       "x": 3072,
       "y": 0,
       "w": 1456,
-      "h": 1320,
+      "h": 1380,
       "title": "RunSequential · Run · sequential (jobs 1)",
       "page": "m11",
       "is_interactive": true
@@ -826,14 +826,41 @@
       "x": 4608,
       "y": 0,
       "w": 1456,
-      "h": 1360,
+      "h": 1420,
       "title": "RunFailures · Run · failures recorded",
+      "page": "m11",
+      "is_interactive": true
+    },
+    "HarnessLive.dc.html": {
+      "x": 0,
+      "y": 1880,
+      "w": 1456,
+      "h": 1500,
+      "title": "HarnessLive · Live view · Codex",
+      "page": "m11",
+      "is_interactive": true
+    },
+    "HarnessLiveStreaming.dc.html": {
+      "x": 1536,
+      "y": 1880,
+      "w": 1456,
+      "h": 1220,
+      "title": "HarnessLiveStreaming · Live view · edit streaming",
+      "page": "m11",
+      "is_interactive": true
+    },
+    "HarnessLiveLimited.dc.html": {
+      "x": 3072,
+      "y": 1880,
+      "w": 1456,
+      "h": 1280,
+      "title": "HarnessLiveLimited · Live view · less exposed",
       "page": "m11",
       "is_interactive": true
     },
     "RunDetach.dc.html": {
       "x": 0,
-      "y": 1820,
+      "y": 3840,
       "w": 1456,
       "h": 860,
       "title": "RunDetach · Detach",
@@ -842,16 +869,16 @@
     },
     "RunReattached.dc.html": {
       "x": 1536,
-      "y": 1820,
+      "y": 3840,
       "w": 1456,
-      "h": 1320,
+      "h": 1380,
       "title": "RunReattached · Reattached",
       "page": "m11",
       "is_interactive": true
     },
     "StopConfirm.dc.html": {
       "x": 3072,
-      "y": 1820,
+      "y": 3840,
       "w": 1456,
       "h": 1020,
       "title": "StopConfirm · Stop · confirm and clean up",
@@ -860,7 +887,7 @@
     },
     "StopCleanup.dc.html": {
       "x": 4608,
-      "y": 1820,
+      "y": 3840,
       "w": 1456,
       "h": 860,
       "title": "StopCleanup · Stop · cleaning up",
@@ -869,7 +896,7 @@
     },
     "ActiveLocked.dc.html": {
       "x": 6144,
-      "y": 1820,
+      "y": 3840,
       "w": 1456,
       "h": 860,
       "title": "ActiveLocked · Frozen while running",
@@ -1024,7 +1051,7 @@
       "x": 1536,
       "y": 0,
       "w": 1144,
-      "h": 1040,
+      "h": 1100,
       "title": "RunListDetail-80x24 · Run · list and detail",
       "page": "m15",
       "is_interactive": true
@@ -1384,14 +1411,23 @@
       "x": 0,
       "y": 30040,
       "w": 1144,
-      "h": 1300,
+      "h": 1360,
       "title": "RunOverview-80x24 · Run overview",
+      "page": "compact",
+      "is_interactive": true
+    },
+    "HarnessLive-80x24.dc.html": {
+      "x": 0,
+      "y": 31860,
+      "w": 1144,
+      "h": 1400,
+      "title": "HarnessLive-80x24 · Live view · Codex",
       "page": "compact",
       "is_interactive": true
     },
     "Judging-80x24.dc.html": {
       "x": 0,
-      "y": 31800,
+      "y": 33720,
       "w": 1144,
       "h": 1060,
       "title": "Judging-80x24 · Judging · in progress",
@@ -1400,7 +1436,7 @@
     },
     "CliRun-80x24.dc.html": {
       "x": 0,
-      "y": 33320,
+      "y": 35240,
       "w": 1144,
       "h": 900,
       "title": "CliRun-80x24 · run --no-tui",
@@ -1409,7 +1445,7 @@
     },
     "PlanReview-80x24.dc.html": {
       "x": 0,
-      "y": 34680,
+      "y": 36600,
       "w": 1144,
       "h": 1280,
       "title": "PlanReview-80x24 · Review the draft",
@@ -1500,6 +1536,9 @@
     "RunQueued.dc.html",
     "RunSequential.dc.html",
     "RunFailures.dc.html",
+    "HarnessLive.dc.html",
+    "HarnessLiveStreaming.dc.html",
+    "HarnessLiveLimited.dc.html",
     "RunDetach.dc.html",
     "RunReattached.dc.html",
     "StopConfirm.dc.html",
@@ -1562,6 +1601,7 @@
     "TaskChecks-80x24.dc.html",
     "Measurements-80x24.dc.html",
     "RunOverview-80x24.dc.html",
+    "HarnessLive-80x24.dc.html",
     "Judging-80x24.dc.html",
     "CliRun-80x24.dc.html",
     "PlanReview-80x24.dc.html"
@@ -1767,10 +1807,18 @@
       "maxW": 6064,
       "page": "m11"
     },
+    "row-m11-m11-live": {
+      "x": 0,
+      "y": 1580,
+      "text": "M11 · 2 · Live view inside one harness",
+      "kind": "title1",
+      "maxW": 4528,
+      "page": "m11"
+    },
     "row-m11-m11-lifecycle": {
       "x": 0,
-      "y": 1520,
-      "text": "M11 · 2 · Detach, reconnect and stop",
+      "y": 3540,
+      "text": "M11 · 3 · Detach, reconnect and stop",
       "kind": "title1",
       "maxW": 7600,
       "page": "m11"
@@ -2015,9 +2063,17 @@
       "maxW": 1456,
       "page": "compact"
     },
+    "row-compact-m11-live": {
+      "x": 0,
+      "y": 31560,
+      "text": "M11 · 2 · Live view inside one harness · 80×24",
+      "kind": "title1",
+      "maxW": 1456,
+      "page": "compact"
+    },
     "row-compact-m12-judging": {
       "x": 0,
-      "y": 31500,
+      "y": 33420,
       "text": "M12 · 1 · Sequential independent reviews · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2025,7 +2081,7 @@
     },
     "row-compact-m14-run": {
       "x": 0,
-      "y": 33020,
+      "y": 34940,
       "text": "M14 · 1 · Commands and unattended runs · 80×24",
       "kind": "title1",
       "maxW": 1456,
@@ -2033,7 +2089,7 @@
     },
     "row-compact-m16-review": {
       "x": 0,
-      "y": 34380,
+      "y": 36300,
       "text": "M16 · 2 · Review, edit, regenerate and approve · 80×24",
       "kind": "title1",
       "maxW": 1456,
