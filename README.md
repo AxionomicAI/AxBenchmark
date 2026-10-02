@@ -2,7 +2,7 @@
 
 At **Axionomic AI**, we believe technology decisions should rest on real, measurable evidence. Agentic coding is a vital part of how we operate, so the models and agent harnesses we choose for it matter.
 
-Every new model release arrives with a wave of highly specialized benchmarks, yet how a model will perform on real, everyday engineering work remains largely a black box. To close that gap, we created **AxBenchmark**: a reproducible benchmark that detects your installed coding-agent harnesses, such as Claude Code or Codex, and runs them through a fixed sequence of tasks to build a complete piece of software.
+Every new model release arrives with a wave of highly specialized benchmarks, yet how a model will perform on real, everyday engineering work remains largely a black box. To close that gap, we created **AxBenchmark**: a reproducible benchmark that detects which supported coding-agent harnesses you have installed (**Claude Code**, **Codex**, **Grok CLI** and **Pi**) and runs them through a fixed sequence of tasks to build a complete piece of software.
 
 For this first edition, we chose a deliberately simple inventory web application: small enough to compare fairly, yet complete enough that we could measure the result, see it and try it for ourselves. Every run below records its cost and time, receives an independent quality review, and is live to try. Open any run's folder and click a screenshot.
 
