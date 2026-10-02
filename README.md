@@ -22,7 +22,7 @@ Lower and farther left means a faster, cheaper run. Color represents the quality
 
 [All recorded costs and times](COMPARISON.md) · [Vector image](assets/charts/cost-time-quality.svg)
 
-## Equal-weight top five
+## Cost vs Time vs Quality top 5
 
 The working priority is **33% cost, 33% time and 33% quality**.
 
