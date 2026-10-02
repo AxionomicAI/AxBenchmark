@@ -54,13 +54,13 @@ Every category is graded **1–5**: 1 = missing or largely broken, 3 = usable wi
 
 [Reviewer comments and evidence by codebase](QUALITY_COMPARISON.md)
 
-## Top three by cost, time and quality
+## Top 5 by cost, time and quality
 
 These are direct rankings by each metric, separate from the weighted shortlist below. All three use the same **11 eligible applications**, requiring a business rules/spec grade of at least **4/5**. The four applications with major required-workflow defects remain in the full comparison but are excluded from these shortlists. Eligibility does not mean an application is defect-free.
 
-![Three direct rankings: lowest cost is DeepSeek cloud, cloud GLM, then GPT-6 Sol; shortest time is Sonnet, Opus, then GPT-6 Sol; highest quality is Astra, Fable, then Opus.](assets/charts/top-three-by-priority.png)
+![Three direct top-5 rankings: lowest cost is DeepSeek cloud, cloud GLM, GPT-6 Sol, Sonnet, then GPT-5.6 Sol; shortest time is Sonnet, Opus, GPT-6 Sol, Grok, then GPU DeepSeek V4; highest quality is Astra, Fable, Opus, GPT-5.6 Sol, then DeepSeek cloud.](assets/charts/top-five-by-priority.png)
 
-[Exact top-three tables](COMPARISON.md#top-3-by-primary-driver) · [Vector image](assets/charts/top-three-by-priority.svg)
+[Exact top-5 tables](COMPARISON.md#top-5-by-primary-driver) · [Vector image](assets/charts/top-five-by-priority.svg)
 
 ## Cost, time and quality together
 

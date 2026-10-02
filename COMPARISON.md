@@ -51,7 +51,7 @@ Under equal weights, **Sonnet ranks first because its speed earns the full time 
 
 <!-- BEGIN GENERATED PRIORITY TABLES -->
 
-## Top 3 by primary driver
+## Top 5 by primary driver
 
 These three tables rank directly by the named metric, separately from the equal-weight top five above. They use the same 11 eligible applications (business rules/spec grade at least 4/5). Cost and time sort ascending; quality sorts descending using unrounded grades. Ties favor lower cost, then shorter time; cost ties favor shorter time, then higher quality. The chart versions are embedded in [README.md](README.md).
 
@@ -62,6 +62,8 @@ These three tables rank directly by the named metric, separately from the equal-
 | 1 | [DeepSeek Flash · cloud](quality-review/deepseek-cloud-deepseek-flash.md) | **$0.45** (COP 1,504) | 51 min 20 s | 3.93 |
 | 2 | [GLM Flash · cloud](quality-review/zai-cloud-glm-5.3-flash.md) | **$0.51** (COP 1,704) | 1 h 10 min | 3.33 |
 | 3 | [GPT-6 Sol](quality-review/openai-cloud-gpt-6-sol-medium.md) | **$1.06** (COP 3,542) | 32 min 34 s | 3.93 |
+| 4 | [Sonnet 5.5](quality-review/anthropic-cloud-sonnet-5.5-medium.md) | **$1.65** (COP 5,513) | 7 min 05 s | 3.65 |
+| 5 | [GPT-5.6 Sol](quality-review/openai-cloud-gpt-5.6-sol-medium.md) | **$2.77** (COP 9,255) | 46 min 12 s | 3.95 |
 
 ### Time driver — shortest run
 
@@ -70,6 +72,8 @@ These three tables rank directly by the named metric, separately from the equal-
 | 1 | [Sonnet 5.5](quality-review/anthropic-cloud-sonnet-5.5-medium.md) | **$1.65** (COP 5,513) | 7 min 05 s | 3.65 |
 | 2 | [Opus 5.5](quality-review/anthropic-cloud-opus-5.5-medium.md) | **$6.50** (COP 21,718) | 20 min 02 s | 4.10 |
 | 3 | [GPT-6 Sol](quality-review/openai-cloud-gpt-6-sol-medium.md) | **$1.06** (COP 3,542) | 32 min 34 s | 3.93 |
+| 4 | [Grok 4.7 Fast](quality-review/xai-cloud-grok-4.7-fast-500k-medium.md) | **$6.31** (COP 21,083) | 38 min 40 s | 3.85 |
+| 5 | [DeepSeek V4 · GPU](quality-review/4x-rtxpro6000-deepseek-v4-flash-q8kxl.md) | **$3.50** (COP 11,678; rental; 552.3 Wh GPU) | 42 min 38 s | 3.10 |
 
 ### Quality driver — highest artifact grade
 
@@ -78,5 +82,7 @@ These three tables rank directly by the named metric, separately from the equal-
 | 1 | [GPT-6 Astra](quality-review/openai-cloud-gpt-6-astra-high.md) | **$10.40** (COP 34,756) | 51 min 19 s | 4.35 |
 | 2 | [Fable 5.1](quality-review/anthropic-cloud-fable-5.1-high.md) | **$44.46** (COP 148,551) | 1 h 35 min | 4.33 |
 | 3 | [Opus 5.5](quality-review/anthropic-cloud-opus-5.5-medium.md) | **$6.50** (COP 21,718) | 20 min 02 s | 4.10 |
+| 4 | [GPT-5.6 Sol](quality-review/openai-cloud-gpt-5.6-sol-medium.md) | **$2.77** (COP 9,255) | 46 min 12 s | 3.95 |
+| 5 | [DeepSeek Flash · cloud](quality-review/deepseek-cloud-deepseek-flash.md) | **$0.45** (COP 1,504) | 51 min 20 s | 3.93 |
 
 <!-- END GENERATED PRIORITY TABLES -->

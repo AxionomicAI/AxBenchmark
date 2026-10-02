@@ -14,21 +14,27 @@
   "minimum_eligible_cost_cop": 1504.0,
   "minimum_eligible_cost_usd_unrounded": 0.4501336334224223,
   "minimum_eligible_seconds": 425,
-  "top_three": {
+  "top_five": {
     "cost": [
       "deepseek-cloud-deepseek-flash",
       "zai-cloud-glm-5.3-flash",
-      "openai-cloud-gpt-6-sol-medium"
+      "openai-cloud-gpt-6-sol-medium",
+      "anthropic-cloud-sonnet-5.5-medium",
+      "openai-cloud-gpt-5.6-sol-medium"
     ],
     "time": [
       "anthropic-cloud-sonnet-5.5-medium",
       "anthropic-cloud-opus-5.5-medium",
-      "openai-cloud-gpt-6-sol-medium"
+      "openai-cloud-gpt-6-sol-medium",
+      "xai-cloud-grok-4.7-fast-500k-medium",
+      "4x-rtxpro6000-deepseek-v4-flash-q8kxl"
     ],
     "quality": [
       "openai-cloud-gpt-6-astra-high",
       "anthropic-cloud-fable-5.1-high",
-      "anthropic-cloud-opus-5.5-medium"
+      "anthropic-cloud-opus-5.5-medium",
+      "openai-cloud-gpt-5.6-sol-medium",
+      "deepseek-cloud-deepseek-flash"
     ]
   },
   "applications": [

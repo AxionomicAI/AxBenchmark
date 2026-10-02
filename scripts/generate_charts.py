@@ -101,9 +101,9 @@ def load_data():
 
 def direct_rankings(data):
     return {
-        "cost": sorted(data, key=lambda row: (row["cost_cop"], row["seconds"], -row["quality"]))[:3],
-        "time": sorted(data, key=lambda row: (row["seconds"], row["cost_cop"], -row["quality"]))[:3],
-        "quality": sorted(data, key=lambda row: (-row["quality"], row["cost_cop"], row["seconds"]))[:3],
+        "cost": sorted(data, key=lambda row: (row["cost_cop"], row["seconds"], -row["quality"]))[:5],
+        "time": sorted(data, key=lambda row: (row["seconds"], row["cost_cop"], -row["quality"]))[:5],
+        "quality": sorted(data, key=lambda row: (-row["quality"], row["cost_cop"], row["seconds"]))[:5],
     }
 
 
@@ -113,7 +113,7 @@ def write_tables(rankings):
     section = [
         start,
         "",
-        "## Top 3 by primary driver",
+        "## Top 5 by primary driver",
         "",
         "These three tables rank directly by the named metric, separately from the equal-weight top five above. "
         "They use the same 11 eligible applications (business rules/spec grade at least 4/5). "
@@ -169,14 +169,14 @@ def save(fig, name):
     plt.close(fig)
 
 
-def chart_top_three(rankings):
-    fig, axes = plt.subplots(1, 3, figsize=(16, 6.8))
+def chart_top_five(rankings):
+    fig, axes = plt.subplots(1, 3, figsize=(16, 9.4))
     fig.patch.set_facecolor(BACKGROUND)
-    fig.subplots_adjust(left=0.055, right=0.965, bottom=0.15, top=0.72, wspace=0.18)
+    fig.subplots_adjust(left=0.055, right=0.965, bottom=0.11, top=0.79, wspace=0.18)
     heading(fig, "Different priorities, different winners", "Direct rankings · 11 eligible applications · Quality is the reviewed artifact grade, out of five")
     settings = [
-        ("cost", "LOWEST COST", COST, 1.5, "Run cost (USD; COP shown below each price)"),
-        ("time", "SHORTEST TIME", TIME, 42, "Elapsed time (minutes)"),
+        ("cost", "LOWEST COST", COST, 3.3, "Run cost (USD; COP shown below each price)"),
+        ("time", "SHORTEST TIME", TIME, 52, "Elapsed time (minutes)"),
         ("quality", "HIGHEST QUALITY", QUALITY, 5.35, "Artifact quality /5"),
     ]
     for axis, (driver, title, color, limit, xlabel) in zip(axes, settings):
@@ -184,24 +184,24 @@ def chart_top_three(rankings):
         axis.set_title(title, loc="left", fontsize=12, weight="bold", color=color, pad=25)
         for index, row in enumerate(rankings[driver]):
             value = {"cost": row["cost_usd_unrounded"], "time": row["seconds"] / 60, "quality": row["quality"]}[driver]
-            y = 2 - index
+            y = 4 - index
             axis.barh(y, value, height=0.34, color=color, alpha=1 if index == 0 else 0.68)
             axis.text(0, y + 0.30, f"{index + 1:02d}  {row['label']}", fontsize=12, weight="bold", color=INK)
             display = {"cost": f"${row['cost_usd_display']}", "time": f"{row['seconds']//60}m {row['seconds']%60:02d}s", "quality": rounded(row["quality"])}[driver]
             axis.text(value + limit * 0.025, y, display, va="center", fontsize=11, color=INK, weight="bold")
             if driver == "cost":
                 axis.text(value + limit * 0.025, y - 0.22, f"COP {row['cost_cop']:,.0f}", va="center", fontsize=9, color=MUTED)
-        axis.set(xlim=(0, limit), ylim=(-0.42, 2.65), yticks=[], xlabel=xlabel)
+        axis.set(xlim=(0, limit), ylim=(-0.42, 4.65), yticks=[], xlabel=xlabel)
         if driver == "cost":
-            axis.set_xticks([0, 0.5, 1, 1.5], labels=["$0", "$0.50", "$1.00", "$1.50"])
+            axis.set_xticks([0, 1, 2, 3], labels=["$0", "$1", "$2", "$3"])
             for label in axis.get_xticklabels():
                 label.set_fontweight("bold")
         elif driver == "time":
-            axis.set_xticks([0, 10, 20, 30, 40])
+            axis.set_xticks([0, 10, 20, 30, 40, 50])
         else:
             axis.set_xticks([0, 1, 2, 3, 4, 5])
     footer(fig, "Eligibility: business rules/spec ≥4/5. Astra and Fable are effectively tied in quality. Source: COMPARISON.md + quality-review/scores.json · 2026-10-01")
-    save(fig, "top-three-by-priority")
+    save(fig, "top-five-by-priority")
 
 
 def chart_tradeoffs(data):
@@ -277,7 +277,7 @@ def main():
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 11, "axes.labelcolor": INK, "axes.labelsize": 11, "svg.fonttype": "none"})
     all_rows, eligible, min_cost, min_seconds = load_data()
     rankings = direct_rankings(eligible)
-    chart_top_three(rankings)
+    chart_top_five(rankings)
     chart_tradeoffs(eligible)
     chart_weighted(eligible)
     (OUTPUT / "chart-data.json").write_text(json.dumps({
@@ -289,7 +289,7 @@ def main():
         "minimum_eligible_cost_cop": min_cost,
         "minimum_eligible_cost_usd_unrounded": min_cost / COP_PER_USD,
         "minimum_eligible_seconds": min_seconds,
-        "top_three": {driver: [row["folder"] for row in rows] for driver, rows in rankings.items()},
+        "top_five": {driver: [row["folder"] for row in rows] for driver, rows in rankings.items()},
         "applications": all_rows,
     }, indent=2) + "\n")
     write_tables(rankings)
