@@ -252,7 +252,7 @@ def chart_weighted(data):
     fig, axis = plt.subplots(figsize=(14, 7.8))
     fig.patch.set_facecolor(BACKGROUND)
     fig.subplots_adjust(left=0.27, right=0.94, bottom=0.14, top=0.73)
-    heading(fig, "Why the equal-weight shortlist ranks this way", "Equal weights: 33% cost · 33% time · 33% quality · Each colored segment is its contribution to the total")
+    heading(fig, "Cost vs Time vs Quality", "Equal weights: 33% cost · 33% time · 33% quality · Each colored segment is its contribution to the total")
     style_axis(axis)
     for index, row in enumerate(rows):
         y = len(rows) - index - 1
