@@ -1,4 +1,4 @@
-# Inventory website benchmark: comparison
+# AxBenchmark: cost and time comparison
 
 Same six high-level tasks for every model ([fixed prompts](benchmark/tasks/)); the standard protocol uses a fresh session per task.
 Cloud agents also ran T7 (test in a real browser and fix). Context sizes and the GPU GLM harness differ as documented in the [methodology](README.md#methodology) and notes below. The folders hold each model's final site. Prices show **USD first**, with COP in parentheses.

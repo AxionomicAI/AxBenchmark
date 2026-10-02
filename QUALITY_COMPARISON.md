@@ -1,4 +1,4 @@
-# Inventory codebase quality comparison
+# AxBenchmark: quality comparison
 
 Review date: October 1, 2026.
 
