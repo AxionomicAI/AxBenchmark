@@ -1,5 +1,11 @@
 # AxBenchmark — Inventory website benchmark · Oct 1, 2026
 
+At **Axionomic AI**, we believe technology decisions should rest on real, measurable evidence. Agentic coding is a vital part of how we operate, so the models and agent harnesses we choose for it matter.
+
+Every new model release arrives with a wave of highly specialized benchmarks, yet how a model will perform on real, everyday engineering work remains largely a black box. To close that gap, we created **AxBenchmark**: a reproducible benchmark that drives any headless coding agent, such as Claude Code or Codex, through a fixed sequence of tasks to build a complete piece of software.
+
+For this first edition, we chose a deliberately simple inventory web application: small enough to compare fairly, yet complete enough that we could measure the result, see it and try it for ourselves. Every run below records its cost and time, receives an independent quality review, and is live to try. Open any run's folder and click a screenshot.
+
 Fifteen generated inventory applications, compared by recorded cost, elapsed time and independently reviewed artifact quality. Review date: **October 1, 2026**.
 
 Different priorities produce different winners: **DeepSeek Flash cloud has the lowest eligible cost**, **Sonnet 5.5 has the shortest eligible run**, and **GPT-6 Astra has the highest weighted quality grade**, effectively tied with Fable. The original quality assessments are unchanged.
