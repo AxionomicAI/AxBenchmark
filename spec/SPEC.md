@@ -6,7 +6,7 @@ Status: proposed product requirements. This document describes the application t
 
 AxBenchmark is a Python terminal application for comparing coding-agent harnesses on representative, multi-step software work. Users choose a reusable benchmark template or create one from a project prompt, run selected harness/model configurations, collect measurements, obtain independent LLM quality reviews, and produce an interactive report. Results from other machines can join a comparison when their benchmark template's SHA-256 matches.
 
-The intended users are developers and teams choosing coding agents for their everyday work. This specification gives future implementers the agreed product behavior, defaults, and acceptance criteria without prescribing a detailed internal architecture.
+The intended users are developers and teams choosing coding agents for their everyday work. This specification gives future implementers the agreed product behavior, defaults, and acceptance criteria. Beyond separating a headless engine from its interfaces, it does not prescribe the internal architecture; [modules/ARCHITECTURE.md](modules/ARCHITECTURE.md) records that implementation decision.
 
 The product extends the methodology and presentation in the repository's README: measured cost and time, a separate quality assessment, and rankings that help users compare different priorities. Results describe complete harness/model/environment configurations, not isolated model capability.
 
@@ -19,6 +19,7 @@ The product extends the methodology and presentation in the repository's README:
 - Save harness/model/effort selections per benchmark and exchange templates and results between machines using ZIP packages.
 - Allow configured cloud providers and local model endpoints through supported harnesses.
 - Use a TUI as the primary interface. Tmux is not required or used by the product.
+- Keep all benchmark logic and state in a headless engine. The TUI and the CLI are interchangeable clients of it, and a later MCP server can be another; no behavior depends on which interface started it or whether one is attached.
 - Run every planner, competitor, and judge invocation in headless mode.
 - Collect local CPU/GPU measurements when compatible tools, hardware, and permissions are available.
 - Export a standalone HTML report that opens by double-clicking the file.

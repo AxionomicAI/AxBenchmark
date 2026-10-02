@@ -4,7 +4,7 @@ Status: proposed requirements derived from [SPEC.md](../SPEC.md), not a descript
 
 ## Purpose and boundary
 
-This module enables engineers to implement comparable, unattended planner, competitor, and judge invocations through supported locally installed harnesses. Every model invocation runs headlessly. Configured cloud providers and local model endpoints are usable through harnesses that support them; endpoint location does not change the execution protocol. These contracts prescribe observable behavior, not an internal architecture, harness switches, or supported version matrix. [R010, R012]
+This module enables engineers to implement comparable, unattended planner, competitor, and judge invocations through supported locally installed harnesses. Every model invocation runs headlessly. Configured cloud providers and local model endpoints are usable through harnesses that support them; endpoint location does not change the execution protocol. These contracts prescribe observable behavior, not harness switches or a supported version matrix. Code structure follows the [headless engine architecture](ARCHITECTURE.md): execution and isolation live in the engine, and interfaces only observe them; see [Implementation](#implementation). [R010, R012]
 
 ## Invocation behavior
 
@@ -26,7 +26,7 @@ Current mode uses the user's existing harness configuration, with explicit bench
 
 ## Conceptual request and result contracts
 
-These are information contracts, not required serialization formats or interfaces.
+These are information contracts. [Implementation](#implementation) maps them to engine domain types and API models; the product requirement is the information, not a particular field layout.
 
 | Contract | Required information and behavior |
 |---|---|
@@ -52,3 +52,302 @@ Process results are separate from executable acceptance outcomes owned by [M08](
 - Concurrent configurations cannot share application ports, mutable test data, or browser contexts. Blocked permissions return explicit outcomes without pending prompts. [R072]
 - Parallel defaults, additional configurations, sequential mode, unattended execution, detach/reconnect, and explicit-stop cleanup satisfy M11/M14 integration behavior. Missing harnesses block execution while data-only functions remain available. [R137, R138]
 - A later run uses the packaged baseline after the original branch advances; source repositories and historical artifacts remain unchanged. [R068, R140]
+
+## Implementation
+
+This section applies the [headless engine architecture](ARCHITECTURE.md). It records implementation decisions; the requirements above remain the product contract. Names of paths, environment variables and constants below are implementation choices and may change without changing product behavior.
+
+### 1. Engine component
+
+Package `axbenchmark.engine.harness`. M05 never decides when work runs: [M11](11-run-orchestration.md) schedules competitor tasks, [M16](16-custom-template-planning.md) starts planner invocations and [M12](12-quality-judging.md) starts judge invocations, all through the application interfaces below. M05 owns the harness process, its isolated environment, its live observation stream and its cleanup.
+
+#### Domain (`engine/harness/domain/`)
+
+Frozen dataclasses and enums; no I/O, no asyncio.
+
+| Type or rule | Content |
+|---|---|
+| `HarnessId` | Enum `claude_code`, `codex`, `grok_cli`, `pi`. Display order follows SPEC: Claude Code, Codex, Grok CLI, Pi. |
+| `Role` | Enum `planner`, `competitor`, `judge`. [R012] |
+| `InvocationScope` | Union of `TaskScope(run_id, configuration_id, task_id, task_index, task_title)`, `PlanningScope(session_id, step)`, `JudgingScope(review_id, artifact_label)`. Every record, event and log line carries it. |
+| `EffortSelection` | `Explicit(value: str, supported: tuple[str, ...])` or `HarnessDefault()`, both taken from the frozen M07 launch record with the M04 evidence frozen in it. |
+| `effort_argument(sel) -> str \| None` | `HarnessDefault` → `None` (no effort argument at all). `Explicit` whose value is not in `supported` → `EffortNotSupported`; the value is never guessed or replaced. [R065] |
+| `RequestedSettings` | harness, installed version, executable path, provider or endpoint, account context reference, model, `EffortSelection`, catalog source (`override`, `discovered`, `bundled`). Exactly one model; there is no fallback field. [R010, R065] |
+| `Observed[T]` | `value: T \| None`, `status` (`verified`, `unverified`, `unavailable`), `source` (`process`, `harness_report`, `harness_log`, `endpoint`, `measured_stream`, `not_exposed`). Effective settings, output rate and context use are all `Observed`. Successful startup never produces `verified` for effort. [R044, R065] |
+| `EffectiveSettings` | `Observed` harness, provider, model, effort, policy, permissions. |
+| `EnvironmentPolicy` | Enum `clean` (default), `current`. [R070, R071] |
+| `IntegrationCategory` / `ControlStatus` | Categories `instructions`, `memories`, `plugins`, `hooks`, `mcp`. Status `disabled` (✓), `absent` (○, the harness has none), `cannot_disable` (✗). |
+| `CleanAssessment` | Per harness and version: status per category, `establishable` (true only when no category is `cannot_disable`), cause and sanitized evidence (`found`), managed settings description, limitations. Rule `assess_clean(controls) -> CleanAssessment`. There is no rule that turns an unestablishable clean policy into `current`. [R070] |
+| `SettingsFingerprint` | Sanitized description of relevant current-mode settings plus a SHA-256 over their canonical form. Rule `sanitize(raw) -> SettingsFingerprint` drops credential-shaped keys and values before hashing; the raw view never leaves the adapter layer. [R071] |
+| `PortRange` / `ResourceAllocation` | Per configuration: workspace path, port range, test data path, browser context id and profile path, baseline SHA-256. Rule `overlaps(a, b)`; an allocation that overlaps a live one is rejected. [R072] |
+| `PermissionProfile` | What the process may do without asking: write inside workspace, test data and its temp dir; bind inside its port range; everything else denied. Rule `decide(action) -> PermissionDecision(allowed \| blocked, reason)` for actions the adapter can observe. [R072] |
+| `EstablishedEnvironment` | Baseline identity, `ResourceAllocation`, policy, `CleanAssessment` or `SettingsFingerprint`, managed settings, limitations, permission profile summary. States what was established, nothing more. [R068, R070, R071, R072] |
+| `InvocationRequest` | `Role`, `InvocationScope`, `RequestedSettings`, inputs (`CompetitorInputs(spec_path, prompt_path)`, or the opaque planner/judge payload paths from M16/M12), `EstablishedEnvironment`, deadline, record directory. Constructing a competitor request with a conversation or session id from an earlier task is impossible: the type has no such field. [R069] |
+| `HarnessSignal` | Union produced by adapters from process output: `ActionObserved(kind, summary, paths)`, `ReasoningObserved(text, is_summary)`, `OutputDelta(tokens: int \| None)`, `ContextReported(used, limit)`, `SettingObserved(name, value)`, `PermissionObserved(action, decision, reason)`, `UsageReported(input, cached, output, reasoning, cost, cumulative: bool, final: bool)` (`final` when the adapter saw the harness's terminal usage record), `RetryObserved(reason)`, `LogLine(source, text)`. |
+| `OutputRateMeter` | Pure accumulator: output tokens per second over the last second. Uses a harness-reported rate when present, else `OutputDelta.tokens` from the stream (`source=measured_stream`); with neither, the rate is `unavailable`, never estimated. [R044] |
+| `ExitClassification` | `outcome` (`exited`, `launch_failed`, `model_rejected`, `auth_failed`, `config_failed`, `timed_out`, `stopped`), exit code, blocked action count, harness message. A zero exit is `exited`, not task success. [R065, R137, R138] |
+| `InvocationResult` | Scope, requested and effective settings, `ExitClassification`, start/end timestamps and process duration, pid and process group, environment reference, log path, start and end workspace snapshot references, usage reports as received. [R065, R137, R138] |
+| `CleanupReport` | Processes ended, services ended, ports released, browser context disposed, each with outcome; incomplete cleanup is reported as such. [R138] |
+
+Domain errors: `EffortNotSupported`, `CleanModeUnavailable(assessments)`, `ResourceConflict`, `HarnessNotInstalled`, `UnsupportedHarness`.
+
+#### Ports (`engine/harness/ports.py`)
+
+```python
+class HarnessAdapter(Protocol):
+    harness: HarnessId
+    def exposure(self, version: str) -> ExposureProfile: ...          # effort, reasoning (none|summary|full), context, rate, usage
+    def clean_controls(self, version: str, settings: UserSettingsView) -> CleanControls: ...
+    def relevant_settings(self, settings: UserSettingsView) -> RawSettings: ...  # input to domain sanitize()
+    def managed_config(self, req: InvocationRequest) -> ManagedConfig: ...       # files for the managed config dir
+    def launch_spec(self, req: InvocationRequest, managed_dir: Path) -> LaunchSpec: ...
+    def parse(self, record: OutputRecord) -> Sequence[HarnessSignal]: ...
+    def classify_exit(self, exit: ProcessExit, tail: Sequence[HarnessSignal]) -> ExitClassification: ...
+    def auth_status_spec(self) -> LaunchSpec | None: ...                # non-model status command, if the harness has one
+
+class ProcessRunner(Protocol):
+    async def spawn(self, spec: LaunchSpec) -> ProcessHandle: ...      # new session/process group, stdin=/dev/null
+
+class ProcessHandle(Protocol):
+    pid: int; pgid: int
+    def records(self) -> AsyncIterator[OutputRecord]: ...             # stdout/stderr, timestamped
+    async def wait(self) -> ProcessExit: ...
+    async def terminate_tree(self, grace: timedelta) -> TreeTermination: ...
+```
+
+| Port | Purpose |
+|---|---|
+| `HarnessAdapter` | One implementation per harness; translates between domain requests/signals and that harness's CLI. Adapters do no I/O themselves, so they are tested against recorded transcripts. |
+| `ProcessRunner`, `ProcessHandle` | Spawn the harness in its own process group with closed stdin, stream output, wait, terminate the tree. |
+| `ServiceSweeper` | Find and end processes that left the process group but belong to the configuration (listening in its port range or with a working directory under its workspace). Used by stop and cleanup. [R138] |
+| `HarnessSettingsReader` | Read-only `UserSettingsView` of a harness's user configuration locations, for clean assessment and current-mode fingerprints. Never writes user files. [R070, R071] |
+| `ManagedConfigWriter` | Write the managed configuration directory used in clean mode (and the permission rules used in both modes). [R070, R072] |
+| `WorkspaceProvisioner` | Copy a packaged baseline snapshot into a fresh workspace; copy test data; record workspace tree identity at task start and exit. [R068, R140] |
+| `PortAllocator` | Reserve and release a non-overlapping `PortRange` per configuration; verifies free ports by bind probe. [R072] |
+| `BrowserContextProvisioner` | Create and dispose the per-configuration browser profile and context id. [R072] |
+| `WorkspaceWatcher` | Stream file changes in a workspace for the live view and compute a file diff against the task's start snapshot. [R044] |
+| `InvocationStore` | Persist invocation records, established environments, cleanup reports and the append-only log; read them back for queries and reconciliation. |
+| `BaselineSource` | Adapter over M01's `RevisionReader.open(sha)` (which verifies identity before handing out files) for a pinned revision, or a snapshot directory handed in by M16 for a planner baseline that is not yet a registered revision. |
+| `InstalledHarnesses` | Application Protocol of M03 (`InstalledHarnesses.list()`): installed harnesses with version and executable path. |
+| `EventPublisher`, `Clock`, `IdGenerator` | Shared ports from `engine/shared`. |
+
+#### Application (`engine/harness/application/`)
+
+Interfaces offered to other engine modules (`application/interfaces.py`), implemented by the use cases below:
+
+```python
+class HarnessExecution(Protocol):            # used by M11 (competitor), M16 (planner), M12 (judge)
+    async def establish(self, spec: EnvironmentSpec) -> EstablishedEnvironment: ...   # raises CleanModeUnavailable
+    async def invoke(self, req: InvocationRequest) -> InvocationResult: ...
+    async def stop(self, run_id: RunId, configuration_id: ConfigurationId | None) -> CleanupReport: ...
+    async def stop_invocation(self, invocation_id: InvocationId) -> CleanupReport: ...  # M16 jobs.cancel, M12 judging.stop
+    async def cleanup_plan(self, run_id: RunId, configuration_id: ConfigurationId | None) -> Sequence[CleanupItem]: ...  # M11 runs.stop_preview; changes nothing
+    async def release(self, environment_id: EnvironmentId) -> CleanupReport: ...
+    async def reconcile(self) -> Sequence[OrphanReport]: ...                         # engine start
+    async def task_snapshot(self, run_id: RunId, cfg: ConfigurationId, task: TaskId) -> SnapshotRef | None: ...  # M08
+    async def materialize(self, ref: SnapshotRef, into: Path) -> None: ...          # M08: read-only source, copy target
+
+class HarnessResources(Protocol):            # used by M08 verification
+    async def lease_verification(self, run_id: RunId, cfg: ConfigurationId) -> VerificationLease: ...  # ports and empty browser profile disjoint from live allocations
+    async def release_verification(self, lease: VerificationLease) -> None: ...
+
+class HarnessLive(Protocol):                 # used by M11 (lane "Live" line, live: topic snapshot); backs harness.live.get
+    async def snapshot(self, run_id: RunId, cfg: ConfigurationId) -> LiveTaskSnapshot | None: ...
+
+class HarnessInspection(Protocol):           # used by M03 (readiness) and M07 (validation, launch)
+    async def assess_policy(self, entries: Sequence[EntryRef]) -> Sequence[PolicyAssessment]: ...
+    async def probe(self, harness: HarnessId, executable: Path, version: str | None) -> HarnessProbe: ...
+    # M03: adapter support, supported-version verdict, exposure, auth outcome (verified | rejected | offline | inconclusive | not_applicable),
+    # headless probe, clean-mode controls, sanitized account label. M03 passes the executable it located, so no call back into M03.
+    async def list_models(self, context: CatalogContext, timeout: timedelta) -> ModelListOutcome: ...
+    # M04 discovery: models, or a classified failure (offline | timeout | auth_rejected | unsupported | failed); never a guess
+```
+
+| Use case | Kind | Behavior |
+|---|---|---|
+| `EstablishEnvironment` | internal | Allocate ports, browser context, workspace copy of the packaged baseline and test data; for `clean`, assess and write the managed config, raising `CleanModeUnavailable` when not establishable; for `current`, record the sanitized fingerprint. Persist and publish `harness.environment.established`. Runs for each configuration in parallel and sequential scheduling alike. [R068, R070–R072, R140] |
+| `InvokeHarness` | internal | Compute `effort_argument`, build the launch spec, spawn, drain output into the log before fan-out, translate signals to events, enforce the caller's deadline, classify the exit, persist and return `InvocationResult`. Never re-invokes, never resumes a conversation, never changes the model. [R012, R065, R069] |
+| `StopInvocations` | internal | Terminate process groups for a configuration or run (or one planner or judge invocation), sweep escaped services, release ports and browser contexts; return and publish `CleanupReport`. Called only by M11's stop and timeout handling, M16's planning cancel and M12's `judging.stop`. [R138] |
+| `ReleaseEnvironment` | internal | Same cleanup after normal completion of a configuration. |
+| `ReconcileOrphans` | internal | At engine start, find recorded process groups still alive from a previous engine; end them and report to M11, which records the interruption. |
+| `AssessPolicy` | internal + query | Clean assessments for entries (M07 launch validation) and the policy matrix query. |
+| `ProbeHarness`, `ListModels` | internal | Adapter support and exposure for the installed version; model listing for M04 through the harness's own model-list command; authentication outcome only from a non-model status command or from recorded invocation failures, otherwise `unknown`. [R137] |
+| `ListAdapters`, `GetPolicyMatrix`, `DescribeConfiguration`, `ReadTaskLog`, `ReadInvocationLog`, `GetIsolation`, `GetLiveSnapshot`, `DiffWorkspaceFile`, `GetInvocation` | query | Back the queries in the API table. Each returns capability flags computed here. |
+
+#### Adapters (`engine/harness/adapters/`)
+
+| Adapter | Implements |
+|---|---|
+| `harnesses/claude_code.py`, `codex.py`, `grok_cli.py`, `pi.py` | `HarnessAdapter`. Each maps clean controls, permission rules, effort omission and output parsing for its CLI. Any harness option that selects a fallback model is never set. |
+| `process.py` | `ProcessRunner` on `asyncio.create_subprocess_exec` with `start_new_session=True`, `stdin=DEVNULL`; `ServiceSweeper` on psutil. |
+| `fs_workspace.py` | `WorkspaceProvisioner`, `WorkspaceWatcher` (watchfiles), diff via git against the start snapshot. |
+| `ports_local.py`, `browser_profiles.py` | `PortAllocator`, `BrowserContextProvisioner`. |
+| `settings_files.py` | `HarnessSettingsReader`, `ManagedConfigWriter`. |
+| `store_fs.py` | `InvocationStore` (JSON records, JSON-lines log). |
+| `rpc.py` | Maps the `harness.*` methods to use cases, domain results to DTOs, domain errors to `harness.*` error codes; registers the topic snapshot provider for `harness.*` events with M11's subscription service. |
+
+Composition (`engine/daemon/composition.py`) builds `{HarnessId: HarnessAdapter}` with all four adapters and injects it, with the other port implementations, into the use cases.
+
+Observation is passive by construction: one reader task per process drains stdout and stderr continuously into the log file and then into an in-memory fan-out; subscriber queues are bounded and coalesce or drop for slow clients, who recover through `since_seq` or a fresh snapshot. No path writes to the process's stdin, signals it, or waits on a client. [R044, R047]
+
+#### Persisted state
+
+M05 writes only into directories its callers hand it; M02 and M11 own the surrounding layout.
+
+| Path (under the caller's configuration directory, e.g. `~/.axbenchmark/runs/<run_id>/<configuration_slug>/`) | Content |
+|---|---|
+| `ws/` | Configuration workspace, copied from the packaged baseline. |
+| `testdata/`, `browser/` | Independent test data copy and browser profile. |
+| `managed/<harness>/` | Managed harness configuration (clean mode) and permission rules. |
+| `environment.json` | `EstablishedEnvironment`, then `CleanupReport`. |
+| `tasks/<task_id>/invocation.json` | Request summary, requested and effective settings, exit classification, pid/pgid, timestamps, snapshot references. |
+| `tasks/<task_id>/log.jsonl` | Append-only log lines with `seq`, timestamp, source, kind; written before any event is published. |
+
+Planner and judge invocations use the same record files under the directory given by M16 or M12. No credential is written to any of these files, consistent with M07's redaction rule. [R071]
+
+#### Owned processes
+
+Every harness process is a child of `axbenchmarkd`, never of a client, in its own process group. Application services the harness starts belong to that group or are found by `ServiceSweeper`. Detaching or closing a client never reaches these processes; only `StopInvocations` (from M11's `runs.stop` or timeout) and `ReleaseEnvironment` end them. [R138]
+
+### 2. API surface (`harness.*`)
+
+All methods are queries with safety class `read`. M05 registers no client command or job: competitor execution starts only through M11's launch, planner work through `planning.*`, judging through `judging.*`, and stopping through `runs.stop`, so no interface can spawn a harness outside frozen inputs.
+
+#### Queries
+
+| Method | Request | Response | Errors | Capability flags |
+|---|---|---|---|---|
+| `harness.adapters.list` | — | `list[HarnessAdapterInfo]`: harness, display name, supported controls, `ExposureProfile` (effort, reasoning `none\|summary\|full`, context, rate, usage). | — | — |
+| `harness.policy.matrix` | `harnesses?: list[HarnessId]` (all installed when omitted; Setup passes the harnesses of its draft's entries) | `PolicyMatrix`: rows `harness, version, categories: {instructions…mcp: disabled\|absent\|cannot_disable}, clean_establishable, cause?, found?, current_fingerprint?` | `harness.unsupported`, `harness.not_installed` | `clean_establishable` per row with `reason` code |
+| `harness.configuration.describe` | `run_id`, `configuration_id` | `ConfigurationExecution`: `tasks: [TaskRow(task_id, title, pid?, outcome, blocked_count, failure?)]`, `current_task_id?`, `task_contract` (fixed facts: new conversation, inputs, carried state), `invocation: [SettingRow(setting, requested, effective: Observed, evidence)]`, `established: EstablishedEnvironmentDTO`, `failure?: ErrorDTO` (e.g. `harness.model_rejected` with message and remedy). | `harness.unknown_run`, `harness.unknown_configuration` | `can_live_view` (a task process is running), `can_search_log` |
+| `harness.task.log` | `run_id`, `configuration_id`, `task_id`, `after_seq?`, `limit` (default 500), `query?` | `LogPage`: `lines: [LogLine(seq, ts, source, text, kind: normal\|blocked\|error\|continuation)]`, `next_seq`, `matches: list[int]`, `complete: bool`, `state: not_started\|running\|finished` | `harness.unknown_task`, `harness.log_unavailable` | — |
+| `harness.isolation.get` | `run_id` | `IsolationReport`: summary counts, rows `configuration_id, harness, workspace, ports, browser_context, test_data, baseline_sha, baseline_matches: bool`, `permissions` text, `blocked: [BlockedRef(configuration_id, task_id, count)]` | `harness.unknown_run` | — |
+| `harness.live.get` | `run_id`, `configuration_id` | `LiveTaskSnapshot`: task, requested and observed model and effort, `rate: Observed[float]`, `context: Observed[ContextUse]`, recent activity, reasoning tail with `is_summary`, files changed in this task, `seq` | `harness.unknown_configuration`, `harness.no_active_task` | `can_show_reasoning`, `has_context`, `has_rate` |
+| `harness.workspace.diff` | `run_id`, `configuration_id`, `task_id`, `path` | `FileDiff`: path, base snapshot, hunks, `final: bool` (saved by the harness) | `harness.diff_unavailable` | — |
+| `harness.invocation.get` | `invocation_id` | `InvocationRecordDTO` for any role (planner and judge screens show requested vs effective with it). | `harness.unknown_invocation` | — |
+| `harness.invocation.log` | `invocation_id`, `after_seq?`, `limit` (default 500), `query?` | `LogPage` as `harness.task.log`, for any role (M16 "Open log", M12 session log) | `harness.unknown_invocation`, `harness.log_unavailable` | — |
+
+#### Events
+
+Every payload carries `scope` (`InvocationScope`), `invocation_id`, `role`, `harness` and, where a value is shown, its `source`. Events are published for all three roles; run-scoped subscriptions filter by `run_id` and `configuration_id`. Topic syntax belongs to M11's `events.subscribe`; M05 supplies the snapshot for its topics (`harness.live.get` for live topics, the tail of `harness.task.log` for log topics).
+
+| Event | Payload | Consumers |
+|---|---|---|
+| `harness.environment.established` | `EstablishedEnvironmentDTO` | M11, M08 (workspace, ports, browser context), M02 |
+| `harness.environment.released` | `CleanupReport` | M11 (stop is reported only after this), StopScreen |
+| `harness.task.started` | pid, pgid, new conversation, input names, start snapshot | M11 lanes, M15, RunConfigScreen, HarnessLiveScreen (resets context) |
+| `harness.task.exited` | `ExitClassification`, duration, end snapshot, blocked count | M11 (continuation, halt on auth/config), M10 (process duration), M08 |
+| `harness.log.appended` | `LogLine` | RunConfigScreen `#log`, RunScreen `#events`, CLI `--attach` |
+| `harness.action.observed` | kind, summary, paths | HarnessLiveScreen `#live-activity` |
+| `harness.reasoning.observed` | text, `is_summary` | HarnessLiveScreen |
+| `harness.output.measured` | `rate: Observed[float]`, at most once per second | HarnessLiveScreen `#live-rate`, M15 lanes |
+| `harness.context.reported` | `Observed[ContextUse]` | HarnessLiveScreen `#live-context`, M15 lanes |
+| `harness.file.changed` | path, added/removed lines, `final` | HarnessLiveScreen `#live-files`, `#live-diff` |
+| `harness.settings.observed` | setting, `Observed` value | RunConfigScreen `#invocation`, HarnessLiveScreen `#live-task` |
+| `harness.permission.decided` | action, `allowed\|blocked`, reason | RunConfigScreen `#log` (`.-blocked`), IsolationScreen |
+| `harness.usage.reported` | `seq`, usage categories, cost, `cumulative`, `final` | M10 only (never live display) |
+| `harness.retry.observed` | reason | M11 (recorded, never an orchestrator retry) |
+
+Live rate and context events are observation aids; M10 consumes only `harness.usage.reported` and `harness.task.exited`. [R044]
+
+#### Error codes
+
+| Code | Raised when |
+|---|---|
+| `harness.clean_unavailable` | Clean mode cannot be established for one or more entries. Raised by M11's `runs.launch` (step `config`, through M07's `freeze_configuration` and `HarnessInspection`); `data.assessments` holds `CleanAssessment` per entry. [R070] |
+| `harness.effort_unsupported` | An explicit effort is not in the frozen supported list. [R065] |
+| `harness.not_installed`, `harness.unsupported` | The selected harness is absent or has no adapter. [R137] |
+| `harness.resource_conflict` | A port range or browser context would be shared. [R072] |
+| `harness.unknown_run`, `harness.unknown_configuration`, `harness.unknown_task`, `harness.unknown_invocation`, `harness.no_active_task`, `harness.log_unavailable`, `harness.diff_unavailable` | Query targets that do not exist or have no data. |
+
+Invocation outcomes (`model_rejected`, `auth_failed`, `config_failed`, `launch_failed`, `timed_out`, `stopped`) are data in `ExitClassification`, not RPC errors; they are rendered from `ConfigurationExecution.failure` and `harness.task.exited` with codes `harness.model_rejected`, `harness.auth_failed`, `harness.config_failed`, `harness.launch_failed`.
+
+### 3. Requires from other modules
+
+| Name | Owner | Purpose |
+|---|---|---|
+| `RevisionReader.open(sha)` (in-engine) | M01 | Packaged baseline to copy into each workspace, identity verified first. [R068] |
+| `InstalledHarnesses.list()` (in-engine) | M03 | Installed version and executable path for the policy matrix and probes. |
+| Frozen launch record (passed in `InvocationRequest` by M11) | M07 | Requested settings, `EffortSelection` with frozen M04 evidence, policy per entry. |
+| `configs.update_entry(draft_id, entry_id, policy=…)` | M07 | EnvPolicyScreen save. |
+| `runs.launch` with `exclude_entries` and `policy_overrides` | M11 | CleanBlockedScreen continue options. |
+| `runs.status` | M11 | Run bar on RunConfigScreen: position of this configuration, other configurations continuing, `can_stop`, `can_detach`. |
+| `runs.stop` (scope configuration or run) | M11 | `s` on RunConfigScreen, via M11's StopScreen. |
+| `events.subscribe` with topic snapshot providers per namespace | M11 | Live log, settings and permission events; snapshot hook for `harness.*` topics. |
+| Run and configuration directory allocation | M11 / M02 | Record directory for `InvocationRequest` and `EnvironmentSpec`. |
+| Planning and judging record directories; a snapshot directory as planner baseline | M16 / M12 | Same, for planner and judge invocations. |
+
+### 4. Screens
+
+All four screens are pure views: they render view models built from the responses above, enable bindings from capability flags with `check_action`, and show `harness.*` error messages verbatim. Glyphs (✓ ✗ ● ○ ?) are a presentation mapping of the enums (`outcome`, `ControlStatus`, `Observed.status`), not a rule.
+
+#### RunConfigScreen — artboards RunConfig, TaskBlocked, ModelRejected
+
+| Item | Specification |
+|---|---|
+| Class and file | `RunConfigScreen(Screen)` in `axbenchmark/tui/screens/run_config.py`; widget tree and TCSS as in the M05 board (`#run-bar`, `#run-tasks`, `#task-contract`, `#invocation`, `#established`, `#log-pane` with `#log-search` and `#log`, `#invocation-summary` for `.-compact`). |
+| View model | `tui/viewmodels/run_config.py`: `RunConfigVM(run_bar, tasks: list[TaskRowVM], cursor_task_id, task_contract: list[KV], invocation: list[SettingRowVM], established: list[KV], failure: NoticeVM \| None, log_title, can_live_view, can_stop)`, built by `build_run_config_vm(desc: ConfigurationExecution, run: RunStatus) -> RunConfigVM`. `LogVM` from `build_log_vm(page: LogPage)`; `.-blocked` from `LogLine.kind`. |
+| Load | Worker on mount: `harness.configuration.describe` and `runs.status`, then `harness.task.log` for `current_task_id` (or the last finished task). |
+| Subscriptions | On mount `events.subscribe` for this configuration: `harness.log.appended`, `harness.task.started`, `harness.task.exited`, `harness.settings.observed`, `harness.permission.decided`, `harness.environment.released`, plus M11 run status events. Unsubscribe on unmount. Task start/exit events trigger a reload of `harness.configuration.describe`. |
+| States | `ContentSwitcher #run-config` with `#run-config`, `#run-config-loading`, `#run-config-error`; the log pane has `ContentSwitcher #log-switcher` with `#log`, `#log-loading` (“Attaching to process …”), `#log-empty` (task not started: `LogPage.state == not_started`), `#log-error` (stream interrupted; reconnects with `since_seq`). TaskBlocked is RunConfig with a `blocked` log line focused; ModelRejected is RunConfig with `failure` rendered as `.notice.-error` above the log and `can_live_view`/`can_stop` false. |
+
+| Binding | Action | API call |
+|---|---|---|
+| `esc` | `app.pop_screen` | none (unsubscribe only) |
+| `/` | focus `#log-search`; submit | `harness.task.log(query=…)`; `n` steps through the returned `matches` without a call |
+| row highlight in `#run-tasks` | show that task's log | `harness.task.log(task_id=…)` |
+| `i` | push `IsolationScreen` | `harness.isolation.get` (in that screen) |
+| `v` | push M11 `HarnessLiveScreen`; disabled unless `can_live_view` | `harness.live.get` (in that screen) |
+| `s` | push M11 `StopScreen` with scope configuration; disabled unless `can_stop` | `runs.stop` (issued by StopScreen) |
+| `d` | push M11 `DetachScreen` | none; the run continues |
+| `tab` | `focus_next` | none |
+
+#### IsolationScreen — artboard RunIsolation
+
+`IsolationScreen(ModalScreen[None])` in `tui/screens/run_config.py`; view model `IsolationVM(summary, rows: list[IsolationRowVM], permissions, blocked)` from `build_isolation_vm(IsolationReport)`. Load `harness.isolation.get(run_id)`; subscribe to `harness.permission.decided` and `harness.environment.released` for the run. States `#isolation`, `#isolation-loading`, `#isolation-error`. Bindings: `esc` → dismiss (no call); `enter` on `#isolation-table` → dismiss and push `RunConfigScreen(run_id, row.configuration_id)` (its load issues `harness.configuration.describe`). A `baseline_matches: false` row is rendered as returned; the screen does not compare hashes.
+
+#### EnvPolicyScreen — artboard EnvPolicy
+
+`EnvPolicyScreen(ModalScreen[EnvPolicy | None])` in `tui/screens/setup.py` (opened by `p` from M07's SetupScreen for the focused entry). View model `EnvPolicyVM(selected: EnvironmentPolicy, matrix: list[PolicyRowVM], hint)` from `build_env_policy_vm(PolicyMatrix, entry)`. Load `harness.policy.matrix(harnesses=[entry.harness])`. No subscriptions. States `#env-policy`, `#env-policy-loading`, `#env-policy-error`. Bindings: `esc` → dismiss(None); `tab`/`shift+tab` → focus; `ctrl+s` (and `#save`) → `configs.update_entry(draft_id, entry_id, policy=…)`, dismiss with the saved policy on success, show the typed error otherwise. `RadioSet #policy` starts at the entry's stored policy (default clean). A row with `clean_establishable: false` is shown with its `cause`; the screen does not block or rewrite the choice, because launch handles it.
+
+#### CleanBlockedScreen — artboard CleanModeBlocked
+
+`CleanBlockedScreen(ModalScreen[CleanDecision])` in `tui/screens/launch_check.py`, pushed by the launch flow when `runs.launch` returns `harness.clean_unavailable`. View model `CleanBlockedVM(harness_label, cause, found, isolated, choices)` from `build_clean_blocked_vm(error.data.assessments[i])`; one dialog per blocked entry. No load call and no subscription: the error payload is the data. Bindings: `esc` → dismiss back to Setup (no call); `enter`/`#continue` with `RadioSet #clean-choice`:
+
+| Choice | API call |
+|---|---|
+| Remove this entry from the launch | `runs.launch(…, exclude_entries=[entry_id])` |
+| Use current for this entry only | `runs.launch(…, policy_overrides={entry_id: "current"})`; the entry is recorded as current with its fingerprint |
+| Cancel the launch | none |
+
+#### Screens owned elsewhere that consume M05
+
+| Screen (owner) | M05 data |
+|---|---|
+| `HarnessLiveScreen` (M11, `tui/screens/live.py`) | `harness.live.get`; events `harness.task.started/exited`, `harness.output.measured`, `harness.context.reported`, `harness.reasoning.observed`, `harness.action.observed`, `harness.file.changed`, `harness.settings.observed`; `harness.workspace.diff` for `#live-diff`. `t` is enabled from `can_show_reasoning`; each value shows its `source`; unavailable values render as “? not reported”. |
+| `RunScreen` lanes and `#events` (M11/M15) | `harness.log.appended`, `harness.output.measured`, `harness.context.reported`, `harness.task.*`. |
+| Planning and judging screens (M16, M12) | `harness.invocation.get` and the same events with `PlanningScope`/`JudgingScope`. |
+| SetupScreen / ReviewLaunchScreen (M07) | `harness.policy.matrix` for policy columns and isolation limitations. |
+| EnvironmentScreen and `doctor` (M03) | `HarnessProbe` through `environment.*`. |
+
+### 5. CLI
+
+M14 owns the commands; these are the ones that reach M05 and the methods they use.
+
+| Command | Methods |
+|---|---|
+| `axbenchmark run --config … [--no-tui] [--jobs N]` | `runs.launch` (M11); `harness.clean_unavailable` prints each assessment and exits 1, since no silent fallback exists; progress lines from `harness.task.*`, `harness.log.appended`, `harness.permission.decided`. |
+| `axbenchmark --attach RUN_ID` | `events.subscribe` including `harness.*` run topics. |
+| `axbenchmark status RUN_ID` | `runs.status` (M11) plus `harness.configuration.describe` per configuration for requested vs effective settings and process outcomes. |
+| `axbenchmark doctor` | `environment.*` (M03), which includes `HarnessProbe` results. |
+| Proposed for M14: `axbenchmark harness list`, `axbenchmark harness policy [--harness H]`, `axbenchmark run log RUN_ID --config ID --task ID [--follow] [--search Q]`, `axbenchmark run isolation RUN_ID` | `harness.adapters.list`, `harness.policy.matrix`, `harness.task.log` (+ `events.subscribe` for `--follow`), `harness.isolation.get`. `--json` prints the response models. |
+
+### 6. Headless verification
+
+| Level | Tests |
+|---|---|
+| Domain | `effort_argument`: harness default and unknown support give `None`; explicit unsupported raises. `assess_clean`: any `cannot_disable` makes clean unestablishable; no code path yields `current`. `sanitize`: credential keys and token-shaped values never reach the fingerprint; equal relevant settings give equal hashes. `overlaps` on port ranges. `OutputRateMeter`: reported rate preferred, stream-measured otherwise, `unavailable` with neither. `InvocationRequest` has no field for a previous conversation. |
+| Adapters (contract tests) | For each of the four `HarnessAdapter`s, recorded transcripts parse into the expected signals; `launch_spec` omits the effort argument for `HarnessDefault`, never sets a fallback model, points to the managed dir in clean mode and leaves user config in current mode; `classify_exit` maps recorded model-rejection and authentication failures. A shared suite runs against every adapter. |
+| Use cases with fakes | `FakeProcessRunner` scripts output and exits. Two successive tasks get distinct pids and no shared session; the second receives spec, its prompt and the first task's workspace. Two configurations of the same harness get disjoint ports, browser contexts and test data and equal baseline hashes, in parallel and sequential order. A blocked permission produces `harness.permission.decided(blocked)` and the process still finishes; a process that waits on stdin sees EOF. A model rejection returns `model_rejected` and no second spawn. A slow subscriber never delays draining (fake process emits faster than the subscriber reads; exit time is unchanged). `StopInvocations` ends the group and a swept service and reports released ports. `ReconcileOrphans` finds a recorded live group. Clean unestablishable raises `CleanModeUnavailable` without writing a managed config. |
+| API via `InProcessClient` | With fake ports and no interface: launch a run (M11 use case with this module wired), subscribe, drop the client, reconnect with `since_seq`, and observe the same pids and no new `harness.task.started`. `harness.configuration.describe` returns `effective.effort.status == "unverified"` for a harness that does not expose effort. `harness.task.log(query=…)` returns match positions. Error codes and `data.assessments` serialize as specified. |
+| Screens with a fake client | `RunConfigScreen` via `App.run_test()`/`Pilot` for RunConfig, TaskBlocked and ModelRejected fixtures: rows, `? unverified`, `.-blocked` line, notice text verbatim, `v` and `s` disabled from flags; each binding issues exactly the listed call; `esc` issues none. `IsolationScreen` `enter` pushes the right configuration. `EnvPolicyScreen` `ctrl+s` issues one `configs.update_entry`. `CleanBlockedScreen` maps each choice to its single `runs.launch` call or none. View-model builders are unit-tested without Textual. |

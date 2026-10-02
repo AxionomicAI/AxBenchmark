@@ -2,7 +2,7 @@
 
 This ledger maps every non-heading source paragraph, list item, and substantive table row in [the product specification](../SPEC.md) to its responsible module(s). IDs identify source units; a unit can contain several obligations, all of which remain required. Shared ownership identifies an integration contract, not permission to omit a clause. Source wording remains authoritative.
 
-Source snapshot SHA-256: d95bb1b6bddf3a99cfdff6d8fa052bb0a082f75beceb44636216c21efc363993. This is a documentation snapshot digest, not a benchmark template identity.
+Source snapshot SHA-256: c8435d225c5647fd2c1eb8147dde561ca4510ac333c57fe2b4647f42c16d93d8. This is a documentation snapshot digest, not a benchmark template identity.
 
 The locator is an excerpt, not a replacement for the complete source requirement. Each module cites its assigned IDs alongside the corresponding contracts.
 
@@ -19,6 +19,7 @@ The locator is an excerpt, not a replacement for the complete source requirement
 | R009 | Initial scope | - Save harness/model/effort selections per benchmark and exchange templates and results between machines using ZIP packages. | [M07](07-run-configuration.md), [M17](17-zip-exchange.md) |
 | R010 | Initial scope | - Allow configured cloud providers and local model endpoints through supported harnesses. | [M04](04-model-catalog.md), [M05](05-harness-execution-isolation.md) |
 | R011 | Initial scope | - Use a TUI as the primary interface. Tmux is not required or used by the product. | [M15](15-terminal-interface.md) |
+| R150 | Initial scope | - Keep all benchmark logic and state in a headless engine. The TUI and the CLI are interchangeable clients of it, and a later MCP server can be another… | [M11](11-run-orchestration.md), [M14](14-command-line-interface.md), [M15](15-terminal-interface.md) |
 | R012 | Initial scope | - Run every planner, competitor, and judge invocation in headless mode. | [M05](05-harness-execution-isolation.md) |
 | R013 | Initial scope | - Collect local CPU/GPU measurements when compatible tools, hardware, and permissions are available. | [M18](18-hardware-monitoring.md) |
 | R014 | Initial scope | - Export a standalone HTML report that opens by double-clicking the file. | [M13](13-standalone-html-report.md) |

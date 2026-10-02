@@ -1,6 +1,6 @@
 # AxBenchmark module specifications
 
-These proposed module contracts decompose [the product specification](../SPEC.md) for engineers implementing AxBenchmark. They describe required behavior, not existing implementation. Module boundaries are a documentation organization choice, not a prescribed architecture.
+These proposed module contracts decompose [the product specification](../SPEC.md) for engineers implementing AxBenchmark. They describe required behavior, not existing implementation. Behavior lives in a headless engine with the TUI and CLI as clients; [the architecture decision](ARCHITECTURE.md) fixes the layers, the API and which module owns each API namespace. Each module's **Implementation** section applies it.
 
 Read the relevant module to implement its behavior and integration contracts, then use its acceptance criteria to verify the result. The original specification remains authoritative; unresolved implementation choices must not be presented as new product requirements.
 
@@ -27,12 +27,14 @@ Read the relevant module to implement its behavior and integration contracts, th
 | M17 | [Portable ZIP exchange and validation](17-zip-exchange.md) |
 | M18 | [Optional CPU and GPU monitoring](18-hardware-monitoring.md) |
 
+All modules: [headless engine and interface architecture](ARCHITECTURE.md).
+
 ## Coverage and delivery
 
 - [Requirement coverage](TRACEABILITY.md) maps every source unit to its module owners.
 - [Suggested development sequence](DEVELOPMENT-SEQUENCE.md) orders implementation and integration checks.
 
-Module IDs and filename prefixes follow the recommended development order, from M01 through M18. Specifications contain prose, contract tables, and optional Mermaid diagrams only.
+Module IDs and filename prefixes follow the recommended development order, from M01 through M18. Specifications contain prose, contract tables, and optional Mermaid diagrams; Implementation sections may also contain short Python signatures (Protocols, use-case and view-model shapes), never full implementations.
 
 ## Shared boundaries
 
