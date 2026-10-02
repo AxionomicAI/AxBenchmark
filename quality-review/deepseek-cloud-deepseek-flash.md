@@ -4,12 +4,12 @@ Reviewed 2026-10-01 against `benchmark/tasks/00-project.md` and T1–T7. Source 
 
 | Category | Grade / 5 | Finding |
 |---|---:|---|
-| UX | 3.5 | Clear row actions, useful search/category controls, explicit destructive-action and checkout confirmations, actionable stock feedback. Cart is below the entire inventory, and the mobile product form clips the price field. |
-| Visual design | 3.5 | Restrained and consistent dark appearance, clear type hierarchy, legible product metadata and orderly borders. Main list wraps neatly on mobile; the quantity/price form row does not. |
 | Code quality | 4.5 | Cohesive storage/items/cart/orders modules, pure lookup/pricing/checkout planning, defensive normalization, copied state, safe DOM rendering, substantive tests. Whole-page rerenders and duplicated helpers add maintenance cost; persistence coordination remains imperfect. |
 | Business rules / spec | 4.5 | All required normal workflows work directly from the file, including correct stock decrement and durable receipt snapshots. Partial storage failure can leave checkout data inconsistent. |
-| Robustness | 3 | Defensive reads, bounded cart quantities and visible write failures are good. Multi-key checkout is not atomic, an unrelated successful save erases an unresolved failure warning, and corrupt data silently appears empty. |
 | Accessibility | 4 | Native modal dialogs, labelled inputs, named row actions, skip link, visible focus and status announcements. Search shortcut, Escape and stock-limit focus behavior passed a keyboard spot check. Mobile form clipping remains a barrier. |
+| UX | 3.5 | Clear row actions, useful search/category controls, explicit destructive-action and checkout confirmations, actionable stock feedback. Cart is below the entire inventory, and the mobile product form clips the price field. |
+| Visual design | 3.5 | Restrained and consistent dark appearance, clear type hierarchy, legible product metadata and orderly borders. Main list wraps neatly on mobile; the quantity/price form row does not. |
+| Robustness | 3 | Defensive reads, bounded cart quantities and visible write failures are good. Multi-key checkout is not atomic, an unrelated successful save erases an unresolved failure warning, and corrupt data silently appears empty. |
 | Weighted overall | **78.5 / 100** | 25% UX, 15% visual, 20% code, 25% spec, 10% robustness, 5% accessibility. |
 
 **Code quality:** Strong separation of domain state and UI, with pure calculation functions and a meaningful dependency-free regression suite; checkout persistence and global warning state need stronger coordination.

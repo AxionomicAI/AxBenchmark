@@ -7,11 +7,11 @@ Reviewed 2026-10-01 against `benchmark/tasks/00-project.md` and T1–T7. This re
 | Category | Score / 5 | Assessment |
 |---|---:|---|
 | UX | **4.5** | Clear management and purchasing flows, specific validation, useful feedback, and careful focus restoration. Long mobile inventory and small row controls are the principal everyday friction. |
-| Visual | **4.0** | Coherent, restrained table-and-card design with readable typography, aligned numbers, distinct actions and stock badges. Mobile layouts work, although the hierarchy is utilitarian and vertically expensive. |
 | Code quality | **4.5** | Strong separation of storage, inventory, cart, orders, formatting and search; safe text rendering and explicit result contracts. The 934-line UI module and repeated persistence scaffolding add maintenance weight. |
 | Business rules/spec adherence | **4.5** | All requested functional deliverables work on the normal direct-file path, including persistent stock and historical order snapshots. Checkout can leave an invalid history entry under a compound write failure. Git history was not supplied. |
-| Robustness | **3.5** | Good validation, integer-cent money, damaged-data backup and ordinary failed-save behavior; two confirmed storage-failure boundaries remain. |
 | Accessibility | **4.5** | Labels, native dialogs, semantic table headings, descriptive row actions, status regions, visible focus and deliberate post-action focus are strong. Mobile controls are only 31px high; assistive-technology behavior was not exhaustively tested. |
+| Visual | **4.0** | Coherent, restrained table-and-card design with readable typography, aligned numbers, distinct actions and stock badges. Mobile layouts work, although the hierarchy is utilitarian and vertically expensive. |
+| Robustness | **3.5** | Good validation, integer-cent money, damaged-data backup and ordinary failed-save behavior; two confirmed storage-failure boundaries remain. |
 | **Weighted overall** | **86.5 / 100** | UX 25%, visual 15%, code 20%, business rules/spec 25%, robustness 10%, accessibility 5%. |
 
 **Code quality:** Well-defined domain APIs, isolated persistence, exact cent conversion and dependency-free tests make this easy to reason about. The principal correctness weakness is checkout state split across three storage keys without recoverable transaction state.

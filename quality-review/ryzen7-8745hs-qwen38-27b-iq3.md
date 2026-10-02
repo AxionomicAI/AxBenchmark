@@ -4,12 +4,12 @@ Reviewed 2026-10-01 against `benchmark/tasks/00-project.md` and T1–T6. Fresh i
 
 | Category | Grade /5 | Finding |
 |---|---:|---|
+| Code quality | 3 | Understandable data/UI functions and safe text rendering; missing UI-state wiring, repeated storage reads and incomplete state validation. |
+| Accessibility | 3 | Native controls, labels, semantic sections/table headers and live cart count; keyboard quantity changes lose focus and mobile controls are cramped. |
 | UX | 2.5 | Straightforward CRUD/search/cart, but the purchase journey stops because Checkout never becomes visible. |
 | Visual design | 2.5 | Clear, readable desktop table with consistent spacing; basic styling, crowded row buttons and an overflowing mobile cart. |
-| Code quality | 3 | Understandable data/UI functions and safe text rendering; missing UI-state wiring, repeated storage reads and incomplete state validation. |
 | Business rules/spec adherence | 2.5 | T1–T5 behavior works, including persistence; T6 cannot be completed through the UI and its work is uncommitted. |
 | Robustness | 2 | Normal persistence works, but malformed product records crash rendering and a failed order write leaves stock already deducted. |
-| Accessibility | 3 | Native controls, labels, semantic sections/table headers and live cart count; keyboard quantity changes lose focus and mobile controls are cramped. |
 
 Weighted overall: **51.5/100** using the common protocol. Scores describe this artifact, not model quality generally.
 

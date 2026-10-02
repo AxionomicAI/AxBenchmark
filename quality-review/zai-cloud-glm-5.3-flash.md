@@ -4,12 +4,12 @@ Reviewed 2026-10-01 against `benchmark/tasks/00-project.md` and T1–T7. All 3,5
 
 | Category | Grade /5 | Finding |
 |---|---:|---|
+| Business rules/spec | 4 | Direct-file operation, CRUD, search, persistent cart and stock-decrementing checkout/history all work normally. A cart refresh defect obstructs repeat additions; write failures can break order-history integrity. |
+| Code quality | 3.5 | Separate store/UI, safe text rendering, structured validation and meaningful dependency-free tests; ignored persistence outcomes and incomplete render dependencies cause real defects. |
+| Accessibility | 3.5 | Labels, scoped table headers, descriptive row controls, status region and native dialogs help; cart rerenders lose keyboard focus and dialogs have no accessible names. |
 | UX | 3 | Clear desktop CRUD, search, validation and checkout; stale cart button state, distant feedback and mobile horizontal scrolling hinder recovery and efficiency. |
 | Visual design | 3 | Consistent typography, restrained blue actions, aligned numbers and legible stock badges; narrow desktop column and table-only mobile layout limit polish. |
-| Code quality | 3.5 | Separate store/UI, safe text rendering, structured validation and meaningful dependency-free tests; ignored persistence outcomes and incomplete render dependencies cause real defects. |
-| Business rules/spec | 4 | Direct-file operation, CRUD, search, persistent cart and stock-decrementing checkout/history all work normally. A cart refresh defect obstructs repeat additions; write failures can break order-history integrity. |
 | Robustness | 2.5 | Good normal validation, live cart reconciliation and order snapshots, but mid-session storage failures are silently accepted and checkout writes are not atomic. |
-| Accessibility | 3.5 | Labels, scoped table headers, descriptive row controls, status region and native dialogs help; cart rerenders lose keyboard focus and dialogs have no accessible names. |
 
 Weighted overall: **66.5/100** using the common protocol; individual grades are the primary judgment.
 

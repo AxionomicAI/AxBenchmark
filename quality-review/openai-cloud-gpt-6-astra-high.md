@@ -4,12 +4,12 @@ Reviewed 2026-10-01 by a fresh subagent after the Fable reviewer completed, foll
 
 | Category | Grade /5 | Finding |
 |---|---:|---|
-| UX | 4 | Clear CRUD dialogs, immediate search, stock-aware cart, useful validation, draft retention and good focus recovery. Mobile actions require horizontal discovery; the long stacked layout separates inventory from cart. |
-| Visual | 3.5 | Coherent light palette, readable typography, consistent controls and restrained desktop panels. Mobile preserves legibility but exposes only part of each table, with unusually tall inventory rows and hidden actions. |
-| Code quality | 4.5 | Cohesive validated storage API, exact cents/BigInt arithmetic, safe DOM rendering, immutable receipt snapshots and save-before-render discipline. UI rendering remains one large imperative module with repeated item lookup and complete row reconstruction. |
 | Business rules / specification | 5 | All required application behavior verified: direct-file vanilla app, seeded persistent inventory, CRUD, lookup, persistent quantities/totals, stock deduction and historical receipts. README documents the delivered behavior. Git history remains unverified rather than failed. |
+| Code quality | 4.5 | Cohesive validated storage API, exact cents/BigInt arithmetic, safe DOM rendering, immutable receipt snapshots and save-before-render discipline. UI rendering remains one large imperative module with repeated item lookup and complete row reconstruction. |
 | Robustness | 4.5 | Failed writes preserve data; checkout commits stock/cart/history in one write. Corrupt state is preserved and blocked; stale edits and invalid quantities are rejected. Corruption recovery remains manual, and stale checks do not serialize simultaneous tabs. |
 | Accessibility | 4.5 | Native dialogs, labels, contextual button names, live statuses, alerts, visible focus and deliberate focus restoration worked in keyboard checks. Horizontal mobile tables still impose navigation effort; no full assistive-technology audit was performed. |
+| UX | 4 | Clear CRUD dialogs, immediate search, stock-aware cart, useful validation, draft retention and good focus recovery. Mobile actions require horizontal discovery; the long stacked layout separates inventory from cart. |
+| Visual | 3.5 | Coherent light palette, readable typography, consistent controls and restrained desktop panels. Mobile preserves legibility but exposes only part of each table, with unusually tall inventory rows and hidden actions. |
 
 Weighted overall: **4.35/5 (87/100)** using the common protocol. Scores judge this artifact within the requested small-app scope, not model capability or historical benchmark claims.
 

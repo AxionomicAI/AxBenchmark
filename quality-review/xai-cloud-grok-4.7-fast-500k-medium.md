@@ -4,10 +4,10 @@ Reviewed 2026-10-01 against `benchmark/tasks/00-project.md` and T1–T7. Read al
 
 | Category | Grade | Finding |
 |---|---:|---|
+| Business rules/spec | 4.5 | Direct-file vanilla app; seeded data, CRUD/search, persistent cart, correct unit totals, stock validation, checkout and historical snapshots all verified. Git commits support T1–T7. Prices are absent: “total” explicitly means units. |
+| Code quality | 4 | Clear inventory/cart/orders/storage boundaries, defensive parsing, safe DOM rendering and useful result objects. The 904-line UI module repeatedly redraws all sections, and checkout rollback cannot guarantee consistency. |
 | UX | 3.5 | Discoverable CRUD, useful tokenized search, stock filter, explicit checkout confirmation and validation. Cart is below the whole catalog; add feedback can be offscreen, mobile cart clips the Remove edge, and keyboard add loses focus. |
 | Visual design | 3.5 | Coherent restrained dark theme, readable typography, tidy aligned desktop table, consistent spacing and buttons. Mobile form is legible but product rows become tall and populated cart requires horizontal scrolling. |
-| Code quality | 4 | Clear inventory/cart/orders/storage boundaries, defensive parsing, safe DOM rendering and useful result objects. The 904-line UI module repeatedly redraws all sections, and checkout rollback cannot guarantee consistency. |
-| Business rules/spec | 4.5 | Direct-file vanilla app; seeded data, CRUD/search, persistent cart, correct unit totals, stock validation, checkout and historical snapshots all verified. Git commits support T1–T7. Prices are absent: “total” explicitly means units. |
 | Robustness | 3.5 | Strong input validation and ordinary save-error handling; transient order-save failure restores stock. Persistent write failure during rollback leaves stock deducted without an order. |
 | Accessibility | 3.5 | Labels, scoped headers, named row actions, live statuses, visible focus and native dialogs. Edit moves focus and Escape cancels checkout; adding by keyboard destroys focused row without restoring focus. |
 

@@ -4,12 +4,12 @@ Reviewed 2026-10-01 against `benchmark/tasks/00-project.md` and T1–T7. Fresh s
 
 | Category | Grade / 5 | Assessment |
 |---|---:|---|
-| UX | 3.5 | Straightforward CRUD, live multi-term search, clear totals and forms. Quantity correction silently restores the previous value for sighted users; cart updates lose keyboard focus. Mobile checkout requires scrolling past all inventory. |
+| Business rules/spec | 4.5 | All T1–T6 core behavior verified, including current-price cart totals, stock reconciliation, immutable historical snapshots and direct-file persistence. Some data-integrity guarantees weaken with malformed stored data. |
 | Visual design | 4 | Consistent green/neutral palette, readable hierarchy, restrained borders and shadows, clear price/stock columns. Mobile cards and form fit cleanly; header and tall product rows use considerable vertical space. |
 | Code quality | 4 | Cohesive InventoryStore/CartStore/OrderStore APIs, normalization, DOM-safe rendering and delegated events. One large script couples storage, domain operations and full DOM rendering; persisted inventory receives weaker validation than new products. |
-| Business rules/spec | 4.5 | All T1–T6 core behavior verified, including current-price cart totals, stock reconciliation, immutable historical snapshots and direct-file persistence. Some data-integrity guarantees weaken with malformed stored data. |
-| Robustness | 3.5 | Rejects invalid quantities, handles unavailable items, and successfully rolled stock back after an injected order-write failure. Read-time inventory schema validation and reliable recovery from corrupt data remain gaps. |
 | Accessibility | 4 | Labeled controls, native modal, initial focus, Escape/return focus, product-specific action names and live announcements. Quantity changes remove the active control, and small row actions offer limited touch area. |
+| UX | 3.5 | Straightforward CRUD, live multi-term search, clear totals and forms. Quantity correction silently restores the previous value for sighted users; cart updates lose keyboard focus. Mobile checkout requires scrolling past all inventory. |
+| Robustness | 3.5 | Rejects invalid quantities, handles unavailable items, and successfully rolled stock back after an injected order-write failure. Read-time inventory schema validation and reliable recovery from corrupt data remain gaps. |
 
 Weighted overall: **79/100**. Weights: UX 25%, visual 15%, code 20%, spec 25%, robustness 10%, accessibility 5%. Scores are artifact judgments, not model capability or benchmark pass percentages.
 

@@ -4,12 +4,12 @@ Reviewed 2026-10-01 against the common inventory specification. All source files
 
 | Category | Grade /5 | Assessment |
 |---|---:|---|
+| Business rules/spec adherence | 4.5 | All required normal flows verified, including direct-file execution, persisted cart, stock deductions and immutable order snapshots. Git scaffold and subsequent feature commits are present. Failure handling undermines the README's stronger all-or-nothing claim. |
 | UX | 3.5 | Clear desktop inventory, efficient ranked multi-term search, useful feedback and straightforward modal flows. Mobile operation requires horizontal panning to reach key information/actions; cart fractions are silently rounded. |
 | Visual design | 3.5 | Consistent navy/white palette, readable system typography, orderly spacing and restrained forms. Desktop is coherent but basic; narrow table columns wrap heavily on mobile and the cart total starts partly offscreen. |
 | Code quality | 3.5 | Small, readable storage/cart/orders/UI modules, shared DOM helpers, text-safe rendering, documented APIs and snapshot orders. Repeated storage wrappers have the same broken write-failure fallback; persisted record validation and checkout commit guarantees are weak. |
-| Business rules/spec adherence | 4.5 | All required normal flows verified, including direct-file execution, persisted cart, stock deductions and immutable order snapshots. Git scaffold and subsequent feature commits are present. Failure handling undermines the README's stronger all-or-nothing claim. |
-| Robustness/data integrity | 2.5 | Normal validation and safe rendering are good. A failed inventory write can leave a successful order with unchanged stock; malformed stored records can break rendering. |
 | Accessibility | 3.5 | Native buttons/dialogs, labeled form controls, live status/error regions, search shortcuts and Escape dismissal work. Dialogs lack accessible names, repeated row actions lack product context, and small action targets/mobile overflow limit usability. |
+| Robustness/data integrity | 2.5 | Normal validation and safe rendering are good. A failed inventory write can leave a successful order with unchanged stock; malformed stored records can break rendering. |
 
 Weighted overall: **73/100** (UX 25%, visual 15%, code 20%, spec 25%, robustness 10%, accessibility 5%). Grades are judgments of this artifact, not model performance statistics.
 

@@ -4,12 +4,12 @@ Reviewed 2026-10-01 by a fresh sequential subagent against `benchmark/tasks/00-p
 
 | Category | Grade /5 | Finding |
 |---|---:|---|
-| UX | 4 | Complete, discoverable desktop flows; helpful stock warnings, search shortcuts, confirmations and specific validation. Mobile inventory actions require sideways scrolling, and corrected fields retain stale errors until submit. |
-| Visual | 3.5 | Clear blue/white hierarchy, consistent typography, restrained panels and readable desktop tables. Plain but coherent; mobile filters consume considerable vertical space and the wide table hides stock/actions. |
 | Code quality | 4.5 | Cohesive storage, inventory, cart and order modules, defensive copies, consistent result contracts, safe DOM construction and meaningful tests. Checkout rollback and object-as-set edge cases remain. |
 | Business rules/spec | 4.5 | All required ordinary workflows verified, including stock depletion, cart persistence, immutable order snapshots, direct-file launch and Git task commits. Persistent failure during checkout can leave inconsistent state. |
-| Robustness | 3.5 | Validates quantities, rejects excess stock, backs up corrupt JSON and protects single writes. Checkout spans three keys and rollback can itself fail while the error claims nothing changed. |
+| UX | 4 | Complete, discoverable desktop flows; helpful stock warnings, search shortcuts, confirmations and specific validation. Mobile inventory actions require sideways scrolling, and corrected fields retain stale errors until submit. |
 | Accessibility | 4 | Native dialogs, linked labels/errors, live status messages, descriptive action names, visible focus and useful keyboard behavior. Mobile table navigation and small row controls limit usability; this was a spot check. |
+| Visual | 3.5 | Clear blue/white hierarchy, consistent typography, restrained panels and readable desktop tables. Plain but coherent; mobile filters consume considerable vertical space and the wide table hides stock/actions. |
+| Robustness | 3.5 | Validates quantities, rejects excess stock, backs up corrupt JSON and protects single writes. Checkout spans three keys and rollback can itself fail while the error claims nothing changed. |
 
 Weighted overall: **82/100** using the common protocol. Scores are judgments of the supplied artifact, not model benchmark percentages.
 

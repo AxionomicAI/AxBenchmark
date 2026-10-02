@@ -6,10 +6,10 @@ Reviewed 2026-10-01 by a fresh, sequential reviewer. All supplied HTML, JavaScri
 |---|---:|---|
 | UX | 2.5 | Straightforward normal operations, but searching discards drafts, cart additions lack visible nearby feedback, and stale cart states cannot be resolved normally. |
 | Visual | 2.5 | Legible, consistent tables and section headings; basic styling, disconnected full-width header, substantial scrolling, and crowded mobile actions. |
-| Code quality | 2 | Small understandable store classes, undermined by unsafe HTML templates, whole-page rendering, weak validation, and non-atomic checkout. |
 | Business rules/spec adherence | 2.5 | Required features exist and the happy path works; failed purchases consume stock, deleted inventory returns, and cart deletion consistency fails. |
-| Robustness | 1 | Confirmed unsafe name execution, corrupted-storage startup failure, and persistent stock loss on rejected checkout or failed history writes. |
 | Accessibility | 2.5 | Native buttons, headings, table headers, and labeled product inputs; search lacks a persistent label, quantity controls lack product context, and rerenders lose keyboard focus. |
+| Code quality | 2 | Small understandable store classes, undermined by unsafe HTML templates, whole-page rendering, weak validation, and non-atomic checkout. |
+| Robustness | 1 | Confirmed unsafe name execution, corrupted-storage startup failure, and persistent stock loss on rejected checkout or failed history writes. |
 
 Weighted overall: **45/100** using the common protocol. This is a judgment of artifact quality, not a benchmark success percentage.
 

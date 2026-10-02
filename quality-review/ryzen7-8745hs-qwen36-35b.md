@@ -4,12 +4,12 @@ Reviewed 2026-10-01 by a fresh sequential reviewer. Read all 2,519 implementatio
 
 | Category | Grade /5 | Assessment |
 |---|---:|---|
-| UX | 2 | CRUD and lookup are approachable, but cart controls fail silently and Orders opens the wrong form. |
 | Visual | 2.5 | Coherent blue/gray desktop cards and readable stock badges; mobile clips product actions and stock filter styling is inconsistent. |
-| Code quality | 2 | Named functions and clear sections help navigation, but major mismatches between function contracts, DOM IDs, event handlers and CSS show incomplete integration. |
 | Business rules/spec | 2.5 | Direct-file vanilla/localStorage inventory, CRUD and search work; required cart and checkout/history are unusable. |
-| Robustness | 1.5 | Startup exception, broken checkout, empty-inventory resurrection and inconsistent persistence validation. |
 | Accessibility | 2.5 | Labels and dialog semantics exist; keyboard focus escapes modal, cart ignores Escape, and mobile controls fall outside viewport. |
+| UX | 2 | CRUD and lookup are approachable, but cart controls fail silently and Orders opens the wrong form. |
+| Code quality | 2 | Named functions and clear sections help navigation, but major mismatches between function contracts, DOM IDs, event handlers and CSS show incomplete integration. |
+| Robustness | 1.5 | Startup exception, broken checkout, empty-inventory resurrection and inconsistent persistence validation. |
 
 Weighted overall: **43.5/100** using the shared protocol. Scores judge the supplied application, not its model or hardware.
 

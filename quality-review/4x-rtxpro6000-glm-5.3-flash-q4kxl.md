@@ -4,10 +4,10 @@ Review date: 2026-10-01. Source inspection, supplied tests, and an isolated Chro
 
 | Category | Score / 5 | Judgment |
 |---|---:|---|
+| Spec | 4.5 | All requested application features work under ordinary direct-file use and survive reload; Git history unavailable, durable checkout fails on write errors. |
+| Code | 4 | Clear modules, centralized validation, safe rendering, and coherent data relationships; persistence result handling and broad rerendering need improvement. |
 | UX | 3.5 | Straightforward desktop management/search/cart workflow, clear validation and checkout feedback; mobile layout and keyboard recovery create material friction. |
 | Visual | 3 | Coherent, readable desktop table and form styling; excessive whitespace and horizontal overflow spoil the mobile presentation. |
-| Code | 4 | Clear modules, centralized validation, safe rendering, and coherent data relationships; persistence result handling and broad rerendering need improvement. |
-| Spec | 4.5 | All requested application features work under ordinary direct-file use and survive reload; Git history unavailable, durable checkout fails on write errors. |
 | Robustness | 2.5 | Useful numeric guards, stale-cart cleanup, and snapshots; reproduced stock loss without durable order history on a failed write. |
 | Accessibility | 2.5 | Labels, table headings, dialog roles, status text, and visible focus styling; reproduced modal focus escape and missing restoration, unannounced form errors, small controls. |
 | **Weighted overall** | **72.5 / 100** | Weights follow the shared review protocol. |

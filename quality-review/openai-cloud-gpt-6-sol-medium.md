@@ -4,10 +4,10 @@ Reviewed 2026-10-01 as sequential reviewer 8. Inspected all 718 application line
 
 | Category | Grade /5 | Finding |
 |---|---:|---|
-| UX | 3.5 | Straightforward inline CRUD, live search, stock-aware cart, useful empty states and checkout feedback. Destructive actions lack recovery, and rerenders disrupt keyboard position. |
+| Business rules / specification | 4.5 | All T1–T6 core requirements verified, including direct-file launch, CRUD, persisted cart, stock deduction and immutable history. Exceptional save failures and silent cart reductions limit confidence beyond normal operation. |
 | Visual | 4 | Coherent green palette, readable typography, restrained cards, aligned desktop controls and effective mobile wrapping. A long single column puts the mobile cart below the inventory and scales less well as inventory grows. |
 | Code quality | 4 | Cohesive storage API, integer cents, reusable validation, safe DOM text rendering, and historical order snapshots. Rendering repeatedly reads/writes storage and wholesale replaces lists; ordinary write failures are unhandled. |
-| Business rules / specification | 4.5 | All T1–T6 core requirements verified, including direct-file launch, CRUD, persisted cart, stock deduction and immutable history. Exceptional save failures and silent cart reductions limit confidence beyond normal operation. |
+| UX | 3.5 | Straightforward inline CRUD, live search, stock-aware cart, useful empty states and checkout feedback. Destructive actions lack recovery, and rerenders disrupt keyboard position. |
 | Robustness | 3.5 | Strong quantity checks, cart reconciliation and a successful partial-checkout rollback probe. CRUD write errors have no user feedback; storage access failures at initial render and rollback failures remain static risks. |
 | Accessibility | 3.5 | Labels, landmarks, product-specific button names, live counts/totals, checkout status, visible focus and mobile legibility are good. Keyboard Add to cart and Cancel lose focus to BODY. |
 

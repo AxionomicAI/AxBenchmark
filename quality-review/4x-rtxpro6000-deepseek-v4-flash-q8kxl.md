@@ -4,12 +4,12 @@ Reviewed 2026-10-01 against the common T1–T6 specification. All implementation
 
 | Category | Score / 5 | Assessment |
 |---|---:|---|
+| Spec alignment | 4.5 | Direct-file, dependency-free, localStorage implementation completes the required normal workflows. Git initialization/commits cannot be verified from the supplied folder. Reliability caveats below affect production confidence. |
 | UX | 3 | Complete, discoverable desktop workflow with search, details, validation and feedback. The large permanent creation form precedes browsing; tiny icon actions and horizontal scrolling impede mobile work. Adding to cart also opens and scrolls to details unexpectedly. |
 | Visual | 3 | Consistent navy header, white cards, restrained accents, aligned controls and readable desktop table. Mobile form adapts well, but table names wrap heavily and action columns require horizontal scrolling. Checkout loses primary-button emphasis. |
 | Code | 2.5 | Straightforward, readable named functions and event delegation, but all state/DOM/persistence lives in one global script. Attribute escaping, derived-column sorting and persistence consistency are demonstrably faulty. |
-| Spec alignment | 4.5 | Direct-file, dependency-free, localStorage implementation completes the required normal workflows. Git initialization/commits cannot be verified from the supplied folder. Reliability caveats below affect production confidence. |
-| Robustness | 1.5 | Checkout rejects excessive stock and deleted products, but unsafe attribute rendering executes entered event handlers, and a failed order write permanently reduces stock without recording the order. |
 | Accessibility | 2.5 | Explicit field labels, named sections, icon-button accessible names and working `/` search shortcut. Sorting and order expansion lack keyboard semantics; feedback has no live region. |
+| Robustness | 1.5 | Checkout rejects excessive stock and deleted products, but unsafe attribute rendering executes entered event handlers, and a failed order write permanently reduces stock without recording the order. |
 | **Weighted overall** | **62 / 100** | Weights: UX 25%, Visual 15%, Code 20%, Spec 25%, Robustness 10%, Accessibility 5%. |
 
 ## Specification checks
