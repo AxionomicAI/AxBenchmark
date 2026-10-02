@@ -4,13 +4,13 @@ A small inventory website built with HTML5, CSS, and vanilla JavaScript. Items a
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-sol-medium/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-6-sol-medium/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-cart.png" alt="cart" title="cart" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-mobile-edit.png" alt="mobile edit" title="mobile edit" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-6-sol-medium-mobile-edit.png" alt="mobile edit" title="mobile edit" width="200"></a>
 
 ## Run
 

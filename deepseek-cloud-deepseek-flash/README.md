@@ -7,13 +7,13 @@ entered on.
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/deepseek-cloud-deepseek-flash/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/deepseek-cloud-deepseek-flash/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-cart.png" alt="cart" title="cart" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/deepseek-cloud-deepseek-flash/"><img src="../quality-review/deepseek-cloud-deepseek-flash-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
 
 ## Running it
 

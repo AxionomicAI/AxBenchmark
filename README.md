@@ -1,4 +1,4 @@
-# Inventory website benchmark
+# AxBenchmark — Inventory website benchmark · Oct 1, 2026
 
 Fifteen generated inventory applications, compared by recorded cost, elapsed time and independently reviewed artifact quality. Review date: **October 1, 2026**.
 

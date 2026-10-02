@@ -6,18 +6,18 @@ browser's `localStorage`.
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-checkout.png" alt="checkout" title="checkout" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop-cart.png" alt="desktop cart" title="desktop cart" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop-form.png" alt="desktop form" title="desktop form" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop-history.png" alt="desktop history" title="desktop history" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile-history.png" alt="mobile history" title="mobile history" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-checkout.png" alt="checkout" title="checkout" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop-cart.png" alt="desktop cart" title="desktop cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop-form.png" alt="desktop form" title="desktop form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-desktop-history.png" alt="desktop history" title="desktop history" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-fable-5.1-high/"><img src="../quality-review/anthropic-cloud-fable-5.1-high-mobile-history.png" alt="mobile history" title="mobile history" width="200"></a>
 
 ## Running
 

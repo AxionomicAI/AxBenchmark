@@ -4,13 +4,13 @@ A browser-only inventory website. It is plain HTML5 and vanilla JavaScript, with
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/xai-cloud-grok-4.7-fast-500k-medium/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/xai-cloud-grok-4.7-fast-500k-medium/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-checkout.png" alt="checkout" title="checkout" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-checkout.png" alt="checkout" title="checkout" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/xai-cloud-grok-4.7-fast-500k-medium/"><img src="../quality-review/xai-cloud-grok-4.7-fast-500k-medium-mobile-cart.png" alt="mobile cart" title="mobile cart" width="200"></a>
 
 ## Run
 

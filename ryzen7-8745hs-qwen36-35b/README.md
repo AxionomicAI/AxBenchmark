@@ -4,13 +4,13 @@ A simple inventory management website built with HTML5 and vanilla JavaScript. A
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen36-35b/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen36-35b/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-cart.png" alt="cart" title="cart" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen36-35b/"><img src="../quality-review/ryzen7-8745hs-qwen36-35b-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
 
 ## Features
 

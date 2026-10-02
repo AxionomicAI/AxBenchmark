@@ -6,15 +6,15 @@ Users can view stock totals, search by product name, SKU, or category, and add, 
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-cart.png" alt="cart" title="cart" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-form.png" alt="form" title="form" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-history.png" alt="history" title="history" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-cart.png" alt="cart" title="cart" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-form.png" alt="form" title="form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-history.png" alt="history" title="history" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/openai-cloud-gpt-5.6-sol-medium/"><img src="../quality-review/openai-cloud-gpt-5.6-sol-medium-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
 
 ## Run locally
 

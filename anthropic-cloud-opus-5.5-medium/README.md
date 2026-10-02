@@ -6,14 +6,14 @@ browser's `localStorage`.
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-opus-5.5-medium/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/anthropic-cloud-opus-5.5-medium/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-checkout.png" alt="checkout" title="checkout" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-form.png" alt="form" title="form" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-checkout.png" alt="checkout" title="checkout" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-form.png" alt="form" title="form" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/anthropic-cloud-opus-5.5-medium/"><img src="../quality-review/anthropic-cloud-opus-5.5-medium-mobile-form.png" alt="mobile form" title="mobile form" width="200"></a>
 
 ## Running
 

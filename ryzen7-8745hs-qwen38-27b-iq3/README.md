@@ -6,13 +6,13 @@ No frameworks or libraries are used. All data is persisted in the browser's
 
 ## Screenshots
 
-Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen38-27b-iq3/).
+Click any screenshot to open the [live app](https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen38-27b-iq3/).
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-desktop.png" alt="desktop" title="desktop" width="100%"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-desktop.png" alt="desktop" title="desktop" width="100%"></a>
 
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-mobile.png" alt="mobile" title="mobile" width="200"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-cart-desktop.png" alt="cart desktop" title="cart desktop" width="420"></a>
-<a href="https://axionomicai.github.io/AxBenchmark_Oct_26_v1/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-orders-diagnostic.png" alt="orders diagnostic" title="orders diagnostic" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-mobile.png" alt="mobile" title="mobile" width="200"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-cart-desktop.png" alt="cart desktop" title="cart desktop" width="420"></a>
+<a href="https://axionomicai.github.io/AxBenchmark/ryzen7-8745hs-qwen38-27b-iq3/"><img src="../quality-review/ryzen7-8745hs-qwen38-27b-iq3-orders-diagnostic.png" alt="orders diagnostic" title="orders diagnostic" width="420"></a>
 
 ## Getting started
 
