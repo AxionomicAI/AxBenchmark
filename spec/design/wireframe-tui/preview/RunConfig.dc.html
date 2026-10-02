@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1660px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1780px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Run · configuration detail</b> · RunConfigScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -276,11 +276,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="RunOverview.dc.html">Run overview (M11)</a><a href="RunConfig.dc.html">Running</a><a href="VerifyProgress.dc.html">Verifying</a><a href="HarnessLive.dc.html">Live view</a><a href="TaskBlocked.dc.html">Blocked action</a><a href="ModelRejected.dc.html">Model rejected</a><a href="RunIsolation.dc.html">Isolation</a><a href="EnvPolicy.dc.html">Policy</a><a href="CleanModeBlocked.dc.html">Clean impossible</a></div>
 <h3>Notes</h3>
-<ul><li>Each task: new process, new conversation, shared spec + its own prompt; state carries only through workspace files (R069).</li><li>Requested and effective settings are separate; an effort the harness does not expose stays “? unverified” (R065).</li><li>Established environment lists baseline copy, workspace, ports, browser context, test data, managed settings and limitations (R068, R070, R072).</li></ul>
+<ul><li>Each task: new process, new conversation, shared spec + its own prompt; state carries only through workspace files (R069).</li><li>Requested and effective settings are separate; an effort the harness does not expose stays “? unverified” (R065).</li><li>Established environment lists baseline copy, workspace, ports, browser context, test data, managed settings and limitations (R068, R070, R072).</li><li>Implementation owner M05. API seam: harness.configuration/task/invocation/log; explicit TrialRef or ResultId; M08 evidence factory.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1660}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1780}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

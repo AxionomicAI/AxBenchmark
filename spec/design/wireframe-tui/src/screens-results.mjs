@@ -32,10 +32,10 @@ const SEL = byId['R-0924lab-1'];
 
 // Run 2026-10-01-a halted when the first check after T2-data.md changed on disk detected a different SHA-256 (D9).
 const HALTED = [
-  ['R-1001a-1', 'Claude Code', 'claude-opus-5-5 medium', '13✓ 8○', 2.71, 2472],
-  ['R-1001a-2', 'Codex', 'gpt-6-sol medium', '13✓ 8○', 1.64, 2472],
-  ['R-1001a-3', 'Grok CLI', 'grok-4.7-fast default', '11✓ 10○', 0.48, 2472],
-  ['R-1001a-4', 'Pi', 'qwen3.5-35b-a3b default', '6✓ 15○', null, 2472],
+  ['R-1001a-1', 'Claude Code', 'claude-opus-5-5 medium', '17✓ 13○', 2.71, 2472],
+  ['R-1001a-2', 'Codex', 'gpt-6-sol medium', '17✓ 13○', 1.64, 2472],
+  ['R-1001a-3', 'Grok CLI', 'grok-4.7-fast default', '15✓ 15○', 0.48, 2472],
+  ['R-1001a-4', 'Pi', 'qwen3.5-35b-a3b default', '10✓ 20○', null, 2472],
 ];
 const TARIFF = 0.22;
 const costCell = (r, st) => {
@@ -90,7 +90,7 @@ export function results(sz, focus = 'results', st = {}) {
     g.box(0, y, W, H - 1 - y, { title: `${r.id} · ↓ imported`, f: 'ln' });
     g.region(0, y, W, H - 1 - y, 'Static', '#summary');
     g.text(2, y + 1, fit(`${r.machine} · judge ${r.judge} · ${r.h} 3.4.1 · ${r.model} · ${r.effort}`, W - 4), 'bd');
-    g.text(2, y + 2, fit(`✓ 21/21 checks · ${usd(r.cost)} list · ${dur(r.time)} · clean · 3 at once`, W - 4));
+    g.text(2, y + 2, fit(`✓ 30/30 checks · ${usd(r.cost)} list · ${dur(r.time)} · clean · 3 at once`, W - 4));
     g.text(2, y + 3, fit('Validated, not certified: the hash proves the definition, not the execution.', W - 4), 'mu');
     let x = 2;
     for (const [k, d, go] of [['o', 'Open', 'ResultOrigin'], ['j', 'Review again', 'Rejudge'], ['x', 'Export ZIP', 'ExportResult']]) {
@@ -146,7 +146,7 @@ export function results(sz, focus = 'results', st = {}) {
   for (const [t, d] of [
     ['Definition and launch', 'template, baseline, configuration, catalog, weights'],
     ['Origin and execution', 'source id, machine, OS, hardware, harness versions'],
-    ['Measurements and outcomes', '7 tasks · 21 checks · cost and time with coverage'],
+    ['Measurements and outcomes', '7 tasks · 30 checks · cost and time with coverage'],
     ['Reviews and evidence', 'judge metadata, raw grades, evidence, logs, snapshots'],
   ]) {
     g.text(62, y, '✓', 'ac'); g.text(64, y++, t, 'bd');
@@ -233,7 +233,7 @@ const RTAB_GO = ['ResultOrigin', 'ResultOutcomes', 'ResultReviews'];
 
 function resultChrome(g, sz, r, tab) {
   const W = g.w, compact = sz.id === 'compact';
-  header(g, 'AxBenchmark', `Result ${r.id}`);
+  header(g, 'AxBenchmark', `Result ${r.id} · trial ${r.trial_index}/${r.trial_count}`);
   g.fill(0, 1, W, 1, 'B1');
   g.text(1, 1, fit(compact
     ? `${r.src === 'imported' ? '↓' : '●'} ${r.machine} · ${r.h} · ${r.model} · r1 ${s8(SHA.inv1)} · ${statusText(r)}`
@@ -279,6 +279,8 @@ export function resultOrigin(sz, focus = 'definition') {
   g.region(60, 4, 60, bh, 'VerticalScroll', '#origin.pane');
   kv(g, 62, 5, 14, 56, [
     ['Result id', `${r.id} · source id, kept on re-export`],
+    ['Run UID', r.run_uid],
+    ['Configuration', r.configuration_id],
     ['Provenance', '↓ imported 2026-09-24 22:10'],
     ['Package', 'inventory-results-lab-4090.zip · payload ✓'],
     ['Machine', 'lab-linux-4090 · id 7c2e…91fa'],
@@ -303,13 +305,13 @@ export function resultOrigin(sz, focus = 'definition') {
 }
 
 export const GROK_TASKS = [
-  ['T1', 'Repository and scaffold', 0, '2✓', 190, '182k / 9k', 0.05],
+  ['T1', 'Repository and scaffold', 0, '6✓', 190, '182k / 9k', 0.05],
   ['T2', 'Inventory data and persistence', 0, '4✓', 400, '401k / 21k', 0.12],
   ['T3', 'Inventory management', 0, '5✓', 665, '702k / 44k', 0.21],
   ['T4', 'Inventory lookup', 0, '2✓', 270, '280k / 12k', 0.08],
-  ['T5', 'Shopping cart', 0, '4✓', 555, '598k / 35k', 0.18],
-  ['T6', 'Checkout', 0, '3✓', 500, '540k / 30k', 0.16],
-  ['T7', 'Test and fix', 0, '1?', 510, '410k / 22k', 0.12],
+  ['T5', 'Shopping cart', 0, '5✓ 1?', 555, '598k / 35k', 0.18],
+  ['T6', 'Checkout', 0, '4✓', 500, '540k / 30k', 0.16],
+  ['T7', 'Test and fix', 0, '3✓', 510, '410k / 22k', 0.12],
 ];
 
 export function resultOutcomes(sz, focus = 'tasks') {
@@ -320,7 +322,7 @@ export function resultOutcomes(sz, focus = 'tasks') {
   const total = { t: GROK_TASKS.reduce((n, t) => n + t[4], 0), c: GROK_TASKS.reduce((n, t) => n + t[6], 0) };
   if (dur(total.t) !== dur(r.time) || f2(total.c) !== f2(r.cost)) throw new Error('Grok task totals disagree with R-0928a-3');
   const rows = GROK_TASKS.map(([id, t, ex, ch, s, tok, c]) => ({ v: [id, t, `✓ exit ${ex}`, ch === '1?' ? { t: '1? unverified', f: 'bd' } : ch, dur(s), tok, usd(c), 'no cache split'], go: 'TaskChecks' }));
-  rows.push({ v: ['Σ', 'Seven tasks', '✓ 7 of 7', '20✓ 0✗ 1?', dur(total.t), '3.11M / 173k', usd(total.c), 'tokens 7/7'], f: 'bd' });
+  rows.push({ v: ['Σ', 'Seven tasks', '✓ 7 of 7', '29✓ 0✗ 1?', dur(total.t), '3.11M / 173k', usd(total.c), 'tokens 7/7'], f: 'bd' });
   g.box(0, 4, W, 11, { f: tf ? 'ac' : 'ln', title: 'Tasks · process, checks and measurements are separate columns' });
   if (compact) {
     table(g, 1, 5, W - 2, [{ l: '#', w: 4 }, { l: 'Task', w: 23 }, { l: 'Process', w: 11 }, { l: 'Checks', w: 15 }, { l: 'Time', w: 8, al: 'right' }, { l: 'Cost', w: 8, al: 'right' }, { l: 'Cov', w: 9 }],
@@ -330,7 +332,7 @@ export function resultOutcomes(sz, focus = 'tasks') {
   }
   g.region(1, 5, W - 2, 9, 'DataTable', '#task-outcomes');
   if (compact) {
-    g.box(0, 15, W, H - 16, { title: 'T7.1 · ? unverified — not failed', f: focus === 'evidence' ? 'ac' : 'ln' });
+    g.box(0, 15, W, H - 16, { title: 'T5_persistence · ? unverified — not failed', f: focus === 'evidence' ? 'ac' : 'ln' });
     g.region(0, 15, W, H - 16, 'Static', '#check-detail');
     para(g, 2, 16, W - 4, 'The verifier could not start Chromium (Playwright browser not installed on 2026-09-28). The check never ran, so it neither passed nor failed. Excluded from default shortlists until verified.', 'mu');
     g.text(2, 20, fit('Cache tokens not exposed by Grok CLI 1.9.2 · cost may be overstated', W - 4), 'mu');
@@ -338,13 +340,13 @@ export function resultOutcomes(sz, focus = 'tasks') {
     return g;
   }
   const ef = focus === 'evidence';
-  g.box(0, 15, 60, 16, { f: ef ? 'ac' : 'ln', title: 'T7.1 · The site works end to end in a real browser' });
+  g.box(0, 15, 60, 16, { f: ef ? 'ac' : 'ln', title: 'T5_persistence · Cart survives reopening' });
   g.region(0, 15, 60, 16, 'VerticalScroll', '#check-detail.pane');
   let y = kv(g, 2, 16, 10, 56, [['Outcome', '? unverified — not failed', 'bd']]);
   y = para(g, 2, y + 1, 56, 'The verifier could not start Chromium: the Playwright browser was not installed on mike-mbp-m4 when this run was verified (2026-09-28). The check never ran, so it neither passed nor failed.');
   y = kv(g, 2, y + 1, 10, 56, [
-    ['Evidence', 'checks/T7.1.log · exit 127 · 0.4 s'],
-    ['Snapshot', 'T7 workspace · commit 9e41c07'],
+    ['Evidence', 'checks/T5_persistence.log · exit 127 · 0.4 s'],
+    ['Snapshot', 'T5 workspace · commit 4e7a1c9'],
     ['Effect', ['Kept and graded; left out of default', 'shortlists until every required check is', 'verified (M06).']],
   ]);
   g.box(60, 15, 60, 16, { f: focus === 'coverage' ? 'ac' : 'ln', title: 'Measurements · sources and coverage' });
@@ -667,7 +669,7 @@ export function scoreBreakdown(sz) {
   let y = m.y;
   g.text(m.x, y++, fit(`${r.id} · ${r.h} · ${r.model} · ${r.effort} · judge A`, m.w), 'bd');
   y++;
-  g.text(m.x, y++, fit(`✓ completed   ✓ ${r.checks.p}/21 checks verified   ✓ grades valid   ✓ business ${r.g[SPEC]} ≥ 4`, m.w));
+  g.text(m.x, y++, fit(`✓ completed   ✓ ${r.checks.p}/30 checks verified   ✓ grades valid   ✓ business ${r.g[SPEC]} ≥ 4`, m.w));
   g.region(m.x, y - 1, m.w, 1, 'Static', '#eligibility');
   y++;
   const nw = normalize(QW);

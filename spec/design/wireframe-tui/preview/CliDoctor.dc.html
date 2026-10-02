@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1260px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1400px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>doctor · models refresh</b> · axbenchmark doctor · models refresh · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -101,7 +101,7 @@ body{margin:0}
 <div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> prices OpenAI · openai.com/api/pricing · retrieved 2026-10-01                                                      </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 bd">  ▲ prices xAI · x.ai/api could not be read · kept last valid prices from 2026-09-15                                  </span><span class="B0"> </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">  ○ prices local endpoint · none · no API charge · cost from energy only in sequential runs                           </span><span class="B0"> </span></div>
-<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> rates open.er-api.com/v6/latest/USD · EUR GBP CNY to USD · source date 2026-10-01 · retrieved 2026-10-01 21:38     </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> rates open.er-api.com/v6/latest/USD · EUR GBP CNY units/USD · source date 2026-10-01 · retrieved 2026-10-01 21:38  </span></div>
 <div class="r"><span class="B0">   </span><span class="B0 ac">●</span><span class="B0"> rates COP · supplied by you (4000.00 per USD, 2026-10-02) · kept, labelled · overrides the collected 4016.06       </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Catalog 2026.10.01-2214 · 1 source and 1 price page failed · no model was assumed compatible · exit 0                 </span><span class="B0"> </span></div>
 <div class="r"><span class="B0">                                                                                                                        </span></div>
@@ -128,11 +128,11 @@ models refresh  discovery + prices + exchange rates (M04)</pre>
 <h3>States and related frames</h3>
 <div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>Collector problems name their cause and never block a run (R054, R103). D5: an insufficient permission points to the collector guide; there is no root mode and no sudo suggestion.</li><li>A failed provider keeps the last valid catalog and all overrides (R053, R063, R064).</li><li>D4: refresh prints one price line per provider with source and retrieval date, or “kept last valid prices”. Prices are never fetched during a run. R3-5: first-version price sources are Anthropic, OpenAI and xAI; other providers use bundled prices and overrides.</li><li>R3-2: the same refresh prints one line per rate source (source URL, source date, retrieval date, currencies collected to USD) and lists user-supplied rates as kept and labelled. Rates are never fetched during a run.</li><li>R3-6: approved revision files stay read-only (files 0444, folders 0555). doctor lists each revision folder whose modes were changed, with expected and found modes and the restore remedy; it never offers chmod or sudo and the CLI never changes modes.</li></ul>
+<ul><li>Collector problems name their cause and never block a run (R054, R103). D5: an insufficient permission points to the collector guide; there is no root mode and no sudo suggestion.</li><li>A failed provider keeps the last valid catalog and all overrides (R053, R063, R064).</li><li>D4: refresh prints one price line per provider with source and retrieval date, or “kept last valid prices”. Prices are never fetched during a run. R3-5: first-version price sources are Anthropic, OpenAI and xAI; other providers use bundled prices and overrides.</li><li>R3-2: the same refresh prints one line per rate source (source URL, source date, retrieval date, currencies collected to USD) and lists user-supplied rates as kept and labelled. Rates are never fetched during a run.</li><li>R3-6: approved revision files stay read-only (files 0444, folders 0555). doctor lists each revision folder whose modes were changed, with expected and found modes and the restore remedy; it never offers chmod or sudo and the CLI never changes modes.</li><li>Implementation owner M14. API seam: M14 curated CLI over published registry; results.resolve_run before UID-only calls; engine/jobs/reports durable status. See M14.2 exact command fixtures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1260}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1400}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

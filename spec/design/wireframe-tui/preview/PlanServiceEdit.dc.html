@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1320px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1420px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Edit a service row</b> · ServiceEditScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -309,11 +309,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="NewTemplateRepo.dc.html">New template (M01)</a><a href="PlannerPicker.dc.html">Planner</a><a href="PlannerUnknownModel.dc.html">No default model</a><a href="PlannerNoUsable.dc.html">No usable harness</a><a href="PlannerVerify.dc.html">Verify now</a><a href="PlanningProgress.dc.html">Planning</a><a href="PlanReview.dc.html">Review</a><a href="PlanReopened.dc.html">Reopened draft</a><a href="PlanServices.dc.html">Services</a><a href="PlanServiceEdit.dc.html">Edit service</a><a href="PlanEdit.dc.html">Edit</a><a href="PlanRegenerate.dc.html">Regenerate</a><a href="PlanApprove.dc.html">Approve</a><a href="PlanApproveIdentical.dc.html">Identical</a><a href="PlanningFailed.dc.html">Failed</a><a href="PlanningInterrupted.dc.html">Interrupted</a><a href="Library.dc.html">Library drafts (M01)</a></div>
 <h3>Notes</h3>
-<ul><li>W9 (R2-8): command, working directory, port and readiness check, each validated on its own, styled like the task editor with a diff against the generated row.</li><li>The working directory must exist in the a41f9c2 snapshot; the port must come from the configuration’s range, never a fixed number.</li><li>Edits change only the draft; after approval any change is a new revision.</li></ul>
+<ul><li>W9 (R2-8): command, working directory, port and readiness check, each validated on its own, styled like the task editor with a diff against the generated row.</li><li>The working directory must exist in the a41f9c2 snapshot; the port must come from the configuration’s range, never a fixed number.</li><li>Edits change only the draft; after approval any change is a new revision.</li><li>Implementation owner M16. API seam: planning.draft; planning.edit(draft_id,base_version,service edit).</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1320}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1420}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

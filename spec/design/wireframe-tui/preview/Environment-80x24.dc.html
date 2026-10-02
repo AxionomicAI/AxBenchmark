@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1440px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1560px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Environment · ready</b> · EnvironmentScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -158,11 +158,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Environment-80x24.dc.html">Ready</a><a href="EnvironmentAuthFailed-80x24.dc.html">Auth failed</a><a href="EnvironmentRechecked.dc.html">Rechecked</a><a href="EnvironmentOffline.dc.html">Offline</a><a href="EnvironmentNoHarness.dc.html">No harness</a><a href="EnvironmentCollectors.dc.html">Linux collectors</a></div>
 <h3>Notes</h3>
-<ul><li>Four named harnesses on macOS and Linux, each with independent findings (R005, R006, R029).</li><li>The detail pane separates what was established from what is only known later (effective effort, per-model access) (R137).</li><li>Collectors are optional and never block a run; their scope is shown (R146).</li></ul>
+<ul><li>Four named harnesses on macOS and Linux, each with independent findings (R005, R006, R029).</li><li>The detail pane separates what was established from what is only known later (effective effort, per-model access) (R137).</li><li>Collectors are optional and never block a run; their scope is shown (R146).</li><li>Implementation owner M03. API seam: environment.report/explain/recheck/verification_plan/verify; catalog factory.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1440}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1560}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

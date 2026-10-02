@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1880px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2020px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Revision · identity</b> · TemplateScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -143,11 +143,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="TemplateTasks-80x24.dc.html">Tasks</a><a href="TemplateIdentity-80x24.dc.html">Identity</a><a href="TemplateConfigs.dc.html">Configurations</a><a href="TemplateResults.dc.html">Results</a><a href="WidgetStates.dc.html">Empty · loading · error</a></div>
 <h3>Notes</h3>
-<ul><li>Full 64-character SHA-256 always; abbreviations elsewhere are 8 characters plus the last 8 when space allows.</li><li>The manifest lists exactly what the hash covers: metadata, spec, ordered prompts, checks, protocol, setup/start/stop, rubric, baseline, declared dependencies (R118, R119).</li><li>Excluded settings are listed so users see that changing harness, machine or weights does not change identity (R141).</li><li>The empty baseline digest is the SHA-256 of zero bytes (e3b0c442…).</li></ul>
+<ul><li>Full 64-character SHA-256 always; abbreviations elsewhere are 8 characters plus the last 8 when space allows.</li><li>The manifest lists exactly what the hash covers: metadata, spec, ordered prompts, checks, protocol, setup/start/stop, rubric, baseline, declared dependencies (R118, R119).</li><li>Excluded settings are listed so users see that changing harness, machine or weights does not change identity (R141).</li><li>The empty baseline digest is the SHA-256 of zero bytes (e3b0c442…).</li><li>Implementation owner M01. API seam: templates.get/revisions/tasks/manifest; configs.list; results.list; templates.rename/verify/restore; typed navigation factories.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1880}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2020}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

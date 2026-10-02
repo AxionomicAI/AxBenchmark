@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1320px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Telemetry · one experiment</b> · TelemetryScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -310,11 +310,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="MonitoringSettings.dc.html">Settings</a><a href="PromptExportCsv.dc.html">Export CSV (M15)</a><a href="EnvironmentCollectors.dc.html">Five causes (M03)</a><a href="CollectorGuide.dc.html">Guidance</a><a href="Telemetry.dc.html">Telemetry</a><a href="EnergyDetail.dc.html">Energy detail</a><a href="SequentialEnergy.dc.html">Sequential windows</a><a href="CurrencyEnergy.dc.html">Currency and energy (M10)</a></div>
 <h3>Notes</h3>
-<ul><li>Imported results of run 2026-09-24-lab keep the telemetry collected on lab-linux-4090 (M02).</li><li>D18: each metric names its collector and actual interval; k10temp could not sample at the requested 1 s and shows its 2 s minimum.</li><li>llama-server is a separate model server, not part of Pi’s process tree (R107, R108).</li><li>Parallel run (jobs 3): shared energy is never divided, so Pi’s cost stays unknown in rankings (D4). Cloud configurations: client machine only (R111).</li></ul>
+<ul><li>Imported results of run 2026-09-24-lab keep the telemetry collected on lab-linux-4090 (M02).</li><li>D18: each metric names its collector and actual interval; k10temp could not sample at the requested 1 s and shows its 2 s minimum.</li><li>llama-server is a separate model server, not part of Pi’s process tree (R107, R108).</li><li>Parallel run (jobs 3): shared energy is never divided, so Pi’s cost stays unknown in rankings (D4). Cloud configurations: client machine only (R111).</li><li>Implementation owner M18. API seam: telemetry.experiment(result_id); provisional/pending/finalized/error; telemetry.export_csv via shared prompt.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1200}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1320}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

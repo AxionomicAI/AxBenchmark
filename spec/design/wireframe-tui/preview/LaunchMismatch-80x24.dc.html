@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1120px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1220px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Launch blocked · inputs changed</b> · LaunchCheckScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -178,11 +178,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="LaunchCheck.dc.html">Freezing</a><a href="LaunchMismatch-80x24.dc.html">Blocked</a></div>
 <h3>Notes</h3>
-<ul><li>A run never claims r1 when its inputs differ, and is never silently relabelled (R067).</li><li>Restore copies the frozen r1 files back; Save as new revision opens the revise flow with the edit.</li></ul>
+<ul><li>A run never claims r1 when its inputs differ, and is never silently relabelled (R067).</li><li>Restore copies the frozen r1 files back; Save as new revision opens the revise flow with the edit.</li><li>Implementation owner M01. API seam: jobs.get/cancel for existing runs.launch job; configs.launch_record; templates.restore/start_revision.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1120}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1220}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

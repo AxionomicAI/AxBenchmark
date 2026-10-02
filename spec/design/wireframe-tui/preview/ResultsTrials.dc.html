@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1940px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 2060px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Results · 3 trials per configuration</b> · ResultsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -240,11 +240,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Results.dc.html">Results</a><a href="ResultsTrials.dc.html">Trials</a><a href="ResultsHalted.dc.html">Halted run</a><a href="ResultsAnalysisTariff.dc.html">Analysis tariff</a><a href="ResultImport.dc.html">Import</a><a href="ResultImportConflict.dc.html">Id conflict</a><a href="ExportResult.dc.html">Export</a><a href="ReportReady.dc.html">Report</a><a href="Rankings.dc.html">Rankings</a></div>
 <h3>Notes</h3>
-<ul><li>D7: every trial is its own result (trial index, own judge session). Each configuration lists its trials, then a bold mean row and a muted min–max row for cost, time and quality.</li><li>A configuration is eligible only when every trial is: one failed check in trial 2 marks the Claude Code mean “✗ trial ineligible”. Rankings use the means.</li><li>Fixture: Orders REST API r3, run 2026-09-27-t (results-data.mjs TRIAL_CONFIGS). Inventory r1 results have the default single trial.</li></ul>
+<ul><li>D7: every trial is its own result (trial index, own judge session). Each configuration lists its trials, then a bold mean row and a muted min–max row for cost, time and quality.</li><li>A configuration is eligible only when every trial is: one failed check in trial 2 marks the Claude Code mean “✗ trial ineligible”. Rankings use the means.</li><li>Fixture: Orders REST API r3, run 2026-09-27-t (results-data.mjs TRIAL_CONFIGS). Inventory r1 results have the default single trial.</li><li>Implementation owner M02. API seam: results.list(template_sha256,filters,tariff); M17 exchange and M13 report factories.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1940}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":2060}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

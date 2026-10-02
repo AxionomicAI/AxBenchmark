@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 880px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 980px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Run · isolation</b> · IsolationScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -134,11 +134,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="RunOverview.dc.html">Run overview (M11)</a><a href="RunConfig.dc.html">Running</a><a href="VerifyProgress.dc.html">Verifying</a><a href="HarnessLive.dc.html">Live view</a><a href="TaskBlocked.dc.html">Blocked action</a><a href="ModelRejected.dc.html">Model rejected</a><a href="RunIsolation.dc.html">Isolation</a><a href="EnvPolicy.dc.html">Policy</a><a href="CleanModeBlocked.dc.html">Clean impossible</a></div>
 <h3>Notes</h3>
-<ul><li>Independent workspaces, ports, test data and browser contexts per configuration, also for two configurations of one harness and in sequential mode (R072).</li><li>Every configuration starts from an equivalent copy of the same packaged baseline (R068).</li></ul>
+<ul><li>Independent workspaces, ports, test data and browser contexts per configuration, also for two configurations of one harness and in sequential mode (R072).</li><li>Every configuration starts from an equivalent copy of the same packaged baseline (R068).</li><li>Implementation owner M05. API seam: harness.isolation; read-only allocation facts.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":880}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":980}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

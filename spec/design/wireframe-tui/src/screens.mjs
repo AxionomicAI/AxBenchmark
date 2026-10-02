@@ -33,13 +33,13 @@ export const TEMPLATES = [
 
 // Task titles and prompts from benchmark/tasks/ (first sentence shown in the table).
 const TASKS = [
-  ['T1', 'Repository and scaffold', 'Set up the project: create a git repository and a basic structure for the inventory website with a README.', 2],
+  ['T1', 'Repository and scaffold', 'Set up the project: create a git repository and a basic structure for the inventory website with a README.', 6],
   ['T2', 'Inventory data and persistence', 'Add the inventory data layer: products with their stock, persisted in localStorage, with sample data on first run.', 4],
   ['T3', 'Inventory management', 'Let the user view the inventory and add, edit and delete products.', 5],
   ['T4', 'Inventory lookup', 'Add inventory lookup so the user can quickly find products.', 2],
-  ['T5', 'Shopping cart', 'Add a shopping cart: the user can add products from the inventory, change quantities, remove them and see the total.', 4],
-  ['T6', 'Checkout', 'Add checkout: completing a purchase updates the stock and keeps an order history.', 3],
-  ['T7', 'Test and fix', 'Test the website thoroughly as a user would, in a real browser (you may install and use any tools you need).', 1],
+  ['T5', 'Shopping cart', 'Add a shopping cart: the user can add products from the inventory, change quantities, remove them and see the total.', 6],
+  ['T6', 'Checkout', 'Add checkout: completing a purchase updates the stock and keeps an order history.', 4],
+  ['T7', 'Test and fix', 'Test the website thoroughly as a user would, in a real browser (you may install and use any tools you need).', 3],
 ];
 const TASKS_R2 = [TASKS[0], TASKS[1], TASKS[2], ['T4', ...TASKS[4].slice(1)], ['T5', ...TASKS[3].slice(1)], ['T6', 'Checkout', TASKS[5][2], 4], TASKS[6]];
 
@@ -238,7 +238,7 @@ export function library(sz, focus = 'templates', st = {}) {
         ['Revision', st.upgrade ? 'r1 of 3 · default · r3 built-in new' : 'r1 of 2 · approved 2026-09-12'],
         ['SHA-256', [sel.sha.slice(0, 32), sel.sha.slice(32)]],
         ['Baseline', 'Empty project'],
-        ['Checks', '21 acceptance checks · v1'],
+        ['Checks', '30 acceptance checks · v1'],
         ['Rubric', 'Web profile v1 · 6 categories'],
         ['Configs', '3 saved for r1'],
         ['Results', '12 · 8 local · 4 imported'],
@@ -268,8 +268,8 @@ export function library(sz, focus = 'templates', st = {}) {
     footer(g, [{ k: 'enter', d: 'Reopen', go: 'PlanReview' }, { k: 'delete', d: 'Discard draft', go: 'DraftDiscard' }, { k: 'a', d: 'About', off: true }, { k: 'n', d: 'New', go: 'NewTemplate' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: '/', d: 'Filter' }, { k: 'tab', d: 'Pane', do: 'next' }, { k: 'q', d: 'Quit' }]);
   } else {
     footer(g, compact
-      ? [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'a', d: 'About', go: builtin ? 'InventoryAbout' : undefined, off: !builtin }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }]
-      : [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'a', d: 'About', go: builtin ? 'InventoryAbout' : undefined, off: !builtin }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'd', d: 'Duplicate', go: 'Revise' }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: '/', d: 'Filter' }, { k: 'q', d: 'Quit' }]);
+      ? [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'a', d: 'About', go: builtin ? 'InventoryAbout' : undefined, off: !builtin }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'del', d: 'Delete', off: builtin, go: builtin ? undefined : 'RevisionDeleteConfirm' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }]
+      : [{ k: 'enter', d: 'Configure', go: 'Setup', off: st.noHarness }, { k: 'a', d: 'About', go: builtin ? 'InventoryAbout' : undefined, off: !builtin }, { k: 'o', d: 'Open', go: 'TemplateTasks' }, { k: 'n', d: 'New', go: 'NewTemplate', off: st.noHarness }, { k: 'e', d: 'Revise', go: 'Revise' }, { k: 'del', d: 'Delete', off: builtin, go: builtin ? undefined : 'RevisionDeleteConfirm' }, { k: 'i', d: 'Import', go: 'ImportTemplate' }, { k: 'x', d: 'Export', go: 'ExportTemplate' }, { k: '/', d: 'Filter' }, { k: 'q', d: 'Quit' }]);
   }
   return g;
 }
@@ -355,10 +355,10 @@ export function template(sz, focus = 'tasks', st = {}) {
       ['Prepended to every task: spec/00-project.md · Project: Inventory website', 'mu'],
       ['', ''],
       ['## Acceptance checks (4)', 'bd'],
-      ['· T2.1  Sample products appear on first load', ''],
-      ['· T2.2  Products and stock survive a page reload', ''],
-      ['· T2.3  Cleared storage restores the sample data on next load', ''],
-      ['· T2.4  No console errors while the inventory loads', ''],
+      ['· T2_products  Products carry stock', ''],
+      ['· T2_persistence  Inventory survives reopening', ''],
+      ['· T2_samples  First-run sample data (no T3 UI required)', ''],
+      ['· T2_commit  New commit in readable task history', ''],
       ['', ''],
       ['Checks run on a disposable copy of the T2 snapshot; the agent never sees them.', 'mu'],
     ];
@@ -569,7 +569,7 @@ export function reviseConfirm(sz, focus = 'approve', st = {}) {
     y++;
   } else {
     g.text(m.x, y, '~ order', ''); g.text(m.x + 10, y++, fit('T4 Inventory lookup ↔ T5 Shopping cart', m.w - 10));
-    g.text(m.x, y, '+ check', ''); g.text(m.x + 10, y++, fit('T6.4 Order history survives a page reload', m.w - 10));
+    g.text(m.x, y, '~ check', ''); g.text(m.x + 10, y++, fit('T6_history observation strategy updated (same obligation)', m.w - 10));
     g.text(m.x, y, '= same', 'mu'); g.text(m.x + 10, y++, fit('specification, prompt text, baseline, protocol, rubric', m.w - 10), 'mu');
   }
   g.region(m.x, m.y + 1, m.w, 3, 'Static', '#revision-diff');
@@ -616,7 +616,7 @@ export function exportTemplate(sz, focus = 'destination') {
     ['✓', 'Manifest axbenchmark-manifest/1 · 15 entries · recomputed before packing'],
     ['✓', 'Specification and 7 ordered task prompts'],
     ['✓', 'Baseline · empty project'],
-    ['✓', '21 acceptance checks · execution protocol · setup, start and stop'],
+    ['✓', '30 acceptance checks · execution protocol · setup, start and stop'],
     ['✓', 'Web grading rubric v1'],
     ['✓', 'Declared dependencies · Python 3.12, Playwright for Python'],
     ['✗', 'Excluded: installed dependency folders, credentials, local absolute paths'],
@@ -775,7 +775,7 @@ export function commandPalette(sz) {
   g.hline(x + 1, y + 2, w - 2, 'ln');
   const items = [
     ['Revise template…', 'Duplicate or edit Inventory web app into a new revision', 'Revise'],
-    ['Show revisions', 'Open the revision tree of the selected template', 'TemplateTasks'],
+    ['Delete revision · unavailable', 'Selected built-in revision is read only; draft rows offer Discard draft', null],
     ['Reconnect to run', '2026-10-01-a · 3/4 configurations running', null],
     ['Recheck environment', 'Detect harnesses, runtimes and collectors again', 'Environment'],
     ['Export template revision…', 'Write a portable ZIP with the frozen definition', 'ExportTemplate'],

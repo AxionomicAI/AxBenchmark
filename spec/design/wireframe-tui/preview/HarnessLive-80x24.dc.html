@@ -64,11 +64,11 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1400px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1520px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Live view · Codex</b> · HarnessLiveScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
-<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                         </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Live · Codex</span><span class="B2">                           </span></div>
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Live · Codex · trial 1</span><span class="B2">                      </span></div>
 <div class="r"><span class="B1"> </span><span class="B1 ac">●</span><span class="B1"> </span><span class="B1 bd">T5 Shopping cart</span><span class="B1 mu"> · 10:58 │ </span><span class="B1">gpt-6-sol</span><span class="B1 mu"> · effort </span><span class="B1">medium </span><span class="B1 it">? unverified</span><span class="B1">            </span></div>
 <div class="r"><span class="B0"> </span><span class="B0 mu">Out </span><span class="B0 bd">46.3 tok/s</span><span class="B0"> </span><span class="B0 ac">▁▂▄▆▇▆▅▇█▆</span><span class="B0"> </span><span class="B0 mu">│ Context </span><span class="B0 bd">84.2k of 272k</span><span class="B0"> </span><span class="B0 ac">████</span><span class="B0 ln">░░░░░░░░</span><span class="B0"> </span><span class="B0 bd">31%</span><span class="B0">             </span></div>
 <div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Code being written · src/cart.js </span><span class="B0 ac">───────────────────────────────────────────┐</span></div>
@@ -126,11 +126,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="HarnessLive-80x24.dc.html">Codex · thinking summarized</a><a href="HarnessLiveStreaming.dc.html">Edit streaming</a><a href="HarnessLiveLimited.dc.html">Less exposed · Grok CLI</a><a href="RunOverview.dc.html">Run overview</a><a href="RunConfig-80x24.dc.html">Configuration</a></div>
 <h3>Notes</h3>
-<ul><li>Opened with v from the focused lane of RunScreen or from RunConfigScreen; esc returns to the run. Observation only (R042, R044, R047).</li><li>The task line names the task, model and effort as requested and as observed: Codex does not expose effort, so it stays “? unverified” (M05).</li><li>tok/s is output tokens per second over the last second, measured from the stream when the harness reports no rate. Context is the current conversation’s use; every task is a new conversation, so it restarts per task.</li><li>Thinking is shown only as the harness gives it and is labelled “summarized” when it is a summary; it is never presented as the full reasoning.</li><li>Token figures keep the M10 rules: cached ⊂ input and reasoning ⊂ output are shown apart and never added.</li></ul>
+<ul><li>Opened with v from the focused lane of RunScreen or from RunConfigScreen; esc returns to the run. Observation only (R042, R044, R047).</li><li>The task line names the task, model and effort as requested and as observed: Codex does not expose effort, so it stays “? unverified” (M05).</li><li>tok/s is output tokens per second over the last second, measured from the stream when the harness reports no rate. Context is the current conversation’s use; every task is a new conversation, so it restarts per task.</li><li>Thinking is shown only as the harness gives it and is labelled “summarized” when it is a summary; it is never presented as the full reasoning.</li><li>Token figures keep the M10 rules: cached ⊂ input and reasoning ⊂ output are shown apart and never added.</li><li>Implementation owner M11. API seam: harness.live/task/file/log; bind resolved TrialRef, discard stale selection responses.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1400}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1520}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

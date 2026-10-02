@@ -156,15 +156,17 @@ const svcFooter = [{ k: 'esc', d: 'Close · draft kept', go: 'Library' }, { k: '
 export function planReview(sz, focus = 'tasks', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
   planChrome(g, sz, 1, st);
+  const selectedTask = PLAN_TASKS[3];
   const tf = focus === 'tasks';
   const rows = PLAN_TASKS.map(([id, t, , c, ed]) => ({ v: [id, t, String(c), ed ? { t: '~ edited', f: 'bd' } : { t: 'generated', f: 'mu' }], go: 'PlanEdit' }));
   if (compact) {
     g.box(0, 4, W, 10, { f: tf ? 'ac' : 'ln', title: 'Tasks · in run order' });
     table(g, 1, 5, W - 2, [{ l: '#', w: 4 }, { l: 'Task', w: W - 2 - 26 }, { l: 'Chk', w: 5, al: 'right' }, { l: '', w: 17 }], rows.map((r) => ({ ...r, v: [r.v[0], r.v[1], r.v[2], r.v[3]] })), { cursor: 3, focused: tf });
     g.region(1, 5, W - 2, 8, 'DataTable', '#draft-tasks');
-    g.box(0, 14, W, H - 15, { title: 'T4 · Move PDF rendering', f: focus === 'detail' ? 'ac' : 'ln' });
-    para(g, 2, 15, W - 4, PLAN_TASKS[3][2]);
-    g.text(2, 18, fit('~ you added the CSV sentence and check T4.3', W - 4), 'mu');
+    g.box(0, 14, W, H - 15, { title: `${selectedTask[0]} · ${selectedTask[1]}`, f: focus === 'detail' ? 'ac' : 'ln' });
+    para(g, 2, 15, W - 4, selectedTask[2]);
+    g.text(2, 18, fit('~ CSV sentence and check edited by you', W - 4), 'mu');
+    g.text(2, 20, `Runs on ${selectedTask[0]} snapshot · each trial’s own copy`, 'mu');
     footer(g, planFooter(true));
     return g;
   }
@@ -173,17 +175,17 @@ export function planReview(sz, focus = 'tasks', st = {}) {
   g.region(1, 5, 62, 8, 'DataTable', '#draft-tasks');
   g.text(2, 13, fit('A new session per task; files carry state.', 60), 'mu');
   const df = focus === 'detail';
-  g.box(64, 4, 56, 25, { f: df ? 'ac' : 'ln', title: 'T4 · Move PDF rendering' });
+  g.box(64, 4, 56, 25, { f: df ? 'ac' : 'ln', title: `${selectedTask[0]} · ${selectedTask[1]}` });
   g.region(64, 4, 56, 25, 'VerticalScroll', '#task-detail.pane');
   let y = 5;
   g.text(66, y++, 'Prompt', 'bd');
-  y = para(g, 66, y, 52, PLAN_TASKS[3][2]) + 1;
+  y = para(g, 66, y, 52, selectedTask[2]) + 1;
   g.text(66, y, '~', 'bd'); y = para(g, 68, y, 50, 'You added “CSV export stays where it is”. The generated text is kept beside your edit.', 'mu') + 1;
   g.text(66, y++, 'Acceptance checks', 'bd');
-  [['T4.1', 'GET /invoices/{id}.pdf: same bytes as before'], ['T4.2', 'No PDF code remains outside billing/invoice/'], ['T4.3', '+ CSV export still returns the same file']].forEach(([id, t]) => { g.text(66, y, id, 'mu'); g.text(72, y++, fit(t, 46)); });
+  [[`${selectedTask[0]}_pdf`, 'GET /invoices/{id}.pdf: same bytes as before'], [`${selectedTask[0]}_module`, 'No PDF code remains outside billing/invoice/'], [`${selectedTask[0]}_csv`, '+ CSV export still returns the same file']].forEach(([id, t]) => { g.text(66, y, id, 'mu'); g.text(80, y++, fit(t, 38)); });
   y++;
   g.text(66, y++, 'Runs on', 'bd');
-  y = para(g, 66, y, 52, 'The T3 snapshot of each configuration’s own copy. Checks use pytest and HTTP requests against the started service, outside the workspace.', 'mu');
+  y = para(g, 66, y, 52, `The ${selectedTask[0]} snapshot of each trial’s own copy. Checks use pytest and HTTP requests against the started service, outside the workspace.`, 'mu');
 
   g.box(0, 15, 64, 14, { f: focus === 'spec' || focus === 'name' ? 'ac' : 'ln', title: 'Draft summary' });
   g.region(0, 15, 64, 14, 'Static', '#draft-summary.kv');
@@ -295,9 +297,9 @@ export function planEdit(sz, focus = 'text') {
   const cf = focus === 'checks';
   g.box(0, 17, W, 10, { f: cf ? 'ac' : 'ln', title: 'Acceptance checks for T4', sub: 'a Add · del Remove' });
   table(g, 1, 18, W - 2, [{ l: 'Id', w: 7 }, { l: 'What it observes', w: 62 }, { l: 'Kind', w: 12 }, { l: 'State', w: W - 2 - 81 }], [
-    { v: ['T4.1', 'GET /invoices/{id}.pdf returns the same bytes as before', 'http', 'generated'] },
-    { v: ['T4.2', 'No PDF rendering code remains outside billing/invoice/', 'source', 'generated'] },
-    { v: ['T4.3', 'CSV export endpoint still returns the same file', 'http', { t: '+ added by you', f: 'bd' }] },
+    { v: ['T4_check1', 'GET /invoices/{id}.pdf returns the same bytes as before', 'http', 'generated'] },
+    { v: ['T4_check2', 'No PDF rendering code remains outside billing/invoice/', 'source', 'generated'] },
+    { v: ['T4_check3', 'CSV export endpoint still returns the same file', 'http', { t: '+ added by you', f: 'bd' }] },
   ], { cursor: 2, focused: cf });
   g.region(1, 18, W - 2, 4, 'DataTable', '#task-checks');
   para(g, 2, 23, W - 4, 'Checks must restate what the prompt asks. A check that adds an obligation the prompt does not state is flagged before approval.', 'mu');

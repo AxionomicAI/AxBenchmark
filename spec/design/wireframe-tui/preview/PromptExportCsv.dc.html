@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1100px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1220px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Prompt · Export CSV · telemetry</b> · PromptScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -183,11 +183,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="PromptSavePreset.dc.html">Save preset</a><a href="PromptExportConfig.dc.html">Export configuration</a><a href="PromptExportCsv.dc.html">Export CSV</a><a href="RankingsAlternative.dc.html">Alternative weights</a><a href="Telemetry.dc.html">Telemetry</a></div>
 <h3>Notes</h3>
-<ul><li>Opened by Export CSV… on Telemetry (M18).</li><li>W2: #export-csv on TelemetryScreen (x) opens the shared PromptScreen with a default path.</li><li>Every row keeps its collector’s actual interval (D18), never the requested one.</li></ul>
+<ul><li>Opened by Export CSV… on Telemetry (M18).</li><li>W2: #export-csv on TelemetryScreen (x) opens the shared PromptScreen with a default path.</li><li>Every row keeps its collector’s actual interval (D18), never the requested one.</li><li>Implementation owner M15. API seam: M15 dialog returns typed value; caller invokes configs.save_preset, scoring.export_weights or telemetry.export_csv.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1100}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1220}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

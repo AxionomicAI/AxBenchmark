@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1460px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1560px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>New template · empty project</b> · NewTemplateScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -278,11 +278,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="NewTemplate.dc.html">Empty project</a><a href="NewTemplateRepo.dc.html">Existing repository</a><a href="NewTemplateInvalid.dc.html">Invalid repository</a></div>
 <h3>Notes</h3>
-<ul><li>Multiline prompt + frontend/backend/fullstack + empty or existing repository (R030).</li><li>The planner shown is the preselected valid choice; changing it happens in planning (M16).</li></ul>
+<ul><li>Multiline prompt + frontend/backend/fullstack + empty or existing repository (R030).</li><li>The planner shown is the preselected valid choice; changing it happens in planning (M16).</li><li>Implementation owner M01. API seam: planning.defaults/inspect_repository/create_request; M16 planner factory.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1460}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1560}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1100px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Keys and views</b> · HelpScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -179,11 +179,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Library.dc.html">Library</a><a href="Environment.dc.html">Environment</a><a href="Setup.dc.html">Setup</a><a href="RunOverview.dc.html">Run 2×2</a><a href="RunListDetail-80x24.dc.html">Run list/detail</a><a href="Results.dc.html">Results</a><a href="CommandPalette.dc.html">Palette</a></div>
 <h3>Notes</h3>
-<ul><li>View keys are a proposal; F5 is left to Recheck and Refresh, which already use it (R038).</li><li>Bindings that cannot run are dimmed, never hidden; q with an active run only detaches (R046).</li><li>Resizing switches layouts without losing focus or the selected configuration (R044).</li></ul>
+<ul><li>View keys are a proposal; F5 is left to Recheck and Refresh, which already use it (R038).</li><li>Bindings that cannot run are dimmed, never hidden; q with an active run only detaches (R046).</li><li>Resizing switches layouts without losing focus or the selected configuration (R044).</li><li>Implementation owner M15. API seam: M15 registered navigation and action registry; no feature mutation.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1100}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1200}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -2,6 +2,16 @@
 
 Status: proposed requirements. [SPEC.md](../SPEC.md) is authoritative. This contract describes observable behavior, not an implemented interface. How the TUI is built follows [the architecture decision](ARCHITECTURE.md) and is specified under Implementation.
 
+## Implementation children
+
+| Child | Independently runnable scope | Completed prerequisites |
+|---|---|---|
+| [M15.1 — tui-foundation](implementation/M15/01-tui-foundation.md) | Shared widgets/theme, base screens/modals, pure helpers, registry-validating fake client and wide/compact harness | Bootstrap API/registry/EngineClient contracts; no feature engine or screen implementation |
+| [M15.2 — tui-shell](implementation/M15/02-tui-shell.md) | Connection, revisioned subscriptions, navigation/palette/focus and state lifecycle with injected fixture screens | M15.1 and M11.1–M11.2 executable client/events foundations |
+| [M15.3 — tui-integration](implementation/M15/03-tui-integration.md) | Register feature-owned screens, compact run component, real launcher and cross-module journeys | M15.2 and relevant completed feature engine/screen children |
+
+These are proposed implementation packages. Bootstrap publishes M11-owned `axbenchmark/client/protocol.py:EngineClient` and `axbenchmark/api/events.py:EventCursor/Subscription/EventEnvelope`; M11.1 later supplies real socket/in-process clients and M11.2 their subscription execution. Bootstrap contract availability is not provider completion. M15.1–M15.2 run early without the full scheduler, harnesses, collectors or feature screens; M15.3 and the parent's real-provider gates remain required. [F15]
+
 ## Purpose and interaction contract
 
 The primary interface for AxBenchmark's Python terminal application is a TUI; the product neither requires nor uses tmux. It connects reusable or prompt-created benchmarks, selected harness/model configurations, measurements, independent LLM quality reviews, and interactive reporting. Other machines' results can join comparisons only against a matching template SHA-256. [R002, R011]
@@ -48,7 +58,7 @@ Surface launch, authentication, verification, import-integrity, and scoring fail
 
 Verifying harnesses (M03's consented verification, offered as M16's "Verify now") is never started by a single key press. A confirmation dialog first lists the harnesses to verify, as the engine returns them, and states that each makes one minimal model call; only confirming starts the verification, and declining or dismissing makes no call. [R031, R040]
 
-Results consume retained records from M02. Both alternative weight sets use M06's validation, normalized preview, labeled alternatives, reset, and export behavior without replacing original weights or raw grades. ZIP actions invoke M17 validation; report generation/opening invokes [M13](13-standalone-html-report.md), displaying the report location. Reporting, exchange, and reweighting use retained data without additional model calls. [R043, R135; R096, R134 dependencies]
+Results consume retained records from M02. Both alternative weight sets use M06's validation, normalized preview, labeled alternatives, reset, and export behavior without replacing original weights or raw grades. ZIP actions invoke M17 validation; report generation/opening invokes [M13](13-standalone-html-report.md), displaying the report location. Display account billing kind and declared/inherited/unknown provenance exactly as M04/M10 return them, including subscription/local cost limitations; editing routes to M04’s separate account billing screen. [R157] Reporting, exchange, and reweighting use retained data without additional model calls. [R043, R135; R096, R134 dependencies]
 
 ## Acceptance criteria
 
@@ -69,19 +79,19 @@ M15 is a client, not an engine module. It owns the package `axbenchmark.tui` apa
 
 ### 1. Engine component
 
-None. M15 owns no engine package, no API namespace, no persisted state and no processes (ARCHITECTURE, Ownership). It never reads or writes `~/.axbenchmark/`, never imports `axbenchmark.engine`, and evaluates no module rule: eligibility, readiness, validation, lifecycle and capability decisions arrive as data. Autostarting the engine goes through `axbenchmark.client.connect(autostart=True)`, which starts `axbenchmarkd` detached from the terminal; the engine is never a child of the TUI, so quitting, closing the terminal or losing the socket cannot end a run. **[R046, R047, R150]**
+None. M15 owns no engine package, no API namespace, no persisted state and no processes (ARCHITECTURE, Ownership). It never reads or writes `~/.axbenchmark/`, never imports `axbenchmark.engine`, and evaluates no module rule: eligibility, readiness, validation, lifecycle and capability decisions arrive as data. Autostarting the engine goes through `axbenchmark.client.connect(autostart=True)`, which starts `axbenchmarkd` detached from the terminal; the engine has a separate session/process group, and execution lifetime is engine-owned, so quitting, closing the terminal or losing the socket cannot end a run. **[R046, R047, R150]**
 
 The TUI package is layered like an engine module, with the API client in the place of ports:
 
 | Layer | Path | Contains | May import |
 |---|---|---|---|
-| View models | `tui/viewmodels/` | Frozen dataclasses and pure builder functions from API DTOs to display values; shared helpers `common.py` (`ActionState`, `ErrorVM`), `format.py` (SHA, durations, money as given), `glyphs.py` (engine enum → glyph and word). No Textual, no I/O. | `api` |
-| Shell | `tui/shell/` | `connection.py` (`ConnectionSupervisor`), `subscriptions.py` (`SubscriptionHub`), `navigation.py` (`Navigator`), `state.py` (`ShellState`). Async, no widgets. | `api`, `client`, `viewmodels` |
-| Widgets | `tui/widgets/`, `tui/axbenchmark.tcss`, `tui/theme.py` | The design system: shared widgets, one stylesheet, the `axbenchmark` Textual theme. | Textual, `viewmodels` |
+| View models | `tui/viewmodels/` | Frozen dataclasses and pure builder functions from API DTOs to display values; shared helpers `common.py` (`ActionState` re-exported from `api.common`, `ErrorVM`), `format.py` (SHA, durations, money as given), `glyphs.py` (engine enum → glyph and word). No Textual, no client errors/classes, no I/O. | `api` |
+| Shell | `tui/shell/` | `connection.py` (`ConnectionSupervisor`), `subscriptions.py` (`SubscriptionHub`), `navigation.py` (`Navigator`), `state.py` (`ShellState`), `jobs.py` (watched job outcomes), `projection.py` (revision reducer). Async, no widgets. | `api`, `client`, `viewmodels` |
+| Widgets | `tui/widgets/`, `tui/axbenchmark.tcss`, `tui/theme.py` | The design system: shared widgets/base stylesheet and the `axbenchmark` Textual theme; feature-owned styles retain their declared files. | Textual, `viewmodels` |
 | Screens | `tui/screens/`, `tui/commands.py`, `tui/app.py` | `EngineScreen` and `AxModal` base classes, every Screen and ModalScreen, palette providers, `AxBenchmarkApp`. | all of the above |
 | Test harness | `tui/testing/` | `FakeEngineClient`, fixture loader, `run_screen` helper. Imported by tests only. | `api`, `client`, Textual |
 
-`import-linter` contracts: `tui` imports only `api`, `client`, Textual and the stdlib; inside `tui`, `viewmodels` imports no Textual and nothing else in `tui`, `shell` imports no widgets or screens, and `tui.testing` is imported by no production module. `tui` imports neither `subprocess` nor any terminal multiplexer library; the app runs in one terminal without tmux. **[R011]**
+`import-linter` contracts: `tui` imports only `api`, `client`, Textual, pydantic API model types and the stdlib; inside `tui`, `viewmodels` imports no Textual and nothing else in `tui`, `shell` imports no widgets or screens, and `tui.testing` is imported by no production module. `tui` imports neither `subprocess` nor any terminal multiplexer library; the app runs in one terminal without tmux. **[R011]**
 
 **Shell components**
 
@@ -89,39 +99,46 @@ The TUI package is layered like an engine module, with the API client in the pla
 class ConnectionSupervisor:
     def __init__(self, connect: Callable[[], Awaitable[EngineClient]], state: ShellState,
                  hub: SubscriptionHub, clock: Callable[[], float]) -> None: ...
-    async def start(self) -> HelloResult: ...          # connect, engine.hello, raise IncompatibleEngine
+    async def start(self) -> EngineClient: ...         # connect performs engine.hello; incompatibility is a client error
     async def run_reconnect_loop(self) -> None: ...    # on ConnectionLost: backoff, connect, hello, hub.resume()
 
 class SubscriptionHub:
     async def subscribe(self, topics: Sequence[str], handler: EventHandler,
                         on_snapshot: SnapshotHandler) -> SubscriptionHandle: ...
     async def unsubscribe(self, handle: SubscriptionHandle) -> None: ...
-    async def resume(self) -> None: ...                # re-subscribe every live handle with since_seq
+    async def resume(self) -> None: ...                # unchanged topics + retained projection: last fully applied EventCursor
 
 class Navigator:
-    def __init__(self, app: "AxBenchmarkApp", state: ShellState) -> None: ...
+    def __init__(self, state: ShellState, activate: Callable[[View], Awaitable[None]]) -> None: ...
     def view_state(self, view: View) -> ActionState: ...   # from ShellState data, no rule
     async def switch_view(self, view: View) -> None: ...
 
 @dataclass
 class ShellState:                                      # observable by screens through Textual reactives
     connection: Literal["connecting", "connected", "reconnecting", "incompatible"]
-    hello: HelloResult | None
-    active_runs: tuple[RunSummaryDTO, ...]             # runs.list(active=True), kept by run.state.changed
+    active_runs: tuple[RunSummaryDTO, ...]             # revisioned runs snapshot/events; keyed by RunUid
     selected_sha256: str | None                        # last revision highlighted in Library or Template
     default_sha256: str | None                         # from templates.list
 ```
 
 | Component | Behavior |
 |---|---|
-| `ConnectionSupervisor.start` | `connect(autostart=True)`, then `engine.hello(client="tui", client_version, api_version)`. A different major `api_version` raises `IncompatibleEngine` carrying the engine's version and the restart instruction the engine returns; the entry point prints it and exits with code 3 before Textual starts. An unreachable socket after autostart also exits 3. |
-| Reconnect | When the client reports `ConnectionLost`, `ShellState.connection` becomes `reconnecting`, every `EngineScreen.check_action` returns `None` for actions that issue a call (dimmed, never hidden), and the app shows one `notify(severity="warning")` with the client's message. The supervisor retries `connect(autostart=True)` with backoff (0.5 s doubling to 5 s), repeats `engine.hello`, then `SubscriptionHub.resume()`. A replay delivers the missed events in `seq` order; a compacted gap delivers a fresh snapshot and the screen rebuilds its view model from it. Nothing is re-sent except subscriptions: no command is retried automatically. A major-version change after reconnect exits the app with the same message and code 3. **[R046, R047]** |
-| `SubscriptionHub` | One stream per client connection, demultiplexed to handles; tracks the last `seq` per handle; drops events with `seq` at or below it. Handlers run on the Textual message loop (`App.call_from_thread` is not needed: the client is asyncio). |
-| `Navigator` | Owns the five views as Textual modes (`App.MODES`): `library`, `environment`, `setup`, `run`, `results`, each with its own screen stack so switching views keeps where each one was. `view_state(run)` is disabled with the wireframe reason "no active run" when `active_runs` from `runs.list(active=True)` is empty; this reads the presence of data and decides nothing about a run. The other views are always enabled. |
-| App-wide subscription | On mount, topics `runs` and `jobs`: `run.state.changed` maintains `ShellState.active_runs`; a `run.state.changed` with `state: ended` and an `outcome` other than `completed` (`stopped`, `interrupted`) for a run whose `RunScreen` is not mounted becomes an error toast with the engine's `outcome_reason` message verbatim (for a halt: "template identity invalidated"), so a halted run is never discovered only later. `job.finished` for a `JobRef` started by a screen that is no longer mounted becomes a toast with the job's result summary or typed error, so the outcome of a job is never lost by navigating away. **[R153]** |
-| Startup calls | `runs.list(active=True)` and `templates.list()` (for `default_sha256`) fill `ShellState`; `environment.recheck(scope="all")` is requested once, so opening the library inspects the environment (M03, **[R029]**). |
+| `ConnectionSupervisor.start` | Use the injected connector; production calls `connect(autostart=True)`, which performs M11's version handshake. Do not invent a second hello request shape. A typed incompatible version or unreachable engine is shown with its remedy and exits 3 before Textual starts. |
+| Reconnect | On `connection_lost`, mark `reconnecting`, dim call-issuing actions, preserve navigation and show one warning. Retry the connector with 0.5 s doubling to 5 s backoff. After its handshake, resume retained handles with the full cursor; never reissue a command/job. A major-version incompatibility exits 3. Close cancels retries and detaches. [R046, R047] |
+| `SubscriptionHub` | Maintain one logical stream per immutable topic set using `EngineClient.subscribe(topics, cursor: EventCursor \| None)`. Store projection, per-object revisions/tombstones, stable append-entry IDs and last fully applied `(epoch, seq)` per subscription generation. Never share a cursor between different topic sets. Deliver accepted state changes on the UI event loop. |
+| `Navigator` | Own five logical views: `library`, `environment`, `setup`, `run`, `results`. The app's injected activation callback owns Textual modes/stacks and screen factories; shell code imports no screens/widgets. Run is dimmed with “no active run” when the active projection is empty; each listed run uses its engine `can_attach`. Other views stay available. |
+| App-wide subscriptions | Register `runs` and `jobs` before installing their snapshots. Maintain active run membership by RunUid, preserving membership tombstones separately from retained run objects. Remember observed active/attached RunUids across membership removal. Recover each watched run with `run:<run_uid>` snapshots or `runs.status` after reconnect/resync, so an ended run missing from the active list still shows its offscreen interrupted/stopped reason once. Watched jobs retain JobRefs across screen navigation and recover via `job:<job_id>`/`jobs.get`; an active `jobs` snapshot alone cannot recover already finished work. Deduplicate outcome notifications by stable job/outcome identity. For watched launch jobs, inspect durable `JobStatus.initial_progress` before terminal handling, separately from latest `progress`; preserve final totals and the optional warning after finish/cache expiry/restart. [R153, R158] |
+| Startup | The `runs` snapshot is authoritative for active runs. `templates.list()` supplies the default revision. Request `environment.recheck(scope="all")` once per app startup and follow its JobRef; reconnect never repeats it. M15.2 injects fixture registrations/responses for these calls, not actual feature engines. |
 
-**Composition.** `axbenchmark/tui/__main__.py:main(attach_run_id: str | None)` is called through the `TuiLauncher` that `axbenchmark/launcher.py` (M14's client composition root) binds, so `cli` never imports `tui`. It builds the client, `ShellState`, `SubscriptionHub`, `ConnectionSupervisor`, runs `start()`, then constructs `AxBenchmarkApp(client, state, hub, supervisor, initial=attach_run_id)` and calls `run()`. Screens obtain the client and shell objects from the app (`self.app.client`, `self.app.hub`, `self.app.shell`); there is no global or service locator, and tests pass a `FakeEngineClient` to the same constructor.
+**Subscription handoff.** Consume [M11's exact algorithm](ARCHITECTURE.md#subscription-handoff-and-replay). The engine registers the queue and captures S under its publication boundary **before** reading snapshots, returns S, then replays every queued event after S. Install snapshots before queued events; newer object revisions win, equal/older upserts or tombstones cannot regress state. Retain tombstone revisions for the generation and deduplicate append entries by stable IDs. Advance the cursor for every processed envelope even when its change is skipped; topic filtering can leave harmless global sequence gaps. Never resume from the newest object revision or from the sequence at snapshot completion. [F04]
+
+Replay keeps projection/revisions only with unchanged topics, matching epoch, retained state and covered cursor. Snapshot mode (initial, epoch_changed, compacted, overflow, topics_changed, invalid_cursor) and `events.subscription.resynced` replace projection, revision/dedup maps and subscription generation, even within the same epoch. Install the replacement subscription_id before applying its events; discard old-generation deliveries. Overflow uses the same S-before-snapshot handoff. Event-only topics trigger their owner's public query on initial load/resync. A lower sequence in a fresh epoch must be accepted.
+
+**Scoped loads.** Every query worker captures screen mount generation, subscription generation/epoch, exact target (RunUid/TrialRef/ResultId/task), arguments and a monotonically increasing load token. Unmount, changed scope, replacement snapshot or connection/epoch change invalidates old tokens; stale responses cannot install data or errors even if worker cancellation arrives late. Merge revisioned query data with the same object rules. For event-only projections, invalidate/refetch when a relevant event races the read, so an older response cannot overwrite newer observations. First subscribe/install state, then perform required queries; never race an unguarded fetch against a replacement snapshot.
+
+**Composition.** `axbenchmark/tui/__main__.py:main(*, attach: RunUid | None) -> int` is bound by M14's `axbenchmark/launcher.py` to `TuiLauncher.__call__(*, attach: RunUid | None) -> int`. M14 resolves `RUN_REF` with `results.resolve_run` before invoking it; M15 receives only a UID or None. Bare invocation opens Library; successful launch may also pass its returned UID. M15 imports no CLI package. Build client/state/hub/supervisor, then `AxBenchmarkApp(client, state, hub, supervisor, screens, attach=attach)`. `screens` is an injected map of five view factories plus feature navigation factories: fixture factories in M15.2, owner factories in M15.3 (`tui/screen_registry.py`). Tests inject `FakeEngineClient` into this same composition; there is no service locator or private store access.
+
+**Recovered launch preparation.** M11 retains the first final-preparation `LaunchStep` in `JobStatus.initial_progress`, exposed by `jobs.get` and `job:<job_id>` snapshots even after completion, generic-cache expiry and engine restart. Watched launch screens/shell read it as well as live progress. Render its optional warning once per job ID per TUI app instance, with the shown-job set separate from subscription revision/dedup maps; replay/resync cannot repeat it. This recovers engine totals/text without computing a threshold or re-opening prelaunch consent. M07 still owns the prelaunch warning confirmation; recovery never launches again. M14 uses the same durable field and per-invocation warning dedup rule. [R158]
 
 ### 2. API surface
 
@@ -131,25 +148,26 @@ How the TUI consumes the API, for every screen:
 
 | API element | TUI rule |
 |---|---|
-| Query | Issued from a Textual worker (`exclusive=True`, group per widget) by `EngineScreen.load`; the result goes through the screen's view-model builder; the widget's `StateSwitcher` shows `-loading` while it runs. |
+| Query | Issued by `EngineScreen.load` in a worker group per widget, guarded by the scoped load token above. Only accepted DTOs reach the pure view-model builder; first load shows `-loading`. Worker exclusivity alone is insufficient for scope/epoch races. |
 | Command | One action handler issues exactly one command and renders its returned model or typed error. On error the handler changes nothing locally. |
-| Job | The handler issues the job method, keeps the `JobRef`, and follows `job.progress` / `job.finished` through the screen's subscription; cancel buttons issue `jobs.cancel(job_id)`. |
+| Job | Issue once, register its JobRef with the app watcher, and consume terminal initial snapshots as well as `job.progress` / `job.finished`. Recover with `jobs.get`; report owners use durable `reports.status(report_id=job_id)` after expiry/resync. Run stop/report waits read durable `RunStatus.stops`, retention and completion_report plus owner status; success, failed/cancelled/skipped or typed pending error settles the local wait. Explicit cancel invokes `jobs.cancel` only when its engine capability permits; navigation/close only detaches. |
 | Subscription | Declared per screen in `TOPICS`; subscribed on mount and unsubscribed on unmount through `SubscriptionHub`. Leaving a screen never sends a command. |
-| Typed error | Rendered by `ErrorVM.from_dto`: `message` and `remedy` verbatim, `field` paths mapped to widget ids by the screen; the `code` is shown dimmed for reference. Never reworded, never replaced by a default value. **[R038, R149]** |
-| Capability flags | Copied into the view model as `ActionState(enabled, reason)` per action name; `check_action` returns `None` (dimmed; Textual hides a binding on `False`, which no screen uses for a capability) when `enabled` is false and the reason is shown in the palette and as the footer tooltip. No screen computes a flag. |
+| Typed error | M11 decodes application wire errors with numeric outer `-32000` and namespaced `data.code` into `EngineError(code, message, field, remedy, data)`. The screen/client boundary passes public error fields or embedded API `ErrorDTO` to the pure `ErrorVM` builder, which preserves them verbatim; `field` maps to widget IDs. `ProtocolError(rpc_code, message, data)` stays distinct. The TUI never parses prose or reparses JSON-RPC; socket/in-process/fake client must agree. [R038, R149; F18] |
+| Capability flags | Copied into the view model as `ActionState(enabled, reason)` per action name; `check_action` returns `None` (dimmed; Textual hides a binding on `False`, which no screen uses for a capability) when `enabled` is false and the reason is shown in the palette and as the footer tooltip. No screen computes a flag. Run-level `can_stop_run` covers running/judging/finalizing/retention_pending as M11 decides; completed configurations have separate disabled `can_stop`. Frozen edit/hint prohibitions and retention/report readiness remain engine decisions. [F13] |
 | Registry metadata | `safety == "destructive"` methods (for example `runs.stop`) are only issued from a confirming `AxModal` owned by the method's module (M11 `StopScreen`). |
 
 ### 3. Requires from other modules
 
 | Name | Owner | Purpose |
 |---|---|---|
-| `axbenchmark.client.connect(autostart=True)`, the `EngineClient` Protocol (`call`, `subscribe`, `close`, a `ConnectionLost` signal), `InProcessClient` | M11 (`engine.daemon` and its client package) | Connection, autostart of a detached engine, reconnect detection, in-process tests. |
-| `engine.hello` returning `api_version`, `engine_version` and a restart instruction for incompatible clients | M11 | Version handshake on connect and reconnect. |
-| `events.subscribe(topics, since_seq?)` with per-namespace snapshots, `events.unsubscribe(subscription_id)`, `events.subscription.resynced` | M11 | Screen and app-wide subscriptions; replay or fresh snapshot after reconnect. |
-| `runs.list(active=True)`, `runs.status(run_id)`, event `run.state.changed {state, outcome?, outcome_reason?}`, topic `runs` | M11 | `ShellState.active_runs`, F4 availability, `--attach RUN_ID`, RunScreen data for the compact layout, the halted-run toast with the engine's reason. |
-| `job.progress`, `job.finished`, `jobs.get`, `jobs.cancel`, topic `jobs` | M11 | Job outcome toasts after navigation; cancel. |
+| `axbenchmark.client.connect(autostart=True)`, the `EngineClient` Protocol (`call`, `subscribe`, `close`, the `connection_lost` signal), `InProcessClient` | M11 (`engine.daemon` and its client package) | Connection, autostart of a detached engine, reconnect detection, in-process tests. |
+| `engine.hello(api_version, client={kind: "tui", version, pid})` performed by `connect`, with M11 `Hello`/typed incompatibility | M11 | Version handshake on connect and reconnect. |
+| `EngineClient.subscribe(topics, cursor: EventCursor \| None)` / `events.subscribe(topics, cursor?)` with revisioned snapshots, `events.unsubscribe(subscription_id)`, `events.subscription.resynced` | M11 | Screen and app-wide subscriptions; replay or fresh snapshot after reconnect. |
+| `runs.list(active=True)`, `runs.status(run_uid)`, event `run.state.changed {state, outcome?, outcome_reason?}`, topic `runs` | M11 | `ShellState.active_runs`, F4 availability, `--attach RUN_REF`, RunScreen data for the compact layout, the halted-run toast with the engine's reason. |
+| `job.progress`, `job.finished`, `jobs.get`, `jobs.cancel`, topics `jobs` and `job:<job_id>`; `JobStatus.initial_progress?: LaunchStep` for launch | M11 | Snapshot/outcome recovery; immutable final-preparation totals/warning survives finish/cache expiry/restart separately from latest progress; explicit cancel. |
+| `reports.status(report_id=job_id)` or `reports.status(completion_run_uid=run_uid)`; durable `RunStatus.retention`, `stops`, `completion_report` | M13, M11 | Recover final dispositions/pending errors after missed events, resync or expired generic jobs. |
 | RunScreen view model with per-lane `ActionState` (`open_configuration`, `live_view`, `stop`) and run-level `RunVM.actions` (`stop_run`, `detach`, `edit`), `StopScreen`, `DetachScreen` | M11 | The RunListDetail layout reuses them unchanged. |
-| `harness.task.log(run_id, configuration_id, task_id, after_seq?, limit, query?)`, event `harness.log.appended` | M05 | Searchable log of the selected configuration in RunListDetail. |
+| `harness.task.log(target: TrialRef \| {result_id: ResultId}, task_id, after_seq?, limit, query?)`, event `harness.log.appended` | M05 | Trial-pinned searchable log; response resolves TrialRef/ResultId and invocation scope. `after_seq` is a log-page cursor, never an EventCursor. |
 | `templates.list` (`default_sha256`) | M01 | Fallback revision for F3 and F6 before one is selected. |
 | `environment.recheck(scope="all")` | M03 | One inspection at TUI startup. |
 | Screens built on `EngineScreen`, `AxModal`, `StateSwitcher` and the TCSS selectors of their legends; per-screen `COMMANDS` providers for extra palette entries (M01 `LibraryCommands`) | M01–M13, M16–M18 | Uniform loading, states, capability dimming and palette coverage. |
@@ -165,7 +183,7 @@ How the TUI consumes the API, for every screen:
 | Element | Implementation |
 |---|---|
 | Theme | `tui/theme.py` registers Textual `Theme("axbenchmark-dark")` and `Theme("axbenchmark-light")` with the tokens of the DesignSystem artboard: `$background`, `$surface`, `$panel`, `$foreground`, `$primary` (= `$accent`); `$success`, `$warning`, `$error` stay grayscale and meaning is carried by glyph and wording. |
-| Stylesheet | `tui/axbenchmark.tcss` is the app's single `CSS_PATH`. M15 writes the foundation block of the DesignSystem artboard (`Screen`, `.pane`, `.pane:focus-within`, `.bordered`, `Input`, `Button`, `Button.-primary`, `.kv`, `.notice`, `.notice.-error`, `ModalScreen`, `.dialog`, `.dialog-actions`, `Screen.-compact #detail-pane, #revisions-pane`, `Screen.-compact #summary`). Each screen owner appends one section with the selectors from its legend. |
+| Stylesheet | `tui/axbenchmark.tcss` supplies the shared base/widget rules. The app loads feature-owned stylesheet files or sections from their owner contracts alongside it. M15 writes the foundation block of the DesignSystem artboard (`Screen`, `.pane`, `.pane:focus-within`, `.bordered`, `Input`, `Button`, `Button.-primary`, `.kv`, `.notice`, `.notice.-error`, `ModalScreen`, `.dialog`, `.dialog-actions`, `Screen.-compact #detail-pane, #revisions-pane`, `Screen.-compact #summary`). Each screen owner supplies its own section/file with the selectors from its legend; M15 integration loads it without duplicating those styles. |
 | `StateSwitcher(ContentSwitcher)` | `tui/widgets/states.py`. Constructed with a base id `x` and the data widget; composes `#x`, `#x-loading` (`LoadingIndicator`), `#x-empty` (`Static.empty`), `#x-error` (`Vertical.notice.-error` with `Button #retry`). Methods `show_data()`, `show_loading()`, `show_empty(text, hint)`, `show_error(error: ErrorVM, retry: bool)`; posts `StateSwitcher.Retry` when `#retry` is pressed. |
 | `Notice(Static)` | Classes `-error`, `-warning`, `-success`, info; text always starts with ✗ ▲ ✓ or none, followed by words. |
 | `Pane(Vertical)` | Class `.pane` with `border_title` and `border_subtitle`. |
@@ -188,14 +206,14 @@ class EngineScreen(Screen, Generic[VM]):
     async def fetch(self) -> VM: ...                  # subclass: call queries, return build_vm(...)
     def render_vm(self, vm: VM) -> None: ...          # subclass: push values into widgets, no logic
     def actions(self, vm: VM) -> Mapping[str, ActionState]: ...   # copied from capability flags
-    async def on_event(self, event: EventDTO) -> None: ...        # subclass: patch DTO, rebuild vm
+    async def on_event(self, event: EventEnvelope) -> None: ...        # subclass: patch DTO, rebuild vm
     async def call(self, method: str, request: BaseModel, *, error_into: StateSwitcher | None = None) -> BaseModel | None: ...
 ```
 
 | Hook | Behavior |
 |---|---|
-| `on_mount` | Starts the `fetch` worker (switchers to `-loading` on first load), then `hub.subscribe(TOPICS)`; a snapshot from the subscription replaces the fetched DTOs. |
-| `on_unmount` | `hub.unsubscribe`; cancels its workers. Sends nothing else. |
+| `on_mount` | Establish the scoped subscription first, install its snapshot, then start any required query loads with scope/epoch/generation tokens; first data load shows `-loading`. Non-subscribing modals load directly with mount/scope tokens. Event-only topics load/refetch through public queries. |
+| `on_unmount` | Invalidate load tokens, unsubscribe the handle and cancel workers. The app watcher may retain a started JobRef. Send no stop/cancel command. |
 | `check_action(action, params)` | `None` (dimmed) when `ShellState.connection != "connected"` and the action issues a call, or when `actions(vm)[action].enabled` is false; `True` otherwise. Pure navigation actions stay enabled while reconnecting. |
 | `call` | Issues exactly one method; on a typed error shows it in `error_into` or as `notify(severity="error")` and returns `None`. Used by every action handler. |
 | Compact | Nothing per screen: the app sets `-compact`; the screen's TCSS section hides or shows widgets. |
@@ -204,11 +222,11 @@ class EngineScreen(Screen, Generic[VM]):
 
 | Aspect | Specification |
 |---|---|
-| Construction | `AxBenchmarkApp(client, shell, hub, supervisor, initial: str \| None)`; `MODES` as in `Navigator`; `COMMANDS = {ViewCommands, ScreenCommands}`; theme `axbenchmark-dark` by default; Textual's theme command switches to `axbenchmark-light`. |
-| Mount | App-wide subscription and startup calls (section 1). Mode `library` with `LibraryScreen` (M01) on top. With `initial` set (from `--attach RUN_ID`), `runs.status(run_id)`, then mode `run` with `RunScreen(run_id)` (M11); a typed error stays on the Library and is shown as an error toast. Attaching restarts nothing. **[R046, R138]** |
-| Reflow | `on_resize` and `on_screen_resume` call `screen.set_class(is_compact(size), "-compact")` with `is_compact(w, h) = w < 100 or h < 30`. Layout changes are CSS only: widgets are not recomposed, so focus, cursor rows, scroll positions and the selected configuration survive a resize. **[R038, R044]** |
-| Mouse | Textual defaults: click focuses and activates rows, tabs, buttons and footer keys; double-click on a `DataTable` row runs the screen's `enter` action; the wheel scrolls tables, logs and text. |
-| Quit | `q` → `action_quit`: unsubscribes, closes the client, exits. It issues no `runs.*` call; active runs keep running in the engine and remain reattachable (`ctrl+r` in the Library, `axbenchmark --attach RUN_ID`). **[R046, R047]** |
+| Construction | `AxBenchmarkApp(client, shell, hub, supervisor, screens, *, attach: RunUid \| None)`; `MODES` as in `Navigator`; `COMMANDS = {ViewCommands, RunCommands, ScreenCommands}`; theme `axbenchmark-dark` by default; Textual's theme command switches to `axbenchmark-light`. |
+| Mount | App-wide subscription and startup calls (section 1). Mode `library` uses its injected factory (M01 in production). With `attach` set, query `runs.status(run_uid=attach)`, then open `RunScreen(attach, reattached=True)` (M11); an unknown/deleted UID stays on Library with its typed error. M14 handles ambiguous labels before launch of the TUI. Attaching restarts nothing. **[R046, R138]** |
+| Reflow | `on_resize` and `on_screen_resume` call `screen.set_class(is_compact(size), "-compact")` with `is_compact(w, h) = w < 100 or h < 30`. Layout visibility changes use CSS without recomposing widgets. Preserve logical focus and explicitly map it between the wide lane and its compact row/detail when the focused widget becomes hidden; preserve cursor rows, scroll positions, query text and the selected trial/task. **[R038, R044]** |
+| Mouse | Bind and test click focus/activation on rows, tabs, buttons and footer actions; double-click on a data row invokes its existing `enter` action once. Wheel scrolling and keyboard activation must preserve the same selected target and capabilities; do not assume an unverified framework default. |
+| Quit | `q` → `action_quit`: unsubscribes, closes the client, exits. It issues no `runs.*` call; active runs keep running in the engine and remain reattachable (`ctrl+r` in the Library, `axbenchmark --attach RUN_REF`). **[R046, R047]** |
 
 | Binding (App) | Action | API call |
 |---|---|---|
@@ -224,13 +242,13 @@ class EngineScreen(Screen, Generic[VM]):
 
 F5 is not bound by the app; Environment (Recheck) and the catalog (Refresh) bind it.
 
-**Command palette** — `tui/commands.py`.
+**Command palette** — M15 owns `tui/commands.py` and the shared CommandPalette behavior/board; feature children contribute registered entries/providers only. M15 also owns the shared WidgetStates board and state widgets/harness; feature children supply their own response/state fixtures rather than duplicate that infrastructure.
 
 | Provider | Hits |
 |---|---|
 | `ViewCommands(Provider)` | "Go to Library / Environment / Setup / Run / Results", "Keys and views", "Quit"; Run carries `Navigator.view_state(run)`. |
-| `RunCommands(Provider)` | "Reconnect to run": one hit per run in `ShellState.active_runs` (template label, run id, state), each pushing M11's `RunScreen(run_id, reattached=True)`; with no active run a single disabled hit with the reason. Library `ctrl+r` (M01) uses the same list. |
-| `ScreenCommands(Provider)` | One hit per binding of the active screen (`screen.active_bindings`, footer description as the title, the binding's key as help). A binding whose `check_action` is false is still listed with its `ActionState.reason`; selecting it runs nothing and shows the reason as a toast. So every footer action is a command, also when a compact footer drops it. |
+| `RunCommands(Provider)` | "Reconnect to run": one hit per run in `ShellState.active_runs` (template label, run_label, origin, state; UID in details), each pushing M11's `RunScreen(run_uid, reattached=True)` with its returned can_attach; with no active run a single disabled hit with the reason. Library `ctrl+r` (M01) uses the same list. |
+| `ScreenCommands(Provider)` | One hit per binding of the active screen (`screen.active_bindings`, footer description as the title, the binding's key as help). A binding whose `check_action` returns `None` is still listed with its `ActionState.reason`; selecting it runs nothing and shows the reason as a toast. So every footer action is a command, also when a compact footer drops it. |
 | Screen providers | A screen may add `COMMANDS` (Textual merges them), e.g. M01 `LibraryCommands` adding "Recheck environment" → `environment.recheck`. Their hits follow the same disabled-hit rule. |
 
 TCSS: `CommandPalette > .command-palette--highlight { text-style: bold underline; }`; otherwise Textual defaults with the theme variables (board CommandPalette).
@@ -268,15 +286,15 @@ def build_help_vm(view_states: Mapping[View, ActionState]) -> HelpVM: ...
 
 `enter` on a disabled view row is dimmed through `check_action` from the row's `ActionState`.
 
-**RunListDetail — the compact layout of `RunScreen`** — board RunListDetail; file `axbenchmark/tui/screens/run.py` (screen and its view model `tui/viewmodels/run.py` are specified by M11). RunListDetail is the only compact run layout: there is no compact table (`#lanes-table`) on RunScreen. M15 specifies the compact composition, which RunScreen composes alongside the wide `#lanes` grid and shows under `Screen.-compact`:
+**RunListDetail — the compact layout of `RunScreen`** — boards RunListDetail and RunListDetail-80x24; shared component `axbenchmark/tui/widgets/run_list_detail.py` and presentation-only `tui/viewmodels/run_list_detail.py` are M15.1-owned and runnable with fixture rows. M15.3 connects/tests the actual owner screen. M11 owns `tui/screens/run.py` and `tui/viewmodels/run.py`, instantiates this component through the shared factory contract, and handles its selection/search/navigation messages. The component accepts `RunListDetailVM` (stable row keys/labels/status, selected key, explicit scope display, detail rows and log lines/matches/state) and emits `Selected(key)`, `Search(text)`, `Page(after_seq)` and `Action(name)` messages. M11 maps its own VM into this presentation contract; the component imports no M11 screen/VM, issues no API calls and duplicates no screen logic. RunListDetail is the only compact run layout: there is no compact table (`#lanes-table`) on RunScreen. M15 specifies the compact composition, which RunScreen composes alongside the wide `#lanes` grid and shows under `Screen.-compact`:
 
 | Aspect | Specification |
 |---|---|
 | Widget tree | `Header`, `Static #run-bar`, `Horizontal` → `ListView #lane-list .pane` (width 26, one `ListItem` per configuration from the same lanes as `#lanes`) and `Vertical #detail` (width `1fr`) → `Vertical #lane-detail .pane` (task strip T1…T7 with glyphs, `KeyValue` Now · Elapsed · Checks) and `SearchableLog` (`RichLog #log .bordered` with `Input #log-search`); `Footer`. Focus order `#lane-list`, `#lane-detail`, `#log-search`, `#log`. |
 | TCSS | `Screen.-compact #lanes { display: none; }`, `#lane-list { width: 26; }`, `#detail { width: 1fr; }`, `#log .-match { background: $primary 24%; }`; outside compact, `#lane-list` and `#detail` are `display: none`. |
 | Data | `#lane-list` and `#lane-detail` render the RunScreen view model (from `runs.status` and its subscription); the selected configuration id is one attribute of RunScreen shared by `#lanes` focus and `#lane-list` cursor, so a resize keeps it. **[R044]** |
-| Log | On selection, a worker calls `harness.task.log(run_id, configuration_id, current_task_id, limit=500)` into `#log`; live lines come from `harness.log.appended` filtered by `configuration_id` on RunScreen's subscription. Scrolling to the top pages earlier lines with `after_seq`. Log title from the view model (`Log · T4–T5`, match count). |
-| Search | `Input.Submitted` on `#log-search` calls `harness.task.log(..., query=text)`; the returned `matches` are highlighted and `n` steps through them without a call. Search does not filter or reorder the log. **[R038, R044]** |
+| Log | RunScreen takes the selected explicit TrialRef/ResultId and task_id from status, then calls `harness.task.log(target, task_id, limit=500)`. Filter appended lines by resolved trial/task/invocation, not configuration alone; page with M05 log `after_seq` (separate from event cursor). Historical evidence/log navigation always retains its explicit target even while another trial runs. Only genuinely live entry points may resolve active scope, and their response returns its TrialRef. Titles show trial/task and match count. Apply scoped-load guards on each selection/search change. [F02, F06] |
+| Search | `Input.Submitted` on `#log-search` calls `harness.task.log(target, task_id, query=text)`; the returned `matches` are highlighted and `n` steps through them without a call. Search does not filter or reorder the log. **[R038, R044]** |
 | States | `#log` sits in `StateSwitcher` `log` (`-loading` while the first page loads, `-empty` before the task writes output, `-error` with the engine's message, e.g. `harness.log_unavailable`). |
 
 | Binding | Action | API call |
@@ -286,46 +304,42 @@ def build_help_vm(view_states: Mapping[View, ActionState]) -> HelpVM: ...
 | `v` | `live_view` | none; push `HarnessLiveScreen` (M11), dimmed from the lane's `live_view` ActionState |
 | `/` | `focus("#log-search")` | none; submit issues `harness.task.log(query=…)` |
 | `n` | next match | none |
-| `s` | `stop_configuration` | none; push M11 `StopScreen`, which issues `runs.stop` after confirmation |
+| `s` | `stop_configuration` | none; push M11 `StopScreen` from lane can_stop; confirmation calls `runs.stop(scope="configuration")` |
+| `S` | `stop_run` | none; push M11 `StopScreen` from run can_stop_run, including judging/finalizing/retention_pending; confirmation calls `runs.stop(scope="run")` |
 | `d` | `detach` | none; push M11 `DetachScreen`; detaching sends no `runs.*` call |
 
 `e` and any other edit action stay dimmed from the run's capability flags in both layouts; no binding can change frozen prompts, models or original weights, or send input to a harness. **[R047]**
 
-**Screens built on the shell.** Library (M01), Environment (M03), Setup (M07), Run (M11) and Results (M02, M06) are the five views; their owners' Implementation sections give classes, view models, calls and bindings. All of them subclass `EngineScreen` or `AxModal`, put every data widget in a `StateSwitcher`, take `-compact` from the app, and are reachable by the F-keys and the palette above.
+**Screens built on the shell.** Library (M01), Environment (M03), Setup (M07), Run (M11) and Results (M02, M06) are the five views; their owners' Implementation sections give classes, view models, calls and bindings. M12 retains `tui/screens/judge_capability.py` even when M07 opens it; M03 retains CollectorGuide even though its board is grouped under M18; M01 owns `NewTemplateScreen` in `tui/screens/new_template.py` and NewTemplate/NewTemplateRepo/NewTemplateInvalid; M16 supplies its planning/capture APIs and subsequent planner/editor screens. M17 owns every template/result ZIP screen and state in `tui/screens/exchange.py`, all exchange view models in `tui/viewmodels/exchange.py`, and `tui/widgets/zip_picker.py`/`validation_order.py`. M01/M02 own only Library/Results navigation entrypoints using injected M17 factories, with no exchange dialog fragments. M15 registers their factories without redesigning their implementations. All of them subclass `EngineScreen` or `AxModal`, put every data widget in a `StateSwitcher`, take `-compact` from the app, and are reachable by the F-keys and the palette above.
 
 ### 5. CLI
 
 | Command | Reaches M15 |
 |---|---|
-| `axbenchmark` | M14's Typer default command calls its `TuiLauncher`, which `launcher.py` binds to `axbenchmark.tui.__main__.main(None)`. Exit 0 after `q`; 3 when the engine is unreachable or incompatible. **[R048]** |
-| `axbenchmark --attach RUN_ID` | `main(run_id)`: the app opens `RunScreen(run_id)` after `runs.status(run_id)`; observation only. **[R049]** |
+| `axbenchmark` | M14's launcher binds `TuiLauncher(attach=None)` to `main(attach=None)`. Exit 0 after detach/quit; 3 for unreachable/incompatible engine. [R048] |
+| `axbenchmark --attach RUN_REF` | M14 first calls `results.resolve_run(RUN_REF)`; only a resolved `RunUid` enters `main(attach=run_uid)`, then `runs.status`/RunScreen observe it. Ambiguity is a typed CLI error with candidate UIDs/origins, never an arbitrary TUI selection. [R049] |
+| `axbenchmark run --config FILE` | After M14's launch job succeeds, the same launcher receives `LaunchResult.run_uid`. No second launch from M15. |
 
-No other command reaches M15; every other CLI command calls the owning namespace directly (M14).
+Other CLI commands reach their namespaces directly. UID is the internal key throughout navigation and subscriptions; run label plus origin are display values, with the UID available for disambiguation. Currency, eligibility and lifecycle remain engine-provided data.
 
 ### 6. Headless verification
 
-| Level | Tests |
+| Level | Required verification |
 |---|---|
-| Pure units (no Textual) | `is_compact` at 120×40, 100×30, 99×40, 120×29, 80×24; the app-wide handler turns an ended `interrupted` run event into a toast with the reason verbatim only when that run's `RunScreen` is not mounted; `format.sha_*` widths (64, 8, `first16…last8`); `glyphs` for every enum value of the API plus an unknown value; `ErrorVM.from_dto` keeps message, remedy and fields verbatim; `build_help_vm` with and without active runs; `ScreenCommands` hit list from a binding table and `ActionState` map, including disabled hits with reasons. |
-| Shell with fake client | `ConnectionSupervisor`: same major version connects; different major raises `IncompatibleEngine` with the engine's instruction; `ConnectionLost` sets `reconnecting`, reconnects, repeats `engine.hello` and re-subscribes each handle with its last `seq`; a compacted gap delivers a snapshot; no command is re-sent. `SubscriptionHub` drops duplicate `seq`. `Navigator` disables Run with no active runs and resolves F3/F6 to the selected or default revision. |
-| API through `InProcessClient` (no interface) | The workflow the TUI drives, scripted as API calls only, against an engine wired with fake harness adapters: library → setup → `runs.launch` → subscribe → detach (close client) → reconnect with `since_seq` → results → report, for an inventory run and an existing-repository custom template (**[R002, R039, R041, R135, R149]**). After the client closes mid-task the run continues and records no interruption (**[R046]**). Parity check: every method name recorded by the screen tests below is present in `axbenchmark.api` registry, so an MCP or CLI client needs nothing the TUI uses privately (**[R150]**). |
-| Screens (`FakeEngineClient`, `App.run_test()` / `Pilot`) | `HelpScreen` at 120×40: rows and dimmed Run without active runs; `enter` switches view; `esc` dismisses with no call. `?` opens Help from every view, including the Library. `ConfirmScreen` with the trial budget fixture (6 trials, one cloud configuration): title, the engine's message verbatim and the Task runs and Judge sessions lines render; focus starts on `#cancel`; Back and `esc` dismiss `False`, Launch dismisses `True`, and the screen records no call. With the verification-plan fixture: one line per harness with label and version and the plan's note; Cancel dismisses `False` and the caller issues no `environment.verify`. `PromptScreen` for each of the three prompt fixtures: `enter` awaits `submit` once; a returned typed error keeps the dialog open with the message under `#prompt-input`; `esc` dismisses with `None` and no call. RunScreen under `-compact` has no `#lanes-table`. F1–F4, F6 switch modes and keep each mode's stack. `ctrl+p` lists every footer binding of the active screen, with disabled hits and reasons. Resize 120×40 → 80×24 → 120×40 on RunScreen keeps focus and the selected configuration and switches `#lanes` ↔ `#lane-list`; `/` + submit issues exactly one `harness.task.log` with `query`; `v`, `s`, `d`, `enter` push their screens and issue no call. `q` with an active run issues no `runs.*` call. Disconnect: call-issuing bindings dim, a toast appears, bindings re-enable after reconnect. Typed error from any call lands verbatim in the target `#x-error`. `--attach` with an unknown run id stays on the Library with the error toast. |
-| Contracts | `import-linter`: `tui` imports only `api`, `client`, Textual and stdlib; no `axbenchmark.engine`, no `subprocess`; `tui.testing` unused by production code. **[R011, R150]** |
+| Pure foundation | `is_compact` boundaries at 120×40, 100×30, 99×40, 120×29 and 80×24; SHA widths/unknown enum glyphs; preserved money/currency/basis and error fields; no Textual import in helpers. Registry-valid fake rejects unknown names and invalid DTO shapes. |
+| Shell with fake client | Same-epoch replay, event between snapshots, snapshot-covered older/equal revisions, tombstone/delete/recreate, stable log entry dedup; lower-sequence new epoch, changed topics, future cursor, compaction and overflow replace state/generation. Late old-generation deliveries and query responses after scope/epoch change cannot regress state. No reconnect command/job retry. |
+| Early real foundations | M15.2 uses real M11.1–2 Unix-socket and InProcessClient with fixture feature registrations and screens. Compare DTOs/errors/snapshot projections; finished-before-subscribe jobs settle, navigation preserves watched outcomes and detach does not cancel fixture work. Recover a finished launch’s `initial_progress` after later progress/cache expiry/restart; final totals remain available and the warning appears once across replay/resync. No full scheduler required. |
+| Shared Pilot harness | Wide 120×40/compact 80×24: loading/empty/error/content, retry, focus, click/double-click/wheel, keyboard and palette parity. Confirm cancel/escape never calls; caller confirm submits once. Prompt errors keep field/message/remedy; rapid Enter/click cannot duplicate its pending submit. Resize preserves selected target, focus and scroll. |
+| Feature integration | All five real owner views, Help and palette; no-harness library/exchange/report access; frontend/backend/custom committed baseline and approved-template reuse; budget warning/verification consent; four lanes ↔ RunListDetail, live source labels/unavailable values, log search and explicit two-trial navigation. Same-label imported runs retain distinct UID/origin subjects and exports. |
+| Lifecycle integration | Stop judging/finalization/retention_pending using engine run capability while completed-configuration stop stays dimmed. Stop/run/report snapshots settle success, failed/cancelled/skipped and typed pending errors even after missed events/cache expiry. Detach, q, terminal close and reconnect preserve pids/task counts; frozen inputs and passive live views remain unchanged. |
+| Contracts | All calls/topics/events resolve in the API registries; numeric outer -32000 and namespaced application errors have socket/in-process/fake parity; ProtocolError remains separate. Import-linter prohibits engine/private stores/subprocess/tmux and production imports of testing. M14's keyword-only UID launcher signature matches exactly. |
 
-**Fake-client harness** (`axbenchmark/tui/testing/`), used by every module's screen tests:
+**Fake-client harness** (`axbenchmark/tui/testing/`) implements Bootstrap's exact M11 `EngineClient` Protocol (`call`, `subscribe(topics, cursor: EventCursor | None)`, `close`, `connection_lost`). M15.1 owns `client.py`, `fixtures.py`, `harness.py` and `screens.py` with fixture-only screen factories. Test controls supply a full initial `Subscription`, `EventEnvelope`s and replacement Subscription/resync controls including subscription_id, epoch, revisions/tombstones and entry IDs; do not manufacture sequence-only events.
 
-```python
-class FakeEngineClient:                               # satisfies the EngineClient Protocol
-    def __init__(self, fixtures: Mapping[str, Any] | None = None) -> None: ...
-    def respond(self, method: str, response: BaseModel | ErrorDTO | Callable[[BaseModel], BaseModel]) -> None: ...
-    def job(self, method: str, events: Sequence[EventDTO], result: BaseModel | ErrorDTO) -> None: ...
-    async def emit(self, event: EventDTO) -> None: ...  # deliver to matching subscriptions with the next seq
-    def drop_connection(self) -> None: ...             # raise ConnectionLost on the next await
-    calls: list[RecordedCall]                          # method, request model, time
+`respond(method, response_or_error)` validates against the published registry. `queue_subscription(topics, subscription, envelopes)` installs deterministic histories; `defer_response(method)` exposes controllable completion for query races; `drop_connection()` signals loss. Record method/request, subscriptions/cursors and closes separately, so “no command” assertions can allow observational subscribe/unsubscribe. Provide `run_screen(screen_factory, client, size=(120, 40))` with app-like injected shell seams and `load_fixture(name)`. Foundations ship only their owned board fixtures; feature owners supply their own registered DTO fixtures. Registry validation never imports feature adapters.
 
-async def run_screen(screen_factory: Callable[[], Screen], client: FakeEngineClient,
-                     size: tuple[int, int] = (120, 40)) -> AsyncContextManager[Pilot]: ...
-def load_fixture(name: str) -> Mapping[str, Any]: ...  # tests/fixtures/tui/<board>.json, one per artboard
-```
+### 7. Integration and pending obligations
 
-`respond` and `call` validate requests and responses against the request and response models in the API registry, and reject a method the registry does not contain, so a fake cannot drift from the published contract. Each artboard has one fixture file named after its board, built from the wireframe example data, so a screen test renders the same state the board shows.
+All three children and the real M11/M05/M08/M10/M12/M13/M18 lifecycle/retention pipeline plus M01/M02/M07/M16/M17 journeys must pass before parent acceptance. Record real supported-host/harness/collector verification and unavailable hardware limits; fixture results alone cannot claim those providers work. M15.3 owns cross-module acceptance and navigation, while each feature owner fixes its screen.
+
+**Shell/board ledger follow-up (no wireframe edits here):** HelpKeys and CommandPalette need engine stop reasons, UID/origin labels and reconnect states; RunListDetail needs explicit trial/task/log scope and scope-change behavior. RunReattached/RunDetach launcher examples must say RUN_REF resolved to UID. Record WidgetStates loading/empty/error/content plus replay/resync, stale-query rejection, terminal-job recovery and typed pending-error cases in the artboard-to-screen/state ledger. M11 owns RunOverview/StopConfirm/StopCleanup judging/finalization/retention variants, M12 JudgeCapability, M03 CollectorGuide, M13 ReportProgress/ReportGenerate and M02 ReportReady; M01 owns NewTemplate/NewTemplateRepo/NewTemplateInvalid while M16 supplies their planning/capture calls. All template/result ZIP board/state legends target M17 `tui/screens/exchange.py` and `tui/viewmodels/exchange.py`, including `zip_picker.py`/`validation_order.py`; Library/Results legends show injected entrypoints only. CommandPalette/WidgetStates remain M15-owned, with feature entries/fixtures only. Add recovered launch final totals/warning from durable `initial_progress` with once-per-job display. Existing boards/previews do not prove these additions are implemented. [F04, F06, F13, F15, F18]

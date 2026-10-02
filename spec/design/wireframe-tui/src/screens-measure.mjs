@@ -21,13 +21,13 @@ const GROK = GROK_TASKS.map(([id, t, ex, ch, s, tok, c], i) => {
 
 // R-0925b-2 · Codex, sequential run, authentication failure at T5. Totals match results-data (2710 s, $2.05).
 const CODEX = [
-  { id: 'T1', t: 'Repository and scaffold', st: '✓ exit 0', ch: '2✓', s: 300, inp: 210, ca: 160, out: 11, rs: 6, c: 0.22 },
+  { id: 'T1', t: 'Repository and scaffold', st: '✓ exit 0', ch: '6✓', s: 300, inp: 210, ca: 160, out: 11, rs: 6, c: 0.22 },
   { id: 'T2', t: 'Inventory data and persistence', st: '✓ exit 0', ch: '4✓', s: 520, inp: 380, ca: 300, out: 19, rs: 10, c: 0.38 },
   { id: 'T3', t: 'Inventory management', st: '✓ exit 0', ch: '5✓', s: 760, inp: 610, ca: 495, out: 31, rs: 17, c: 0.61 },
   { id: 'T4', t: 'Inventory lookup', st: '✓ exit 0', ch: '2✓', s: 410, inp: 300, ca: 240, out: 14, rs: 8, c: 0.31 },
-  { id: 'T5', t: 'Shopping cart', st: '✗ auth 401', ch: '4○', s: 720, inp: 420, ca: 350, out: 22, rs: 12, c: 0.53, partial: true },
-  { id: 'T6', t: 'Checkout', st: '○ not run', ch: '3○', s: null },
-  { id: 'T7', t: 'Test and fix', st: '○ not run', ch: '1○', s: null },
+  { id: 'T5', t: 'Shopping cart', st: '✗ auth 401', ch: '6○', s: 720, inp: 420, ca: 350, out: 22, rs: 12, c: 0.53, partial: true },
+  { id: 'T6', t: 'Checkout', st: '○ not run', ch: '4○', s: null },
+  { id: 'T7', t: 'Test and fix', st: '○ not run', ch: '3○', s: null },
 ];
 
 function measureChrome(g, r, sub) {
@@ -76,7 +76,7 @@ export function measurements(sz, focus = 'tasks') {
   }
   g.box(0, 2, W, 12, { f: tf ? 'ac' : 'ln', title: 'Per task and total · every category, with its source', sub: 'USD' });
   const rows = GROK.map((t) => ({ v: [t.id, t.t, `✓ exit ${t.ex}`, t.ch, dur(t.s), `${t.inp}k`, { t: '?', f: 'it' }, `${t.out}k`, `${t.rs}k`, usd(t.c), 'estimate · complete'], go: 'TaskChecks' }));
-  rows.push({ v: ['Σ', 'Configuration · 7 tasks', '✓ 7 of 7', '20✓ 1?', dur(tot.s), k(tot.inp), { t: '?', f: 'it' }, `${tot.out}k`, `${tot.rs}k`, usd(tot.c), 'estimate · 7 of 7'], f: 'bd' });
+  rows.push({ v: ['Σ', 'Configuration · 7 tasks', '✓ 7 of 7', '29✓ 1?', dur(tot.s), k(tot.inp), { t: '?', f: 'it' }, `${tot.out}k`, `${tot.rs}k`, usd(tot.c), 'estimate · 7 of 7'], f: 'bd' });
   table(g, 1, 3, W - 2, COLS(W - 2), rows, { cursor: 2, focused: tf });
   g.region(1, 3, W - 2, 9, 'DataTable', '#measurements');
   g.text(2, 12, fit('Reasoning ⊂ output and cached ⊂ input: shown apart, never added to the total. ? = not exposed by the harness.', W - 4), 'mu');
@@ -136,7 +136,7 @@ export function measurementsPartial(sz, focus = 'tasks') {
   const rows = CODEX.map((t) => (t.s == null
     ? { v: [t.id, t.t, { t: t.st, f: 'mu' }, { t: t.ch, f: 'mu' }, '—', '—', '—', '—', '—', '—', { t: 'unknown · not run', f: 'mu' }] }
     : { v: [t.id, t.t, t.partial ? { t: t.st, f: 'bd' } : t.st, t.ch, P(dur(t.s), t.partial), P(`${t.inp}k`, t.partial), P(`${t.ca}k`, t.partial), P(`${t.out}k`, t.partial), P(`${t.rs}k`, t.partial), P(usd(t.c), t.partial), t.partial ? { t: 'reported · partial', f: 'bd' } : 'reported · complete'] }));
-  rows.push({ v: ['Σ', 'Configuration · 7 tasks', { t: '✗ halted T5', f: 'bd' }, '13✓ 8○', `${dur(tot.s)} ▲`, `${k(tot.inp)} ▲`, `${k(tot.ca)} ▲`, `${tot.out}k ▲`, `${tot.rs}k ▲`, `${usd(tot.c)} ▲`, 'reported · 5/7 ▲'], f: 'bd' });
+  rows.push({ v: ['Σ', 'Configuration · 7 tasks', { t: '✗ halted T5', f: 'bd' }, '17✓ 13○', `${dur(tot.s)} ▲`, `${k(tot.inp)} ▲`, `${k(tot.ca)} ▲`, `${tot.out}k ▲`, `${tot.rs}k ▲`, `${usd(tot.c)} ▲`, 'reported · 5/7 ▲'], f: 'bd' });
   table(g, 1, 3, W - 2, COLS(W - 2), rows, { cursor: 4, focused: tf });
   g.region(1, 3, W - 2, 9, 'DataTable', '#measurements');
   g.text(2, 12, fit('The total covers T1–T5 only and stays marked partial. It is never shown as the cost of a complete benchmark.', W - 4), 'mu');
@@ -260,8 +260,8 @@ export function costBasis(sz, focus = 'table') {
     ['Reported', 'the harness or provider stated the charge · always preferred'],
     ['Estimate', 'known usage × price table at launch · source and date · subscriptions labelled'],
     ['Energy estimate', 'local endpoint in a sequential run · kWh in its windows × tariff'],
-    ['Verified $0', 'reported $0, complete usage, billing not subscription or unknown · none here'],
-    ['Unknown', 'no usage or price · local endpoint in a parallel run · never $0'],
+    ['Verified zero', 'engine confirms complete USD zero with supported billing and evidence · none here'],
+    ['Unverified zero', 'reported 0 without qualifying evidence → unknown (unverified_zero_cost)'],
     ['Billing', 'frozen at launch · harness status output, or “declared by user” in the catalog (M04)'],
   ]);
   y++;
@@ -392,7 +392,7 @@ export function measurementsTrials(sz, focus = 'codex') {
     const st = { s: S((t) => t.time), i: S((t) => t.inp), o: S((t) => t.out), c: S((t) => t.cost), q: S((t) => quality(t.g)) };
     const basis = c.basis === 'reported' ? 'reported' : 'estimate · price table';
     table(g, 1, y + 1, W - 2, cols, [
-      ...c.trials.map((t) => ({ v: [`${t.trial} of ${c.trials.length}`, t.id, '✓ exit 0', t.checks.f ? { t: checksText(t.checks), f: 'bd' } : checksText(t.checks), dur(t.time), k1(t.inp), `${t.out}k`, usd(t.cost), f2(quality(t.g)), t.checks.f ? { t: `✗ T4.2 failed · spec ${t.g[3]}`, f: 'bd' } : basis] })),
+      ...c.trials.map((t) => ({ v: [`${t.trial} of ${c.trials.length}`, t.id, '✓ exit 0', t.checks.f ? { t: checksText(t.checks), f: 'bd' } : checksText(t.checks), dur(t.time), k1(t.inp), `${t.out}k`, usd(t.cost), f2(quality(t.g)), t.checks.f ? { t: `✗ T4_check2 failed · spec ${t.g[3]}`, f: 'bd' } : basis] })),
       { v: ['Mean', '', '', '', dur(Math.round(st.s.mean)), k1(Math.round(st.i.mean)), `${Math.round(st.o.mean)}k`, usd(st.c.mean), f2(st.q.mean), gates.length ? { t: '✗ not ranked · trial 2', f: 'bd' } : '✓ used by rankings'], f: 'bd' },
       { v: ['Min–max', '', '', '', `${dur(st.s.min)}–${dur(st.s.max)}`, '', '', `${usd(st.c.min)}–${f2(st.c.max)}`, `${f2(st.q.min)}–${f2(st.q.max)}`, 'range of the 3 trials'], f: 'mu' },
     ], { cursor: key === 'codex' ? 0 : 1, focused: f });
@@ -409,7 +409,7 @@ export function measurementsTrials(sz, focus = 'codex') {
     ['Order', 'trials of one configuration run one after another; configurations follow the scheduling policy'],
     ['Shown', 'every trial, then the mean of cost, time and quality and the min–max range · a gap leaves both empty'],
     ['Rankings', 'use the means · a configuration is eligible only when every one of its trials is eligible (M06)'],
-    ['Claude Code', 'trial 2 failed check T4.2 and graded spec 3.5 → listed with that reason, not ranked'],
+    ['Claude Code', 'trial 2 failed check T4_check2 and graded spec 3.5 → listed with that reason, not ranked'],
     ['Prices', 'Claude Code estimates use anthropic.com/pricing, retrieved 2026-09-26 · Codex reports its cost'],
     ['Default', '1 trial · Inventory r1 results have one trial each: a single row and no range'],
   ]);

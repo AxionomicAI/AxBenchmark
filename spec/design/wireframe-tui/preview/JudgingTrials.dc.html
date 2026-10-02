@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1360px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Judging · 3 trials per configuration</b> · JudgingScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -86,7 +86,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln">│</span><span class="BS bd"> Codex               mean        4.17    3.83    4.33    4.17    4.00    3.67       4.11 ✓ every trial eligible       </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0 mu"> gpt-6-sol           min–max  4.0–4.5 3.5–4.0 4.0–4.5 4.0–4.5     4.0 3.5–4.0  3.90–4.35                              </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Claude Code         mean        4.00    3.83    4.17    4.00    3.83    3.33       3.96 ✗ trial 2 not eligible       </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> claude-sonnet-5-5   min–max      4.0 3.5–4.0 4.0–4.5 3.5–4.5 3.5–4.0 3.0–3.5  3.70–4.10 check T4.2 failed · spec 3.5 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> claude-sonnet-5-5   min–max      4.0 3.5–4.0 4.0–4.5 3.5–4.5 3.5–4.0 3.0–3.5  3.70–4.10 check T4_lookup failed · spe…</span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Q per trial uses the backend profile weights; the mean of the three is what ranks, and the range stays visible.     </span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">A configuration ranks only when every trial is eligible: Claude Code is listed with trial 2’s reason, not ranked.   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> rankings use the mean </span><span class="B0 ln">─┘</span></div>
@@ -128,7 +128,7 @@ body{margin:0}
 <div class="r"><span class="B0 ac">│</span><span class="BA on bd"> Codex               mean        4.17    3.83    4.33    4.17    4.00    3.67       4.11 ✓ every trial eligible       </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0 mu"> gpt-6-sol           min–max  4.0–4.5 3.5–4.0 4.0–4.5 4.0–4.5     4.0 3.5–4.0  3.90–4.35                              </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0 bd"> Claude Code         mean        4.00    3.83    4.17    4.00    3.83    3.33       3.96 ✗ trial 2 not eligible       </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0 mu"> claude-sonnet-5-5   min–max      4.0 3.5–4.0 4.0–4.5 3.5–4.5 3.5–4.0 3.0–3.5  3.70–4.10 check T4.2 failed · spec 3.5 </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 mu"> claude-sonnet-5-5   min–max      4.0 3.5–4.0 4.0–4.5 3.5–4.5 3.5–4.0 3.0–3.5  3.70–4.10 check T4_lookup failed · spe…</span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Q per trial uses the backend profile weights; the mean of the three is what ranks, and the range stays visible.     </span><span class="B0"> </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">A configuration ranks only when every trial is eligible: Claude Code is listed with trial 2’s reason, not ranked.   </span><span class="B0"> </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> rankings use the mean </span><span class="B0 ac">─┘</span></div>
@@ -170,7 +170,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln">│</span><span class="BS bd"> Codex               mean        4.17    3.83    4.33    4.17    4.00    3.67       4.11 ✓ every trial eligible       </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0 mu"> gpt-6-sol           min–max  4.0–4.5 3.5–4.0 4.0–4.5 4.0–4.5     4.0 3.5–4.0  3.90–4.35                              </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Claude Code         mean        4.00    3.83    4.17    4.00    3.83    3.33       3.96 ✗ trial 2 not eligible       </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> claude-sonnet-5-5   min–max      4.0 3.5–4.0 4.0–4.5 3.5–4.5 3.5–4.0 3.0–3.5  3.70–4.10 check T4.2 failed · spec 3.5 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> claude-sonnet-5-5   min–max      4.0 3.5–4.0 4.0–4.5 3.5–4.5 3.5–4.0 3.0–3.5  3.70–4.10 check T4_lookup failed · spe…</span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Q per trial uses the backend profile weights; the mean of the three is what ranks, and the range stays visible.     </span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">A configuration ranks only when every trial is eligible: Claude Code is listed with trial 2’s reason, not ranked.   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> rankings use the mean </span><span class="B0 ln">─┘</span></div>
@@ -226,11 +226,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Judging.dc.html">In progress</a><a href="JudgingDone.dc.html">Finished · 1 ungraded</a><a href="JudgingTrials.dc.html">3 trials</a><a href="RankingsTrials.dc.html">Trials ranked (M06)</a><a href="ReviewUngraded.dc.html">Ungraded review</a><a href="ReviewDetail.dc.html">Complete review</a><a href="RubricProfiles.dc.html">Profiles</a><a href="JudgeCapability.dc.html">No screenshot support</a><a href="JudgeHandoff.dc.html">Judge input (M08)</a></div>
 <h3>Notes</h3>
-<ul><li>D7: Orders REST API r3, run 2026-09-27-t (TRIAL_CONFIGS). Six artifacts, six fresh sessions: each trial is judged separately under its own anonymous label.</li><li>#trial-quality shows the mean and min–max per category and of Q, computed by AxBenchmark; rankings use the mean Q.</li><li>A configuration is eligible only when every trial is: Claude Code trial 2 (spec 3.5, 1 failed check) keeps it out of rankings, with that reason.</li><li>Backend profile: no screenshots are part of this template’s final regression.</li></ul>
+<ul><li>D7: Orders REST API r3, run 2026-09-27-t (TRIAL_CONFIGS). Six artifacts, six fresh sessions: each trial is judged separately under its own anonymous label.</li><li>#trial-quality shows the mean and min–max per category and of Q, computed by AxBenchmark; rankings use the mean Q.</li><li>A configuration is eligible only when every trial is: Claude Code trial 2 (spec 3.5, 1 failed check) keeps it out of rankings, with that reason.</li><li>Backend profile: no screenshots are part of this template’s final regression.</li><li>Implementation owner M12. API seam: judging.status/stop(batch_id); RUN delegates runs.stop, REJUDGE cancels additional job only.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1240}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1360}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

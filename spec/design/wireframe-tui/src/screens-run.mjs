@@ -23,7 +23,7 @@ const RUNS = {
   live: {
     id: '2026-10-01-a', bar: '● 3 of 4 running · 1 complete · one configuration per harness, up to 4 at once (jobs 4) · tasks sequential',
     lanes: [
-      L('Claude Code', { cfg: 'claude-opus-5-5 · medium', state: 'done', tasks: '✓✓✓✓✓✓✓', now: 'complete 21:35:37 · final regression 21✓', elapsed: '36:50', cost: '$4.61 · API-equivalent estimate', go: 'RunConfig' }),
+      L('Claude Code', { cfg: 'claude-opus-5-5 · medium', state: 'done', tasks: '✓✓✓✓✓✓✓', now: 'complete 21:35:37 · final regression 30✓', elapsed: '36:50', cost: '$4.61 · API-equivalent estimate', go: 'RunConfig' }),
       L('Codex', { cfg: 'gpt-6-sol · medium', state: 'run', tasks: '✓✓✓✓●○○', now: 'T5 Shopping cart · 10:58 in this task', elapsed: '41:12', cost: '$1.92 · reported · T1–T4', live: '46.3 tok/s · context 84.2k of 272k · 31%', go: 'RunConfig' }),
       L('Grok CLI', { cfg: 'grok-4.7-fast · harness default', state: 'run', tasks: '✓✓✓●○○○', now: 'T4 Inventory lookup · 0:22 in this task', elapsed: '24:57', cost: '$0.41 · estimate · T1–T3', live: '112 tok/s · context ? not reported', go: 'RunConfig' }),
       L('Pi', { cfg: 'qwen3.5-35b-a3b · harness default', state: 'run', tasks: '✓✓●○○○○', now: 'T3 Inventory management · 14:05 in this task', elapsed: '39:31', cost: LOCAL, live: '29.4 tok/s · context 21.4k of 32k · 65%', go: 'RunConfig' }),
@@ -31,7 +31,7 @@ const RUNS = {
     events: [
       ['20:58:47', 'run', 'frozen · template 3f9c2e71… · configuration and original weights · 4 configurations start together'],
       ['21:35:37', 'claude', 'T7 exit 0 · 7 of 7 tasks · final regression started on a disposable copy'],
-      ['21:35:59', 'verify', 'Claude Code final regression 21✓ · evidence saved · waiting for judging after the run'],
+      ['21:35:59', 'verify', 'Claude Code final regression 30✓ · evidence saved · waiting for judging after the run'],
       ['21:38:20', 'codex', 'T5 policy: allowed · npx serve -l 41021 (ports 41020–41029)'],
       ['21:39:40', 'grok', 'T4 started · new process 49820 · workspace at T3 commit 7aa01c3'],
       ['21:40:02', 'pi', 'T3 harness retried 1 request (HTTP 429) · recorded as a harness-internal retry'],
@@ -49,7 +49,7 @@ const RUNS = {
     events: [
       ['09:12:05', 'run', 'frozen · 5 entries · 4 lanes · #2 queued behind #1 (same harness)'],
       ['09:12:06', 'run', 'started #1 Claude Code · #3 Codex · #4 Grok CLI · #5 Pi'],
-      ['09:21:40', 'grok', 'T1 exit 0 · checks 2✓ · T2 started in a new process'],
+      ['09:21:40', 'grok', 'T1 exit 0 · checks 6✓ · T2 started in a new process'],
       ['09:25:33', 'claude', 'T2 exit 0 · checks 4✓ · T3 started in a new process'],
       ['09:31:52', 'pi', 'T2 is using the T1 workspace commit 41d0e2a'],
     ],
@@ -148,7 +148,7 @@ export function runOverview(sz, focus = 'lane1', st = {}) {
   g.region(0, 1, W, 1, 'Static', '#run-bar');
 
   g.text(1, 2, '■', 'ac');
-  g.text(3, 2, fit(run.frozen ?? `Frozen at launch · template ${s8(SHA.inv1)}… · configuration ${s8(SHA.cfg)}… · original weights · none of them can change while running`, W - 4), 'mu');
+  g.text(3, 2, fit(run.frozen ?? `UID run_mbp_${run.id.replaceAll("-", "")} · origin mike-mbp-m4 · selected codex_medium / trial 1 · frozen ${s8(SHA.inv1)}`, W - 4), 'mu');
   g.region(0, 2, W, 1, 'Static', '#frozen');
   const lw = W / 2, lh = 11;
   run.lanes.forEach((d, i) => lane(g, (i % 2) * lw, 3 + Math.floor(i / 2) * lh, lw, lh, d, i + 1, focus === `lane${i}`));
@@ -228,7 +228,7 @@ export function harnessLive(sz, focus = 'code', st = {}) {
   if (st.rate != null) L.rate = st.rate;
   if (st.ctx != null && L.ctx) L.ctx = [st.ctx, L.ctx[1]];
   const adds = st.adds ?? 5, showThink = st.thinking !== false && L.thinking !== 'none';
-  header(g, 'AxBenchmark', compact ? `Live · ${L.cfg.split(' · ')[0]}` : `Run 2026-10-01-a · ${L.cfg} · live view`);
+  header(g, 'AxBenchmark', compact ? `Live · ${L.cfg.split(' · ')[0]} · trial 1` : `UID run_mbp_20261001a · ${L.cfg} · trial 1 · live view`);
 
   // task line: the one place that says what is running, with which model and effort
   g.fill(0, 1, W, 1, 'B1');
@@ -346,8 +346,8 @@ export function runDetach(sz, focus = 'detach') {
   g.text(m.x, y++, 'Come back with', 'bd');
   y = kv(g, m.x, y, 22, m.w, [
     ['Library', 'ctrl+r Reconnect in the status bar'],
-    ['Command line', 'axbenchmark --attach 2026-10-01-a'],
-    ['Status only', 'axbenchmark status 2026-10-01-a'],
+    ['Command line', 'axbenchmark --attach run_mbp_20261001a'],
+    ['Status only', 'axbenchmark status run_mbp_20261001a'],
   ]);
   g.region(m.x, y - 3, m.w, 3, 'Static', '#reattach.kv');
   y++;
@@ -368,7 +368,7 @@ export function stopConfirm(sz, focus = 'scope') {
   radios(g, m.x, y++, ['This configuration · Codex · gpt-6-sol · medium', 'The whole run · 3 running'], 0, { focus: sf });
   g.region(m.x, y - 1, m.w, 1, 'RadioSet', '#stop-scope');
   y++;
-  g.text(m.x, y++, 'Cleaned up before the stop is reported', 'bd');
+  g.text(m.x, y++, 'Cleanup · retention settles separately', 'bd');
   table(g, m.x, y, m.w, [{ l: 'Kind', w: 12 }, { l: 'Item', w: 44 }, { l: 'Action', w: m.w - 56 }], [
     { v: ['Process', 'codex exec · pid 48211 · 3 child processes', 'SIGTERM, then SIGKILL'] },
     { v: ['Service', 'npx serve -l 41021 · started in T5', 'stopped'] },
@@ -384,7 +384,7 @@ export function stopConfirm(sz, focus = 'scope') {
     ['Other lanes', 'Claude Code, Grok CLI and Pi continue unchanged'],
   ]);
   y++;
-  para(g, m.x, y, m.w, 'Stopping is never retried or resumed automatically. Detaching is a different action and stops nothing.', 'mu');
+  para(g, m.x, y, m.w, 'Run stop remains available while judging or finalizing; completed configurations cannot be stopped. Detach stops observing only.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'RunOverview' }, { label: 'Stop configuration', v: 'primary', go: 'StopCleanup', focus: focus === 'stop' }]);
   footer(g, [{ k: 'esc', d: 'Cancel', go: 'RunOverview' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'enter', d: 'Stop', go: 'StopCleanup' }], '');
   return g;
@@ -402,7 +402,7 @@ export function stopCleanup(sz) {
   step(g, m.x, y++, m.w, 'todo', 'Mark T6 and T7 as not run');
   g.region(m.x, m.y, m.w, 6, 'Vertical', '#stop-steps');
   y++;
-  para(g, m.x, y, m.w, 'Measurements up to the stop are kept as partial. The other three configurations are not affected.', 'mu');
+  para(g, m.x, y, m.w, 'Cleanup complete; retention is pending. A storage error keeps its remedy visible and report status pending. Other configurations continue.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Hide', v: 'primary', go: 'RunOverview', focus: true }]);
   footer(g, [{ k: 'esc', d: 'Hide · cleanup continues', go: 'RunOverview' }], '');
   return g;
@@ -413,7 +413,7 @@ export function stopCleanup(sz) {
 export function runHalted(sz, focus = 'close') {
   const g = runOverview(sz, 'none', { run: 'halted' });
   const m = modal(g, 86, 31, 'Run 2026-09-29-c halted · template identity invalidated', { sel: '#halted' });
-  let y = notice(g, m.x, m.y, m.w, 'error', 'An approved file of Inventory web app r1 changed on disk during the run', 'The first detection halted the whole run. All four configurations were stopped with the same cleanup as an explicit stop and recorded as interrupted with this reason.');
+  let y = notice(g, m.x, m.y, m.w, 'error', 'An approved file of Inventory web app r1 changed on disk during the run', 'The first detection halted the whole run. Active work stopped; unsealed results become interrupted. Sealed facts stay intact; every result is marked non-comparable.');
   g.region(m.x, m.y, m.w, y - m.y, 'Static', '.notice.-error');
   y++;
   const y0 = y;
@@ -431,7 +431,7 @@ export function runHalted(sz, focus = 'close') {
   y = kv(g, m.x, y, 13, m.w, [
     ['Recorded', '4 results · interrupted · “template identity invalidated”'],
     ['Kept', 'evidence, logs, snapshots and partial measurements (▲)'],
-    ['Never', 'rebound to r1 or another revision · never in rankings or reports'],
+    ['Never', 'rebound to r1 or another revision · never compared · inspection evidence retained'],
     ['Command line', 'axbenchmark status 2026-09-29-c shows the same reason'],
   ]);
   y++;

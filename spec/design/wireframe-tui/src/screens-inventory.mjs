@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs';
 import { Grid, fit, len, wrap, header, footer, table, buttons, para, kv, notice, modal, tree, scrollbar } from './lib.mjs';
 import { SHA, s8, mid, library } from './screens.mjs';
-import { CHECKS } from './checks-data.mjs';
+import { CHECKS, CHECK_DETAILS } from './checks-data.mjs';
 
 const TASK_DIR = new URL('../../../../benchmark/tasks/', import.meta.url);
 const FILES = ['00-project.md', 'T1-scaffold.md', 'T2-data.md', 'T3-management.md', 'T4-lookup.md', 'T5-cart.md', 'T6-checkout.md', 'T7-qa.md'];
@@ -30,7 +30,7 @@ export function inventoryAbout(sz, focus = 'configure') {
     ['Persistence', 'localStorage · inventory, cart and order history'],
     ['Work', 'shared specification + T1–T7 in order · one commit per task'],
     ['Sessions', 'each task starts a new session · files are the only state'],
-    ['Checks', 'acceptance checks v1 · 21 · bundled with the template'],
+    ['Checks', 'acceptance checks v1 · 30 · bundled with the template'],
     ['Rubric', 'web v1 · UX 25 Visual 15 Code 20 Spec 25 Robust 10 A11y 5'],
     ['Planning', 'none · approved tasks, no LLM planner call'],
   ];
@@ -91,33 +91,28 @@ export function inventoryPrompts(sz, focus = 'text') {
 
 // ---------------------------------------------------------------- check coverage
 
-export function inventoryChecks(sz, focus = 'checks') {
+export function inventoryChecks(sz, focus = 'checks', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
-  header(g, 'AxBenchmark', 'Inventory web app r1 · acceptance checks v1');
-  g.fill(0, 1, W, 1, 'B1');
-  g.text(1, 1, fit('checks/acceptance.v1.json · 21 checks · bundled · run outside the competitor workspace on disposable copies (M08)', W - 2));
+  header(g, 'AxBenchmark', 'Inventory r1 · 30 unique checks');
+  g.text(1, 1, fit('At-task 30 · final 30 = 19 delivered artifact + 11 task history · T1–T7: 6 / 4 / 5 / 2 / 6 / 4 / 3', W - 2), 'bd');
   g.region(0, 1, W, 1, 'Static', '#checks-bar');
-  const cf = focus === 'checks';
-  g.box(0, 2, W, 24, { f: cf ? 'ac' : 'ln', title: 'Coverage by task', sub: 'titles restate the prompts only' });
-  let last = '';
-  table(g, 1, 3, W - 2, [{ l: 'Task', w: 35 }, { l: 'Check', w: 7 }, { l: 'What it observes', w: 54 }, { l: 'Kind', w: 10 }, { l: 'Covers', w: W - 2 - 106 }],
-    CHECKS.map(([id, t, k]) => {
-      const task = id.split('.')[0], first = task !== last;
-      last = task;
-      return { v: [first ? { t: `${task} ${TASK_NAMES[task]}`, f: 'bd' } : '', id, t, k, first ? REQ[task] : ''] };
-    }), { cursor: 11, focused: cf });
-  g.region(1, 3, W - 2, 22, 'DataTable', '#coverage');
-  g.box(0, 26, 60, H - 28, { f: focus === 'rules' ? 'ac' : 'ln', title: 'Also checked' });
-  g.region(0, 26, 60, H - 28, 'Static', '#also-checked');
-  let y = 27;
-  for (const t of ['Every task ends with a commit; its id is kept as evidence, and a missing commit stays unavailable, never invented.', 'The delivered artifact (final regression) uses HTML5 and vanilla JavaScript, opens from index.html and keeps its data in localStorage.']) {
-    g.text(2, y, '✓', 'ac'); y = para(g, 4, y, 54, t) + 1;
-  }
-  g.box(60, 26, 60, H - 28, { f: focus === 'open' ? 'ac' : 'ln', title: 'Left open, so never checked' });
-  g.region(60, 26, 60, H - 28, 'Static', '#not-checked');
-  y = para(g, 62, 27, 56, OPEN, 'mu');
-  para(g, 62, y + 1, 56, 'Checks must not add obligations the prompts do not state.', 'mu');
-  footer(g, [{ k: 'esc', d: 'Back', go: 'InventoryAbout' }, { k: 'p', d: 'Prompts', go: 'InventoryPrompts' }, { k: 'o', d: 'Open check file' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  const selected = st.check ?? 'T2_samples', start = st.start ?? 0, visible = CHECKS.slice(start, start + 18);
+  g.box(0, 2, W, 21, { f: focus === 'checks' ? 'ac' : 'ln', title: 'Versioned catalog · scroll for all 30', sub: `${start + 1}–${start + visible.length} of 30` });
+  table(g, 1, 3, W - 2, [{ l: 'Check', w: 19 }, { l: 'Requirement', w: 12 }, { l: 'What it observes', w: 46 }, { l: 'Kind', w: 9 }, { l: 'Final target', w: W - 88 }], visible.map(([id, title, kind]) => ({ v: [id, CHECK_DETAILS[id].requirement, title, kind, CHECK_DETAILS[id].target === 'task_history' ? 'task history' : 'delivered artifact'] })), { cursor: visible.findIndex(([id]) => id === selected), focused: focus === 'checks' });
+  g.region(1, 3, W - 2, 19, 'DataTable', '#coverage');
+  g.box(0, 23, W, 12, { f: focus === 'detail' ? 'ac' : 'ln', title: `${selected} · observation and phases` });
+  g.region(0, 23, W, 12, 'VerticalScroll', '#check-observation');
+  const d = CHECK_DETAILS[selected];
+  let y = kv(g, 2, 24, 16, W - 4, [
+    ['Requirement', `${d.requirement} · ${selected.split('_')[0]} prompt · ${CHECKS.find(([id]) => id === selected)[1]}`],
+    ['At task', d.phase === 'H' ? 'task_history · captured start/end snapshots and invocation evidence' : 'task_snapshot · defining task only; no later UI obligation'],
+    ['Final', d.target === 'task_history' ? 'task_history · same original boundary, not T7 HEAD' : 'delivered_artifact · delivered T7 snapshot'],
+    ['Evidence', `${d.evidence} · checks/${d.strategy}.py · frozen discovery rules`],
+  ]);
+  y = para(g, 2, y + 1, W - 4, d.observation, 'mu');
+  g.text(2, 33, fit('Unobservable → unverified, never application failure. T2 needs data initialization, not the T3 inventory UI.', W - 4), 'bd');
+  para(g, 2, 36, W - 4, 'Left open: ' + OPEN, 'mu');
+  footer(g, [{ k: 'esc', d: 'Back', go: 'InventoryAbout' }, { k: '↑↓', d: 'Select / scroll' }, { k: 'p', d: 'Prompts', go: 'InventoryPrompts' }, { k: 'o', d: 'Suite file' }, { k: 'tab', d: 'Pane', do: 'next' }]);
   return g;
 }
 
@@ -157,8 +152,8 @@ export function inventoryUpgrade(sz, focus = 'close') {
   g.text(m.x, y++, 'Changes from r1', 'bd');
   for (const [k, t, f] of [
     ['= same', 'spec and the seven prompts, verbatim · baseline · rubric web v1', 'mu'],
-    ['~ check', 'T2.3 waits for the sample data to render (verifier fix)', ''],
-    ['~ check', 'T7.1 browser start timeout 60 s → 120 s', ''],
+    ['~ check', 'T2_samples improves data discovery (no UI required)', ''],
+    ['~ check', 'T7_browser_qa improves retained action evidence discovery', ''],
     ['~ protocol', 'execution protocol v1 → v1.1 · service readiness retries', ''],
   ]) { g.text(m.x, y, k, f || ''); g.text(m.x + 12, y++, fit(t, m.w - 12), f); }
   y++;

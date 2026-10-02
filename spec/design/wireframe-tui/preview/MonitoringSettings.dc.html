@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1360px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Monitoring settings</b> · MonitoringScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -223,11 +223,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="MonitoringSettings.dc.html">Settings</a><a href="PromptExportCsv.dc.html">Export CSV (M15)</a><a href="EnvironmentCollectors.dc.html">Five causes (M03)</a><a href="CollectorGuide.dc.html">Guidance</a><a href="Telemetry.dc.html">Telemetry</a><a href="EnergyDetail.dc.html">Energy detail</a><a href="SequentialEnergy.dc.html">Sequential windows</a><a href="CurrencyEnergy.dc.html">Currency and energy (M10)</a></div>
 <h3>Notes</h3>
-<ul><li>Automatic detection by default, explicit off (R102).</li><li>D18: the sampling interval is a run-configuration setting, 0.5–10 s, default 1 s, frozen at launch and not part of the template identity; invalid values are rejected.</li><li>A collector that cannot sample that fast uses its own minimum (IOReport: 1 s); the actual interval is recorded and shown, never presented as the requested one.</li><li>Same mike-mbp-m4 collectors as the Environment frames (M03).</li></ul>
+<ul><li>Automatic detection by default, explicit off (R102).</li><li>D18: the sampling interval is a run-configuration setting, 0.5–10 s, default 1 s, frozen at launch and not part of the template identity; invalid values are rejected.</li><li>A collector that cannot sample that fast uses its own minimum (IOReport: 1 s); the actual interval is recorded and shown, never presented as the requested one.</li><li>Same mike-mbp-m4 collectors as the Environment frames (M03).</li><li>Implementation owner M18. API seam: telemetry.capabilities(sampling_interval_s); configs.set_execution; effective/observed interval labels.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1240}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1360}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1360px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1480px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Weights · ranking 2:1:1</b> · WeightsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -270,11 +270,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Rankings.dc.html">Original</a><a href="RankingsProfileDefaults.dc.html">Profile defaults</a><a href="RankingsTrials.dc.html">Trials</a><a href="ScoreBreakdown.dc.html">Breakdown</a><a href="WeightsEditor.dc.html">Weights</a><a href="WeightsInvalid.dc.html">Invalid</a><a href="RankingsAlternative.dc.html">Alternative</a></div>
 <h3>Notes</h3>
-<ul><li>Ranking 2:1:1 previews 50% · 25% · 25%, independent of category weights (R094, R095).</li><li>Restore defaults (product profile) and Reset to original (frozen at launch) are different actions (R096).</li><li>Presets save both sets to YAML for reuse (R145). Save preset… asks for a name in the shared PromptScreen (M15).</li><li>The Preset select also lists each result’s original weights when they differ across the judge group (D13).</li></ul>
+<ul><li>Ranking 2:1:1 previews 50% · 25% · 25%, independent of category weights (R094, R095).</li><li>Restore defaults (product profile) and Reset to original (frozen at launch) are different actions (R096).</li><li>Presets save both sets to YAML for reuse (R145). Save preset… asks for a name in the shared PromptScreen (M15).</li><li>The Preset select also lists each result’s original weights when they differ across the judge group (D13).</li><li>Implementation owner M06. API seam: scoring.weight_choices/preview_weights/validate_weights; configs.set_weights or analysis return value.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1360}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1480}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

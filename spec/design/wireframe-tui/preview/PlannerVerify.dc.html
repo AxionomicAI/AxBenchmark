@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1080px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Planner · Verify now consent</b> · ConfirmScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -160,7 +160,7 @@ body{margin:0}
 <div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
 </div>
 <aside class="lg" style="width: 440px; flex-shrink: 0">
-<div class="lg-h"><b>ConfirmScreen</b><span class="mut">tui/widgets/confirm.py</span></div>
+<div class="lg-h"><b>ConfirmScreen</b><span class="mut">tui/screens/confirm.py</span></div>
 <h3>Widget tree</h3>
 <pre>ConfirmScreen(ModalScreen[bool])   shared (M15)
 ├─ Vertical #confirm .dialog
@@ -177,11 +177,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="NewTemplateRepo.dc.html">New template (M01)</a><a href="PlannerPicker.dc.html">Planner</a><a href="PlannerUnknownModel.dc.html">No default model</a><a href="PlannerNoUsable.dc.html">No usable harness</a><a href="PlannerVerify.dc.html">Verify now</a><a href="PlanningProgress.dc.html">Planning</a><a href="PlanReview.dc.html">Review</a><a href="PlanReopened.dc.html">Reopened draft</a><a href="PlanServices.dc.html">Services</a><a href="PlanServiceEdit.dc.html">Edit service</a><a href="PlanEdit.dc.html">Edit</a><a href="PlanRegenerate.dc.html">Regenerate</a><a href="PlanApprove.dc.html">Approve</a><a href="PlanApproveIdentical.dc.html">Identical</a><a href="PlanningFailed.dc.html">Failed</a><a href="PlanningInterrupted.dc.html">Interrupted</a><a href="Library.dc.html">Library drafts (M01)</a></div>
 <h3>Notes</h3>
-<ul><li>D15: one minimal headless call per harness, no model or effort argument, no tools, 60 s deadline. The outcome is recorded in readiness and the first usable harness is then preselected.</li><li>Consent covers this request only; nothing is verified in the background.</li></ul>
+<ul><li>D15: one minimal headless call per harness, no model or effort argument, no tools, 60 s deadline. The outcome is recorded in readiness and the first usable harness is then preselected.</li><li>Consent covers this request only; nothing is verified in the background.</li><li>Implementation owner M16. API seam: environment.verification_plan; environment.verify(consent=true); returned job + planning options refresh.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1080}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

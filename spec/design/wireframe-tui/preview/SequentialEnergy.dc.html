@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Sequential execution windows</b> · WindowsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -133,11 +133,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="MonitoringSettings.dc.html">Settings</a><a href="PromptExportCsv.dc.html">Export CSV (M15)</a><a href="EnvironmentCollectors.dc.html">Five causes (M03)</a><a href="CollectorGuide.dc.html">Guidance</a><a href="Telemetry.dc.html">Telemetry</a><a href="EnergyDetail.dc.html">Energy detail</a><a href="SequentialEnergy.dc.html">Sequential windows</a><a href="CurrencyEnergy.dc.html">Currency and energy (M10)</a></div>
 <h3>Notes</h3>
-<ul><li>R-0919lab-1 ran alone (jobs 1); window durations add up to its 27:30 (results-data).</li><li>Windows include background activity and are never exclusive consumption (R110).</li><li>D4: in a sequential run a local configuration’s cost for rankings is this kWh × the frozen tariff, labelled “energy estimate” with its scope: $0.01 (results-data R-0919lab-1).</li></ul>
+<ul><li>R-0919lab-1 ran alone (jobs 1); window durations add up to its 27:30 (results-data).</li><li>Windows include background activity and are never exclusive consumption (R110).</li><li>D4: in a sequential run a local configuration’s cost for rankings is this kWh × the frozen tariff, labelled “energy estimate” with its scope: $0.01 (results-data R-0919lab-1).</li><li>Implementation owner M18. API seam: telemetry.windows(result_id); explicit TrialRef on every sequential window.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

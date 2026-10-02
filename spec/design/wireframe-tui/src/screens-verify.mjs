@@ -5,7 +5,7 @@
 import { Grid, fit, len, header, footer, table, button, buttons, para, kv, notice, modal, progress, loading } from './lib.mjs';
 import { step } from './screens.mjs';
 import { runConfig } from './screens-execution.mjs';
-import { CHECKS, byCheck, PI_AT_TASK, PI_FINAL, COMMITS } from './checks-data.mjs';
+import { CHECKS, CHECK_DETAILS, byCheck, PI_AT_TASK, PI_FINAL, COMMITS } from './checks-data.mjs';
 
 const OUT = { pass: '✓ passed', fail: '✗ failed', unv: '? unverified', none: '○ not run' };
 const ocell = (k) => ({ t: OUT[k], f: k === 'fail' ? 'bd' : k === 'pass' ? '' : k === 'unv' ? 'it' : 'mu' });
@@ -18,153 +18,77 @@ function resultBar(g, compact, text) {
 
 // ---------------------------------------------------------------- one task's checks
 
-export function taskChecks(sz, focus = 'checks') {
+export function taskChecks(sz, focus = 'checks', st = {}) {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h, compact = sz.id === 'compact';
-  header(g, 'AxBenchmark', compact ? 'R-0928a-4 · T5 checks' : 'Result R-0928a-4 · T5 Shopping cart · checks');
-  resultBar(g, compact, compact
-    ? `Pi · qwen3.5-35b-a3b · exit 0 · 2✓ 2✗ · snapshot ${COMMITS.T5}`
-    : `● Local · mike-mbp-m4 · Pi · qwen3.5-35b-a3b · process ✓ exit 0 · checks 2✓ 2✗ · T5 snapshot, commit ${COMMITS.T5}`);
-  const t5 = CHECKS.filter((c) => c[0].startsWith('T5'));
-  const rows = t5.map(([id, t, k]) => ({ v: [id, t, k, ocell(PI_AT_TASK[id] ?? 'pass')] }));
-  const cf = focus === 'checks';
-  const lw = compact ? W : 72;
-  g.box(0, 2, lw, 7, { f: cf ? 'ac' : 'ln', title: 'Acceptance checks · T5', sub: 'frozen in r1' });
-  table(g, 1, 3, lw - 2, [{ l: 'Check', w: 6 }, { l: 'Title', w: lw - 2 - 27 }, { l: 'Kind', w: 9 }, { l: 'Outcome', w: 12 }], rows, { cursor: 2, focused: cf });
-  g.region(1, 3, lw - 2, 5, 'DataTable', '#task-checks');
-
-  if (compact) {
-    g.box(0, 9, W, H - 10, { title: 'T5.3 · ✗ failed · application', f: focus === 'detail' ? 'ac' : 'ln' });
-    g.region(0, 9, W, H - 10, 'VerticalScroll', '#check-detail');
-    let y = para(g, 2, 10, W - 4, 'Expected: after an item is removed, the total no longer includes it. Observed: the row disappeared but the total stayed at 64.00.');
-    y++;
-    for (const [ok, s] of [['✓', '1 open index.html directly (file://)'], ['✓', '2 add “Desk lamp”, then “Notebook” twice'], ['✓', '3 Tab to Remove on Desk lamp, Enter'], ['✗', '4 total excludes Desk lamp · still 64.00']]) {
-      g.text(2, y, ok, ok === '✓' ? 'ac' : 'bd'); g.text(4, y++, fit(s, W - 6), ok === '✗' ? 'bd' : '');
-    }
-    y++;
-    g.text(2, y++, fit('Console: TypeError: cart.items.find is not a function', W - 4), 'mu');
-    g.text(2, y++, fit('Screenshots 1440×1000 + 390×844 · checked on a disposable copy', W - 4), 'mu');
-    footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: 's', d: 'Shots', go: 'Screenshots' }, { k: 'f', d: 'Final', go: 'FinalRegression' }, { k: 'j', d: 'Judge input', go: 'JudgeHandoff' }]);
-    return g;
+  const id = st.check ?? 'T5_remove', task = id.split('_')[0], d = CHECK_DETAILS[id];
+  const fixture = st.fixture ?? 'remove';
+  const examples = {
+    remove: ['✗ failed · application_failure', 'Remove an added cart line, then reopen.', 'The selected line remains after removal.', 'browser, data, screenshot, keyboard · remove.log'],
+    missing_commit: ['✗ failed · application_failure', 'T4 must advance its own repository history.', 'Readable start/end history: same HEAD; no new commit.', 'repository, log · start/end capture · T4_commit.log'],
+    unavailable_history: ['? unverified · verifier_error', 'Observe T4 commit advancement at its task boundary.', 'Retained history is unreadable; advancement cannot be established.', 'capture error + repository log · no fabricated failure'],
+    data_only: ['✓ passed · data observation', 'Fresh storage initializes sample products with stock.', 'Supported data observer confirms initialization; no T3 UI exists yet.', 'data, browser · initializer bindings + storage observations'],
+    missing_browser: ['? unverified · missing_prerequisite', 'Reopen the nonempty cart with the same profile and origin.', 'Browser is not installed; behavior was not observed.', 'readiness reason + verification log'],
+  };
+  const [outcome, expected, observed, evidence] = examples[fixture];
+  header(g, 'AxBenchmark', `R-0928a-4 · ${task} checks · trial 1`);
+  resultBar(g, compact, 'UID run_mbp_20260928a · origin mike-mbp-m4 · config pi_default · trial 1 · phase at_task');
+  const taskRows = CHECKS.filter(([cid]) => cid.startsWith(task + '_'));
+  const height = taskRows.length + 3;
+  g.box(0, 2, W, height, { f: focus === 'checks' ? 'ac' : 'ln', title: `Acceptance checks · ${task}`, sub: 'outcomes separate from process exit' });
+  table(g, 1, 3, W - 2, [{ l: 'Check', w: 19 }, { l: 'Title', w: W - 36 }, { l: 'Outcome', w: 15 }], taskRows.map(([cid, title]) => ({ v: [cid, title, cid === id && fixture !== 'remove' ? (fixture === 'data_only' ? '✓ passed' : fixture === 'missing_commit' ? '✗ failed' : '? unverified') : OUT[PI_AT_TASK[cid] ?? 'pass']] })), { cursor: taskRows.findIndex(([cid]) => cid === id), focused: focus === 'checks' });
+  g.region(1, 3, W - 2, taskRows.length + 1, 'DataTable', '#task-checks');
+  const top = height + 2;
+  g.box(0, top, W, H - top - 1, { f: focus === 'detail' ? 'ac' : 'ln', title: `${id} · ${outcome}` });
+  g.region(0, top, W, H - top - 1, 'VerticalScroll', '#check-detail');
+  let y = top + 1;
+  for (const [label, value] of [['Expected', expected], ['Observed', observed], ['Target', d.phase === 'H' ? `${task} captured start/end history · never substituted with T7` : `${task} task snapshot ${COMMITS[task]} · disposable copy`], ['Evidence', evidence]]) {
+    g.text(2, y++, label, 'bd'); y = para(g, 4, y, W - 6, value, 'mu');
   }
-
-  g.box(0, 9, lw, 9, { f: focus === 'verification' ? 'ac' : 'ln', title: 'How T5 was verified' });
-  g.region(0, 9, lw, 9, 'Static', '#verification-facts.kv');
-  kv(g, 2, 10, 13, lw - 4, [
-    ['Snapshot', `T5 workspace · commit ${COMMITS.T5} · preserved as evidence`],
-    ['Checked on', 'a disposable copy, deleted after the checks'],
-    ['Tooling', 'outside the workspace · Playwright for Python 1.52'],
-    ['Browser', 'Chromium 140 · index.html opened directly'],
-    ['Repairs', 'none · generated code is never changed'],
-    ['Process', '✓ exit 0 · recorded separately (M05)'],
-    ['Grades', 'judge A · kept separate; cannot change outcomes'],
-  ]);
-  g.box(0, 18, lw, 8, { f: focus === 'final' ? 'ac' : 'ln', title: 'Same checks on the delivered artifact', sub: 'f Final regression' });
-  g.region(0, 18, lw, 8, 'Static', '#final-summary');
-  table(g, 1, 19, lw - 2, [{ l: 'Check', w: 6 }, { l: 'At T5', w: 15 }, { l: 'Final (T7)', w: 15 }, { l: '', w: lw - 2 - 36 }],
-    t5.map(([id]) => {
-      const a = PI_AT_TASK[id] ?? 'pass', f = PI_FINAL[id] ?? 'pass';
-      return { v: [id, ocell(a), ocell(f), a === f ? '' : a === 'fail' ? 'fixed during T7' : 'regressed'] };
-    }));
-  g.link(0, 18, lw, 8, 'go:FinalRegression');
-
-  const dx = lw + 2, dw = W - lw - 4, df = focus === 'detail';
-  g.box(lw, 2, W - lw, H - 4, { f: df ? 'ac' : 'ln', title: 'T5.3 · Removing an item updates the total' });
-  g.region(lw, 2, W - lw, H - 4, 'VerticalScroll', '#check-detail.pane');
-  let y = 3;
-  g.text(dx, y, '✗', 'bd'); g.text(dx + 2, y++, 'Failed · application behavior', 'bd');
-  y++;
-  y = kv(g, dx, y, 10, dw, [['Expected', ['After an item is removed, the', 'total no longer includes it.']], ['Observed', ['The row disappeared but the', 'total stayed at 64.00.']]]);
-  y++;
-  g.text(dx, y++, 'Steps · keyboard only', 'bd');
-  for (const [ok, s] of [['✓', 'Open index.html directly (file://)'], ['✓', 'Add “Desk lamp” to the cart'], ['✓', 'Add “Notebook” twice'], ['✓', 'Tab to Remove on Desk lamp, press Enter'], ['✗', 'Total excludes Desk lamp · still 64.00']]) {
-    g.text(dx, y, ok, ok === '✓' ? 'ac' : 'bd'); g.text(dx + 2, y++, fit(s, dw - 2), ok === '✗' ? 'bd' : '');
+  if (!compact) {
+    y++;
+    y = para(g, 2, y, W - 4, 'At-task total 27 passed / 30. Final total 27 passed / 30: 19 artifact targets + 11 historical targets. Final T5_persistence passes; T4_lookup regresses. Screenshots and console output alone establish no pass or failure.', 'mu');
   }
-  y++;
-  y = kv(g, dx, y, 12, dw, [
-    ['Console', ['1 error · TypeError: cart.items', '.find is not a function', 'cart.js:88']],
-    ['Screenshots', ['desktop 1440×1000', 'mobile 390×844 · after last step']],
-    ['Log', 'verify/T5/T5.3.log · 2.1 s'],
-  ]);
-  y++;
-  para(g, dx, y, dw, 'Task screenshots help inspection and stay in evidence and the report. They never establish a pass and are not judge input: the judge gets the final regression’s screenshots.', 'mu');
-  buttons(g, W - 1, H - 2, [{ label: 'Screenshots', go: 'Screenshots', focus: focus === 'shots' }, { label: 'Final regression', go: 'FinalRegression' }, { label: 'Judge input', go: 'JudgeHandoff' }]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: '←→', d: 'Task' }, { k: 's', d: 'Screenshots', go: 'Screenshots' }, { k: 'f', d: 'Final regression', go: 'FinalRegression' }, { k: 'j', d: 'Judge input', go: 'JudgeHandoff' }, { k: 'l', d: 'Log', go: 'EvidenceViewer' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: 's', d: 'Shots', go: 'Screenshots' }, { k: 'f', d: 'Final', go: 'FinalRegression' }, { k: 'j', d: 'Judge input', go: 'JudgeHandoff' }]);
   return g;
 }
-
-// ---------------------------------------------------------------- final regression
 
 export function finalRegression(sz, focus = 'table') {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
-  header(g, 'AxBenchmark', 'Result R-0928a-4 · final regression');
-  resultBar(g, false, `Delivered artifact = T7 snapshot ${COMMITS.T7} · all 21 checks run again on a disposable copy · task evidence kept`);
-  const tf = focus === 'table';
-  g.box(0, 2, W, 24, { f: tf ? 'ac' : 'ln', title: 'Acceptance checks · at their task and on the delivered artifact', sub: '21 checks' });
-  table(g, 1, 3, W - 2, [{ l: 'Check', w: 7 }, { l: 'Title', w: 54 }, { l: 'Kind', w: 9 }, { l: 'At its task', w: 13 }, { l: 'Final artifact', w: 15 }, { l: 'Change', w: W - 2 - 98 }],
-    CHECKS.map(([id, t, k]) => {
-      const a = PI_AT_TASK[id] ?? 'pass', f = PI_FINAL[id] ?? 'pass';
-      return { v: [id, t, k, ocell(a), ocell(f), a === f ? { t: '=', f: 'mu' } : { t: a === 'fail' ? '✗ → ✓ fixed in T7' : '✓ → ✗ regressed', f: 'bd' }] };
-    }), { cursor: 12, focused: tf });
-  g.region(1, 3, W - 2, 22, 'DataTable', '#regression');
-  const n = (o) => ({ p: CHECKS.filter(([id]) => !(id in o)).length, f: Object.keys(o).length });
-  const a = n(PI_AT_TASK), f = n(PI_FINAL);
-  let y = kv(g, 1, 27, 16, W - 2, [
-    ['At each task', `${a.p}✓ ${a.f}✗ · each check ran on its own task’s snapshot`],
-    ['Final artifact', `${f.p}✓ ${f.f}✗ · every check ran on the T7 snapshot`],
-    ['Changes', 'T4.2 passed at T4 and fails on the delivered site · T5.4 failed at T5 and was fixed during T7'],
-  ]);
-  g.region(1, 27, W - 2, 3, 'Static', '#regression-summary.kv');
-  notice(g, 1, y + 1, W - 2, 'info', 'Both columns are evidence', 'An earlier pass never stands in for the final behavior, and a final pass never erases what happened at the task. Snapshots, logs and screenshots stay attached to the task they describe.');
-  buttons(g, W - 1, H - 2, [{ label: 'Open check', go: 'TaskChecks', focus: focus === 'open' }, { label: 'Not passed only', go: 'CheckOutcomes' }]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'TaskChecks' }, { k: 'enter', d: 'Open check', go: 'TaskChecks' }, { k: 'n', d: 'Not passed only', go: 'CheckOutcomes' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  header(g, 'AxBenchmark', 'R-0928a-4 · final regression · trial 1');
+  resultBar(g, false, `UID run_mbp_20260928a · pi_default / trial 1 · delivered T7 ${COMMITS.T7} · 19 artifact + 11 task-history observations`);
+  const visible = CHECKS.slice(12); // rendered scroll position includes all three final failures
+  g.box(0, 2, W, 21, { f: focus === 'table' ? 'ac' : 'ln', title: 'At-task and final outcomes · scroll 13–30 of 30', sub: '30 unique checks' });
+  table(g, 1, 3, W - 2, [{ l: 'Check', w: 19 }, { l: 'Title', w: 39 }, { l: 'Final target', w: 17 }, { l: 'At task', w: 13 }, { l: 'Final', w: 13 }, { l: 'Change', w: W - 103 }], visible.map(([id, title]) => {
+    const a = PI_AT_TASK[id] ?? 'pass', f = PI_FINAL[id] ?? 'pass';
+    return { v: [id, title, CHECK_DETAILS[id].target === 'task_history' ? 'task history' : 'artifact', ocell(a), ocell(f), a === f ? '=' : a === 'fail' ? 'fixed' : 'regressed'] };
+  }), { cursor: 3, focused: focus === 'table' });
+  g.region(1, 3, W - 2, 19, 'DataTable', '#regression');
+  kv(g, 2, 25, 17, W - 4, [['At each task', '27✓ 3✗ / 30 · task_snapshot or task_history as declared'], ['Final regression', '27✓ 3✗ / 30 · 19 delivered-artifact + 11 historical checks'], ['At-task failures', 'T5_remove · T5_persistence · T6_history'], ['Final failures', 'T4_lookup · T5_remove · T6_history']]);
+  para(g, 2, 31, W - 4, 'T5 persistence was repaired; T4 lookup regressed. Missing task commits remain failed when readable history proves no advancement. Unavailable history is unverified. Final evidence never substitutes T7 HEAD for an earlier task boundary.', 'mu');
+  footer(g, [{ k: 'esc', d: 'Back', go: 'TaskChecks' }, { k: '↑↓', d: 'Scroll' }, { k: 's', d: 'Shots', go: 'Screenshots' }, { k: 'j', d: 'Judge input', go: 'JudgeHandoff' }]);
   return g;
 }
 
-// ---------------------------------------------------------------- why checks did not pass
-
-const CAUSES = [
-  ['✗', 'Application failure', 'the check ran and observed a requirement fail'],
-  ['?', 'Missing prerequisite', 'a tool the check needs is absent on this machine'],
-  ['?', 'Verifier error', 'the check itself broke; nothing was observed'],
-  ['○', 'Not run', 'the process ended before the task produced work'],
-];
 const NOT_PASSED = [
-  ['R-0928a-4', 'T4.2', 'fail', 'application', 'final artifact: lookup still shows a product’s old name'],
-  ['R-0928a-4', 'T5.3', 'fail', 'application', 'total unchanged after an item was removed'],
-  ['R-0928a-4', 'T6.2', 'fail', 'application', 'order history is empty after a reload'],
-  ['R-0928a-3', 'T7.1', 'unv', 'prerequisite', 'Chromium for Playwright not installed on mike-mbp-m4'],
-  ['R-0925b-2', 'T5.1–T5.4', 'none', 'not run', 'process failed at T5 (timeout); snapshot kept as evidence'],
-  ['R-0925b-2', 'T6.1–T7.1', 'none', 'not run', 'T6 and T7 never started'],
-  ['R-0919lab-1', 'T6.1', 'fail', 'application', 'stock unchanged after purchase · imported evidence'],
-  ['10-01-a · Grok', 'T3.2', 'unv', 'verifier error', 'checks/T3.2 crashed: KeyError in the fixture loader'],
+  ['T5_remove', 'failed', 'application_failure', 'Cart line remains after removal'],
+  ['T5_persistence', 'failed', 'application_failure', 'Cart lost at task; passes final'],
+  ['T6_history', 'failed', 'application_failure', 'Purchase history lost on reopen'],
+  ['T4_lookup', 'failed', 'application_failure', 'Current product cannot be found at final'],
+  ['T5_persistence', 'unverified', 'missing_prerequisite', 'Missing browser fixture; behavior unobserved'],
+  ['T4_commit', 'failed', 'application_failure', 'Readable history proves no task commit'],
+  ['T4_commit', 'unverified', 'verifier_error', 'Retained task history unavailable'],
 ];
-
 export function checkOutcomes(sz, focus = 'table') {
-  const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
-  header(g, 'AxBenchmark', 'Checks not passed · Inventory web app r1');
-  resultBar(g, false, '12 results and 1 live run · checks that did not pass · four causes, never merged with each other or with exit status');
-  CAUSES.forEach(([gl, t, d], i) => {
-    const x = i * 30;
-    g.box(x, 2, 30, 5, { f: 'ln' });
-    g.text(x + 2, 3, gl, gl === '✗' ? 'bd' : gl === '○' ? 'mu' : 'it'); g.text(x + 4, 3, fit(t, 24), 'bd');
-    para(g, x + 2, 4, 26, d, 'mu');
-  });
-  g.region(0, 2, W, 5, 'Horizontal', '#cause-legend');
-  const tf = focus === 'table';
-  g.box(0, 7, W, NOT_PASSED.length + 3, { f: tf ? 'ac' : 'ln', title: 'Not passed', sub: 'o open · / filter' });
-  table(g, 1, 8, W - 2, [{ l: 'Result', w: 15 }, { l: 'Check', w: 11 }, { l: 'Outcome', w: 14 }, { l: 'Cause', w: 16 }, { l: 'Reason', w: W - 2 - 56 }],
-    NOT_PASSED.map(([r, c, o, cause, why]) => ({ v: [r, c, ocell(o), cause, why], go: r === 'R-0928a-4' ? 'TaskChecks' : r === 'R-0928a-3' ? 'ResultOutcomes' : undefined })), { cursor: 7, focused: tf });
-  g.region(1, 8, W - 2, NOT_PASSED.length + 1, 'DataTable', '#not-passed');
-  const y0 = 7 + NOT_PASSED.length + 3;
-  g.box(0, y0, W, H - 2 - y0, { f: focus === 'detail' ? 'ac' : 'ln', title: 'T3.2 · ? unverified · verifier error · live run 2026-10-01-a, Grok CLI' });
-  g.region(0, y0, W, H - 2 - y0, 'Static', '#outcome-detail');
-  let y = para(g, 2, y0 + 1, W - 4, 'The check script raised KeyError while loading its fixture, before it touched the site. Nothing about the application was observed, so the outcome is unverified, not failed and not passed. The error, the check log and the T3 snapshot stay with the task.');
-  y = kv(g, 2, y + 1, 16, W - 4, [
-    ['Different from', 'a missing prerequisite (tool absent, see Environment) and an application failure (check ran, requirement failed)'],
-    ['Evidence', 'verify/T3/T3.2.log · traceback · T3 snapshot c04e7aa'],
-    ['Effect', 'the result cannot enter default shortlists while a required check is unverified (M06)'],
-  ]);
-  footer(g, [{ k: 'esc', d: 'Back', go: 'Results' }, { k: 'o', d: 'Open check', go: 'TaskChecks' }, { k: '/', d: 'Filter' }, { k: 'c', d: 'Cause' }, { k: 'tab', d: 'Focus', do: 'next' }]);
+  const g = new Grid(sz.cols, sz.rows), W = g.w;
+  header(g, 'AxBenchmark', 'Check outcomes · phase and cause');
+  resultBar(g, false, 'Each row retains ResultId · TrialRef · task · phase · observation evidence; fixtures below are separate cases');
+  table(g, 1, 3, W - 2, [{ l: 'Check', w: 19 }, { l: 'Outcome', w: 12 }, { l: 'Cause', w: 23 }, { l: 'Reason', w: W - 56 }], NOT_PASSED.map(v => ({ v })), { cursor: 6, focused: focus === 'table' });
+  g.region(1, 3, W - 2, 8, 'DataTable', '#not-passed');
+  g.box(0, 14, W, 15, { f: focus === 'detail' ? 'ac' : 'ln', title: 'Unverified is distinct from a requirement failure' });
+  g.region(0, 14, W, 15, 'Static', '#outcome-detail');
+  para(g, 2, 16, W - 4, 'An unavailable observer, missing prerequisite or absent target cannot prove an application failure. A readable before/after repository with no new T4 commit does prove T4_commit failed. A valid T2 data implementation needs no T3 interface. Discovery limits and unsupported storage formats remain visible as limitations.', 'mu');
+  buttons(g, W - 3, 26, [{ label: 'Missing commit', go: 'CheckMissingCommit' }, { label: 'History unavailable', go: 'CheckHistoryUnavailable' }, { label: 'T2 data only', go: 'CheckT2WithoutUI' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'Results' }, { k: 'o', d: 'Check', go: 'TaskChecks' }, { k: '/', d: 'Filter' }, { k: 'c', d: 'Cause' }]);
   return g;
 }
 
@@ -172,16 +96,16 @@ export function checkOutcomes(sz, focus = 'table') {
 
 export function screenshots(sz, focus = 'list') {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
-  header(g, 'AxBenchmark', 'R-0928a-4 · T5.3 · screenshots');
+  header(g, 'AxBenchmark', 'R-0928a-4 · T5_remove · screenshots');
   resultBar(g, false, 'Captured by Playwright for Python after each browser check · 1440×1000 and 390×844 · evidence for inspection, not a pass');
   const lf = focus === 'list';
   g.box(0, 2, W, 8, { f: lf ? 'ac' : 'ln', title: 'T5 screenshots · 8', sub: 'o open in the system viewer' });
-  table(g, 1, 3, W - 2, [{ l: 'Check', w: 7 }, { l: 'After step', w: 30 }, { l: 'Viewport', w: 20 }, { l: 'File', w: W - 2 - 67 }, { l: 'Size', w: 10, al: 'right' }], [
-    { v: ['T5.3', '4 · Tab to Remove, Enter', 'desktop 1440×1000', 'verify/T5/T5.3-desktop.png', '212 KB'] },
-    { v: ['T5.3', '4 · Tab to Remove, Enter', 'mobile 390×844', 'verify/T5/T5.3-mobile.png', '96 KB'] },
-    { v: ['T5.2', '3 · quantity set to 3', 'desktop 1440×1000', 'verify/T5/T5.2-desktop.png', '208 KB'] },
-    { v: ['T5.2', '3 · quantity set to 3', 'mobile 390×844', 'verify/T5/T5.2-mobile.png', '94 KB'] },
-    { v: ['T5.1', '2 · added to the cart', 'desktop · mobile', '2 files', '301 KB'] },
+  table(g, 1, 3, W - 2, [{ l: 'Check', w: 19 }, { l: 'After step', w: 18 }, { l: 'Viewport', w: 20 }, { l: 'File', w: W - 2 - 67 }, { l: 'Size', w: 10, al: 'right' }], [
+    { v: ['T5_remove', '4 · Tab to Remove, Enter', 'desktop 1440×1000', 'verify/T5/T5_remove-desktop.png', '212 KB'] },
+    { v: ['T5_remove', '4 · Tab to Remove, Enter', 'mobile 390×844', 'verify/T5/T5_remove-mobile.png', '96 KB'] },
+    { v: ['T5_quantity', '3 · quantity set to 3', 'desktop 1440×1000', 'verify/T5/T5_quantity-desktop.png', '208 KB'] },
+    { v: ['T5_quantity', '3 · quantity set to 3', 'mobile 390×844', 'verify/T5/T5_quantity-mobile.png', '94 KB'] },
+    { v: ['T5_add', '2 · added to the cart', 'desktop · mobile', '2 files', '301 KB'] },
   ], { cursor: 0, focused: lf });
   g.region(1, 3, W - 2, 6, 'DataTable', '#shots');
   // Proportional frames: 1440×1000 and 390×844 at one cell = 7.8×16 px.
@@ -190,7 +114,7 @@ export function screenshots(sz, focus = 'list') {
     g.box(x, 11, w, dh, { f: 'ln', title });
     lines.forEach((l, i) => g.text(x + Math.floor((w - len(l)) / 2), 11 + Math.floor(dh / 2) - 2 + i, l, i === 0 ? 'bd' : 'mu'));
   };
-  frame(1, dw, 'desktop 1440×1000', ['Screenshot preview', 'terminals cannot show images reliably', 'o opens T5.3-desktop.png', '', 'shape drawn to scale']);
+  frame(1, dw, 'desktop 1440×1000', ['Screenshot preview', 'terminals cannot show images reliably', 'o opens T5_remove-desktop.png', '', 'shape drawn to scale']);
   frame(dw + 4, mw, 'mobile 390×844', ['Preview', 'o opens', 'mobile.png']);
   g.region(1, 11, dw + mw + 3, dh, 'Horizontal', '#shot-frames');
   para(g, dw + mw + 7, 12, W - dw - mw - 8, 'Images show what the browser rendered after the step. They support inspection and judging; the check outcome comes from the executable assertion alone.', 'mu');
@@ -207,14 +131,14 @@ export function verifyProgress(sz) {
   step(g, m.x, y++, m.w, 'done', 'T4 snapshot preserved · commit 5b1e9a0');
   step(g, m.x, y++, m.w, 'done', 'Disposable copy created · verification tools stay outside it');
   step(g, m.x, y++, m.w, 'done', 'index.html opened directly in Chromium · Playwright for Python 1.52');
-  step(g, m.x, y++, m.w, 'now', 'Running checks · 2 of 2 · T4.2 Lookup reflects the current inventory');
+  step(g, m.x, y++, m.w, 'now', 'Running checks · 2 of 2 · T4_commit repository advancement');
   progress(g, m.x + 2, y++, m.w - 2, 50);
   step(g, m.x, y++, m.w, 'todo', 'Screenshots · desktop 1440×1000 · mobile 390×844');
   step(g, m.x, y++, m.w, 'todo', 'Discard the copy · keep snapshot, logs and screenshots');
   g.region(m.x, m.y, m.w, 7, 'Vertical', '#verify-steps');
   y++;
   g.text(m.x, y++, 'So far', 'bd');
-  g.text(m.x, y, '✓', 'ac'); g.text(m.x + 2, y++, fit('T4.1 Lookup finds a product the user asks for · passed · 1.8 s', m.w - 2));
+  g.text(m.x, y, '✓', 'ac'); g.text(m.x + 2, y++, fit('T4_lookup Lookup finds a product the user asks for · passed · 1.8 s', m.w - 2));
   y++;
   para(g, m.x, y, m.w, 'A check that cannot run is recorded as unverified with its reason, never as passed. Generated code is never repaired, even when setup exposes a defect.', 'mu');
   buttons(g, m.right, m.bottom, [{ label: 'Hide', v: 'primary', go: 'RunConfig', focus: true }]);
@@ -234,7 +158,7 @@ export function judgeHandoff(sz) {
   for (const t of [
     `Delivered artifact · T7 snapshot ${COMMITS.T7}`,
     'Specification, the seven task prompts and rubric web v1',
-    'Check outcomes · per task and final regression · 18✓ 3✗ each',
+    'Check outcomes · per task and final regression · 27✓ 3✗ each',
     '14 screenshots from the final regression · desktop + mobile per task area',
     'Keyboard traces from the final regression',
     'Browser console errors · 2',
@@ -252,8 +176,8 @@ export function judgeHandoff(sz) {
 // ---------------------------------------------------------------- evidence viewer (l, Open log / snapshot / evidence)
 
 const EV_LOG = [
-  ['18:41:02', 'verify', 'T7.1 The site works end to end in a real browser'],
-  ['18:41:02', 'verify', `disposable copy of T7 snapshot 9e41c07 → /tmp/axb-verify-7f3a/ws`],
+  ['18:41:02', 'verify', 'T5_persistence Cart survives reopening'],
+  ['18:41:02', 'verify', `disposable copy of T5 snapshot 4e7a1c9 → /tmp/axb-verify-7f3a/ws`],
   ['18:41:02', 'verify', 'tooling outside the copy · Playwright for Python 1.52'],
   ['18:41:02', 'browser', 'launch chromium (headless) …'],
   ['18:41:03', 'browser', '✗ Executable doesn’t exist at ~/Library/Caches/ms-playwright/chromium-1161/'],
@@ -262,15 +186,15 @@ const EV_LOG = [
   ['18:41:03', 'verify', 'exit 127 after 0.4 s · no step ran'],
   ['18:41:03', 'verify', 'outcome ? unverified · cause: missing prerequisite (browser)'],
   ['18:41:03', 'verify', 'never recorded as passed or failed · no repair attempted'],
-  ['18:41:03', 'verify', 'copy discarded · T7 snapshot 9e41c07 unchanged'],
+  ['18:41:03', 'verify', 'copy discarded · T5 snapshot 4e7a1c9 unchanged'],
 ];
 
 const EV_FILES = [
-  ['checks/T7.1.log', 'check log', '1.2 KB'],
+  ['checks/T5_persistence.log', 'check log', '1.2 KB'],
   ['checks/final-regression.log', 'check log', '18 KB'],
-  ['logs/T7.log', 'task log', '412 KB'],
-  ['snapshots/T7 @ 9e41c07', 'snapshot', '38 files'],
-  ['screenshots/T7.1-desktop.png', 'image', '—'],
+  ['logs/T5.log', 'task log', '412 KB'],
+  ['snapshots/T5 @ 4e7a1c9', 'snapshot', '38 files'],
+  ['screenshots/T5_persistence-desktop.png', 'image', '—'],
   ['review/judge-A.json', 'review', '6.1 KB'],
   ['measurements/cost.json', 'measure', '3.4 KB'],
   ['record.yaml', 'record', '9.8 KB'],
@@ -281,7 +205,7 @@ export function evidenceViewer(sz, focus = 'text') {
   header(g, 'AxBenchmark', compact ? 'R-0928a-3 · evidence' : 'Result R-0928a-3 · evidence');
   g.fill(0, 1, W, 1, 'B1');
   g.text(1, 1, fit(compact
-    ? 'R-0928a-3 · Grok CLI · checks/T7.1.log · read-only'
+    ? 'R-0928a-3 · Grok CLI · checks/T5_persistence.log · read-only'
     : '● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · read-only · ~/.axbenchmark/results/R-0928a-3/', W - 2));
   g.region(0, 1, W, 1, 'Static', '#evidence-bar');
   const lw = compact ? 0 : 44;
@@ -293,8 +217,8 @@ export function evidenceViewer(sz, focus = 'text') {
     g.box(0, 14, lw, H - 16, { f: 'ln', title: 'File' });
     g.region(0, 14, lw, H - 16, 'Static', '#evidence-meta.kv');
     let y = kv(g, 2, 15, 9, lw - 4, [
-      ['Path', 'checks/T7.1.log'],
-      ['Task', 'T7 Test and fix · check T7.1'],
+      ['Path', 'checks/T5_persistence.log'],
+      ['Task', 'T5 Shopping cart · check T5_persistence'],
       ['Size', '1.2 KB · 11 lines · text'],
       ['SHA-256', '5c1e09d2…a77b40e3'],
       ['Payload', '✓ listed in the manifest'],
@@ -303,7 +227,7 @@ export function evidenceViewer(sz, focus = 'text') {
     para(g, 2, y + 1, lw - 4, 'Read-only evidence retained with the result. Opening a file never changes its outcomes or grades. Long files are paged.', 'mu');
   }
   const tf = focus === 'text', x = lw, w = W - lw, th = H - 4;
-  g.box(x, 2, w, th, { f: tf ? 'ac' : 'ln', title: 'checks/T7.1.log', sub: 'lines 1–11 of 11 · end' });
+  g.box(x, 2, w, th, { f: tf ? 'ac' : 'ln', title: 'checks/T5_persistence.log', sub: 'lines 1–11 of 11 · end' });
   g.region(x, 2, w, th, 'TextArea', '#evidence-text  read_only=True');
   EV_LOG.forEach(([t, src, m], i) => {
     const yy = 3 + i, bad = m.startsWith('✗') || m.includes('unverified');
@@ -317,7 +241,7 @@ export function evidenceViewer(sz, focus = 'text') {
       g.text(x + 23, yy, fit(m, w - 25), bad ? 'bd' : '');
     }
   });
-  if (!compact) notice(g, x + 2, 3 + EV_LOG.length + 1, w - 4, 'info', 'Opened from Outcomes · T7.1 · ? unverified', 'Snapshots open as a read-only file list at their commit; images and other binary files open in the system viewer (o).');
+  if (!compact) notice(g, x + 2, 3 + EV_LOG.length + 1, w - 4, 'info', 'Opened from Outcomes · T5_persistence · ? unverified', 'Snapshots open as a read-only file list at their commit; images and other binary files open in the system viewer (o).');
   if (compact) {
     footer(g, [{ k: 'esc', d: 'Back', go: 'ResultOutcomes' }, { k: 'e', d: 'Files' }, { k: 'o', d: 'Open' }, { k: 'f', d: 'Reveal' }, { k: 'end', d: 'End' }]);
     return g;

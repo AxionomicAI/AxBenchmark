@@ -72,7 +72,7 @@ export function runListDetail(sz, focus = 'list') {
   const g = new Grid(sz.cols, sz.rows), W = g.w, H = g.h;
   header(g, 'AxBenchmark', 'Run 2026-10-01-a');
   g.fill(0, 1, W, 1, 'B1');
-  g.text(1, 1, fit('● 3 of 4 running · jobs 4 · list and detail below 100×30', W - 2));
+  g.text(1, 1, fit('run_mbp_20261001a · mike-mbp-m4 · selected codex_medium / trial 1', W - 2));
   g.region(0, 1, W, 1, 'Static', '#run-bar');
   const lf = focus === 'list', LW = 26;
   g.box(0, 2, LW, H - 3, { f: lf ? 'ac' : 'ln', title: 'Configurations' });
@@ -81,14 +81,14 @@ export function runListDetail(sz, focus = 'list') {
   g.region(1, 3, LW - 2, 5, 'ListView', '#lane-list');
   let y = 9;
   LANES.forEach(([h, , , now]) => { g.text(2, y, fit(h.split(' ')[0], 7), 'mu'); g.text(9, y++, fit(now, LW - 11)); });
-  para(g, 2, y + 1, LW - 4, 'Select to show its tasks and log on the right.', 'mu');
+  para(g, 2, y + 1, LW - 4, 'Select a configuration and trial. Historical logs keep that trial.', 'mu');
 
   const x = LW, w = W - LW;
   const df = focus === 'tasks';
   g.box(x, 2, w, 6, { f: df ? 'ac' : 'ln', title: 'Codex · gpt-6-sol · medium' });
   g.region(x, 2, w, 6, 'Vertical', '#lane-detail.pane');
   ['T1 ✓', 'T2 ✓', 'T3 ✓', 'T4 ✓', 'T5 ●', 'T6 ○', 'T7 ○'].forEach((t, i) => { g.text(x + 2 + i * 7, 3, t.slice(0, 2), t.endsWith('●') ? 'bd' : 'mu'); g.text(x + 5 + i * 7, 3, t.slice(-1), t.endsWith('○') ? 'mu' : 'ac'); });
-  kv(g, x + 2, 4, 9, w - 4, [['Now', 'T5 Shopping cart · 10:58 in task'], ['Elapsed', '41:12 · $1.92 reported'], ['Checks', 'T1–T4 13✓ · T4 1 blocked action']]);
+  kv(g, x + 2, 4, 9, w - 4, [['Now', 'T5 Shopping cart · 10:58 in task'], ['Elapsed', '41:12 · $1.92 reported'], ['Checks', 'T1–T4 17✓ · T4 1 blocked action']]);
   const sf = focus === 'search', gf = focus === 'log';
   g.box(x, 8, w, H - 9, { f: sf || gf ? 'ac' : 'ln', title: 'Log · T4–T5', sub: '2 matches · n next' });
   g.region(x, 8, w, H - 9, 'RichLog', '#log');

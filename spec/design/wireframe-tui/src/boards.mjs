@@ -54,7 +54,7 @@ const LIB_KEYS = [
   ['enter', 'configure / reopen', 'Configure a run for the selected revision (Setup · M07); on a draft row, reopen the draft where it was left (M16)'],
   ['a', 'about', 'InventoryAboutScreen (M09). Enabled only on the built-in inventory row; dimmed via check_action otherwise'],
   ['?', 'app.help', 'App-wide Help (M15), never About'],
-  ['delete', 'discard_draft', 'Draft rows only: ConfirmScreen (M15), then the draft folder is deleted'],
+  ['delete', 'delete_revision / discard_draft', 'Revision row: M15 ConfirmScreen with templates.get effect/token, then templates.delete; draft row: confirm planning.discard. Engine refusal dims both binding and palette. Escape sends nothing.'],
   ['o', 'open_template', 'Open TemplateScreen'],
   ['n', 'new_template', 'Push NewTemplateScreen'],
   ['d / e', 'duplicate / revise', 'Push ReviseScreen with the mode preselected'],
@@ -238,7 +238,7 @@ const MODAL_KEYS = (extra) => [['esc', 'dismiss(None)', 'Close without changes']
 // ---------------------------------------------------------------- boards
 
 const S = (name, title, def) => ({ name, title, ...def });
-const LIB_STATES = [['Default', 'Library'], ['Drafts', 'LibraryDrafts'], ['Discard draft', 'DraftDiscard'], ['Look-alike', 'LibraryLookAlike'], ['Newer built-in', 'LibraryUpgrade'], ['Loading', 'LibraryLoading'], ['Empty', 'LibraryEmpty'], ['Error', 'LibraryError'], ['No harness', 'LibraryNoHarness']];
+const LIB_STATES = [['Delete revision', 'RevisionDeleteConfirm'], ['Built-in refusal', 'RevisionDeleteBuiltin'], ['Active-run refusal', 'RevisionDeleteActiveRun'], ['Results refusal', 'RevisionDeleteHasResults'], ['Changed plan', 'RevisionDeleteChanged'], ['Pending publication', 'RevisionDeletePending'], ['Default', 'Library'], ['Drafts', 'LibraryDrafts'], ['Discard draft', 'DraftDiscard'], ['Look-alike', 'LibraryLookAlike'], ['Newer built-in', 'LibraryUpgrade'], ['Loading', 'LibraryLoading'], ['Empty', 'LibraryEmpty'], ['Error', 'LibraryError'], ['No harness', 'LibraryNoHarness']];
 const TPL_STATES = [['Tasks', 'TemplateTasks'], ['Identity', 'TemplateIdentity'], ['Configurations', 'TemplateConfigs'], ['Results', 'TemplateResults'], ['Empty · loading · error', 'WidgetStates']];
 const libLegend = (notes) => ({ screen: 'LibraryScreen', file: 'tui/screens/library.py', tree: LIB_TREE, sel: LIB_SEL, keys: LIB_KEYS, states: LIB_STATES, notes });
 const tplLegend = (notes) => ({ screen: 'TemplateScreen', file: 'tui/screens/template.py', tree: TPL_TREE, sel: TPL_SEL, keys: TPL_KEYS, states: TPL_STATES, notes });
@@ -260,7 +260,7 @@ export const GROUPS = [
       'delete or Discard draft… asks through the shared ConfirmScreen (M15). A draft has no SHA-256, so nothing else can refer to it.',
       'a About is dimmed: it only applies to the built-in inventory row (D2).',
     ]) }),
-    S('DraftDiscard', 'Discard draft · confirm', { sizes: ['wide'], focus: { wide: [['cancel', 'Button #cancel'], ['discard', 'Button #confirm']] }, render: (sz, f) => draftDiscard(sz, f), legend: { screen: 'ConfirmScreen (M15, shared)', file: 'tui/widgets/confirm.py', tree: `ConfirmScreen(ModalScreen[bool])\n├─ Vertical #confirm .dialog\n│  ├─ Static #confirm-subject\n│  ├─ Static #confirm-body\n│  └─ Horizontal .dialog-actions\n│     ├─ Button #cancel          default focus\n│     └─ Button #confirm .-error\n└─ Footer`, sel: [...modalSel('#confirm', 72), ['Button.-error', 'text-style: bold underline;  destructive']], keys: MODAL_KEYS([['enter', 'choose', 'Activate the focused button; Cancel has focus first']]), states: LIB_STATES, notes: ['Instance of the shared ConfirmScreen drawn on the M15 page; the Library supplies subject and body.', 'Only the draft folder is deleted. Repository, templates, configurations and results are untouched.'] } }),
+    S('DraftDiscard', 'Discard draft · confirm', { sizes: ['wide'], focus: { wide: [['cancel', 'Button #cancel'], ['discard', 'Button #confirm']] }, render: (sz, f) => draftDiscard(sz, f), legend: { screen: 'ConfirmScreen (M15, shared)', file: 'tui/screens/confirm.py', tree: `ConfirmScreen(ModalScreen[bool])\n├─ Vertical #confirm .dialog\n│  ├─ Static #confirm-subject\n│  ├─ Static #confirm-body\n│  └─ Horizontal .dialog-actions\n│     ├─ Button #cancel          default focus\n│     └─ Button #confirm .-error\n└─ Footer`, sel: [...modalSel('#confirm', 72), ['Button.-error', 'text-style: bold underline;  destructive']], keys: MODAL_KEYS([['enter', 'choose', 'Activate the focused button; Cancel has focus first']]), states: LIB_STATES, notes: ['Instance of the shared ConfirmScreen drawn on the M15 page; the Library supplies subject and body.', 'Only the draft folder is deleted. Repository, templates, configurations and results are untouched.'] } }),
     S('LibraryLookAlike', 'Library · look-alike selected', { sizes: ['wide'], focus: { wide: [['templates', 'DataTable #templates'], ['why', 'Button #why-not-default'], ['detail', 'Button #configure']] }, render: (sz, f) => library(sz, f, { sel: 'lookalike' }), legend: libLegend([
       'Selecting a look-alike of the default (same name, different task count) shows Why not the default? (#why-not-default), which opens VariantScreen (M09, capability can_compare_default).',
       'a About is dimmed in the Footer: it is enabled only on the built-in inventory row (D2). ? stays the app-wide Help.',

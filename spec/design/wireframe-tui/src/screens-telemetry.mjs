@@ -147,7 +147,7 @@ export function energyDetail(sz, focus = 'table') {
   const m = modal(g, 86, 22, 'How energy was derived · run 2026-09-24-lab', { sel: '#energy-detail' });
   let y = m.y;
   table(g, m.x, y, m.w, [{ l: 'Domain', w: 15 }, { l: 'Method', w: 25 }, { l: 'Events', w: 19 }, { l: 'Result', w: m.w - 59 }], [
-    { v: ['CPU package', 'RAPL counter delta', '1 wraparound fixed', '38.6 Wh · 100%'] },
+    { v: ['CPU package', 'RAPL counter delta', '1 wrap · continuity proven', '38.6 Wh · 100%'] },
     { v: ['CPU cores', 'RAPL · inside package', 'not added again', { t: '○ shown, not summed', f: 'mu' }] },
     { v: ['GPU board', 'NVML power × 1 s', { t: '74 s gap at 30:40', f: 'bd' }, { t: '112.4 Wh ▲ estimate', f: 'bd' }] },
     { v: ['Rest of host', 'no sensor', '—', { t: 'unknown', f: 'it' }] },
@@ -155,8 +155,8 @@ export function energyDetail(sz, focus = 'table') {
   g.region(m.x, y, m.w, 5, 'DataTable', '#energy-domains');
   y += 6;
   y = kv(g, m.x, y, 14, m.w, [
-    ['Preferred', 'energy counters; power samples only where no counter exists'],
-    ['Gap', 'not interpolated · GPU energy is partial (97% of the window)'],
+    ['Source choice', 'one selected source per physical domain; rejected duplicates retained'],
+    ['Reset / gap', 'ambiguous decrease or gap stays uncovered; known range alone proves no wrap'],
     ['Overlap', 'package already includes cores · never package + cores'],
     ['Label', 'estimated from power · never a wall-socket measurement'],
     ['Allocation', 'none · 3 configurations ran concurrently'],

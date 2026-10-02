@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1120px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Weights · invalid values</b> · WeightsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -186,11 +186,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Rankings.dc.html">Original</a><a href="RankingsProfileDefaults.dc.html">Profile defaults</a><a href="RankingsTrials.dc.html">Trials</a><a href="ScoreBreakdown.dc.html">Breakdown</a><a href="WeightsEditor.dc.html">Weights</a><a href="WeightsInvalid.dc.html">Invalid</a><a href="RankingsAlternative.dc.html">Alternative</a></div>
 <h3>Notes</h3>
-<ul><li>Rejected: negative, non-finite, unknown component, all-zero set; the message names the input (R145).</li><li>Apply and Save preset are disabled until both sets are valid. Previews show — instead of a percentage.</li></ul>
+<ul><li>Rejected: negative, non-finite, unknown component, all-zero set; the message names the input (R145).</li><li>Apply and Save preset are disabled until both sets are valid. Previews show — instead of a percentage.</li><li>Implementation owner M06. API seam: scoring.weight_choices/preview_weights/validate_weights; configs.set_weights or analysis return value.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1120}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1240}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

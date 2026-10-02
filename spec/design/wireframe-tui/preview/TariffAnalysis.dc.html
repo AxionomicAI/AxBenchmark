@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1580px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1700px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Tariff · analysis setting in Results</b> · CurrencyEnergyScreen · analysis · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -228,11 +228,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="MeasurementsTrials.dc.html">3 trials</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="TariffAnalysis.dc.html">Tariff · analysis</a><a href="ResultsAnalysisTariff.dc.html">Results · tariff (M02)</a><a href="ResultsTrials.dc.html">Results · trials (M02)</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
 <h3>Notes</h3>
-<ul><li>D4: opened from Results after the runs. A changed tariff recalculates energy estimates only and is labelled alternative, like alternative weights; the recorded tariff stays in every original record.</li><li>R-0919lab-1: 80.7 Wh × 0.22 = $0.02 instead of the recorded $0.01. Parallel local results stay unknown at any tariff.</li><li>Reset to recorded removes the alternative everywhere (Results, Rankings, report).</li><li>R3-2: only the tariff is an analysis setting. There is no display currency at analysis time; values keep each run’s frozen display currency, and a view spanning runs with different display currencies shows USD and says so.</li></ul>
+<ul><li>D4: opened from Results after the runs. A changed tariff recalculates energy estimates only and is labelled alternative, like alternative weights; the recorded tariff stays in every original record.</li><li>R-0919lab-1: 80.7 Wh × 0.22 = $0.02 instead of the recorded $0.01. Parallel local results stay unknown at any tariff.</li><li>Reset to recorded removes the alternative everywhere (Results, Rankings, report).</li><li>R3-2: only the tariff is an analysis setting. There is no display currency at analysis time; values keep each run’s frozen display currency, and a view spanning runs with different display currencies shows USD and says so.</li><li>Implementation owner M10. API seam: measurements.accounting/preview_accounting/validate_accounting; configs.set_execution for setup; analysis returns tariff only.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1580}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1700}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

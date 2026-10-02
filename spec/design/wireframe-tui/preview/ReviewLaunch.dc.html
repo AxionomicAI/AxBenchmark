@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1080px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Review before launch</b> · ReviewLaunchScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -184,11 +184,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Setup.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
 <h3>Notes</h3>
-<ul><li>Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings (trials with task-run and judge-session totals, sampling interval, display currency, tariff, billing kinds) and limitations (R032, R033, R037).</li><li>What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.</li><li>Launch goes to TrialBudgetWarning when launch validation returns trial_budget_warning (R3-7), otherwise straight to the identity check.</li></ul>
+<ul><li>Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings (trials with task-run and judge-session totals, sampling interval, display currency, tariff, billing kinds) and limitations (R032, R033, R037).</li><li>What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.</li><li>Launch goes to TrialBudgetWarning when launch validation returns trial_budget_warning (R3-7), otherwise straight to the identity check.</li><li>Implementation owner M07. API seam: configs.review; runs.launch(draft_id,preview_digest,execution adjustments).</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1080}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1200}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

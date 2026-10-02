@@ -1,6 +1,6 @@
 # AxBenchmark TUI navigation graph · M01–M18
 
-Terminal UI for [SPEC.md](../../SPEC.md), built with Python **Textual**. This set covers
+Proposed Textual terminal UI for [SPEC.md](../../SPEC.md). This set covers
 [M01 · Template library and immutable identity](../../modules/01-template-library-identity.md),
 [M02 · Retained results and comparability](../../modules/02-retained-results-comparability.md),
 [M03 · Environment readiness](../../modules/03-environment-readiness.md),
@@ -19,13 +19,15 @@ Terminal UI for [SPEC.md](../../SPEC.md), built with Python **Textual**. This se
 [M16 · Custom template planning and baseline capture](../../modules/16-custom-template-planning.md),
 [M17 · Portable ZIP exchange and validation](../../modules/17-zip-exchange.md) and
 [M18 · Optional CPU and GPU monitoring](../../modules/18-hardware-monitoring.md), plus the shared design system.
-Each module has its own canvas page; compact frames share one page. M13 also includes a low-fidelity wireframe of the
+Canvas groups follow modules for browsing, while [the ownership ledger](ownership-ledger.md) assigns actual screen/state/API ownership; compact frames share one page. M13 also includes a low-fidelity wireframe of the
 generated HTML file, and M14 frames are plain terminal output on the same character grid.
 
 Node IDs match the artboards in the [wireframe preview](preview/preview.html). Each frame is a fixed character grid at
 **120×40** (reference) and, for primary screens, **80×24** (compact reflow, suffix `-80x24`). The design is proposed,
 not implemented. Example data is fictional, except the inventory task titles and prompts, which are quoted from
 [`benchmark/tasks/`](../../../benchmark/tasks/).
+
+The [screen/state/API ownership ledger](ownership-ledger.md) exhaustively lists the source catalogs, rendered sizes and future contract-only acceptance states. Its latter table covers lifecycle, recovery and error cases that reuse existing screen families without separate artboards. A preview build verifies static geometry and source consistency, not runtime Textual behavior. Module parents and implementation children remain normative.
 
 ## Design system in one screen
 
@@ -53,11 +55,19 @@ widget's bounds labelled with its Textual class and selector.
 
 ```mermaid
 flowchart LR
-    Library["Library · LibraryScreen"] -->|o / enter on row| TemplateTasks["Revision · tasks"]
+    Library["Library · LibraryScreen"] -->|o on revision| TemplateTasks["Revision · tasks"]
+    Library -->|enter on revision| Setup
+    Library -->|delete on deletable revision| RevisionDeleteConfirm
+    RevisionDeleteConfirm -->|cancel / escape| Library
+    RevisionDeleteConfirm -.->|plan changed| RevisionDeleteChanged
+    Library -.->|disabled Delete reason| RevisionDeleteBuiltin
+    Library -.->|active run| RevisionDeleteActiveRun
+    Library -.->|retained results| RevisionDeleteHasResults
+    Library -.->|publication pending| RevisionDeletePending
     Library -->|ctrl+p| CommandPalette["Command palette"]
     Library -->|a on the built-in row| InventoryAbout["About · M09"]
     Library -->|draft row| LibraryDrafts["Drafts"]
-    LibraryDrafts -->|enter| Planning["Reopen draft · M16"]
+    LibraryDrafts -->|enter| PlanReopened["Reopen draft · M16"]
     LibraryDrafts -->|delete| DraftDiscard["Discard · ConfirmScreen"]
     Library -.->|look-alike row| LibraryLookAlike["Look-alike · a dimmed"]
     LibraryLookAlike -->|Why not the default?| InventoryVariant
@@ -71,6 +81,7 @@ flowchart LR
 
 - The built-in seven-task inventory benchmark r1 is the default selection and runs without a planner call.
 - Rows show name, project type, source, task count, revision, SHA-256, saved configurations and results; the description is in the detail pane (wide) or summary strip (compact).
+- Delete is context-sensitive in the footer and palette: revision rows use the current `templates.get` effect/config count/lineage warning and plan token, while draft rows confirm `planning.discard`. All six revision-deletion boards have wide/compact layouts, Cancel initially focused and cancellation back to the selected Library row. Built-in, active-run, retained-result and pending-publication refusals disable mutation; a changed plan requires fresh confirmation.
 - `#env-bar` shows harness readiness and the active run, reattachable with `ctrl+r`.
 - With no harness: planning and runs are dimmed; browsing, ZIP exchange and saved results stay available.
 - `a` opens the inventory About screens and is enabled only on the built-in inventory row; elsewhere it is dimmed. `?` stays the app-wide Help.
@@ -210,7 +221,8 @@ flowchart LR
 flowchart LR
     Environment -->|m| Catalog["Model catalog"]
     Catalog -->|o| CatalogOverride["Override · inherit / value / unknown"]
-    Catalog -->|r| CatalogRates["Exchange rates · to USD"]
+    Catalog -->|b| CatalogBilling["Account billing · all models and versions"]
+    Catalog -->|x| CatalogRates["Exchange rates · units per USD"]
     Catalog -.->|refresh fails| CatalogRefreshFailed["Last valid catalog kept"]
     TemplateConfigs -->|add entry| ModelPicker["Add entry · known efforts"]
     ModelPicker -.->|support unknown| ModelPickerUnknown["Harness default only"]
@@ -220,8 +232,10 @@ flowchart LR
 - Unknown stays unknown. Unknown effort support offers only harness default, which passes no effort argument.
 - Override fields are tri-state (Inherit · Value · Unknown); Unknown stops resolution with source “override”. Prices come from per-provider price sources during refresh, with source URL and date.
 - The harness's own default model is labelled in the catalog and the entry picker but never preselected for a competitor entry.
-- Billing kind (api, subscription, local, unknown) is per account: read from the harness status by M05's probe, or declared in the override form (`#override-billing`, Inherit · Value · Unknown) and labelled “declared by user”. It is frozen at launch and shown with the cost basis (M10); unknown never yields a verified $0.
-- `r` opens `CatalogRates`: rates to USD collected only during an explicit refresh, each with source and date. A rate you supply overrides the collected one and is labelled “supplied by you”. A failed refresh keeps the last valid rates. A currency without a rate converts to unknown (`no_rate_conversion`).
+- Billing kind (api, subscription, local, unknown) is per account: read from the harness status by M05's probe, or declared in CatalogBilling (`#billing-mode`, Inherit · Value · Unknown) and labelled “declared by user”. It is frozen at launch and shown with the cost basis (M10); unknown never yields a verified $0.
+- `x` opens `CatalogRates`: rates in currency units per 1 USD collected only during an explicit refresh, each with source and date. A rate you supply overrides the collected one and is labelled “supplied by you”. A failed refresh keeps the last valid rates. A currency without a rate converts to unknown (`no_rate_conversion`).
+
+Catalog controls are separate scopes (R156/R157, F16/F19). `o` opens the model-only CatalogOverride (efforts, default, image, prices and price currency); its Save issues only `catalog.save_override`. `b` opens CatalogBilling with the full harness/target/account identity, an all-model/all-version explanation and Value/Inherit/Unknown modes; Save issues only `catalog.save_account_override`. `x` opens CatalogRates. Its editable value is currency units per **1 USD**, COP **4000**; USD identity is read-only. Billing and Rates both have wide/compact boards. Typed save errors keep the form; Cancel sends nothing. Removing a supplied rate saves Inherit through the same rate command, with no reciprocal calculation.
 
 ## 10 · M05 · Headless execution and isolation
 
@@ -301,9 +315,9 @@ flowchart LR
 
 - Checks run on a disposable copy of the task snapshot, with tooling outside the workspace and no repairs. Each is passed, failed or unverified.
 - Not passed has four causes that stay distinct: application failure, missing prerequisite, verifier error, not run.
-- The final regression runs every check on the delivered artifact; both columns are kept. The judge gets the evidence without the measured statistics, including the screenshots from the final regression (inventory: 14, one desktop and one mobile per task area). Per-task screenshots stay in evidence, results and the report.
+- At-task and final each have 30 outcomes. Final targets are 19 delivered-artifact observations and 11 original task-history observations; final history never substitutes T7 HEAD. Both phase columns are retained. The judge gets the evidence without the measured statistics, including the screenshots from the final regression (inventory: 14, one desktop and one mobile per task area). Per-task screenshots stay in evidence, results and the report.
 - `EvidenceViewer` shows retained logs, snapshots and evidence read-only (`#evidence-files`, `#evidence-text`, paged); `o` opens externally, `f` reveals the folder.
-- The 21 check titles live in `src/checks-data.mjs` and are shared with the M01 task tab.
+- The exact 30 M09 check IDs, titles and observation metadata live in `src/checks-data.mjs` and are shared with the M01 task tab.
 
 ## 14 · M09 · Default inventory benchmark
 
@@ -311,13 +325,15 @@ flowchart LR
 flowchart LR
     Library -->|"a About"| InventoryAbout["Frozen contract"]
     InventoryAbout -->|p| InventoryPrompts["Preserved prompts · verbatim"]
-    InventoryAbout -->|c| InventoryChecks["Check coverage · 21"]
+    InventoryAbout -->|c| InventoryChecks["Check coverage · 30"]
     InventoryAbout -->|enter| Setup
     LibraryLookAlike -->|Why not the default?| InventoryVariant["Look-alike is not the default"]
     LibraryUpgrade -->|What changed| InventoryUpgrade["Newer built-in · r1 and r3 not comparable"]
 ```
 
 - The prompts are read from `benchmark/tasks/` when the wireframes are built, so the frame always shows the preserved text.
+- `InventoryChecks` shows the exact 30-check suite, T1–T7 counts 6/4/5/2/6/4/3, and selected requirement/phase/target/observation/evidence detail. There is no display-only “Also checked” assertion; the DTO keeps `also_checked: []`. The fixture shows a scroll position, with every row in the source catalog.
+- Pi has 27/30 at-task and 27/30 final: at-task failures `T5_remove`, `T5_persistence`, `T6_history`; final failures `T4_lookup`, `T5_remove`, `T6_history`. `CheckMissingCommit` fails `T4_commit` only from readable non-advancing history; `CheckHistoryUnavailable` is unverified; `CheckT2WithoutUI` passes supported data observations without a T3 interface. `CheckMissingBrowser` names `T5_persistence`.
 - Choices the prompts leave open (product attributes, lookup matching, currency, stock conflicts, order structure) are listed and not checked.
 - A newer built-in revision never replaces a default that already has results; the Library offers it with a notice.
 
@@ -338,11 +354,11 @@ flowchart LR
 
 - Every task and the configuration total show wall time, input, cached, output and reasoning tokens, cost, checks and status, each with source and coverage. Reasoning ⊂ output and cached ⊂ input are shown apart and never added.
 - Benchmark elapsed is the sum of task processes; queue, planning, verification and judging are separate, and the experiment duration is clock time.
-- Cost bases (D4): reported · verified $0 (reported $0, complete usage, not a subscription) · estimate (known usage × the price table recorded at launch, labelled with its price source and retrieval date) · energy estimate · unknown with its reason. Subscriptions, unknown billing and missing prices or rates are never $0.
+- Cost bases (D4): reported · verified zero (complete evidence and supported billing, confirmed by M10) · estimate (known usage × the price table recorded at launch, labelled with its price source and retrieval date) · energy estimate · unknown with its reason. Subscriptions, unknown billing and missing prices or rates are never $0.
 - Billing (R3-1): `CostBasis` shows each result's billing kind frozen at launch (api, subscription, local, unknown), read from the harness status output (“api · harness status”) or declared per account in the catalog and labelled “declared by user” (R-0928a-1). Unknown billing never yields a verified $0.
 - Currencies (R3-2): costs are computed, aggregated and ranked in USD. A price in another currency converts to USD with the run's frozen rate; without one the estimate is unknown with `no_rate_conversion` (shown in `CostBasis` as an example; every r1 price is in USD). Values display in each run's frozen display currency (all four r1 runs froze USD); a view spanning runs with different display currencies shows USD and says so. There is no display currency to choose at analysis time.
 - A local endpoint in a sequential run is costed as an energy estimate: kWh in its execution windows × the frozen tariff, labelled with its measured scope (CPU package + GPU). In a parallel run shared energy is never divided, so its cost stays unknown (reason `parallel_energy_shared`) and it leaves cost-weighted rankings. In the fixture the Pi results of runs with jobs 2–4 are unknown and R-0919lab-1 (jobs 1) is $0.01.
-- `CurrencyEnergyScreen` has two modes. Setup (`c` in Setup) holds the display currency (`#display-currency`, default USD), shows the catalog's exchange rates to USD with source and date (`#rate-table`, collected by M04 during an explicit refresh; a user-supplied rate is labelled “supplied by you”), states what launch freezes as the `RateSnapshot` beside the price snapshot (every price currency, the display currency and the tariff currency; a missing rate is frozen as missing and its values show `no_rate_conversion`) and holds the electricity tariff (`#tariff-per-kwh`, `#tariff-currency`). Analysis (`e` in Results, `TariffAnalysis`) changes only the tariff, as an alternative with “Reset to recorded” (`#reset`); only energy estimates are recalculated.
+- `CurrencyEnergyScreen` has two modes. Setup (`c` in Setup) holds the display currency (`#display-currency`, default USD), shows the catalog's exchange rates in currency units per 1 USD with source and date (`#rate-table`, collected by M04 during an explicit refresh; a user-supplied rate is labelled “supplied by you”), states what launch freezes as the `RateSnapshot` beside the price snapshot (every price currency, the display currency and the tariff currency; a missing rate is frozen as missing and its values show `no_rate_conversion`) and holds the electricity tariff (`#tariff-per-kwh`, `#tariff-currency`). Analysis (`e` in Results, `TariffAnalysis`) changes only the tariff, as an alternative with “Reset to recorded” (`#reset`); only energy estimates are recalculated.
 - Partial measurements (D11) keep ▲ and their coverage (“covers 5 of 7 tasks”) in every table and count as missing in any ranking where they carry weight.
 - Trials (D7): default 1; with N, each trial is a separate result shown as its own row, followed by `#trial-summary` (mean of cost, time and quality, min–max range). Rankings use the means; a configuration is eligible only when every trial is. Fixture: Orders REST API r3, run 2026-09-27-t (`TRIAL_CONFIGS`).
 - Numbers agree with `src/results-data.mjs` and the M02 Outcomes tab (R-0928a-3, R-0925b-2, run 2026-09-28-a).
@@ -371,7 +387,7 @@ flowchart LR
 - Default: one configuration per harness at once, up to four; more entries of one harness queue in its lane (`RunQueued`). `--jobs 1` runs one at a time (`RunSequential`). Tasks are always sequential.
 - `RunFailures`: an authentication failure halts only its configuration; a timeout or ordinary failure continues from the resulting workspace with no rerun; harness-internal retries are recorded.
 - Detaching or closing only stops observing. Stop is the one action that ends work and it cleans up processes, services, browser contexts and ports.
-- `RunHalted` (D9): approved revision files are read-only on disk; the first detected change halts the whole run with explicit-stop cleanup. Every configuration is recorded as interrupted with reason “template identity invalidated”, the approved and computed SHA-256 and the changed paths; evidence is kept, nothing is rebound or compared. `status` shows the same reason (`CliHalted`).
+- `RunHalted` (D9): approved revision files are read-only on disk; the first detected change halts the whole run with explicit-stop cleanup. Unsealed results become interrupted; sealed facts remain immutable, and every result inherits the run invalidation with approved/computed SHA-256 and changed paths; evidence is kept, nothing is rebound or compared. `status` shows the same reason (`CliHalted`).
 - `RunOverview` is drawn at 120×40 only; below 100×30 the run is `RunListDetail` (W6). There is no compact lanes table.
 - `HarnessLive` (`v` on a lane, in `RunConfig` or in the compact list): one configuration's current task process. A one-line task header (task, model, effort as requested and as observed), output tok/s with a 60 s sparkline, context used of the model's window, the code being written as a live diff of the workspace, and the thinking and actions beside it. Read-only: it never sends input, and leaving it changes nothing in the run.
 - Each live value names its source (reported by the harness or endpoint, or measured from the stream). Thinking is shown only as the harness exposes it and labelled when summarized; a harness that reports no context or reasoning shows `?` and a dimmed `t` (`HarnessLiveLimited`). Context restarts with every task, because each task is a new conversation.
@@ -427,8 +443,8 @@ flowchart LR
 
 - Unattended runs validate and freeze like the TUI (the frozen records include the price and rate snapshots with the display currency), print plain progress and never ask a question. Ctrl-C stops watching only.
 - Trial budget (R3-7): when M07 returns `trial_budget_warning` (more than 5 trials for a configuration not on a local endpoint), `run --no-tui` prints it as a ▲ line with the totals (5 configurations × 6 trials × 7 tasks = 210 task runs, 30 judge sessions) and continues without reading stdin (`CliRunReport`). The TUI shows the same totals in the shared `ConfirmScreen` (`TrialBudgetWarning`, M07).
-- Report wait (R3-3): after a completed run, `run --no-tui` waits for the completion report and prints its path and open attempt; a failed report prints its error and `axbenchmark report RUN_ID` and still exits 0; `--no-wait-report` exits after the outcome and prints the regeneration command.
-- Exit codes (D1, W8): 0 success, including a run that completed with failed or unverified tasks · 1 typed error (rejected package, not found, incomplete configuration, a followed run that was stopped or interrupted, with the reason printed) · 2 usage · 3 engine unreachable or incompatible. `status` exits 0 whatever the run state; scripts read task failures from `status RUN_ID --json`.
+- Report wait (R3-3): after a completed run, `run --no-tui` waits for the completion report and prints its path and open attempt; a failed report prints its error and `axbenchmark report RUN_REF` and still exits 0; `--no-wait-report` exits after the outcome and prints the regeneration command.
+- Exit codes (D1, W8): 0 success, including a run that completed with failed or unverified tasks · 1 typed error (rejected package, not found, incomplete configuration, a followed run that was stopped or interrupted, with the reason printed) · 2 usage · 3 engine unreachable or incompatible. `status` exits 0 whatever the run state; scripts read task failures from `status RUN_REF --json`.
 - `doctor` reports an insufficient collector permission with the fix from the collector guide; it never suggests `sudo` and has no root mode (D5). `doctor` also lists approved revision folders whose read-only modes (files 0444, folders 0555) were changed, with expected and found modes and the restore remedy; it never offers `chmod` or `sudo` (R3-6). `doctor --verify` (R3-4) shows a `[y/N]` prompt on a terminal listing the harnesses and that each makes one minimal model call (default No); `--yes` consents without a prompt; without a terminal and without `--yes` it exits 2 naming `--yes` and sends nothing. Each consented call is recorded in readiness (D15). `models refresh` prints one price line per provider (first-version sources: Anthropic, OpenAI, xAI) with source and retrieval date, or “kept last valid prices”, and one rate line per rate source (source, source date, retrieval date, currencies collected to USD), with user-supplied rates listed as kept and labelled.
 
 ## 20 · M15 · Terminal interface
@@ -497,7 +513,7 @@ flowchart LR
 
 - Five ordered steps: safe boundary, definition, result compatibility, existing identities, registration. Any failure adds nothing; nothing runs, installs or calls a model.
 - A relay machine never replaces a result's origin. Mismatched results can join only a separately validated embedded revision, never r1.
-- The result-package picker reuses M01's `#zip-path` and `#zip-browser` (W3).
+- The result-package picker uses M17-owned `#zip-path` and `#zip-browser` (W3).
 
 ## 23 · M18 · Hardware monitoring
 
@@ -517,12 +533,24 @@ flowchart LR
 - The sampling interval (`#sampling-interval`, D18) is a run-configuration setting, 0.5–10 s, default 1 s, frozen at launch and outside the template identity. A collector that cannot sample that fast uses its own minimum; each collector's actual interval is recorded and shown, never the requested one.
 - In a sequential run the windows' energy × tariff is the local configuration's cost for rankings, labelled “energy estimate” with its scope (D4).
 
+## Ownership and implementation follow-through
+
+- All fourteen ZIP boards, their screens and VMs are M17-owned in `tui/screens/exchange.py` and `tui/viewmodels/exchange.py`; M17 also owns `zip_picker` and `validation_order`. M01/M02 only provide entrypoints/factories. NewTemplateScreen is M01; CollectorGuideScreen is M03; JudgeCapabilityScreen is M12 in `judge_capability.py`. M15 owns CommandPalette, WidgetStates and the presentation-only RunListDetail widget; M11 supplies run data and handles actions.
+- Run routes take RunUid; labels and origin are shown for people. Historical logs/checks/measurements use explicit TrialRef or ResultId. Run-level Stop remains enabled during original judging, finalizing and retention pending according to ActionState; completed configurations have no independent Stop. StopCleanup keeps cleanup, retention and report outcomes separate. The ledger maps finalizing/retention errors and all report dispositions to RunOverview/RunReattached without claiming rendered lifecycle transitions.
+- Judging retains result/trial identities, durable settlement and not-judged dispositions. Original RUN stop delegates run stop; REJUDGE cancellation affects only the added review. Settling, persistence pending, interrupted, invalidated and missing-raw variants map to M12's existing screen families in the ledger.
+- Report status is durable: succeeded/written, failed, cancelled or skipped settles the wait; retention/persistence pending is an explicit typed condition. Commit wins a late cancellation, and opener failure retains the written path. Plans revalidate readiness and invalidation at submit. CLI resolves RUN_REF to UID, prints launch warnings once from durable initial progress and forwards tariff only as paired `--tariff AMOUNT_PER_KWH --tariff-currency CODE`.
+- Cost/mean/min/max views retain exact values, display currency, frozen RateUse and billing provenance; clients never reconstruct them. A reported numeric zero without qualifying evidence remains unknown with `unverified_zero_cost`; missing conversion remains `no_rate_conversion`. Mixed frozen display currencies show USD. No analysis-time display-currency override is added.
+- PlanReview and PlanReopened derive the selected task's checks and snapshot label from T4, including compact copy. Runtime uses `planning.draft_task.snapshot_label`, `planning` and the current `job:<id>` subscriptions. Approval submits the preview's version as `base_version`; stale versions reload and require new approval. Canonical baseline/executable-mode facts remain engine-supplied.
+- Telemetry distinguishes requested, effective and observed collector intervals; one source per physical domain is selected before overlap removal. Rejected sources, known-range resets and uncovered gaps remain evidence. Sequential windows carry TrialRef. Provisional, close-pending and error variants map to existing M18 screens in the ledger.
+
 ## Files
 
 - `index.html` redirects to `preview/preview.html`.
-- `animation.html` is an animated walkthrough of the preloaded inventory benchmark from the shell prompt to the opened HTML report (13 chapters, about 1:45, play/pause, chapter scrubber, speed and theme). It is generated by `node src/animation.mjs` from the same screen functions, plus the in-between states (typing, freezing, run time-lapse, judging, report writing).
+- `animation.html` is an animated walkthrough of the preloaded inventory benchmark from the shell prompt to the opened HTML report (15 chapters, about 2:14, play/pause, chapter scrubber, speed and theme). It is generated by `node src/animation.mjs` from the same screen functions, plus the in-between states (typing, freezing, run time-lapse, judging, report writing).
 - `preview/` holds the generated canvas index `canvas.json`, one `.dc.html` per artboard and the flat `preview.html` (theme and size selectable). The canvas entry `Main.dc.html` is the navigation map. Suffixes: none = 120×40, `-80x24` = 80×24.
 - `src/` is the generator: `node src/build.mjs`. `lib.mjs` is the character-grid renderer and Textual widget drawers (it throws when a footer or table does not fit its cells), `theme.mjs` the tokens and CSS, `screens.mjs` the M01 frames and copy, `boards.mjs` the M01 artboards and legends, `system.mjs` the design system, navigation map and widget-state matrix.
-- M02–M09: `screens-results.mjs` (M02 and M06), `screens-readiness.mjs` (M03 and M04), `screens-execution.mjs` (M05), `screens-setup.mjs` (M07), `screens-verify.mjs` (M08), `screens-inventory.mjs` (M09), `checks-data.mjs` (the 21 checks), `results-data.mjs` (the shared result fixture and the M06 scoring contract) and `boards-modules.mjs` (their pages, groups and legends).
+- M02–M09: `screens-results.mjs` (M02 and M06), `screens-readiness.mjs` (M03 and M04), `screens-execution.mjs` (M05), `screens-setup.mjs` (M07), `screens-verify.mjs` (M08), `screens-inventory.mjs` (M09), `checks-data.mjs` (the 30-check catalog), `results-data.mjs` (the shared result fixture and the M06 scoring contract) and `boards-modules.mjs` (their pages, groups and legends).
 - M10–M18: `screens-measure.mjs` (M10), `screens-run.mjs` (M11), `screens-judging.mjs` (M12), `screens-report.mjs` (M13, including the report page and its CSS), `screens-cli.mjs` (M14), `screens-tui.mjs` (M15), `screens-planning.mjs` (M16), `screens-exchange.mjs` (M17), `screens-telemetry.mjs` (M18) and `boards-later.mjs` (their pages, groups and legends). A board whose only size is 80×24 (`RunListDetail`) sits on its module page. `screens-tui.mjs` also holds the shared `PromptScreen` drawer.
 - Add later modules by adding screen functions and a group with a `page` in `boards-later.mjs`; the design system, legends and canvas layout are shared.
+
+Static checks: `node src/build.mjs`, `node src/animation.mjs`, `node src/verify.mjs`. The generated ledger identifies rendered states separately from future Textual/Pilot and real-provider integration tests.

@@ -1,3 +1,12 @@
+# Application record: all original questions, explanations, suggestions, options,
+# answers and notes below are preserved history, not current policy.
+# application.clauses links the current normative SPEC/module clauses; they take
+# precedence over historical wording. applied means incorporated into specification
+# and design contracts, not implemented or runtime-verified functionality.
+# refined_by identifies later decisions in OPEN-QUESTIONS-R3.yaml; resolution records
+# their refinements and any superseded suggestion. Original response instructions
+# remain below as historical context.
+#
 # Open questions, round 2: follow-ups to the answers in OPEN-QUESTIONS.yaml.
 #
 # Each item has an explanation and a suggestion. To accept the suggestion,
@@ -22,6 +31,14 @@ follow_ups:
       b: Any reported $0 counts, including subscriptions (contradicts SPEC §5; needs a SPEC change).
     answer: we need to create something to scrape the prices from each provider so we could have a table to compute this in case the harness does not provide the price
     notes:
+    application:
+      status: applied
+      clauses:
+        - "04-model-catalog.md#catalog-information-contract"
+        - "10-measurements-cost.md#cost-basis-and-currency"
+        - "06-scoring-rankings.md#eligibility-and-exceptional-data"
+      refined_by: [R3-1, R3-5]
+      resolution: "The answer adds collected provider prices, frozen at launch, for API-equivalent estimates. R3-5 fixes provider-source coverage and R3-1 adds account billing declarations. The unaccepted 'never zero' suggestion is not current policy: F08 retains numeric zero estimates as unverified and excludes them from lowest-cost and positive-cost-weight rankings."
 
   - id: R2-2
     refers_to: P4
@@ -41,6 +58,13 @@ follow_ups:
       c: In Results only, after the run.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "07-run-configuration.md#configuration-behavior"
+        - "10-measurements-cost.md#cost-basis-and-currency"
+      refined_by: [R3-2]
+      resolution: "An optional tariff with currency is set in Setup/YAML and frozen at launch; Results can apply an alternative tariff without changing the record. R3-2 adds collected or supplied exchange rates frozen at launch; an alternative tariff without its required frozen rate remains unknown."
 
   - id: R2-3
     refers_to: P4
@@ -64,6 +88,12 @@ follow_ups:
       c: Count it in parallel runs too, with an equal split of shared energy (contradicts SPEC §7).
     answer: b
     notes:
+    application:
+      status: applied
+      clauses:
+        - "10-measurements-cost.md#cost-basis-and-currency"
+        - "06-scoring-rankings.md#eligibility-and-exceptional-data"
+      resolution: "Sequential local configurations may rank on measured execution-window energy times tariff, labelled with scope; parallel shared energy is not allocated. Missing or partial inputs retain their eligibility limits, and current F08 excludes unverified zero estimates from cost-dependent rankings."
 
   - id: R2-4
     refers_to: P7
@@ -83,6 +113,15 @@ follow_ups:
       c: Same, but only the last trial is judged.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "11-run-orchestration.md#scheduling-contract"
+        - "12-quality-judging.md#review-inputs-and-execution"
+        - "06-scoring-rankings.md#calculations"
+        - "07-run-configuration.md#configuration-behavior"
+      refined_by: [R3-7]
+      resolution: "Each trial starts from a fresh baseline, runs sequentially within its configuration and receives a separate judge session. Rankings use means, show min-max and require every expected trial to qualify. R3-7 adds no upper limit and the more-than-five-trials warning for non-local competitors."
 
   - id: R2-5
     refers_to: P9
@@ -102,6 +141,14 @@ follow_ups:
       b: Only the warning; do not make files read-only.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#library-and-revision-operations"
+        - "01-template-library-identity.md#identity-and-launch-invariants"
+        - "11-run-orchestration.md#launch-boundary-and-invariants"
+      refined_by: [R3-6]
+      resolution: "Approved files are read-only; duplicate/revise warns before editing when the revision has an active run. Detected mutation halts and invalidates the whole run while retaining evidence. R3-6 adds app-managed removal and doctor mode-drift reporting; current deletion rules make only retired directories writable."
 
   - id: R2-6
     refers_to: P15
@@ -120,6 +167,13 @@ follow_ups:
       c: Block until the harness becomes usable some other way.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "16-custom-template-planning.md#planner-selection-and-review"
+        - "03-environment-readiness.md#required-readiness-behavior"
+      refined_by: [R3-4]
+      resolution: "No confirmed-usable planner yields an error with Verify now; explicit consent authorizes one minimal call per harness, with recorded outcomes before preselection. R3-4 adds CLI prompt/--yes consent and exit 2 for a noninteractive invocation without --yes."
 
   - id: R2-7
     refers_to: P2
@@ -131,6 +185,12 @@ follow_ups:
       a: As suggested.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#4-screens"
+        - "09-default-inventory-benchmark.md#3-requires-from-other-modules"
+      resolution: "Library a opens InventoryAboutScreen and is shown in the Footer for built-in inventory rows; ? remains app-wide Help."
 
   - id: R2-8
     refers_to: W9
@@ -147,6 +207,12 @@ follow_ups:
       b: No; service rows can only be changed by regenerating the plan.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "16-custom-template-planning.md#planner-selection-and-review"
+        - "16-custom-template-planning.md#4-screens"
+      resolution: "ServiceEditScreen/PlanServiceEdit is the modal for command, working directory, port and readiness check, styled like the task editor and showing field-specific validation errors."
 
 confirmations:
   # Details I will apply unless you change them. Write `answer: ok` or your correction.
@@ -157,6 +223,12 @@ confirmations:
       A completed run exits 0 even with failed tasks. Scripts detect task failures by reading
       `axbenchmark status RUN_ID --json`.
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "14-command-line-interface.md#unattended-execution-and-lifecycle"
+      refined_by: [R3-3]
+      resolution: "Completed runs exit 0 despite task failures; scripts inspect status --json. R3-3 adds default report waiting and --no-wait-report, while a failed completion report still leaves a completed run's exit code at 0."
 
   - id: C2
     refers_to: P11
@@ -164,6 +236,11 @@ confirmations:
       The "partial counts as missing" rule also applies to elapsed time: a partial time excludes the
       entry from rankings where time has positive weight.
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "06-scoring-rankings.md#eligibility-and-exceptional-data"
+      resolution: "Partial elapsed time counts as missing for rankings requiring time, including combined rankings with positive time weight; the partial value and coverage remain visible."
 
   - id: C3
     refers_to: P17
@@ -172,6 +249,12 @@ confirmations:
       If it is unknown, the model field stays empty and must be picked. The planner never runs
       without an explicit model.
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "04-model-catalog.md#catalog-information-contract"
+        - "16-custom-template-planning.md#planner-selection-and-review"
+      resolution: "Harness configuration/status supplies the catalog default without a model call; an unknown default leaves the planner model empty and requires an explicit selection before planning."
 
   - id: C4
     refers_to: P18
@@ -179,21 +262,45 @@ confirmations:
       Sampling interval 0.5–10 s, default 1 s, frozen with the run. Each collector's actual interval
       is recorded and shown.
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "18-hardware-monitoring.md#conceptual-data-and-operations"
+        - "07-run-configuration.md#configuration-behavior"
+      resolution: "Sampling accepts 0.5-10 seconds, defaults to 1 second and is frozen at launch; each collector's actual interval is separately recorded and shown."
 
   - id: C5
     refers_to: P3
     item: Remove the "unlinked historical results" mentions from M01 and M09.
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#library-and-revision-operations"
+        - "09-default-inventory-benchmark.md#4-screens"
+      resolution: "Historical README runs stay outside the app; M01 and M09 associate displayed results only through verified SHA-256, with no unlinked-history view."
 
   - id: C6
     refers_to: W4
     item: "`c` on Setup opens the currency/energy screen."
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "07-run-configuration.md#4-screens"
+        - "10-measurements-cost.md#currencyenergyscreen--artboard-currencyenergy"
+      resolution: "Setup c opens CurrencyEnergyScreen; saving returns accounting settings to configs.set_execution before launch."
 
   - id: C7
     refers_to: W5
     item: "`p` on a run configuration opens the verification progress screen."
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "08-verification-evidence.md#verifyprogressscreen--artboard-verifyprogress"
+        - "11-run-orchestration.md#screens-owned-elsewhere-that-consume-m11"
+      resolution: "RunConfigScreen p opens VerifyProgressScreen for the selected explicit TrialRef, preserving the selected trial through progress and evidence navigation."
 
   - id: C8
     refers_to: P10, W10
@@ -201,3 +308,10 @@ confirmations:
       Drafts are saved to disk under ~/.axbenchmark/drafts/, so they survive an engine exit and appear
       as "draft" rows in the Library.
     answer: ok
+    application:
+      status: applied
+      clauses:
+        - "07-run-configuration.md#conceptual-data-and-operations"
+        - "16-custom-template-planning.md#baseline-and-approval-invariants"
+        - "01-template-library-identity.md#library-and-revision-operations"
+      resolution: "Setup and planning drafts persist under ~/.axbenchmark/drafts/ across engine exits. Unfinished planning drafts appear as Library draft rows; interrupted planning reopens as failed and never resumes silently."

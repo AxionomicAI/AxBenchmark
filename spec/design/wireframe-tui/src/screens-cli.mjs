@@ -46,16 +46,16 @@ export function cliHelp(sz) {
   s.cols(['  Command', 'Does'], W, 'mu');
   [
     ['axbenchmark', 'open the TUI · library, setup, readiness', 'Library'],
-    ['axbenchmark --attach RUN_ID', 'observe a running run · never restarts tasks', 'RunReattached'],
+    ['axbenchmark --attach RUN_REF', 'observe a running run · never restarts tasks', 'RunReattached'],
     ['axbenchmark run --config benchmark.yaml --no-tui', 'validate, freeze, run unattended · plain output', 'CliRun'],
-    ['axbenchmark status RUN_ID', 'saved status and failures · no TUI needed', 'CliStatusStop'],
-    ['axbenchmark stop RUN_ID', 'stop and clean up processes and services', 'CliStatusStop'],
+    ['axbenchmark status RUN_REF', 'saved status and failures · no TUI needed', 'CliStatusStop'],
+    ['axbenchmark stop RUN_REF', 'stop and clean up processes and services', 'CliStatusStop'],
     ['axbenchmark models refresh', 'discover models · keeps the last valid catalog', 'CliDoctor'],
     ['axbenchmark doctor', 'check prerequisites · actionable guidance', 'CliDoctor'],
     ['axbenchmark report RUN_DIR', 'regenerate the offline report · no model calls', 'CliExchange'],
     ['axbenchmark templates export TEMPLATE_SHA --output template.zip', 'export one exact revision', 'CliExchange'],
     ['axbenchmark templates import template.zip', 'validate, recompute SHA-256, then add', 'CliExchange'],
-    ['axbenchmark results export RUN_ID --output results.zip', 'records, evidence, provenance and the template', 'CliExchange'],
+    ['axbenchmark results export RUN_REF --output results.zip', 'records, evidence, provenance and the template', 'CliExchange'],
     ['axbenchmark results import results.zip --template TEMPLATE_SHA', 'validate identities and digests, then add', 'CliExchange'],
   ].forEach(([c, d, go]) => { s.cols([`  ${c}`, d], W, (i) => (i === 0 ? '' : 'mu')); s.g.link(1, s.y - 1, W[0] - 1, 1, 'go:' + go); });
   s.gap();
@@ -86,7 +86,7 @@ export function cliRun(sz) {
     s.out('Frozen → runs/2026-10-02-a/ · template, config, weights, prices, rates');
     s.out('jobs 4 · one per harness · tasks sequential · 3:00:00/task', 'mu');
     s.gap();
-    [['09:12:06', 'start  #1 claude #3 codex #4 grok #5 pi'], ['09:12:06', 'queue  #2 claude high · after #1'], ['09:17:10', '#1 claude T1 ✓ exit 0  5:04  2✓'], ['09:21:40', '#4 grok   T1 ✓ exit 0  9:34  2✓'], ['09:23:55', '#3 codex  T1 ✓ exit 0 11:49  2✓'], ['09:25:33', '#1 claude T2 ✓ exit 0  8:23  4✓'], ['09:26:20', '#5 pi     T1 ✓ exit 0 14:14  2✓'], ['09:31:52', '#5 pi     T2 using T1 commit 41d0e2a']].forEach(([t, m]) => s.out(`${t}  ${m}`));
+    [['09:12:06', 'start  #1 claude #3 codex #4 grok #5 pi'], ['09:12:06', 'queue  #2 claude high · after #1'], ['09:17:10', '#1 claude T1 ✓ exit 0  5:04  6✓'], ['09:21:40', '#4 grok   T1 ✓ exit 0  9:34  6✓'], ['09:23:55', '#3 codex  T1 ✓ exit 0 11:49  6✓'], ['09:25:33', '#1 claude T2 ✓ exit 0  8:23  4✓'], ['09:26:20', '#5 pi     T1 ✓ exit 0 14:14  6✓'], ['09:31:52', '#5 pi     T2 using T1 commit 41d0e2a']].forEach(([t, m]) => s.out(`${t}  ${m}`));
     s.gap();
     s.out('Ctrl-C stops watching; the run continues.', 'mu');
     s.out('  axbenchmark --attach 2026-10-02-a', '', { go: 'RunQueued' });
@@ -110,11 +110,11 @@ export function cliRun(sz) {
     ['09:12:06', '#4', 'grok-cli', 'start', 'grok-4.7-fast · harness default'],
     ['09:12:06', '#5', 'pi', 'start', 'qwen3.5-35b-a3b · harness default'],
     ['09:12:06', '#2', 'claude-code', 'queued', 'starts when #1 ends (same harness)'],
-    ['09:17:10', '#1', 'claude-code', 'T1 ✓ exit 0 · 5:04', 'checks 2✓ · $0.31 estimate'],
-    ['09:21:40', '#4', 'grok-cli', 'T1 ✓ exit 0 · 9:34', 'checks 2✓ · $0.05 estimate'],
-    ['09:23:55', '#3', 'codex', 'T1 ✓ exit 0 · 11:49', 'checks 2✓ · $0.58 reported'],
+    ['09:17:10', '#1', 'claude-code', 'T1 ✓ exit 0 · 5:04', 'checks 6✓ · $0.31 estimate'],
+    ['09:21:40', '#4', 'grok-cli', 'T1 ✓ exit 0 · 9:34', 'checks 6✓ · $0.05 estimate'],
+    ['09:23:55', '#3', 'codex', 'T1 ✓ exit 0 · 11:49', 'checks 6✓ · $0.58 reported'],
     ['09:25:33', '#1', 'claude-code', 'T2 ✓ exit 0 · 8:23', 'checks 4✓ · $0.49 estimate'],
-    ['09:26:20', '#5', 'pi', 'T1 ✓ exit 0 · 14:14', 'checks 2✓ · cost unknown · local, parallel'],
+    ['09:26:20', '#5', 'pi', 'T1 ✓ exit 0 · 14:14', 'checks 6✓ · cost unknown · local, parallel'],
     ['09:29:12', '#4', 'grok-cli', 'T2 ✓ exit 0 · 7:32', 'checks 4✓ · $0.12 estimate'],
     ['09:31:52', '#5', 'pi', 'T2 running', 'from the T1 workspace · commit 41d0e2a'],
   ].forEach((r) => s.cols(r, W, (i, c) => (i === 0 || i === 1 ? 'mu' : i === 3 && c.includes('✓') ? '' : i === 4 ? 'mu' : '')));
@@ -282,7 +282,7 @@ export function cliDoctor(sz) {
   s.out('  ▲ prices xAI · x.ai/api could not be read · kept last valid prices from 2026-09-15');
   s.out('  ○ prices local endpoint · none · no API charge · cost from energy only in sequential runs', 'mu');
   // R3-2 · one line per rate source (rates to USD), then user-supplied rates, kept and labelled.
-  s.out('  ✓ rates open.er-api.com/v6/latest/USD · EUR GBP CNY to USD · source date 2026-10-01 · retrieved 2026-10-01 21:38');
+  s.out('  ✓ rates open.er-api.com/v6/latest/USD · EUR GBP CNY units/USD · source date 2026-10-01 · retrieved 2026-10-01 21:38');
   s.out('  ● rates COP · supplied by you (4000.00 per USD, 2026-10-02) · kept, labelled · overrides the collected 4016.06');
   s.out('Catalog 2026.10.01-2214 · 1 source and 1 price page failed · no model was assumed compatible · exit 0', 'mu');
   s.gap();

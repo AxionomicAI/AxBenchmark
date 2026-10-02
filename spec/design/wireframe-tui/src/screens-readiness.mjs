@@ -252,14 +252,14 @@ const providerTree = (sel) => [
   { t: 'OpenRouter · personal', depth: 1, last: true },
 ];
 
-// R3-2 · exchange rates to USD, collected by M04's ExchangeRateSource during an explicit refresh (never during a run).
+// R3-2 · exchange units per USD, collected by M04's ExchangeRateSource during an explicit refresh (never during a run).
 // A user-supplied rate overrides the collected one and is labelled. The README's historical COP rate is never used.
 export const RATES = [
   { cur: 'USD', rate: '1', layer: 'fixed', src: '—', at: '—' },
-  { cur: 'EUR', rate: '1.0839', layer: 'collected', src: 'open.er-api.com/v6/latest/USD', at: '2026-10-01 16:00' },
-  { cur: 'GBP', rate: '1.2706', layer: 'collected', src: 'open.er-api.com/v6/latest/USD', at: '2026-10-01 16:00' },
-  { cur: 'CNY', rate: '0.1391', layer: 'collected', src: 'open.er-api.com/v6/latest/USD', at: '2026-10-01 16:00' },
-  { cur: 'COP', rate: '0.000250', layer: 'override', src: 'supplied by you · collected 0.000249', at: '2026-10-02 09:12', user: true },
+  { cur: 'EUR', rate: '0.9226', layer: 'collected', src: 'open.er-api.com/v6/latest/USD', at: '2026-10-01 16:00' },
+  { cur: 'GBP', rate: '0.7870', layer: 'collected', src: 'open.er-api.com/v6/latest/USD', at: '2026-10-01 16:00' },
+  { cur: 'CNY', rate: '7.1891', layer: 'collected', src: 'open.er-api.com/v6/latest/USD', at: '2026-10-01 16:00' },
+  { cur: 'COP', rate: '4000', layer: 'override', src: 'supplied by you · collected 4016.06', at: '2026-10-02 09:12', user: true },
 ];
 
 const modelCols = (w) => [{ l: 'Model', w: w - 64 }, { l: 'Supported efforts', w: 22 }, { l: 'Default', w: 9 }, { l: 'Image', w: 6 }, { l: 'Price in/out', w: 13 }, { l: 'Source', w: 14 }];
@@ -270,7 +270,7 @@ export function catalog(sz, focus = 'models', st = {}) {
   header(g, 'AxBenchmark', 'Model catalog');
   g.fill(0, 1, W, 1, 'B1');
   if (failed) { g.text(1, 1, '✗', 'bd'); g.text(3, 1, fit(compact ? 'Refresh failed 21:41 · showing last valid data (3 days)' : 'Refresh failed 21:41 · Codex model request timed out · last valid catalog and rates kept (3 days)', W - 18), 'bd'); }
-  else g.text(1, 1, fit(compact ? 'catalog 2026.09.2 · discovered 21:38 · rates 10-01 · 3 overrides' : 'catalog 2026.09.2 · bundled 09-15 · discovered 21:38 · rates to USD 2026-10-01 · 3 overrides, which win', W - 15));
+  else g.text(1, 1, fit(compact ? 'catalog 2026.09.2 · discovered 21:38 · rates 10-01 · 3 overrides' : 'catalog 2026.09.2 · bundled 09-15 · discovered 21:38 · units per USD 2026-10-01 · 3 overrides, which win', W - 15));
   g.text(W - 12, 1, 'F5', 'ac bd'); g.text(W - 9, 1, 'Refresh');
   g.region(0, 1, W, 1, 'Static', '#catalog-bar');
   const models = failed ? CODEX_MODELS : CLAUDE_MODELS;
@@ -292,10 +292,10 @@ export function catalog(sz, focus = 'models', st = {}) {
       ['Pricing', '$1 in · $5 out per Mtok · USD · bundled 2026-09-15'],
       ['Billing', 'subscription · declared by user · account personal'],
       ['Sources', 'override — · discovered: listed only · bundled ✓'],
-      ['Rates', 'to USD · open.er-api.com 2026-10-01 · COP supplied by you'],
+      ['Rates', 'units/USD · open.er-api.com 2026-10-01 · COP supplied by you'],
     ]);
     g.text(2, y + 8, fit('Listed is not ready: access is checked in Environment and at launch.', W - 4), 'mu');
-    footer(g, [{ k: 'esc', d: 'Back', go: 'Environment' }, { k: 'f5', d: 'Refresh' }, { k: 'o', d: 'Override', go: 'CatalogOverride' }, { k: 'r', d: 'Rates', go: 'CatalogRates' }, { k: '/', d: 'Filter' }]);
+    footer(g, [{ k: 'esc', d: 'Back', go: 'Environment' }, { k: 'f5', d: 'Refresh' }, { k: 'o', d: 'Override', go: 'CatalogOverride' }, { k: 'b', d: 'Billing', go: 'CatalogBilling' }, { k: 'x', d: 'Rates', go: 'CatalogRates' }]);
     return g;
   }
 
@@ -308,12 +308,12 @@ export function catalog(sz, focus = 'models', st = {}) {
     ? [['Account', 'personal'], ['Harness', '0.98.0'], ['Catalog', 'for 0.98.x'], ['Source', '◷ cache · 3 d']]
     : [['Account', 'personal'], ['Billing', ['subscription', 'declared by user']], ['Harness', '3.4.1'], ['Catalog', 'for 3.4.x'], ['Source', '✓ live 21:38'], ['Default', 'sonnet-5-5 · config']]);
   const py = para(g, 2, ky + 1, 28, 'The same model name under another harness, provider, account or version is a separate entry.', 'mu');
-  // Rates to USD: collected during an explicit refresh (R3-2); a failed refresh keeps the last valid rates.
+  // Units per USD: collected during an explicit refresh (R3-2); a failed refresh keeps the last valid rates.
   let ry = py + 1;
-  g.text(2, ry, 'Rates to USD', 'bd'); g.text(25, ry, 'r', 'ac bd'); g.link(2, ry++, 28, 1, 'go:CatalogRates');
+  g.text(2, ry, 'Units per USD', 'bd'); g.text(25, ry, 'x', 'ac bd'); g.link(2, ry++, 28, 1, 'go:CatalogRates');
   for (const r of RATES.slice(1)) {
     g.text(2, ry, r.cur, 'mu'); g.text(7, ry, fit(r.rate, 9));
-    g.text(17, ry++, fit(r.user ? '▲ yours 10-02' : failed ? '◷ ecb · 10-01' : 'ecb · 10-01', 13), r.user ? 'bd' : 'mu');
+    g.text(17, ry++, fit(r.user ? '▲ yours 10-02' : failed ? '◷ er-api 10-01' : 'er-api 10-01', 13), r.user ? 'bd' : 'mu');
   }
   g.region(2, py + 1, 28, ry - py - 1, 'Static', '#rates-summary');
   x0 = 32;
@@ -361,7 +361,7 @@ export function catalog(sz, focus = 'models', st = {}) {
     notice(g, dx, y, dw, 'info', 'Listed is not ready', 'Catalog entries describe what is known about a model. Authentication and headless execution come from Environment and are checked again at launch.');
     buttons(g, W - 3, dy + dh - 2, [{ label: 'Add override…', go: 'CatalogOverride', focus: df }, { label: 'Open catalog YAML' }]);
   }
-  footer(g, [{ k: 'esc', d: 'Back', go: 'Environment' }, { k: 'f5', d: 'Refresh' }, { k: 'o', d: 'Override', go: 'CatalogOverride' }, { k: 'r', d: 'Rates', go: 'CatalogRates' }, { k: '/', d: 'Filter' }, { k: 'y', d: 'Open YAML' }, { k: 'tab', d: 'Pane', do: 'next' }]);
+  footer(g, [{ k: 'esc', d: 'Back', go: 'Environment' }, { k: 'f5', d: 'Refresh' }, { k: 'o', d: 'Override', go: 'CatalogOverride' }, { k: 'b', d: 'Billing', go: 'CatalogBilling' }, { k: 'x', d: 'Rates', go: 'CatalogRates' }, { k: '/', d: 'Filter' }, { k: 'y', d: 'Open YAML' }, { k: 'tab', d: 'Pane', do: 'next' }]);
   return g;
 }
 
@@ -387,23 +387,13 @@ export function catalogOverride(sz, focus = 'efforts') {
   row('Price in', '#override-price-in', 'Unknown', 'price', (x, w) => { g.text(x, y, fit('? unknown · source override', w), 'bd'); g.region(x, y, w, 1, 'Input', '#override-price-in'); });
   row('Price out', '#override-price-out', 'Unknown', 'price-out', (x, w) => { g.text(x, y, fit('? unknown · source override', w), 'bd'); g.region(x, y, w, 1, 'Input', '#override-price-out'); });
   y++;
-  // R3-1 · billing kind is declared per account, through the same tri-state override; precedence override › discovered › unknown.
-  const ah = 'Account personal · every model of Claude Code · Anthropic ';
-  g.text(m.x, y, ah, 'bd'); g.hline(m.x + len(ah), y, m.w - len(ah)); y++;
-  row('Billing kind', '#override-billing', 'Value', 'billing', (x, w) => {
-    select(g, x, y, 16, 'subscription', { focus: focus === 'billing-value' });
-    g.text(x + 17, y, fit('declared by user', w - 17), 'bd');
-    g.region(x, y, 16, 1, 'Select', '#override-billing');
-  });
+  row('Price currency', '#override-currency', 'Value', 'currency', (x, w) => { input(g, x, y, 12, 'USD', { focus: focus === 'currency' }); g.region(x, y, 12, 1, 'Input', '#override-currency'); });
   y++;
   g.text(m.x, y++, 'Effect in a run', 'bd');
   for (const [gl, t] of [
     ['✓', 'Efforts low · medium · high are offered in the entry picker (value).'],
     ['?', 'Default effort unknown (inherit): unchosen efforts run at harness default.'],
     ['?', 'Price unknown: no API-equivalent estimate; the bundled $1 / $5 is not used.'],
-    ['?', 'Billing: the harness status does not report it (discovered: unknown).'],
-    ['✓', 'Billing subscription for every model of this account: never a verified $0.'],
-    ['▲', 'Every cost of this account is labelled “subscription · declared by user”.'],
   ]) { g.text(m.x, y, gl, gl === '✓' ? 'ac' : gl === '▲' ? 'bd' : 'it'); g.text(m.x + 2, y++, fit(t, m.w - 2), 'mu'); }
   y++;
   y = para(g, m.x, y, m.w, 'Overrides are your own metadata. They win over discovered and bundled values and survive every refresh, but they never prove account access or the effort a run actually used.', 'mu');
@@ -415,39 +405,49 @@ export function catalogOverride(sz, focus = 'efforts') {
 
 // ---------------------------------------------------------------- M04 · exchange rates (R3-2)
 
-export function catalogRates(sz, focus = 'rates') {
-  const g = catalog(sz, 'none');
-  const m = modal(g, 92, 31, 'Exchange rates · to USD', { sel: '#rates' });
+export function catalogBilling(sz, focus = 'mode') {
+  const g = catalog(sz, 'none'), compact = sz.id === 'compact';
+  const m = modal(g, compact ? 78 : 86, compact ? 20 : 26, 'Account billing', { sel: '#billing' });
   let y = m.y;
-  g.text(m.x, y++, fit('Collected by the catalog refresh (F5) · 2026-10-01 21:38 · 3 collected · 1 yours', m.w), 'bd');
-  y = para(g, m.x, y, m.w, 'Used to convert prices in other currencies and to show any display currency. A run freezes the rates it needs at launch; changes here never reach a frozen run.', 'mu');
+  g.text(m.x, y++, fit('Claude Code · provider Anthropic · account personal', m.w), 'bd');
+  y = para(g, m.x, y, m.w, 'Applies to every model and every harness version in this account.', 'bd') + 1;
+  g.text(m.x, y, 'Declaration', 'mu'); select(g, m.x + 14, y++, 21, 'Value', { focus: focus === 'mode' });
+  g.region(m.x + 14, y - 1, 21, 1, 'Select', '#billing-mode');
+  g.text(m.x, y, 'Billing kind', 'mu'); select(g, m.x + 14, y++, 21, 'subscription', { focus: focus === 'value' });
+  g.region(m.x + 14, y - 1, 21, 1, 'Select', '#billing-value');
   y++;
-  const rf = focus === 'rates';
-  table(g, m.x, y, m.w, [{ l: 'Cur', w: 5 }, { l: 'USD per unit', w: 13 }, { l: 'Layer', w: 12 }, { l: 'Source', w: m.w - 47 }, { l: 'Retrieved', w: 17 }],
-    RATES.map((r) => ({ v: [r.cur, r.rate, r.user ? { t: '▲ override', f: 'bd' } : r.layer, r.user ? { t: r.src, f: 'bd' } : r.src, r.at] })), { cursor: rf ? 4 : -1, focused: rf });
-  g.region(m.x, y, m.w, RATES.length + 1, 'DataTable', '#rates-table');
-  y += RATES.length + 2;
-  g.text(m.x, y++, 'COP · your rate', 'bd');
-  const L = 12;
-  g.text(m.x, y, 'Mode', 'mu'); select(g, m.x + L, y, 12, 'Value', { focus: focus === 'mode' }); g.region(m.x + L, y, 12, 1, 'Select', '#rate-mode');
-  input(g, m.x + L + 14, y, 12, '0.000250', { focus: focus === 'value' }); g.region(m.x + L + 14, y, 12, 1, 'Input', '#rate-value');
-  g.text(m.x + L + 28, y++, fit('USD per COP (4000.00 COP per USD)', m.w - L - 28), 'mu');
-  g.text(m.x, y, 'Collected', 'mu'); g.text(m.x + L, y++, fit('0.000249 · open.er-api.com · 2026-10-01 · kept, used again after Remove', m.w - L), 'mu');
+  for (const [mode, effect] of [['Value', 'subscription · declared by user'], ['Inherit', '? unknown · harness status does not report billing'], ['Unknown', '? unknown · explicitly supplied by you']]) {
+    g.text(m.x, y, mode, 'bd'); g.text(m.x + 10, y++, fit(effect, m.w - 10), 'mu');
+  }
   y++;
-  for (const [gl, t] of [
-    ['✓', 'Rates are collected only during an explicit refresh, never during a run.'],
-    ['◷', 'A failed refresh keeps the last valid rates; offline, this cache is used.'],
-    ['▲', 'Your rate wins over the collected one and is labelled “supplied by you” wherever it is used.'],
-    ['?', 'A currency without a rate converts to unknown (no_rate_conversion), never to a guess.'],
-  ]) { g.text(m.x, y, gl, gl === '✓' ? 'ac' : gl === '?' ? 'it' : 'bd'); y = para(g, m.x + 2, y, m.w - 2, t, 'mu'); }
-  y++;
-  para(g, m.x, y, m.w, 'The README’s historical exchange rate is never used. Saved to ~/.axbenchmark/catalog/overrides.yaml (rates:).', 'mu');
-  buttons(g, m.right, m.bottom, [{ label: 'Remove my rate' }, { label: 'Add rate…' }, { label: 'Close', go: 'Catalog' }, { label: 'Save', v: 'primary', go: 'Catalog', focus: focus === 'save' }]);
-  footer(g, [{ k: 'esc', d: 'Close', go: 'Catalog' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'a', d: 'Add rate' }, { k: 'del', d: 'Remove my rate' }, { k: '^s', d: 'Save', go: 'Catalog' }], '');
+  para(g, m.x, y, m.w, 'Launch freezes billing and its source. Subscription and unknown billing never establish a verified zero.', 'mu');
+  buttons(g, m.right, m.bottom, [{ label: 'Cancel', go: 'Catalog' }, { label: 'Save account', v: 'primary', focus: focus === 'save', go: 'Catalog' }]);
+  footer(g, [{ k: 'esc', d: 'Cancel', go: 'Catalog' }, { k: 'tab', d: 'Next', do: 'next' }, { k: '^s', d: 'Save account', go: 'Catalog' }], '');
   return g;
 }
 
-// ---------------------------------------------------------------- M04 · model and effort picker (Setup · M07 context)
+export function catalogRates(sz, focus = 'rates') {
+  const g = catalog(sz, 'none'), compact = sz.id === 'compact';
+  const m = modal(g, compact ? 78 : 92, compact ? 22 : 31, 'Exchange rates · currency units per 1 USD', { sel: '#rates' });
+  let y = m.y;
+  g.text(m.x, y++, fit('Source date 2026-10-01 · retrieved 2026-10-01 16:00 UTC', m.w), 'mu');
+  table(g, m.x, y, m.w, [{ l: 'Cur', w: 5 }, { l: 'Units / USD', w: 13 }, { l: 'Layer', w: 12 }, { l: 'Source', w: m.w - 30 }],
+    RATES.map((r) => ({ v: [r.cur, r.rate, r.layer, r.user ? 'supplied by you · 10-02 09:12' : r.cur === 'USD' ? 'identity · read only' : 'open.er-api.com · 10-01'] })), { cursor: 4, focused: focus === 'rates' });
+  g.region(m.x, y, m.w, RATES.length + 1, 'DataTable', '#rates-table');
+  y += RATES.length + 2;
+  g.text(m.x, y++, 'COP · your rate · 1 USD = 4000 COP', 'bd');
+  select(g, m.x, y, 12, 'Value', { focus: focus === 'mode' }); g.region(m.x, y, 12, 1, 'Select', '#rate-mode');
+  input(g, m.x + 14, y, 12, '4000', { focus: focus === 'value' }); g.region(m.x + 14, y, 12, 1, 'Input', '#rate-value');
+  g.text(m.x + 28, y++, fit('COP per 1 USD', m.w - 28), 'mu');
+  g.text(m.x, y++, fit('Collected: 4016.06 · kept for Inherit / Remove', m.w), 'mu');
+  if (!compact) {
+    y++;
+    for (const t of ['Value, Inherit or Unknown · USD identity stays read only.', 'Rates change only through explicit refresh or your edits.', 'A run freezes the needed price, display and tariff currency rates.', 'Missing conversion stays unknown; a rate is never guessed.']) y = para(g, m.x, y, m.w, t, 'mu') + 1;
+  }
+  buttons(g, m.right, m.bottom, [{ label: 'Remove my rate' }, { label: 'Close', go: 'Catalog' }, { label: 'Save', v: 'primary', go: 'Catalog', focus: focus === 'save' }]);
+  footer(g, [{ k: 'esc', d: 'Close', go: 'Catalog' }, { k: 'tab', d: 'Next', do: 'next' }, { k: 'a', d: 'Add rate' }, { k: '^s', d: 'Save', go: 'Catalog' }], '');
+  return g;
+}
 
 export function modelPicker(sz, focus = 'model', st = {}) {
   const g = setup(sz, 'none');

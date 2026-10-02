@@ -2,6 +2,18 @@
 
 Status: proposed module contract derived from [SPEC.md](../SPEC.md). This describes required behavior, not implemented functionality. Requirement IDs refer to [source traceability](TRACEABILITY.md).
 
+## Delivery slices
+
+| Child | Bounded implementation | Completed prerequisites beyond Bootstrap |
+|---|---|---|
+| [M18.1 telemetry-domain](implementation/M18/01-telemetry-domain.md) | Pure capabilities, intervals, counter/coverage/source and window rules; F02/F06/F12 | None; publish this vocabulary early for M03/M07/M10 |
+| [M18.2 sampling-lifecycle](implementation/M18/02-sampling-lifecycle.md) | Shared collection, scoped persistence/API and awaited close receipt; F03 | M18.1, M02.2, M11.1–2 |
+| [M18.3 macos-collectors](implementation/M18/03-macos-collectors.md) | psutil/macmon/powermetrics adapters and verified guides | M18.2 |
+| [M18.4 linux-collectors](implementation/M18/04-linux-collectors.md) | Linux psutil/RAPL/NVIDIA/AMD adapters and verified guides | M18.2 |
+| [M18.5 telemetry-screens](implementation/M18/05-telemetry-screens.md) | Monitoring, telemetry, energy/windows and cross-owner guidance/CSV flows | M18.3–4, M10.2, M15.1–2 |
+
+These are implementation prerequisites, not completed software. Bootstrap publishes M18 domain/receipt contracts and M11 RunContext/M05 process-event/M02 recorder fixtures. M18.1 requires no scheduler; M18.2 injects RunContext before the real M11.3–4 integration gate, avoiding a scheduler cycle. Parent completion also requires supported-host evidence and M03/M07/M10/M13/M14/M17 integration; fixture tests alone cannot establish sensor support.
+
 ## Purpose and boundaries
 
 Engineers implementing M18 must enable optional local hardware measurements without making a sensor a prerequisite for benchmarking. Monitoring defaults to automatic detection and may be disabled. Collect available CPU/GPU utilization, memory, power, energy, and temperature information only when compatible tools, hardware, and permissions permit it. A machine with no usable collectors remains able to benchmark. [R013, R102, R146]
@@ -38,7 +50,7 @@ Attribute process-tree CPU time and memory where observable. A separately runnin
 
 Parallel execution remains the default. Shared-device energy belongs to the experiment and must not be divided among concurrent harnesses. Sequential execution permits displaying energy observed during each configuration's execution windows (per trial when a configuration runs several), and supplying it with its scope and coverage to [M10](10-measurements-cost.md), but the display must explicitly include background activity and avoid exclusive-attribution claims. Sequential scheduling alone does not isolate electricity use. [R109, R110, R147]
 
-Prefer energy-counter deltas when available. Otherwise integrate sampled power and label the derived energy as an estimate. Account for resets, wraparound, and missing samples, retaining partial coverage instead of presenting an incomplete interval as fully measured. Preserve the source's definitions and uncertainty. Do not add overlapping package, subdomain, and SoC measurements, and do not describe power estimates as wall-socket measurements. [R112, R113, R147]
+Prefer usable energy-counter deltas when available. Otherwise integrate sampled power and label the derived energy as an estimate. A known counter range alone never proves a wrap: require collector continuity/reset evidence, increasing timestamps, documented counter semantics and plausible delta bounds. Resets, ambiguous decreases and gaps with possible multiple wraps leave uncovered intervals. Preserve source definitions, rejected readings and uncertainty. Resolve competing sources for the same physical domain deterministically before removing parent/subdomain overlap. Do not add overlapping package, subdomain, and SoC measurements, and do not describe power estimates as wall-socket measurements. [R112, R113, R147]
 
 An optional electricity tariff may produce a clearly labeled energy-cost estimate, computed by M10. Its scope follows the underlying measurement: CPU-package or GPU-only readings cannot justify whole-system electricity cost. Keep shared experiment energy of parallel runs separate from per-configuration rankings; in sequential runs, the window energy M18 supplies for a configuration on a local endpoint is what M10 prices as that configuration's "energy estimate" cost, labelled with this scope. Do not add energy charges to reported provider costs. [R110, R114, R155]
 
@@ -72,11 +84,11 @@ Frozen dataclasses, enums and pure functions; no I/O, no asyncio.
 | Type or rule | Content |
 |---|---|
 | `MonitoringMode` | `AUTOMATIC` (default), `OFF`. With `SamplingInterval`, the vocabulary of M07's `ExecutionSettings.monitoring` (`MonitoringChoice(mode, sampling_interval_s)`). **[R102]** |
-| `SamplingInterval` | `Decimal` seconds, `MIN = 0.5`, `MAX = 10`, `DEFAULT = 1`. `validate_interval(value)` raises `InvalidInterval` outside the range or for a non-number; nothing is rounded or clamped. Frozen with the launch; not a template input. **[R106]** |
+| `SamplingInterval` | Finite `Decimal` seconds, `MIN = 0.5`, `MAX = 10`, `DEFAULT = 1`. `validate_interval(value)` raises `InvalidInterval` outside the range or for nonfinite/non-numeric input; nothing is rounded or clamped. Frozen with the launch; not a template input. **[R106]** |
 | `effective_interval(requested, collector_min) -> CollectorInterval` | `max(requested, collector_min)` per collector, with `raised: bool` when the collector's minimum applied. Recorded in every collection and shown wherever an interval is shown; the requested value is never displayed as a collector's actual interval. **[R106, R147]** |
 | `MetricFamily` | `CPU_UTILIZATION`, `GPU_UTILIZATION`, `MEMORY`, `POWER`, `ENERGY`, `TEMPERATURE`. **[R102]** |
 | `Scope` | `PROCESS_TREE`, `HOST`, `CPU_PACKAGE`, `CPU_SUBDOMAIN`, `GPU`, `SOC`, `SOC_SUBDOMAIN`. Every sample, observation and label carries one; there is no unscoped value. **[R108]** |
-| `Domain` | `id` (e.g. `intel-rapl:0`, `intel-rapl:0:0`, `nvidia:0`), `scope`, `label`, `parent: str \| None`. The parent link is how overlap is known. **[R113]** |
+| `Domain` | Collector-local `id`, verified `physical_domain_id` (host/device identity plus measured domain, never just a device index), `scope`, metric definition, `label`, `parent: str \| None`, and alias/overlap evidence. Unknown alias relationships remain explicitly unresolved and cannot justify a summed total. **[R113]** |
 | `CollectorId` | `PSUTIL`, `MACMON`, `POWERMETRICS`, `POWERCAP_RAPL`, `NVIDIA_SMI`, `AMD_SMI`. **[R104]** |
 | `CollectorCause` | `MISSING_TOOL`, `INSUFFICIENT_PERMISSION`, `MISSING_DRIVER_OR_KERNEL_INTERFACE`, `UNSUPPORTED_HARDWARE`, `COLLECTOR_FAILURE`. Single definition; M03's readiness domain imports it. **[R103]** |
 | `ProbeOutcome` | Raw facts of one probe: tool path and version or absence, device nodes found, permission errors with path and mode, sensor enumeration, parse errors, timeout. |
@@ -85,21 +97,28 @@ Frozen dataclasses, enums and pure functions; no I/O, no asyncio.
 | `CapabilityReport` | Host (OS, version, distribution, CPU, GPUs, hostname), `detected_at`, capabilities. |
 | `enabled_metrics(report, mode) -> Sequence[Capability]` | Empty for `OFF`; otherwise only `AVAILABLE` capabilities. **[R102, R104]** |
 | `limitations(report, mode, interval) -> Sequence[Limitation]` | One per unavailable metric with its cause, one per collector whose minimum is slower than `interval` ("nvidia-smi samples every 2 s"), or a single `monitoring off` limitation. Never blocking. Feeds M07's `SetupFacts` and results. **[R103, R106, R146]** |
-| `Sample` | `t` (wall time and monotonic offset), `ref`, value or `None`, unit, source, scope, `missing_reason`. A failed read is a `None` sample, never 0. **[R106, R147]** |
-| `ProcessObservation` | `configuration_id \| None`, root pid/pgid, CPU time, peak RSS, `attribution: HARNESS_TREE \| SEPARATE_SERVER`, `endpoint_kind: LOCAL \| CLOUD`, note. A local model server outside the harness group is `SEPARATE_SERVER` with `configuration_id=None`. **[R107, R111]** |
-| `counter_delta(readings, max_range) -> Derived` | Sum of positive steps; a decrease with a known `max_range` is a wraparound (`+max_range`, event recorded); a decrease without one is a reset that splits the interval and leaves the gap uncovered. **[R112]** |
-| `integrate_power(samples, interval) -> Derived` | Rectangle integration of present samples only, with the collector's effective interval; gaps are not interpolated; result is always `estimate=True`. **[R112, R113]** |
-| `Derived` | `wh: Decimal \| None`, `method: COUNTER_DELTA \| POWER_INTEGRATION`, `estimate`, `coverage` (covered seconds / window seconds), `events` (wraparounds, resets, gaps with start and length). `coverage < 1` is `PARTIAL`; no samples is `UNAVAILABLE`. |
-| `derive_energy(domains, series, window) -> Sequence[EnergyObservation]` | Per domain: `counter_delta` when the domain has an energy counter, else `integrate_power`. **[R112]** |
-| `EnergyObservation` | Domain, scope, `window`, `Derived`, source, source definition text, `summed: bool`. |
-| `non_overlapping(observations) -> EnergyScope` | Marks child domains (`CPU_SUBDOMAIN`, `SOC_SUBDOMAIN`) of a measured parent `summed=False`; the scope is the set of measured top-level domains plus `not_measured` (the rest of the host). Package + cores and SoC + subdomains are never added. Label text such as "CPU package + GPU · not system". **[R113, R114]** |
-| `Window` | `EXPERIMENT`, or `SEQUENTIAL(configuration_id, trial_index, task_id \| None, start, end, includes_background=True)`. |
+| `SourceReading` | Collector/device-scoped raw value with sample id, source timestamp/epoch, observed duration, units, domain and continuity evidence; no run/trial attribution. HostSampler wraps one reading in each due run’s Sample envelope without treating it as another physical measurement. |
+| `Sample` | `sample_id`, `run_uid`, `collection_id`, `active_trials: tuple[TrialRef, ...]` (context only, not energy ownership), `t` (wall time, monotonic offset and clock/collector epoch), `ref`, physical domain, value or `None`, unit, source/version, scope, observed interval, continuity/reset evidence and `missing_reason`. Raw host samples have experiment scope; every retained result envelope additionally binds its explicit `TrialRef`. A failed/stale read is `None`, never 0. **[R106, R147]** |
+| `ProcessObservation` | `run_uid`, `trial: TrialRef \| None`, `task_id \| None`, invocation/root pid/pgid and process-start identity, CPU time, peak RSS, coverage, `attribution: HARNESS_TREE \| SEPARATE_SERVER`, `endpoint_kind: LOCAL \| CLOUD`, note. Harness observations require a trial; a server outside that group is run-scoped `SEPARATE_SERVER` with `trial=None`, not competitor energy. **[R107, R111]** |
+| `CounterSemantics` | Documented source/version, unit scaling, modulus/range meaning if known, reset/epoch behavior, continuity evidence requirements, conservative maximum energy rate and bound provenance, accepted gap limit. An observed instantaneous power value or configured power limit is not automatically a guaranteed upper bound. |
+| `counter_delta(readings, semantics, window) -> Derived` | Validate adjacent intervals with the rules below. Sum only admissible, uniquely determined deltas; positive differences also require continuity and gap/bound checks. Reset or ambiguous intervals stay uncovered, with raw values and reason retained. Range alone never selects a wrap. **[R112]** |
+| `integrate_power(samples, interval, window) -> Derived` | Left-rectangle integration only over fresh, adjacent valid readings within the accepted gap limit, clipped to the window; use actual timestamp differences, not tick count × requested interval. Do not bridge missing samples, extend a final sample or reuse stale values. Always `estimate=True`. **[R112, R113]** |
+| `Derived` | Exact rational Wh (shared exact-value vocabulary) or `None`, method, estimate, covered interval set, window duration and coverage, events with times/reasons. Divide J by 3600 and Wh by 1000 exactly. No admissible interval is `UNAVAILABLE`, not 0; a measured zero over covered time is valid. |
+| `derive_energy(domains, series, window) -> Sequence[EnergyObservation]` | Derive candidates per source, run `select_sources` for physical-domain duplicates, then `non_overlapping`; preserve all candidates and decisions. Prefer usable counters; power fallback remains an estimate. **[R112]** |
+| `EnergyObservation` | `run_uid`, explicit experiment or TrialRef window, physical domain/scope, Derived, source/version/definition, selection reason, `selected`, `summed`; rejected observations keep their evidence and coverage. |
+| `select_sources(candidates, policy) -> SourceSelection` | Per physical domain and window: usable COUNTER_DELTA before usable POWER_INTEGRATION, then greater covered duration, then frozen collector preference, then lexical source ref. Default preference: POWERCAP_RAPL, NVIDIA_SMI, AMD_SMI, MACMON, POWERMETRICS, PSUTIL. Record policy/version and each rejection; never splice different sources' counter baselines. |
+| `non_overlapping(selected) -> EnergyScope` | After source selection, usable parent measurements exclude children from the sum; retain child rows as shown, not summed. Unresolved domain relationships are not summed. Preserve per-domain coverage and the intersection of covered intervals for aggregate full-scope coverage. Label e.g. "CPU package + GPU · not system". **[R113, R114]** |
+| `Window` | `EXPERIMENT(run_uid, start, end)` or `SEQUENTIAL(trial: TrialRef, task_id \| None, start, end, includes_background=True)`. Durable M11 execution windows supply boundaries; absent/not-run windows are unavailable, never zero-duration measured energy. |
 | `allocation(scheduling) -> Allocation` | `NONE` when more than one configuration could run at once; `PER_WINDOW` only when the run's scheduling is `jobs == 1`. There is no function that divides experiment energy among configurations. **[R109, R110, R147]** |
-| `window_energy(observations_per_domain, windows) -> Sequence[WindowEnergy]` | Only callable with `PER_WINDOW`; one row per configuration and trial (task windows inside it summed), with the `non_overlapping` scope label and coverage; every row carries `includes_background=True`; the total row is the sum of windows and is labelled not exclusive. **[R110, R113]** |
+| `window_energy(observations_per_domain, windows) -> Sequence[WindowEnergy]` | Only callable with `PER_WINDOW`; one row per TrialRef using the union of its task windows, with the selected non-overlapping scope and coverage. Every row carries `includes_background=True`; sum disjoint windows for the total, labelled not exclusive. **[R110, R113]** |
 | `downsample(series, points) -> Sequence[Bucket]` | Mean per bucket; a bucket that contains a missing sample is flagged `gap`, a bucket with no sample is `None`. |
 | `guidance_for(capability, host, catalog) -> Guidance` | Commands only when the catalog has an entry verified for the host's OS and distribution version; otherwise links only. `UNSUPPORTED_HARDWARE` never carries an install command. **[R103, R105]** |
 
-Domain errors: `InvalidMode`, `InvalidInterval`, `UnknownCapability`, `NotSequential`, `NoTelemetry` (result recorded with monitoring off), `UnknownResult`.
+**Counter admission (F12).** Reject nonfinite/out-of-range counter values, nonpositive ranges/bounds, non-increasing or cross-epoch timestamps, reset evidence, missing affirmative continuity evidence, unsupported semantics, gaps beyond the frozen accepted gap limit, and implausible increments. For a documented modulo counter with range `R`, enumerate nonnegative candidates `new − old + kR` consistent with documented semantics and the bound `B = maximum_energy_rate × elapsed`; accept only one possible candidate. A decrease requires exactly one wrap (`k=1`), affirmative continuity and no reset; if another wrap is plausible or reset cannot be excluded, the interval is uncovered. Nonmodulo counters require documented monotonic semantics and continuity. Do not infer a counter reset solely from a parser restart, or continuity solely from an unchanged tool PID. Gaps/resets establish a new baseline without inventing energy across the break.
+
+Counter intervals straddling a trial boundary are not prorated: use only intervals wholly within that window or actual readings at both boundaries; keep the uncovered edge. Power rectangles may be clipped because they are already estimates. Union task windows before deriving a trial total, so nested windows are not counted twice. Scope, included background activity and every missing edge survive M10 pricing and retained exports.
+
+Domain errors: `InvalidMode`, `InvalidInterval`, `UnknownCapability`, `NotSequential`, `NoTelemetry` (result recorded with monitoring off), `UnknownResult`, `ScopeMismatch`, `CollectionConflict`, `TelemetryFinalizationConflict`, `TelemetryPersistenceFailed`. Sensor unavailability is a value/limitation; retention failure is a typed error that blocks sealing.
 
 #### Ports (`engine/telemetry/ports.py`)
 
@@ -110,7 +129,7 @@ class CollectorProbe(Protocol):              # one adapter per CollectorId
     async def open(self, caps: Sequence[Capability], interval: CollectorInterval) -> SampleSource: ...
 
 class SampleSource(Protocol):
-    async def read(self) -> Sequence[Sample]: ...   # one tick; never raises for a missing value
+    async def read(self) -> Sequence[SourceReading]: ...   # one tick; missing value is data
     async def close(self) -> None: ...
 
 class ProcessTreeReader(Protocol):
@@ -126,18 +145,35 @@ class GuideCatalog(Protocol):
 class TelemetryStore(Protocol):
     async def save_report(self, report: CapabilityReport) -> None: ...
     async def load_report(self) -> CapabilityReport | None: ...
-    async def open_collection(self, run: RunId, meta: CollectionMeta) -> None: ...
-    async def append(self, run: RunId, samples: Sequence[Sample]) -> None: ...
-    async def append_processes(self, run: RunId, obs: Sequence[ProcessObservation]) -> None: ...
-    async def finish(self, run: RunId, summary: ExperimentTelemetry) -> None: ...
-    async def load(self, run: RunId) -> ExperimentTelemetry | None: ...
-    async def open_collections(self) -> Sequence[RunId]: ...             # for reconciliation
+    async def open_collection(self, run_uid: RunUid, meta: CollectionMeta) -> None: ...
+    async def append(self, run_uid: RunUid, samples: Sequence[Sample], operation_id: str) -> None: ...
+    async def append_processes(self, run_uid: RunUid, obs: Sequence[ProcessObservation], operation_id: str) -> None: ...
+    async def checkpoint_close(self, run_uid: RunUid, checkpoint: TelemetryCloseCheckpoint) -> None: ...
+    async def finish(self, run_uid: RunUid, summary: TelemetrySummary, receipt: TelemetryFinalizationReceipt) -> None: ...
+    async def load(self, run_uid: RunUid) -> StoredCollection | None: ...
+    async def open_collections(self) -> Sequence[RunUid]: ...
+
+class ExperimentTelemetry(Protocol):  # published application interface; M11 awaits both
+    async def open(self, run_uid: RunUid, choice: MonitoringChoice) -> None: ...
+    async def close(self, run_uid: RunUid) -> TelemetryFinalizationReceipt: ...
+
+class ProcessTracking(Protocol):  # M05 scoped process lifecycle handoff, injected at composition
+    async def started(self, scope: TaskScope, invocation_id: InvocationId, pid: int, pgid: int, process_start: str) -> None: ...
+    async def exited(self, scope: TaskScope, invocation_id: InvocationId) -> None: ...
 
 class CsvSink(Protocol):
     async def write(self, path: Path, rows: Iterable[Sequence[str]], overwrite: bool) -> WrittenFile: ...
 ```
 
-Ports onto other modules, satisfied by their application interfaces or a thin adapter: `RunContext` (M11: `configuration`, `scheduling`, `windows`, plus the run directory), `ResultRecorder.append_hardware_samples` (M02), `RetainedResultReader.get` (M02, for imported and finished results), `EnergyCostReader` (M10, recorded electricity estimate of a run). `Clock` (wall and monotonic), `EventPublisher` and `EventSource` come from `engine/shared`.
+Ports onto other modules, satisfied by public application interfaces or thin adapters: `RunContext.configuration(run_uid)`, `.scheduling(run_uid)`, `.windows(run_uid)` (M11: frozen roster/ResultId bindings, TrialRef windows with durable end/cutoff state and run directory), `ResultRecorder.append_hardware_samples(rid, HardwareSamples, operation_id)` and `.attach_evidence(rid, EvidenceRef, operation_id)` (M02), `RetainedResultReader.get` (M02), `MeasurementReader` (M10, recorded electricity estimate). `Clock`, exact values, RunUid/TrialRef, publication and typed cursor interfaces come from Bootstrap/shared foundations. No port imports another module's adapter or runs a collector on behalf of a UI.
+
+`HardwareSamples` is the schema-versioned M18 payload accepted by M02: `run_uid`, `trial: TrialRef`, `result_id`, `collection_id`, shared collection digest/evidence refs, per-trial windows/process observations, selected and rejected energy observations, source policy/semantics, actual intervals, gaps and coverage/limitations. Every retained envelope binds its result's trial, while the referenced host series remains explicitly experiment-scoped and is not duplicated energy. M02 validates scope and durability.
+
+`TelemetryFinalizationReceipt` is M18's single published frozen contract, consumed unchanged by M10/M11: `{schema_version: 1, run_uid, collection_id, input_digest, collection_digest, windows_digest, cutoff: {wall_time, monotonic_offset, clock_epoch, last_persisted_sample_id?}, status: complete | partial | unavailable | off, limitations, results: [{result_id, trial: TrialRef, hardware_digest, operation_id}]}`. Sort result rows by ResultId; digests are SHA-256 of canonical credential-free inputs/collection/windows/hardware payload respectively, excluding receipt/checkpoint bookkeeping. `input_digest` binds the launch digest, roster, windows, sample/gap cutoff and frozen derivation policy. `complete` means complete coverage for the declared enabled/measured scope, never every host sensor. An unavailable/off receipt still retains explicit reasons and every expected trial envelope; no energy value is fabricated.
+
+**Awaited close and recovery (F03).** M11 joins producers and awaits M10 `drain_run` → M18 `close` → M10 `finalize_run(run_uid, receipt, original_terminal_cause)` → M02 seal. Close removes only this RunUid's schedules, drains in-flight accepted reads, flushes persisted samples/gaps, freezes execution windows and cutoff in `TelemetryCloseCheckpoint`, derives from those exact inputs, and awaits all M02 evidence/hardware writes. Stable append IDs are `telemetry:<run_uid>:<result_id>:hardware:v1` (and deterministic evidence/batch IDs); the same ID/payload is a no-op, changed payload is a conflict. Persist the receipt and close completion before returning or publishing finished. OFF, no collectors and collector failure follow this barrier with explicit unavailable data; storage failure remains pending and cannot be swallowed as optional monitoring failure.
+
+Repeated/concurrent close joins the same checkpoint and returns the identical receipt. After engine loss, M11 first recovers binding/windows, then invokes close using persisted samples/gaps only; no probe, resumed sampler or new collection is allowed for that run. The uncovered tail extends to the recorded execution cutoff; nothing is extrapolated beyond the last persisted sample. Existing close/finalizer checkpoints retain their original windows, input digest, operation IDs, cause and receipt; later engine-lost/stop cause is separate M11 lifecycle evidence. Already sealed results reuse prior receipt rows and receive no fact writes. `run.state.changed(ended)` and observational telemetry events never trigger accounting or retention.
 
 #### Application (`engine/telemetry/application/`)
 
@@ -147,34 +183,34 @@ Ports onto other modules, satisfied by their application interfaces or a thin ad
 | `GetCapabilities` | query `telemetry.capabilities` | Last report, mode options, `limitations` per mode, capability flags. Runs `DetectCapabilities` first only when no report exists. |
 | `GetGuidance(ref)` | query `telemetry.guidance`; in-engine `CollectorCapabilities.guidance` (M03) | `guidance_for` the capability on this host, plus the other causes' remedies for context. |
 | `ValidateMonitoring(mode, interval)` | in-engine `MonitoringOptions.validate` (M07) | Returns `MonitoringChoice` or raises `InvalidMode` / `InvalidInterval`; also `limitations(report, mode, interval)` and the effective interval per collector for `SetupFacts`. |
-| `StartCollection(run, choice)` | in-engine `ExperimentTelemetry.open(run, MonitoringChoice)` (M11, after `bind`) | `OFF`: records `monitoring off` and returns. Otherwise takes the current report (detecting first if none exists), computes `effective_interval` per collector from the frozen `sampling_interval_s`, opens or joins one `SampleSource` per collector with enabled metrics, stores `CollectionMeta` (mode, requested interval, effective interval per collector, collectors and versions, host, domains, scheduling), registers the run with the engine-wide `HostSampler`, publishes `telemetry.collection.started`. Never raises to M11: any failure is recorded as a limitation. **[R102, R106]** |
-| `HostSampler` | owned asyncio task | One per engine. Keeps one schedule per open collection and collector at that collector's effective interval on the monotonic clock. Each collector's source is opened once per engine and shared: polled collectors are read when a schedule is due (one read serves every collection due at that tick); streaming collectors (`macmon pipe`, vendor tools) run at the fastest effective interval any open collection needs and each collection takes the latest reading at its own ticks. Concurrent configurations of one run share their run's collection, so no experiment gets a second host collection. A source that raises is closed; its metrics get `None` samples with `COLLECTOR_FAILURE` from that tick on, and `telemetry.collector.failed` is published. Missed ticks are recorded as gaps, not backfilled. **[R106, R147]** |
-| `TrackProcessTree` | on `harness.task.started` / `harness.task.exited` (M05) | Registers the task's pgid against its configuration, samples `group_usage` on each tick, closes on exit. For a configuration whose frozen entry is a local endpoint, observes `listener(port)` as `SEPARATE_SERVER` with no configuration; cloud entries are marked `CLOUD` (client machine only). **[R107, R108, R111]** |
-| `FinishCollection(run)` | in-engine `ExperimentTelemetry.close` (M11, after the last configuration ends and before `ResultRecorder.seal`) | Unregisters the run, closes sources, `derive_energy` over the experiment window, `non_overlapping`, `allocation` from `RunContext.scheduling`; with `PER_WINDOW`, `window_energy` over `RunContext.windows`. Writes the summary and calls `append_hardware_samples` for each result (one per configuration and trial): the shared experiment series and energy (same collection id and digest for every result), that result's window energy when sequential, plus its configuration's process observations. Publishes `telemetry.collection.finished`. **[R106, R109, R110, R112, R113]** |
-| `ReconcileCollections` | engine start | For each collection left open by a dead engine: finish it with coverage ending at the last stored sample. Nothing is extrapolated. |
-| `GetExperimentTelemetry(result, points)` | query `telemetry.experiment` | Loads from `TelemetryStore` for local runs or from M02's retained record for imported ones; downsamples; adds M10's recorded electricity estimate unchanged. |
+| `StartCollection(run_uid, choice)` | awaited `ExperimentTelemetry.open` (M11, after complete binding) | Persist OFF/no-collector metadata too. Otherwise detect if needed, freeze capabilities/source policy/intervals and register this RunUid's collection with HostSampler. Identical open joins; changed choice/binding conflicts. Collector errors become limitations and never stop execution; persistence errors are typed, preventing an unrecorded collection. A recovered/closed run cannot open anew. **[R102, R106]** |
+| `HostSampler` | owned asyncio task | One engine task; schedules keyed by RunUid/collection/collector, associated with explicit active TrialRefs. Share one source/read per collector across due collections, preserving source timestamp/sample identity. Streaming sources use the fastest admitted interval; each collection records its effective schedule plus observed intervals, and cannot reuse stale samples as new readings. Restart/reconfiguration changes continuity epoch unless the adapter proves counter continuity. A source crash affects only that collector, records gaps and failure, never auto-restarts the run. Closing one run releases only its leases; last lease closes the source. **[R106, R147]** |
+| `TrackProcessTree` | M05 scoped start/exit application handoff | Register TaskScope/TrialRef/InvocationId and pgid/process-start identity; sample observable group usage until exit. Separate listeners have run scope and no attributed trial. Cloud entries describe the client only. Required registration/flush is awaited and idempotent; public `harness.task.started` / `.exited` events are observational, not a lossy-queue persistence dependency. **[R107, R108, R111]** |
+| `FinishCollection(run_uid)` | awaited `ExperimentTelemetry.close -> TelemetryFinalizationReceipt` | Execute the checkpoint/retention barrier above; select sources before overlap filtering; sequential windows carry exact TrialRefs. Await M02 writes for each unsealed expected result and reuse prior sealed receipt rows. Keep shared collection identity/digest across envelopes without allocating its energy. Publish finished only after durable receipt, then let M10 price it before M11 seals. **[R106, R109, R110, R112, R113]** |
+| `ReconcileCollections` | M11 startup coordinator | Load orphaned collection metadata, stop orphan collector children and mark sampling closed; after M11 recovers durable windows, call the same close operation from persisted samples/gaps. Never open/probe/resume lost-run collection. No new receipt or changed inputs for an existing checkpoint. |
+| `GetExperimentTelemetry(result, points)` | query `telemetry.experiment` | Finalized local and imported facts come only from M02; active local projections from TelemetryStore are explicitly provisional. Downsample and add M10's recorded electricity estimate unchanged. |
 | `ExplainEnergy(result)` | query `telemetry.energy` | Domain rows with method, events and result; the fixed statements (preferred method, gap, overlap, label, allocation) as engine text. |
 | `GetWindowEnergy(result)` | query `telemetry.windows` | `window_energy` rows; raises `NotSequential` for concurrent runs. |
-| `ExportCsv(result, path, overwrite)` | command `telemetry.export_csv` | One row per sample with timestamp, ref, domain, scope, unit, source, value or empty, missing reason. |
+| `ExportCsv(result, path, overwrite)` | command `telemetry.export_csv` | One row per sample with RunUid, retained TrialRef envelope, sample id, timestamps/observed interval, ref, physical domain, scope, unit, source/version, value or empty, selection and missing reason. Retain experiment-scope labels; use authoritative M02 facts once finalized. |
 | `DescribeSamples(samples)` | in-engine `TelemetryDescriber.describe` (M13) | Scope, source, coverage and limitation labels for timelines; pure. |
-| `EnergyObservations(run)`, `WindowEnergyObservations(run)`, `HostEnergyScope()` | in-engine `EnergySource` (M10: `observations`, `window_energy`, `host_scope`) | Experiment observations with scope, window, coverage and source; for `PER_WINDOW` runs only, per configuration and trial window energy in kWh with the scope label, coverage and `includes_background` (empty for parallel runs, so M10 never receives a divided share); the scope label the current host can measure. **[R110, R114]** |
+| `EnergyObservations(run_uid)`, `WindowEnergyObservations(run_uid)`, `HostEnergyScope()` | in-engine `EnergySource` (M10: `observations`, `window_energy`, `host_scope`) | Closed receipt-bound observations with exact kWh, source/selection/scope and coverage; sequential rows require TrialRef and background labels, parallel returns no per-trial allocation. M10 verifies the receipt/digests before consuming these observations. Host preview is capability guidance only and cannot replace a closed run's measured scope. **[R110, R114]** |
 
-Application interfaces offered to other modules (`engine/telemetry/application/interfaces.py`): `CollectorCapabilities` (M03), `MonitoringOptions` (M07), `ExperimentTelemetry` (M11), `EnergySource` (M10), `TelemetryDescriber` (M13).
+Application interfaces offered to other modules (`engine/telemetry/application/interfaces.py`): `CollectorCapabilities` (M03), `MonitoringOptions` (M07), `ExperimentTelemetry` (M11), `ProcessTracking` (M05), `EnergySource` (M10), `TelemetryDescriber` (M13). Bootstrap publishes these signatures; wire the M05 handoff before real process-attribution acceptance.
 
 #### Adapters (`engine/telemetry/adapters/`)
 
 | Adapter | Implements | Notes |
 |---|---|---|
-| `psutil_collector.py` | `CollectorProbe` (`PSUTIL`), `ProcessTreeReader` | Host CPU utilization and memory; process groups by `os.getpgid` over `psutil.process_iter`; `listener` through `psutil.net_connections`. `AccessDenied` on a member is a partial observation, not a failure. |
-| `macmon_collector.py` | `CollectorProbe` (`MACMON`) | Probes `macmon --version`; streams `macmon pipe` JSON as a child process in its own process group. Apple Silicon only. |
-| `powermetrics_collector.py` | `CollectorProbe` (`POWERMETRICS`) | Probe runs `powermetrics -n 1` without privilege escalation; a root requirement is `INSUFFICIENT_PERMISSION`. |
-| `powercap_collector.py` | `CollectorProbe` (`POWERCAP_RAPL`) | Reads `/sys/class/powercap/*/name`, `energy_uj`, `max_energy_range_uj` and the zone hierarchy (parent links); no `/sys/class/powercap` is `MISSING_DRIVER_OR_KERNEL_INTERFACE`, `EACCES` on `energy_uj` is `INSUFFICIENT_PERMISSION` with path and mode. |
-| `nvidia_collector.py` | `CollectorProbe` (`NVIDIA_SMI`) | NVML through `nvidia-ml-py` when importable, otherwise `nvidia-smi --query-gpu=… --format=csv`; uses the total-energy counter where the device reports one, otherwise power samples. |
-| `amd_collector.py` | `CollectorProbe` (`AMD_SMI`) | `amd-smi metric --json`; energy counter where exposed. |
+| `psutil_collector.py`, `macos_psutil.py`, `linux_psutil.py` | Dispatcher plus platform `CollectorProbe` (`PSUTIL`)/`ProcessTreeReader` | M18.2 owns registration infrastructure; M18.3/4 own distinct platform implementations. Version-gated documented process/host reads retain denied/disappeared member coverage and process-start identity, never fabricated attribution. |
+| `macmon_collector.py` | `CollectorProbe` (`MACMON`) | Version-gated `macmon pipe` JSON in an owned process group. Maintainer documentation establishes the candidate interface; recorded schema and actual host probe establish enabled metrics. |
+| `powermetrics_collector.py` | `CollectorProbe` (`POWERMETRICS`) | Bounded read-only probe using flags verified against the supported host's installed Apple manual/help; permission denial is unavailable. No privilege escalation or general claim of supported output format. |
+| `powercap_collector.py` | `CollectorProbe` (`POWERCAP_RAPL`) | Discover the documented sysfs zone roots actually present on the supported host; read `name`, `energy_uj`, `max_energy_range_uj` and parent hierarchy. No supported interface is `MISSING_DRIVER_OR_KERNEL_INTERFACE`; an observed denied counter read is `INSUFFICIENT_PERMISSION`. Range/reset/continuity evidence still passes the F12 admission rule. Never write sysfs. |
+| `nvidia_collector.py` | `CollectorProbe` (`NVIDIA_SMI`) | Version/device-gated NVML binding or read-only SMI query with individually probed fields. Counter only after documented units/semantics/continuity are verified; otherwise supported power fields provide estimates or unavailable values. |
+| `amd_collector.py` | `CollectorProbe` (`AMD_SMI`) | Version-gated read-only metric JSON command verified against official docs/help. No assumed counter, units, reset semantics or sensor merely because a utility exists. |
 | `subprocess_allowlist.py` | — | The only way the collectors above spawn processes: fixed executables and read-only arguments; `sudo`, package managers and `chmod` cannot be expressed. |
 | `platform_host.py` | `HostInfo` | `platform`, `/etc/os-release`, `sw_vers`, CPU and GPU names. |
-| `packaged_guides.py` | `GuideCatalog` | `docs/collectors/*.md` and `guidance.yaml` in the package: entries keyed by collector, cause, OS, distribution id and version, with commands, the guide path and the reference links named in the product contract (macmon, powercap, NVIDIA SMI, AMD SMI). |
-| `jsonl_store.py` | `TelemetryStore` | Files below. Samples appended as JSON lines and flushed each tick; summaries written with temp file and rename. |
+| `packaged_guides.py` | `GuideCatalog` | `docs/collectors/*.md` and `guidance/macos.yaml`, `guidance/linux.yaml` in the package: entries keyed by collector, cause, OS, distribution id and version, with commands, the guide path and the reference links named in the product contract (macmon, powercap, NVIDIA SMI, AMD SMI). |
+| `jsonl_store.py` | `TelemetryStore` | Files below. Durable operation-ID batches, torn-tail detection, fsync before acknowledgement; atomic checkpoints/summary/receipt with temp file, fsync and rename. Never silently discard an acknowledged batch. |
 | `csv_sink.py` | `CsvSink` | Refuses an existing file unless `overwrite`. |
 | `run_context.py`, `results_bridge.py`, `energy_costs.py` | ports onto M11, M02, M10 | Thin mappings; no rule. |
 | `rpc.py` | — | DTOs in `axbenchmark.api.telemetry`; domain errors to the codes below. |
@@ -184,16 +220,17 @@ Application interfaces offered to other modules (`engine/telemetry/application/i
 | Path | Content |
 |---|---|
 | `~/.axbenchmark/telemetry/capabilities.json` | Last `CapabilityReport`. No credentials. |
-| `<run dir>/telemetry/collection.json` | `CollectionMeta`: mode, requested sampling interval, effective interval per collector (with `raised`), host, collectors and versions, domains with parents, scheduling, started/ended, state `open \| finished \| reconciled`. |
-| `<run dir>/telemetry/samples.jsonl` | One line per tick and ref; `null` values with `missing_reason`. |
-| `<run dir>/telemetry/processes.jsonl` | `ProcessObservation`s per tick (cumulative CPU time, RSS). |
-| `<run dir>/telemetry/summary.json` | Derived `EnergyObservation`s, `EnergyScope`, `Allocation`, window energy per configuration and trial when sequential, per-metric summaries and coverage. |
+| `<run dir>/telemetry/collection.json` | UID-keyed CollectionMeta: RunUid/TrialRef roster, launch binding, requested/effective intervals, observed timing policy, host/device/source versions, semantics/source preference, domains, scheduling, state `open \| closing \| finished \| recovery_pending`. |
+| `<run dir>/telemetry/samples.jsonl` | Scoped operation-ID batches with sample/source identity, timestamps/epoch, values or explicit gaps; stale/missed reads never backfilled. |
+| `<run dir>/telemetry/processes.jsonl` | Scoped ProcessObservations including TrialRef/InvocationId or explicit separate-server scope. |
+| `<run dir>/telemetry/close.json` | Frozen TelemetryCloseCheckpoint: cutoff, input/windows/launch digests, selected results, operation IDs, per-result durable append progress and receipt. |
+| `<run dir>/telemetry/summary.json` | Derived accepted/rejected observations and raw references, EnergyScope, allocation, explicit trial-window energy, exact values, coverage and limitations. |
 
-Retained results carry the same content through M02; imported results are served only from M02. **Owned processes:** probe subprocesses (bounded by timeout, process group killed on expiry) and, while a collection is open, long-running collector children (`macmon pipe`, vendor tools). All are children of `axbenchmarkd`, never of a client, and end when the last collection closes or the engine stops. A collector process crash ends that collector only.
+M18 retains hardware content through M02; M10 copies the exact close receipt into its retained MeasurementSet energy evidence before sealing; finalized local and imported results are served only from M02. **Owned processes:** timeout-bounded probes and admitted streaming collectors belong to `axbenchmarkd`, never a client; close the process only after its last live collection lease ends. Collector crashes affect that collector only. Startup cleanup/recovery cannot begin new sensing for a lost run. No tariff, billing or provider-cost arithmetic lives in M18.
 
 ### 2. API surface (`telemetry.*`)
 
-DTOs in `axbenchmark.api.telemetry`. Every value cell is `MeasuredDTO(value: str | None, unit, coverage: complete | partial | unavailable, coverage_pct?, estimate: bool, reason?)`, and every series or row carries `source` and `scope_label`, so interfaces render text and state without deriving either.
+DTOs in `axbenchmark.api.telemetry`; rows carry RunUid and explicit TrialRef where result-scoped. Exact energy values serialize as reduced `n/d` strings, matching M10's convention; rendering may round but CSV/retention preserve the exact value. Every value cell is `MeasuredDTO(value: str | None, unit, coverage: complete | partial | unavailable, coverage_pct?, estimate: bool, reason?)`, and every series or row carries `source` and `scope_label`, so interfaces render text and state without deriving either.
 
 #### Queries
 
@@ -201,11 +238,11 @@ DTOs in `axbenchmark.api.telemetry`. Every value cell is `MeasuredDTO(value: str
 |---|---|---|---|---|---|
 | `telemetry.capabilities` | `sampling_interval_s?` (to preview effective intervals) | `CapabilitiesView {host: HostDTO, detected_at, modes: [{value, label}], default_mode, interval: {default_s: 1, min_s: 0.5, max_s: 10, requested_s}, rows: [CapabilityRowDTO {ref, metric, source, version?, scope_label, status: "on" \| "unavailable", cause?, cause_text?, has_guidance, min_interval_s, effective_interval_s, interval_raised}], energy_note, statements: [[label, text]], limitations_by_mode: {mode: [LimitationDTO]}, detection_job?: JobRef}` | — | `can_detect` (`reason: telemetry.detection_running`) | read |
 | `telemetry.guidance` | `ref` | `GuidanceDTO {ref, title, host, source, found, cause, cause_text, commands?: {text, verified_for}, guide_path, references: [{label, url}], other_causes: [[cause, remedy]], continue_note}` | `telemetry.unknown_capability` | `can_copy_commands` | read |
-| `telemetry.experiment` | `result_id`, `points: int = 80` | `TelemetryView {state: "collected" \| "off" \| "none", bar: str, provenance, host, concurrency_text, requested_interval_s, collector_intervals: [{collector, effective_interval_s, raised}], duration, series: [SeriesDTO {label, source, scope_label, unit, buckets: [float \| null], gap_buckets: [int], summary}], markers: [{at: float, label}], processes: [ProcessRowDTO {label, cpu_time, peak_rss, note, attribution, endpoint_kind}], process_note, energy: [[label, text]], energy_note, footnote}` | `telemetry.unknown_result` | `can_energy_detail`, `can_windows` (`reason: telemetry.not_sequential` or `telemetry.no_energy`), `can_export_csv` | read |
-| `telemetry.energy` | `result_id` | `EnergyDerivationView {title, rows: [{domain, method, events, result: MeasuredDTO, summed: bool}], statements: [[label, text]], tariff_note?}` | `telemetry.unknown_result`, `telemetry.no_energy` | — | read |
-| `telemetry.windows` | `result_id` | `WindowEnergyView {title, subtitle, columns: [str], rows: [{window, configuration_id, trial_index, duration, values: [MeasuredDTO], includes}], total: {…same}, scope_label, note}` | `telemetry.unknown_result`, `telemetry.not_sequential`, `telemetry.no_energy` | — | read |
+| `telemetry.experiment` | `result_id`, `points: int = 80` | `TelemetryView {run_uid, trial: TrialRefDTO, finalization: "provisional" \| "pending" \| "finalized" \| "error", state: "collected" \| "off" \| "none", bar: str, provenance, host, concurrency_text, requested_interval_s, collector_intervals: [{collector, effective_interval_s, observed_interval_range_s, raised}], duration, series: [SeriesDTO {label, source, scope_label, unit, buckets: [float \| null], gap_buckets: [int], summary}], markers: [{at: float, label}], processes: [ProcessRowDTO {label, cpu_time, peak_rss, note, attribution, endpoint_kind}], process_note, energy: [[label, text]], energy_note, footnote}` | `telemetry.unknown_result` | `can_energy_detail`, `can_windows` (`reason: telemetry.not_sequential` or `telemetry.no_energy`), `can_export_csv` | read |
+| `telemetry.energy` | `result_id` | `EnergyDerivationView {title, rows: [{domain, physical_domain_id, source, method, events, result: MeasuredDTO, selected: bool, selection_reason, summed: bool}], statements: [[label, text]], tariff_note?}` | `telemetry.unknown_result`, `telemetry.no_energy` | — | read |
+| `telemetry.windows` | `result_id` | `WindowEnergyView {title, subtitle, columns: [str], rows: [{window, trial: TrialRefDTO, duration, values: [MeasuredDTO], includes}], total: {…same}, scope_label, note}` | `telemetry.unknown_result`, `telemetry.not_sequential`, `telemetry.no_energy` | — | read |
 
-`buckets` values are normalized to 0–1 per series by the engine; `gap_buckets` lists buckets that contain a missing sample. `markers` place configuration end times on the shared time axis.
+`buckets` values are normalized to 0–1 per series by the engine; `gap_buckets` lists buckets that contain a missing sample. `markers` retain explicit TrialRef/configuration identity on the shared time axis. `can_energy_detail` is true when derivation evidence exists even if every candidate is unavailable, so reset/ambiguity reasons remain inspectable; `no_energy` means no such evidence exists. A window-total row has an explicit set of contributing TrialRefs, never an invented single trial.
 
 #### Commands and jobs
 
@@ -218,14 +255,18 @@ Monitoring mode and sampling interval are stored by M07: `configs.set_execution(
 
 #### Events
 
+Register revisioned `telemetry` snapshots and run events through M11’s shared publication boundary; save state before publishing. Clients use `EventCursor {epoch, seq}` and resnapshot on resync/overflow, never subscribe by event-name topic. Required collection/retention work uses awaited application ports, not these notifications.
+
 | Event | Payload | Topics |
 |---|---|---|
 | `telemetry.capabilities.updated` | `CapabilitiesView`, `changes: [{ref, before, after}]` | `telemetry` (snapshot `CapabilitiesView`) |
-| `telemetry.collection.started` | `run_id`, `mode`, enabled refs, `requested_interval_s`, `collector_intervals` | `telemetry`, `run:<id>` |
-| `telemetry.collector.failed` | `run_id`, collector, refs, `cause: collector_failure`, `at`, message | `telemetry`, `run:<id>` |
-| `telemetry.collection.finished` | `run_id`, coverage per ref, energy available | `telemetry`, `run:<id>` |
+| `telemetry.collection.started` | `run_uid`, `mode`, enabled refs, `requested_interval_s`, `collector_intervals` | `telemetry`, `run:<run_uid>` |
+| `telemetry.collector.failed` | `run_uid`, collector, refs, `cause: collector_failure`, `at`, message | `telemetry`, `run:<run_uid>` |
+| `telemetry.collection.finished` | `run_uid`, coverage per ref, energy available | `telemetry`, `run:<run_uid>` |
 
 #### Error codes
+
+Use the shared numeric JSON-RPC error envelope with namespaced `data.code`, message, remedy and field details. Internal persistence/finalization conflicts reach M11 as typed pending-retention errors; sensor unavailability remains a successful capability/receipt with explicit limitations.
 
 | Code | Raised when |
 |---|---|
@@ -242,14 +283,14 @@ Monitoring mode and sampling interval are stored by M07: `configs.set_execution(
 
 | Name | Owner | Purpose |
 |---|---|---|
-| `RunContext.configuration`, `.scheduling`, `.windows` (per configuration and trial), `.run_dir` (application interface) | M11 | Endpoint kind and port per configuration, concurrency, execution windows, `<run dir>/telemetry/`. |
-| Calls to `ExperimentTelemetry.open(run, MonitoringChoice(mode, sampling_interval_s))` after `bind` and `.close(run)` after the last configuration ends and before `ResultRecorder.seal`, also on stop, identity halt and reconciliation | M11 | One collection per experiment at the frozen interval, closed before results are sealed. |
-| Routing of `telemetry.collection.*` and `telemetry.collector.failed` to `run:<id>` through `TopicRegistry` | M11 | Run log visibility of collector failures. |
+| `RunContext.configuration(run_uid)`, `.scheduling(run_uid)`, `.windows(run_uid)` (TrialRef/result roster and durable cutoff), `.run_dir` (application interface) | M11 | Endpoint kind and port per configuration, concurrency, execution windows, `<run dir>/telemetry/`. |
+| Await `ExperimentTelemetry.open(run_uid, MonitoringChoice)` after complete binding and idempotent `.close(run_uid) -> TelemetryFinalizationReceipt` after producer/drain settlement and before M10 finalize/M02 seal, including stop/recovery | M11 | One collection per experiment at the frozen interval, closed before results are sealed. |
+| Routing of `telemetry.collection.*` and `telemetry.collector.failed` to `run:<run_uid>` through `TopicRegistry` | M11 | Run log visibility of collector failures. |
 | `events.subscribe`, `jobs.get`, `jobs.cancel`, `job.progress`, `job.finished` | M11 | Subscriptions and job supervision. |
-| Events `harness.task.started` (pid, pgid), `harness.task.exited` | M05 | Process-tree association per configuration. |
-| `ResultRecorder.append_hardware_samples`, `RetainedResultReader.get` | M02 | Retain samples with each result; serve imported results. |
+| `ProcessTracking.started(TaskScope, InvocationId, pid, pgid, process_start)` / `.exited(TaskScope, InvocationId)`; scoped public lifecycle events | M05 | Await process registration/flush; observations remain optional, with explicit gaps if unavailable. |
+| `ResultRecorder.append_hardware_samples(rid, HardwareSamples, operation_id)`, `RetainedResultReader.get` | M02 | Retain samples with each result; serve imported results. |
 | `t` binding on `ResultScreen` (ResultOrigin) pushing `TelemetryScreen(result_id)`, enabled from the result capability `can_telemetry` | M02 | Entry point named in the TelemetryScreen tree ("t from a result"). |
-| `MeasurementReader` energy costs of a run (recorded tariff estimate with scope); caller of `EnergySource.window_energy` | M10 | Electricity line of `#energy` and the tariff note, shown unchanged; local configuration cost in sequential runs. |
+| `MeasurementReader` recorded costs; `MeasurementFinalizer.drain_run/finalize_run`; receipt-bound `EnergySource.observations/window_energy` | M10 | Electricity line of `#energy` and the tariff note, shown unchanged; local configuration cost in sequential runs. |
 | `configs.set_execution(draft_id, monitoring={mode, sampling_interval_s})`; `SetupView.execution.monitoring`; Setup's Monitoring row pushing `MonitoringScreen(draft_id, current)` | M07 | Storing mode and interval; entry point. |
 | `environment.explain(ref)` accepting M18 capability refs; `CollectorGuideScreen`; `environment.recheck(scope="collectors")` | M03 | Guidance dialog and recheck from Environment and from MonitoringScreen. |
 | `CollectorCause` imported from `engine.telemetry.domain` in M03's readiness domain | M03 | One five-cause vocabulary. |
@@ -259,7 +300,7 @@ Monitoring mode and sampling interval are stored by M07: `configs.set_execution(
 
 Owned artboards: MonitoringSettings, Telemetry, EnergyDetail, SequentialEnergy ([navigation §23](../design/wireframe-tui/navigation.md)). CollectorGuide is drawn on the M18 page but is `CollectorGuideScreen` in `tui/screens/environment.py`, specified by [M03](03-environment-readiness.md); its content is M18's `GuidanceDTO` passed through `environment.explain`. CurrencyEnergy is M10's screen and shows M18's scope through `measurements.preview_accounting`.
 
-Shared rules: loads run in an `exclusive=True` worker through the injected client; data widgets sit in `ContentSwitcher`s with `#x`, `#x-loading`, `#x-empty`, `#x-error`; errors show the engine's `message` and `remedy` verbatim with a Retry that repeats the load; `check_action` returns `None` (dimmed) from capability flags only. No screen classifies a cause, decides an enabled metric, sums energy, computes coverage or decides whether windows apply.
+Shared rules: show provisional, close-pending/error, complete, partial and unavailable engine states explicitly. Loads run in an `exclusive=True` worker through the injected client; data widgets sit in `ContentSwitcher`s with `#x`, `#x-loading`, `#x-empty`, `#x-error`; errors show the engine's `message` and `remedy` verbatim with a Retry that repeats the load; `check_action` returns `None` (dimmed) from capability flags only. No screen classifies a cause, decides an enabled metric, sums energy, computes coverage or decides whether windows apply.
 
 View models (`tui/viewmodels/telemetry.py`):
 
@@ -279,6 +320,7 @@ class SeriesVM:
 
 @dataclass(frozen=True)
 class TelemetryVM:
+    run_uid: str; trial: TrialRefDTO; finalization: str
     state: Literal["collected", "off", "none"]; bar: str
     series: list[SeriesVM]; axis: tuple[str, list[tuple[float, str]], str]
     processes: list[tuple[str, str, str, str]]; separate_rows: set[int]; process_note: str
@@ -319,7 +361,7 @@ Builders map `status`, `coverage`, `estimate` and `attribution` to glyphs (✓ �
 | Widgets | `Header`; `Static #telemetry-bar` (`bar`, including the requested interval and any collector whose actual interval differs); `Vertical #charts .pane` (wireframe `Static #charts`, height 12) holding one row per series: label, source, `Sparkline` over `values` with gap buckets drawn as `·` in the muted class, `summary`; then the time axis with `markers`; `Horizontal` with `Vertical .pane` > `DataTable #process-trees` (Configuration, CPU time, Peak RSS, Note; `separate_rows` in the bold class) and `process_note`, and `Static #energy .pane.kv` (width 54) with `energy` pairs and `energy_note`; footnote; `Horizontal .actions` with `Button #energy-detail` and `Button #export-csv` (id is an addition); `Footer`. |
 | Load | Worker calls `telemetry.experiment(result_id, points=<#charts content width − label and summary columns>)`; on resize past a width step it reloads with the new `points`. |
 | ContentSwitcher | `#telemetry` (state `collected`); `#telemetry-empty` (state `off` or `none`: the engine's `bar` and limitation text, e.g. "monitoring off", never empty charts); `#telemetry-loading`; `#telemetry-error`. |
-| Subscription | When the result belongs to an active run: `events.subscribe(["run:<run_id>"])`; `telemetry.collection.finished` reloads. Otherwise none. Dropped on unmount. |
+| Subscription | When the result belongs to an active run: `events.subscribe(["run:<run_uid>"])`; `telemetry.collection.finished` reloads. Otherwise none. Dropped on unmount. |
 
 | Binding | Action | API call |
 |---|---|---|
@@ -331,11 +373,13 @@ Builders map `status`, `coverage`, `estimate` and `attribution` to glyphs (✓ �
 
 #### EnergyDetailScreen — artboard EnergyDetail
 
-`EnergyDetailScreen(ModalScreen[None])` in `tui/screens/telemetry.py`, constructed with the `EnergyDerivationView` already loaded by TelemetryScreen. `Vertical #energy-detail .dialog` > `DataTable #energy-domains` (Domain, Method, Events, Result; `summed=False` rows in the muted class with the engine's "shown, not summed" text), `Static .kv` (statements: Preferred, Gap, Overlap, Label, Allocation), tariff note, Close. No load, no subscription. `esc` → `dismiss`, no API call.
+`EnergyDetailScreen(ModalScreen[None])` in `tui/screens/telemetry.py`, constructed with the `EnergyDerivationView` already loaded by TelemetryScreen. `Vertical #energy-detail .dialog` > `DataTable #energy-domains` (Domain, Source, Method, Events, Result; `summed=False` rows in the muted class with the engine's "shown, not summed" text), `Static .kv` (statements: Preferred, Gap, Overlap, Label, Allocation), tariff note, Close. No load, no subscription. `esc` → `dismiss`, no API call.
 
 #### WindowsScreen — artboard SequentialEnergy
 
 `WindowsScreen(ModalScreen[None])` in `tui/screens/telemetry.py`, constructed with the `WindowEnergyView`. `Vertical #windows .dialog` > subtitle, `DataTable #window-energy` (Window — configuration, and trial when there are several — Duration, then `columns`, Includes; the total row in bold), scope label, `Static #windows-note` (`note`), Close. Column headers come from the DTO, so a host without a GPU shows no GPU column. `esc` → `dismiss`, no API call.
+
+**Wireframe follow-up:** MonitoringSettings needs effective versus observed intervals; EnergyDetail needs physical-domain/source preference and rejected-source/reset/gap reasons; SequentialEnergy needs explicit trial identity; Telemetry needs provisional/close-pending/error variants. Keep the existing boards; no wireframe edits here. CollectorGuide belongs to M03 and CurrencyEnergy to M10.
 
 **Consumers elsewhere:** EnvironmentScreen `#collectors` and `CollectorGuideScreen` (M03) through `environment.*`; SetupScreen `#execution-pane` and `#limitations` (M07) through `SetupView`; CurrencyEnergyScreen `#energy-scope` (M10); the report's hardware timelines (M13); ResultScreen origin and coverage (M02).
 
@@ -354,9 +398,15 @@ Exit codes follow ARCHITECTURE.md; a detection that found no collectors exits 0.
 
 ### 6. Headless verification
 
-| Level | Tests |
+Child commands are proposed implementation acceptance, not tests executed by this specification change. Use each child's exact source/test ownership and prerequisite gates.
+
+| Gate | Required evidence |
 |---|---|
-| Domain (`tests/engine/telemetry/domain/`) | `classify`: tool present and no sensor → `UNSUPPORTED_HARDWARE`; `energy_uj` mode 0400 root → `INSUFFICIENT_PERMISSION`; no `/sys/class/powercap` → `MISSING_DRIVER_OR_KERNEL_INTERFACE`; timeout and garbage output → `COLLECTOR_FAILURE`; absent executable → `MISSING_TOOL`; each of the five is distinct. `enabled_metrics` is empty for `OFF` and never contains an unavailable metric. `counter_delta` over a wraparound with known range equals the true delta and records one event; a reset without range leaves partial coverage. `integrate_power` with a 74 s gap gives an estimate with coverage < 1 and no interpolated value; no input yields 0 from missing samples. `non_overlapping` never adds `intel-rapl:0` and `intel-rapl:0:0`, and labels CPU package + GPU as not system. `allocation` is `NONE` for jobs > 1; `window_energy` rows all include background, carry the scope label and the total matches the sum of windows (the R-0919lab-1 fixture: seven windows adding to 27:30); two trials of one configuration give two rows. `validate_interval` accepts 0.5, 1 and 10 and rejects 0.4, 10.5, 0 and text, never clamping; `effective_interval` raises a 0.5 s request to a collector's 2 s minimum with `raised` and keeps 1 s for a collector whose minimum is 0.5 s. `guidance_for` returns no commands for an unverified distribution and none for unsupported hardware. Property tests (hypothesis): coverage is `COMPLETE` only when every tick has a value; energy is monotonic in covered samples. |
-| Use cases (fakes for every port) | `DetectCapabilities` with one probe hanging returns the others and a `COLLECTOR_FAILURE` row; no fake records any install or permission call. Two concurrent configurations produce one `HostSampler` read per tick; two overlapping runs at 1 s and 2 s share one source per collector and each collection records its own interval. A collection records requested and effective intervals in `collection.json`. `EnergySource.window_energy` is empty for a `jobs 4` run and has one row per configuration and trial for a `jobs 1` run. A source that raises mid-run publishes `telemetry.collector.failed`, keeps the run going and leaves `None` samples. `TrackProcessTree` attributes a fake harness group per configuration and a fake local listener as `SEPARATE_SERVER`; cloud entries are marked client only. `FinishCollection` appends the same collection digest to every result before seal. `ReconcileCollections` ends coverage at the last sample. `OFF` records "monitoring off" and starts no source. |
-| API via `InProcessClient` | Composed engine with fake collectors and harness, no interface: launch a three-configuration run, subscribe to `run:<id>`, observe `telemetry.collection.started` and `.finished`; `telemetry.experiment` returns `can_windows=false, reason=telemetry.not_sequential`, and `telemetry.windows` returns that code; a `jobs 1` run returns window rows. Drop the client mid-run and reconnect with `since_seq`: one collection, no duplicate samples. `telemetry.export_csv` writes empty cells for missing samples and refuses an existing file. Error codes and DTOs validate against the exported JSON Schema. |
-| Screens (`App.run_test()` with a fake client) | MonitoringScreen renders the wireframe's five `#detected` rows from a `CapabilitiesView` fixture with their effective intervals, `ctrl+s` issues exactly `configs.set_execution(draft_id, monitoring={mode: "off", sampling_interval_s: "1"})` after selecting Off, `telemetry.invalid_interval` from the fake marks `#sampling-interval`, `#guidance` is dimmed on a row without guidance. TelemetryScreen renders gaps as `·` from `gap_buckets`, `separate_rows` in bold, and the `off` state in `#telemetry-empty`; `w` is dimmed from `can_windows` and issues no call; `e` issues `telemetry.energy` once and pushes EnergyDetailScreen. View-model builders are tested without Textual against DTO fixtures taken from `screens-telemetry.mjs`. Import-linter: `tui` imports only `api` and `client`. |
+| Pure domain | [M18.1 numerical vectors](implementation/M18/01-telemetry-domain.md#numerical-and-fault-acceptance): 950→30, range 1000, continuous 1 s, 100 W bound gives 80 J only when documented wrap semantics/evidence support it. Known-range 100→10 reset never gives 910; subsequent 10→30 gives 20 J with half coverage. Unknown-range reset, ambiguous 20 s/multiple-wrap interval and absent continuity remain uncovered. Duplicate 80 J package sources plus a 50 J child and separate 20 J GPU yield 100 J once, with rejected rows retained. |
+| Intervals/coverage | 0.5/1/10 accepted, out-of-range/nonfinite/text rejected; 0.5 request plus 2 s minimum records both and observed timing. Fresh 60 W readings at 0/1 and 3/4 with a missing reading at 2 give 120 J and 1/2 coverage over 4 s. Missing-only data is unavailable, never zero. Counter window edges are not prorated; unions avoid nested-task duplication; aggregate coverage cannot exceed any summed domain's coverage. |
+| Lifecycle/retention | [M18.2](implementation/M18/02-sampling-lifecycle.md): same-label different-UID runs and repeated TrialRefs never collide; shared source leases and requested/effective/observed intervals survive retention. Delay read flush, M02 append, receipt persistence and M10 finalization: no seal/readiness can overtake them. Inject every crash checkpoint, changed operation-ID payload, partial seal and later stop/engine loss; original input/cause/digest/receipt stays fixed and no lost-run collector resumes. |
+| Recorded adapters | [M18.3](implementation/M18/03-macos-collectors.md), [M18.4](implementation/M18/04-linux-collectors.md): versioned recorded output, documented controls, five causes, unsupported fields, reset/continuity evidence, timestamp/gap/alias cases, bounded children and no mutation/escalation. A tool/version probe alone never proves a sensor. |
+| API/clients/screens | Both actual clients round-trip exact values, TrialRefs, errors and capabilities. Shared typed cursor/revision snapshots withstand races, overflow, reconnect and epoch changes without duplicate collection. [M18.5](implementation/M18/05-telemetry-screens.md) tests each named board/state, dimmed actions, stable historical trial selection, guidance ownership and CSV empty values/overwrite. Finalized/imported queries read M02, never recompute from working state. |
+| Real supported-host and consumer integration | On documented supported macOS/Linux combinations, capture real tool/device/permissions/interval evidence; explicitly list untested GPU/platform combinations. Compose M03 discovery, M05 process handoff, M07 frozen settings, M11 stop/recovery and the M18→M10→M02 receipt barrier; immediate M13 report/M17 export-import and M14 doctor/CLI agree with retained facts. No real sensor/hardware test is claimed here. |
+
+Pending owner reconciliation: M05 must wire the published awaited ProcessTracking start/exit handoff; M10 must preserve the exact M18 receipt as retained MeasurementSet energy evidence. The remaining wireframe changes are listed under Screens. Neither unresolved hardware gates nor these consumer gates can be replaced with fake-provider completion claims.

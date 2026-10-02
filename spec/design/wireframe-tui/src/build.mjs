@@ -1,15 +1,20 @@
 // Regenerate the TUI artboards, canvas index and flat preview in ../preview/. Run: node src/build.mjs
+import { annotateOwnership, writeOwnershipLedger } from './ownership.mjs';
 import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { SIZES, CELL, ACCENT, ACCENTS, esc, len } from './lib.mjs';
 import { CSS, FONT_LINK } from './theme.mjs';
 import { GROUPS as M01_GROUPS, SYSTEM } from './boards.mjs';
 import { MODULE_GROUPS, MODULE_PAGES } from './boards-modules.mjs';
+import { REFINEMENT_GROUPS } from './boards-refinement.mjs';
 import { LATER_GROUPS, LATER_PAGES } from './boards-later.mjs';
 import { reportPage, REPORT_CSS } from './screens-report.mjs';
 import { designSystem, navMap, widgetStates, NAV_H, STATES_H } from './system.mjs';
 
 // M01 groups live on the 'wide' page; M02–M14 groups name their own page.
-const GROUPS = [...M01_GROUPS.map((g) => ({ ...g, page: 'wide' })), ...MODULE_GROUPS, ...LATER_GROUPS];
+const GROUPS = [...M01_GROUPS.map((g) => ({ ...g, page: 'wide' })), ...MODULE_GROUPS, ...LATER_GROUPS, ...REFINEMENT_GROUPS];
+
+annotateOwnership(GROUPS);
+writeOwnershipLedger(GROUPS, SYSTEM);
 
 const LEGEND_W = 440, PAD = 24, GAP = 32;
 const SUFFIX = { wide: '', compact: '-80x24' };

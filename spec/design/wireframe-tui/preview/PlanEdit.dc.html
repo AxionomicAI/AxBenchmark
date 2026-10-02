@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1060px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Edit a task</b> · TaskEditorScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -88,9 +88,9 @@ body{margin:0}
 <div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────┘</span><span class="B0 ln">└──────────────────────────────────────────────────────────┘</span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Acceptance checks for T4 </span><span class="B0 ln">───────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Id     What it observes                                              Kind        State                               </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T4.1   GET /invoices/{id}.pdf returns the same bytes as before       http        generated                           </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T4.2   No PDF rendering code remains outside billing/invoice/        source      generated                           </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="BS"> T4.3   CSV export endpoint still returns the same file               http       </span><span class="BS bd"> + added by you                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T4_ch… GET /invoices/{id}.pdf returns the same bytes as before       http        generated                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T4_ch… No PDF rendering code remains outside billing/invoice/        source      generated                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> T4_ch… CSV export endpoint still returns the same file               http       </span><span class="BS bd"> + added by you                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Checks must restate what the prompt asks. A check that adds an obligation the prompt does not state is flagged</span><span class="B0">       </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">before approval.</span><span class="B0">                                                                                                     </span><span class="B0 ln">│</span></div>
@@ -130,9 +130,9 @@ body{margin:0}
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
 <div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Acceptance checks for T4 </span><span class="B0 ac">───────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Id     What it observes                                              Kind        State                               </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> T4.1   GET /invoices/{id}.pdf returns the same bytes as before       http        generated                           </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> T4.2   No PDF rendering code remains outside billing/invoice/        source      generated                           </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="BA on"> T4.3   CSV export endpoint still returns the same file               http       </span><span class="BA on bd"> + added by you                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T4_ch… GET /invoices/{id}.pdf returns the same bytes as before       http        generated                           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T4_ch… No PDF rendering code remains outside billing/invoice/        source      generated                           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> T4_ch… CSV export endpoint still returns the same file               http       </span><span class="BA on bd"> + added by you                      </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Checks must restate what the prompt asks. A check that adds an obligation the prompt does not state is flagged</span><span class="B0">       </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">before approval.</span><span class="B0">                                                                                                     </span><span class="B0 ac">│</span></div>
@@ -172,9 +172,9 @@ body{margin:0}
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Acceptance checks for T4 </span><span class="B0 ln">───────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Id     What it observes                                              Kind        State                               </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T4.1   GET /invoices/{id}.pdf returns the same bytes as before       http        generated                           </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T4.2   No PDF rendering code remains outside billing/invoice/        source      generated                           </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="BS"> T4.3   CSV export endpoint still returns the same file               http       </span><span class="BS bd"> + added by you                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T4_ch… GET /invoices/{id}.pdf returns the same bytes as before       http        generated                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T4_ch… No PDF rendering code remains outside billing/invoice/        source      generated                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> T4_ch… CSV export endpoint still returns the same file               http       </span><span class="BS bd"> + added by you                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Checks must restate what the prompt asks. A check that adds an obligation the prompt does not state is flagged</span><span class="B0">       </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">before approval.</span><span class="B0">                                                                                                     </span><span class="B0 ln">│</span></div>
@@ -226,11 +226,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="NewTemplateRepo.dc.html">New template (M01)</a><a href="PlannerPicker.dc.html">Planner</a><a href="PlannerUnknownModel.dc.html">No default model</a><a href="PlannerNoUsable.dc.html">No usable harness</a><a href="PlannerVerify.dc.html">Verify now</a><a href="PlanningProgress.dc.html">Planning</a><a href="PlanReview.dc.html">Review</a><a href="PlanReopened.dc.html">Reopened draft</a><a href="PlanServices.dc.html">Services</a><a href="PlanServiceEdit.dc.html">Edit service</a><a href="PlanEdit.dc.html">Edit</a><a href="PlanRegenerate.dc.html">Regenerate</a><a href="PlanApprove.dc.html">Approve</a><a href="PlanApproveIdentical.dc.html">Identical</a><a href="PlanningFailed.dc.html">Failed</a><a href="PlanningInterrupted.dc.html">Interrupted</a><a href="Library.dc.html">Library drafts (M01)</a></div>
 <h3>Notes</h3>
-<ul><li>Edits change only the draft; also used when revising an approved template into r2 (M01).</li><li>Checks may not add obligations the prompt does not state.</li></ul>
+<ul><li>Edits change only the draft; also used when revising an approved template into r2 (M01).</li><li>Checks may not add obligations the prompt does not state.</li><li>Implementation owner M16. API seam: planning.draft_task; planning.edit(draft_id,base_version,task edit).</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1060}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

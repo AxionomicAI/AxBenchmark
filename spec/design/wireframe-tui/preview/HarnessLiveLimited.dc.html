@@ -64,11 +64,11 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1280px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1400px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Live view · less exposed</b> · HarnessLiveScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
-<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">              </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Run 2026-10-01-a · Grok CLI · grok-4.7-fast · harness default · live view</span><span class="B2">                 </span></div>
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">       </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — UID run_mbp_20261001a · Grok CLI · grok-4.7-fast · harness default · trial 1 · live view</span><span class="B2">         </span></div>
 <div class="r"><span class="B1"> </span><span class="B1 ac">●</span><span class="B1"> </span><span class="B1 bd">T5 Shopping cart</span><span class="B1 mu"> · 6:02 │ </span><span class="B1">grok-4.7-fast</span><span class="B1 mu"> · effort </span><span class="B1">harness default </span><span class="B1 mu">(no argument passed) │ Grok CLI 1.9.3 · pid 49820 …</span><span class="B1"> </span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Throughput and context </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Output</span><span class="B0">   </span><span class="B0 bd">112 tok/s</span><span class="B0">  </span><span class="B0 ac">▃▅▇█▇▆▇█▇▅▆▇█▇▆▅▇█</span><span class="B0">  </span><span class="B0 mu">last 60 s · measured from the stream · the harness reports no rate          </span><span class="B0"> </span><span class="B0 ln">│</span></div>
@@ -143,11 +143,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="HarnessLive.dc.html">Codex · thinking summarized</a><a href="HarnessLiveStreaming.dc.html">Edit streaming</a><a href="HarnessLiveLimited.dc.html">Less exposed · Grok CLI</a><a href="RunOverview.dc.html">Run overview</a><a href="RunConfig.dc.html">Configuration</a></div>
 <h3>Notes</h3>
-<ul><li>Grok CLI reports neither context nor reasoning while it runs: context stays “? not reported” with no bar, and t is dimmed through check_action.</li><li>Unknown is never estimated silently: each value names its source (harness, endpoint or measured from the stream).</li><li>The code pane works for every harness, because it is read from the configuration’s own workspace, not from the model stream.</li></ul>
+<ul><li>Grok CLI reports neither context nor reasoning while it runs: context stays “? not reported” with no bar, and t is dimmed through check_action.</li><li>Unknown is never estimated silently: each value names its source (harness, endpoint or measured from the stream).</li><li>The code pane works for every harness, because it is read from the configuration’s own workspace, not from the model stream.</li><li>Implementation owner M11. API seam: harness.live/task/file/log; bind resolved TrialRef, discard stale selection responses.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1280}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1400}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

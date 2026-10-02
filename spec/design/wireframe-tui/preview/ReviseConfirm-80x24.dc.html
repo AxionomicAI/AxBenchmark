@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1120px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Approve revision r2</b> · ApproveRevisionScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -75,7 +75,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln xd">─</span><span class="B1 ac">│</span><span class="B1">                                                                            </span><span class="B1 ac">│</span><span class="B0 ln xd">─</span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Changes from r1</span><span class="B1">                                                           </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  ~ order   T4 Inventory lookup ↔ T5 Shopping cart                          </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
-<div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  + check   T6.4 Order history survives a page reload                       </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  ~ check   T6_history observation strategy updated (same obligation)       </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">= same</span><span class="B1">    </span><span class="B1 mu">specification, prompt text, baseline, protocol, rubric        </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">                                                                            </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Identity</span><span class="B1">                                                                  </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
@@ -101,7 +101,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln xd">─</span><span class="B1 ac">│</span><span class="B1">                                                                            </span><span class="B1 ac">│</span><span class="B0 ln xd">─</span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Changes from r1</span><span class="B1">                                                           </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  ~ order   T4 Inventory lookup ↔ T5 Shopping cart                          </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
-<div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  + check   T6.4 Order history survives a page reload                       </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  ~ check   T6_history observation strategy updated (same obligation)       </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">= same</span><span class="B1">    </span><span class="B1 mu">specification, prompt text, baseline, protocol, rubric        </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">                                                                            </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
 <div class="r"><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Identity</span><span class="B1">                                                                  </span><span class="B1 ac">│</span><span class="B0 xd"> </span></div>
@@ -153,11 +153,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Revise.dc.html">Choose</a><a href="ReviseActiveRun.dc.html">Run active</a><a href="ReviseConfirm-80x24.dc.html">Approve</a><a href="ReviseIdentical-80x24.dc.html">Identical</a><a href="RevisionSaved.dc.html">Saved</a></div>
 <h3>Notes</h3>
-<ul><li>Task-order changes alone produce a new digest (R067, R118).</li><li>Configurations do not carry over silently; copying is an explicit choice that creates new r2 configurations.</li></ul>
+<ul><li>Task-order changes alone produce a new digest (R067, R118).</li><li>Configurations do not carry over silently; copying is an explicit choice that creates new r2 configurations.</li><li>Implementation owner M01. API seam: templates.approval_preview; templates.approve_revision(draft_id,base_version,copy_configs).</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1120}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1240}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 940px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1040px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Newer built-in revision · what changed</b> · DefaultChangesScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -80,8 +80,8 @@ body{margin:0}
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B2 bd xd">   Name        </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Changes from r1</span><span class="B1">                                                                   </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="BS xd"> ★ Inventory we</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">= same</span><span class="B1">      </span><span class="B1 mu">spec and the seven prompts, verbatim · baseline · rubric web v1     </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">owser QA        </span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Inventory we</span><span class="B1 ac">│</span><span class="B1">  ~ check     T2.3 waits for the sample data to render (verifier fix)               </span><span class="B1 ac">│</span><span class="B0 xd"> · r3 built-in… </span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Orders REST </span><span class="B1 ac">│</span><span class="B1">  ~ check     T7.1 browser start timeout 60 s → 120 s                               </span><span class="B1 ac">│</span><span class="B0 xd">37ee9e73ea2376b </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Inventory we</span><span class="B1 ac">│</span><span class="B1">  ~ check     T2_samples improves data discovery (no UI required)                   </span><span class="B1 ac">│</span><span class="B0 xd"> · r3 built-in… </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Orders REST </span><span class="B1 ac">│</span><span class="B1">  ~ check     T7_browser_qa improves retained action evidence discovery             </span><span class="B1 ac">│</span><span class="B0 xd">37ee9e73ea2376b </span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Billing serv</span><span class="B1 ac">│</span><span class="B1">  ~ protocol  execution protocol v1 → v1.1 · service readiness retries              </span><span class="B1 ac">│</span><span class="B0 xd">1380bc01229ff49 </span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ↓ Kanban board</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ↓ Recipe plann</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Identity</span><span class="B1">                                                                          </span><span class="B1 ac">│</span><span class="B0 xd">cks · v1        </span><span class="B0 ln xd">│</span></div>
@@ -136,11 +136,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="InventoryAbout.dc.html">Contract</a><a href="InventoryPrompts.dc.html">Prompts</a><a href="InventoryChecks.dc.html">Checks</a><a href="InventoryVariant.dc.html">Look-alike</a><a href="InventoryUpgrade.dc.html">Newer built-in</a></div>
 <h3>Notes</h3>
-<ul><li>D16: opened from #default-changes in the Library notice. All built-in revisions stay available.</li><li>Prompts stay verbatim; only checks and protocol changed, which is enough for a new SHA-256, so r1 and r3 results never compare.</li><li>Make r3 the default… confirms through ConfirmScreen and changes only the Library’s default selection.</li></ul>
+<ul><li>D16: opened from #default-changes in the Library notice. All built-in revisions stay available.</li><li>Prompts stay verbatim; only checks and protocol changed, which is enough for a new SHA-256, so r1 and r3 results never compare.</li><li>Make r3 the default… confirms through ConfirmScreen and changes only the Library’s default selection.</li><li>Implementation owner M09. API seam: templates.list.default_notice; templates.set_default after confirmation.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":940}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1040}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

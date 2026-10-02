@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1080px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1220px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>run · halted, then status</b> · axbenchmark run --no-tui · status · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -129,11 +129,11 @@ status RUN_ID     always exit 0
 <h3>States and related frames</h3>
 <div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
 <h3>Notes</h3>
-<ul><li>D9: run 2026-09-29-c halts when approved files change on disk (RunHalted). The reason, both SHA-256 and the changed paths are printed, then exit 1.</li><li>D1: status exits 0 whatever the run state; run 2026-09-28-a completed with 3 failed and 1 unverified check and exited 0, and status --json shows them.</li></ul>
+<ul><li>D9: run 2026-09-29-c halts when approved files change on disk (RunHalted). The reason, both SHA-256 and the changed paths are printed, then exit 1.</li><li>D1: status exits 0 whatever the run state; run 2026-09-28-a completed with 3 failed and 1 unverified check and exited 0, and status --json shows them.</li><li>Implementation owner M14. API seam: M14 curated CLI over published registry; results.resolve_run before UID-only calls; engine/jobs/reports durable status. See M14.2 exact command fixtures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1080}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1220}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

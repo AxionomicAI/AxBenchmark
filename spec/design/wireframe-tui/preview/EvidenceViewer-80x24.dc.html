@@ -64,15 +64,15 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1360px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Evidence viewer · check log</b> · EvidenceViewerScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
 <div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                     </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — R-0928a-3 · evidence</span><span class="B2">                       </span></div>
-<div class="r"><span class="B1"> R-0928a-3 · Grok CLI · checks/T7.1.log · read-only                             </span></div>
-<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> checks/T7.1.log </span><span class="B0 ac">────────────────────────────────────────────────────────────┐</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:02 </span><span class="B0">T7.1 The site works end to end in a real browser                       </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:02 </span><span class="B0">disposable copy of T7 snapshot 9e41c07 → /tmp/axb-verify-7f3a/ws       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B1"> R-0928a-3 · Grok CLI · checks/T5_persistence.log · read-only                   </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> checks/T5_persistence.log </span><span class="B0 ac">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:02 </span><span class="B0">T5_persistence Cart survives reopening                                 </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:02 </span><span class="B0">disposable copy of T5 snapshot 4e7a1c9 → /tmp/axb-verify-7f3a/ws       </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:02 </span><span class="B0">tooling outside the copy · Playwright for Python 1.52                  </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:02 </span><span class="B0">launch chromium (headless) …                                           </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:03 </span><span class="B0 bd">✗ Executable doesn’t exist at ~/Library/Caches/ms-playwright/chromium…</span><span class="B0"> </span><span class="B0 ac">│</span></div>
@@ -81,7 +81,7 @@ body{margin:0}
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:03 </span><span class="B0">exit 127 after 0.4 s · no step ran                                     </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:03 </span><span class="B0 bd">outcome ? unverified · cause: missing prerequisite (browser)          </span><span class="B0"> </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:03 </span><span class="B0">never recorded as passed or failed · no repair attempted               </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:03 </span><span class="B0">copy discarded · T7 snapshot 9e41c07 unchanged                         </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">41:03 </span><span class="B0">copy discarded · T5 snapshot 4e7a1c9 unchanged                         </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
@@ -124,11 +124,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="TaskChecks-80x24.dc.html">Task checks</a><a href="FinalRegression.dc.html">Final regression</a><a href="CheckOutcomes.dc.html">Not passed</a><a href="Screenshots.dc.html">Screenshots</a><a href="EvidenceViewer-80x24.dc.html">Evidence</a><a href="VerifyProgress.dc.html">In progress</a><a href="JudgeHandoff.dc.html">Judge input</a></div>
 <h3>Notes</h3>
-<ul><li>W1: opened from results with l and the Open log / Open snapshot / Open evidence buttons (M02), and with l on TaskChecks.</li><li>Content is paged from results.read_evidence; the view never writes, so outcomes and grades cannot change.</li><li>Binary evidence (screenshots) opens externally; snapshots list their files at the recorded commit.</li></ul>
+<ul><li>W1: opened from results with l and the Open log / Open snapshot / Open evidence buttons (M02), and with l on TaskChecks.</li><li>Content is paged from results.read_evidence; the view never writes, so outcomes and grades cannot change.</li><li>Binary evidence (screenshots) opens externally; snapshots list their files at the recorded commit.</li><li>Implementation owner M08. API seam: verification.evidence; results.read_evidence; opener on returned evidence.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1240}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1360}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

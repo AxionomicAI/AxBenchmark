@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1060px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Clean mode cannot be established</b> · CleanBlockedScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -179,11 +179,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="RunOverview.dc.html">Run overview (M11)</a><a href="RunConfig.dc.html">Running</a><a href="VerifyProgress.dc.html">Verifying</a><a href="HarnessLive.dc.html">Live view</a><a href="TaskBlocked.dc.html">Blocked action</a><a href="ModelRejected.dc.html">Model rejected</a><a href="RunIsolation.dc.html">Isolation</a><a href="EnvPolicy.dc.html">Policy</a><a href="CleanModeBlocked.dc.html">Clean impossible</a></div>
 <h3>Notes</h3>
-<ul><li>Never a silent fallback to current, never “clean” for partial isolation (R070).</li><li>Choosing current for one entry records that entry as current with its fingerprint.</li></ul>
+<ul><li>Never a silent fallback to current, never “clean” for partial isolation (R070).</li><li>Choosing current for one entry records that entry as current with its fingerprint.</li><li>Implementation owner M05. API seam: harness.policy; engine ActionState and typed clean-unavailable reason.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1060}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

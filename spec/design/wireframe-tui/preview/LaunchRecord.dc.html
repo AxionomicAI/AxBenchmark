@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Launch record</b> · LaunchRecordScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -133,11 +133,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Setup.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
 <h3>Notes</h3>
-<ul><li>Template binding, resolved configuration and original weights are frozen separately before the first task (R067).</li><li>Machine and catalog metadata are captured for M02; credentials appear only as “set” (R066).</li></ul>
+<ul><li>Template binding, resolved configuration and original weights are frozen separately before the first task (R067).</li><li>Machine and catalog metadata are captured for M02; credentials appear only as “set” (R066).</li><li>Implementation owner M07. API seam: configs.launch_record(run_uid); runs.status; immutable frozen record.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

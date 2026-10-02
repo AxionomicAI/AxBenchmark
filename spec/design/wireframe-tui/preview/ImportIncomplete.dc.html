@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 920px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1040px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Incomplete package</b> · ImportScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -179,11 +179,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="ImportTemplate.dc.html">Import (M01)</a><a href="ResultPackagePick.dc.html">Choose result ZIP</a><a href="ImportUnsafe.dc.html">Unsafe</a><a href="ImportIncomplete.dc.html">Incomplete</a><a href="ImportRejected.dc.html">Digest mismatch</a><a href="ImportDuplicate.dc.html">Identical</a><a href="ResultPackage.dc.html">Result package</a><a href="ResultMismatch.dc.html">Template differs</a><a href="ResultEmbedded.dc.html">Separate revision</a><a href="ResultImportConflict.dc.html">Id conflict</a></div>
 <h3>Notes</h3>
-<ul><li>Completeness is checked against the template contract before identity (R115).</li><li>Diagnostics name the failed requirement and a next action (R117).</li></ul>
+<ul><li>Completeness is checked against the template contract before identity (R115).</li><li>Diagnostics name the failed requirement and a next action (R117).</li><li>Implementation owner M17. API seam: exchange.inspect_package/import_template; job:&lt;id&gt;; explicit jobs.cancel respects publication.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":920}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1040}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

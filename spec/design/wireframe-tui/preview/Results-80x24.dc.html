@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2080px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Results</b> · ResultsScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -88,7 +88,7 @@ body{margin:0}
 <div class="r"><span class="B0 ac">└────────────────────────────────────</span><span class="B0 mu"> highest known cost first · unknown last </span><span class="B0 ac">─┘</span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> R-0924lab-1 · ↓ imported </span><span class="B0 ln">───────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">lab-linux-4090 · judge B · Claude Code 3.4.1 · claude-sonnet-5-5 · medium   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> ✓ 21/21 checks · $2.35 list · 35:20 · clean · 3 at once                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> ✓ 30/30 checks · $2.35 list · 35:20 · clean · 3 at once                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Validated, not certified: the hash proves the definition, not the execution.</span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><a class="B0 ac bd k" href="ResultOrigin.dc.html">o</a><a class="B0 k" href="ResultOrigin.dc.html"> Open</a><span class="B0">   </span><a class="B0 ac bd k" href="Rejudge.dc.html">j</a><a class="B0 k" href="Rejudge.dc.html"> Review again</a><span class="B0">   </span><a class="B0 ac bd k" href="ExportResult.dc.html">x</a><a class="B0 k" href="ExportResult.dc.html"> Export ZIP</a><span class="B0">                                       </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
@@ -114,7 +114,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln">└────────────────────────────────────</span><span class="B0 mu"> highest known cost first · unknown last </span><span class="B0 ln">─┘</span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> R-0924lab-1 · ↓ imported </span><span class="B0 ln">───────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">lab-linux-4090 · judge B · Claude Code 3.4.1 · claude-sonnet-5-5 · medium   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> ✓ 21/21 checks · $2.35 list · 35:20 · clean · 3 at once                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> ✓ 30/30 checks · $2.35 list · 35:20 · clean · 3 at once                      </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Validated, not certified: the hash proves the definition, not the execution.</span><span class="B0"> </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><a class="B0 ac bd k" href="ResultOrigin.dc.html">o</a><a class="B0 k" href="ResultOrigin.dc.html"> Open</a><span class="B0">   </span><a class="B0 ac bd k" href="Rejudge.dc.html">j</a><a class="B0 k" href="Rejudge.dc.html"> Review again</a><span class="B0">   </span><a class="B0 ac bd k" href="ExportResult.dc.html">x</a><a class="B0 k" href="ExportResult.dc.html"> Export ZIP</a><span class="B0">                                       </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
@@ -162,11 +162,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Results-80x24.dc.html">Results</a><a href="ResultsTrials.dc.html">Trials</a><a href="ResultsHalted.dc.html">Halted run</a><a href="ResultsAnalysisTariff.dc.html">Analysis tariff</a><a href="ResultImport.dc.html">Import</a><a href="ResultImportConflict-80x24.dc.html">Id conflict</a><a href="ExportResult.dc.html">Export</a><a href="ReportReady.dc.html">Report</a><a href="Rankings-80x24.dc.html">Rankings</a></div>
 <h3>Notes</h3>
-<ul><li>Only results whose template SHA-256 matches r1 are listed; another hash opens its own comparison and never mixes in (R122).</li><li>All five comparison filters are visible (R124). Machine differences are inputs, not hash mismatches.</li><li>Measured tables default to highest known cost first, unknown last (M06 R131). Unknown cost reads “unknown”, never $0; a local endpoint in a parallel run has no cost (D4), and partial cost carries ▲ (D11).</li><li>The selected result shows its cost basis: reported, price-table estimate with source and date, or energy estimate (D4).</li><li>Imported rows carry ↓ and their source machine; the summary says validated, not certified (R123).</li><li>Costs show in each run’s frozen display currency (all USD here). Rows from runs with different display currencies show in USD, and the table says so. There is no currency switch in Results; rankings compute in USD.</li></ul>
+<ul><li>Only results whose template SHA-256 matches r1 are listed; another hash opens its own comparison and never mixes in (R122).</li><li>All five comparison filters are visible (R124). Machine differences are inputs, not hash mismatches.</li><li>Measured tables default to highest known cost first, unknown last (M06 R131). Unknown cost reads “unknown”, never $0; a local endpoint in a parallel run has no cost (D4), and partial cost carries ▲ (D11).</li><li>The selected result shows its cost basis: reported, price-table estimate with source and date, or energy estimate (D4).</li><li>Imported rows carry ↓ and their source machine; the summary says validated, not certified (R123).</li><li>Costs show in each run’s frozen display currency (all USD here). Rows from runs with different display currencies show in USD, and the table says so. There is no currency switch in Results; rankings compute in USD.</li><li>Implementation owner M02. API seam: results.list(template_sha256,filters,tariff); M17 exchange and M13 report factories.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2080}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2200}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

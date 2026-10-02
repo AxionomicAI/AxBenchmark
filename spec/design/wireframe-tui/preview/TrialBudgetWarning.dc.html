@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1320px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Launch · trial budget warning</b> · ConfirmScreen (M15, shared) · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -162,7 +162,7 @@ body{margin:0}
 <div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
 </div>
 <aside class="lg" style="width: 440px; flex-shrink: 0">
-<div class="lg-h"><b>ConfirmScreen (M15, shared)</b><span class="mut">tui/widgets/confirm.py</span></div>
+<div class="lg-h"><b>ConfirmScreen (M15, shared)</b><span class="mut">tui/screens/confirm.py</span></div>
 <h3>Widget tree</h3>
 <pre>ConfirmScreen(ModalScreen[bool])   over ReviewLaunchScreen
 ├─ Vertical #confirm .dialog
@@ -179,11 +179,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Setup.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
 <h3>Notes</h3>
-<ul><li>R3-7: there is no upper limit on trials. When a launch requests more than 5 trials for any configuration not on a local endpoint, M07’s launch validation returns trial_budget_warning with its totals.</li><li>Totals: task runs = configurations × trials × tasks; judge sessions = configurations × trials. The dialog states clearly that the extra trials consume budget and subscription usage.</li><li>Not shown when every configuration above 5 trials is on a local endpoint; local configurations are listed apart as using no budget.</li><li>Focus starts on Back to review. run --no-tui prints the same warning and continues; it never prompts (M14).</li></ul>
+<ul><li>R3-7: there is no upper limit on trials. When a launch requests more than 5 trials for any configuration not on a local endpoint, M07’s launch validation returns trial_budget_warning with its totals.</li><li>Totals: task runs = configurations × trials × tasks; judge sessions = configurations × trials. The dialog states clearly that the extra trials consume budget and subscription usage.</li><li>Not shown when every configuration above 5 trials is on a local endpoint; local configurations are listed apart as using no budget.</li><li>Focus starts on Back to review. run --no-tui prints the same warning and continues; it never prompts (M14).</li><li>Implementation owner M07. API seam: configs.review totals/token → fresh confirmation → runs.launch; never a local budget calculation.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1200}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1320}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

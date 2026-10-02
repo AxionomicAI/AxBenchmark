@@ -1,0 +1,41 @@
+# M02.2 — retention-services
+
+Parent: [M02](../../02-retained-results-comparability.md#1-engine-component). Requirements: R015, R035, R066, R067, R076–R081, R114, R116, R117, R122–R124, R134, R140, R142, R147, R153–R155. Findings: F02, F03, F06, F09, F14; consume F07 currency rules.
+
+Outcome: durable scoped facts and evidence, receipt-backed sealing, atomic import participation, and `results.*` queries with reliable readiness. Proposed work; fake-provider success is not end-to-end acceptance.
+
+## Entry conditions
+
+**Completed implementation prerequisites:** Bootstrap, [M02.1](01-retained-records.md), M11.1 engine/API clients and M11.2 jobs/events foundations as named in [the delivery table](../../../recommendations.md). Foundation interfaces must have executable tests before this child starts.
+
+**Bootstrap-published contracts, allowed as injected fixtures:** Shared `PublicationTransactions`/`PublicationView` and a deterministic coordinator; M01 `TemplateDirectory` and revision publication participant; M07 `LaunchRecords`; M06 `ScoringRules`; M10 `CostAnalysis`/`MeasurementReader`/`MeasurementFinalizer`; M18 telemetry receipt; M11 terminal retention input; M17 prepared-package/journal coordinator. Inject exact protocols with deterministic pause/failure hooks. Scheduler, real accounting/collectors and the real archive coordinator are later gates, avoiding cycles with their dependence on M02.
+
+## Ownership and interfaces
+
+Own proposed files:
+
+- `axbenchmark/engine/results/ports.py`, `application/interfaces.py`, `application/recording.py`, `finalization.py`, `invalidation.py`, `queries.py`, `import_registration.py`, `export_bundle.py`.
+- `axbenchmark/engine/results/adapters/fs_repository.py`, `fs_evidence.py`, `recovery.py`, `rpc.py`; `axbenchmark/api/results.py`; only M02 registrations in `axbenchmark/engine/daemon/composition.py` and the shared API/event registry.
+- `tests/results/test_recording.py`, `test_finalization.py`, `test_evidence_store.py`, `test_import_publication.py`, `test_recovery.py`, `test_queries.py`, `test_results_api.py`, `test_export_bundle.py`.
+
+Implement the parent's `ResultRecorder`, `ImportRegistrar`, `RetainedResultReader`, `RevisionResults` and `ArtifactSnapshots` exactly. Each accepted append is durable and idempotent by operation identity; conflicting repeat content is an error. Capture one `PublicationView` for all repository reads and pass pinned effective records to scoring/accounting. Full TrialRef scopes survive every append, evidence path, query and event; M18 shared host series retains experiment scope within that envelope. Query presentation calls `CostAnalysis.display_currency_for(pinned_runs)` once and passes only its mixed-USD choice to `ranking_cost` and `MeasurementReader.trial_summary`; return M10 CostDTO/DurationDTO and complete range metadata unchanged.
+
+`finalization_receipt` binds the exact durable result fact set; `seal` verifies it. `finish_run_retention` exposes readiness only after every expected trial and original-review disposition settles. `prepare/commit_view/rollback` are transaction participants; `commit_view` never publishes. Shared publication tokens distinguish new from pre-existing registrations and protect both from incorrect rollback. M17 owns orchestration and the shared journal; M02 owns only its recovery operations. Public/guessed IDs cannot open staged data. Same-tx/same-intent prepare recovers the original durable tokens/created flags even before M17 journaled them; changed intent fails and rolled-back entries are never reprepared. `read_incoming(staged_result_dir, staged_run_dir)` alone parses both selected M02 records and shared run binding/retention/invalidations; M17 only cross-checks its returned data.
+
+## Acceptance and faults
+
+Run `pytest tests/results/test_recording.py tests/results/test_finalization.py tests/results/test_evidence_store.py tests/results/test_import_publication.py tests/results/test_recovery.py tests/results/test_queries.py tests/results/test_results_api.py tests/results/test_export_bundle.py`:
+
+1. Delay accepted usage, checks and final hardware writes. An early/mismatched receipt cannot seal; export/report remains pending. Complete drainage and energy retention, seal and settle reviews: query/export contain equal final cost, coverage, rate and evidence data. No measurement append succeeds afterward.
+2. Crash after one of three seals. Restart preserves that seal/receipt, finishes only unsealed records with observed partial coverage, and keeps readiness false until all settle. Simulated disk failure never reports success; repeated successful operations emit no duplicate logical change.
+3. Invalidate during final verification and again after all seals during judging. Overlay is durable before cleanup, all readers exclude every result from comparisons, sealed bytes/reviews remain unchanged, and an inspection export contains invalidation evidence.
+4. Pause/crash before and after each participant prepare, commit_view and shared marker while concurrently reading M01/M02 and guessing staged IDs. Readers see the old or entire new collection. Crash after participant prepare but before journal receipt, retry the same tx/intent and compare original tokens/created flags byte-for-byte; changed intent fails. Unpublished rollback preserves pre-existing identical records; published retry rolls forward and reimports identically; failed rollback blocks startup readiness.
+5. Import same-label/same-configuration different-UID runs; means, run lookup and exports remain separate. UID launch conflicts, trial/result binding conflicts and one changed review snapshot reject the entire batch. Ambiguous CLI labels return candidate UID/origin data.
+6. Two trial paths retain different T1 logs/screenshots; traversal/symlink attempts fail. Export rejects cross-run selections, contains only credential presence, and pins binding/retention/facts/reviews/invalidation. Assert immutable `bundle.template_sha256` equals the pinned RunBinding and every selected result's template; a mismatch rejects acquisition, and M17 passes that exact value to `RevisionReader.open(..., view)`. Race invalidation before the guard: `SnapshotChanged` prevents output commit; inside the guard the writer holds the run mutation lock until output commit. A later review preserves the pinned export version; failure/cancel/normal exit releases every lease. Parse a selected result plus shared staged run files through M02 and reject inconsistent references without an M17 codec. Currency analysis uses each frozen rate, mixed currencies use USD, missing rate keeps an always-present unknown display projection and tariff analysis changes no retained bytes. Mean/min/max retain exact rational values, billing/rates, basis and contributor evidence; partial/unknown trials never disappear.
+7. Validate every `results.*` response/error against API schemas through both clients. Cursor replay and run-wide invalidation refreshes preserve object revisions. Disable model ports: query/import/export inputs and report input assembly remain available without calls.
+
+**Wireframes:** supplies DTO states for Results, ResultsTrials, ResultsHalted, ResultsAnalysisTariff, ResultOrigin/Outcomes/Reviews, ResultImport/Conflict, ExportResult, Rejudge and ReportReady; no screen code here.
+
+**Real integration gate:** M11.3–4 + M08.2 + M10.2 + M18.2 run delayed-observation and stop/recovery cases with real retention; M12.2 settles/cancels original reviews; M17.2 with M01.2–3 proves atomic embedded imports, prepare-receipt recovery, guarded export/lease closure and round trips; M06.1/M13.1 consume retained facts with model access disabled. Record actual provider/platform coverage separately from fixture coverage.
+
+**Pending parent obligations:** M02.3 UI and all real gates above; this child cannot claim real collector, harness, scorer or report support from fakes.

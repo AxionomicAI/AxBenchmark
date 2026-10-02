@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 880px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 980px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Score breakdown</b> · ScoreBreakdownScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -77,7 +77,7 @@ body{margin:0}
 <div class="r"><span class="B0 ln xd">│</span><span class="B2 bd xd"> #   Result     </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B2 bd xd">    Cost    Time</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="BS xd"> 1   R-0928a-2  </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">R-0928a-1 · Claude Code · claude-opus-5-5 · medium · judge A                    </span><span class="B1">  </span><span class="B1 ac">│</span><span class="BS xd">   $3.10   44:05</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> 2   R-0925b-1  </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">   $6.40   31:44</span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> 3   R-0928a-1  </span><span class="B1 ac">│</span><span class="B1">  ✓ completed   ✓ 21/21 checks verified   ✓ grades valid   ✓ business 5 ≥ 4         </span><span class="B1 ac">│</span><span class="B0 xd">   $4.82   38:12</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> 3   R-0928a-1  </span><span class="B1 ac">│</span><span class="B1">  ✓ completed   ✓ 30/30 checks verified   ✓ grades valid   ✓ business 5 ≥ 4         </span><span class="B1 ac">│</span><span class="B0 xd">   $4.82   38:12</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">└────────────────</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">3 of 8 qualify </span><span class="B0 ln xd">─┘</span></div>
 <div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Lowest cost </span><span class="B0 ln xd">──</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> Quality · web v1            Raw   Weight  Normalized               Contribution</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────┐</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B2 bd xd"> #  Model · effo</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> User experience               4       25       25.0%                       1.00</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B2 bd xd">                </span><span class="B0 ln xd">│</span></div>
@@ -136,11 +136,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Rankings.dc.html">Original</a><a href="RankingsProfileDefaults.dc.html">Profile defaults</a><a href="RankingsTrials.dc.html">Trials</a><a href="ScoreBreakdown.dc.html">Breakdown</a><a href="WeightsEditor.dc.html">Weights</a><a href="WeightsInvalid.dc.html">Invalid</a><a href="RankingsAlternative.dc.html">Alternative</a></div>
 <h3>Notes</h3>
-<ul><li>Q = Σ normalized category weight × raw grade (R097).</li><li>Score = 100 × (w_c·minCost/cost + w_t·minTime/time + w_q·Q/5), minima from this ranking’s eligible population (R098, R099).</li><li>Full precision internally; rounding is display only (R131).</li></ul>
+<ul><li>Q = Σ normalized category weight × raw grade (R097).</li><li>Score = 100 × (w_c·minCost/cost + w_t·minTime/time + w_q·Q/5), minima from this ranking’s eligible population (R098, R099).</li><li>Full precision internally; rounding is display only (R131).</li><li>Implementation owner M06. API seam: scoring.breakdown(result_id,judge_group); returned original/alternative measures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":880}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":980}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

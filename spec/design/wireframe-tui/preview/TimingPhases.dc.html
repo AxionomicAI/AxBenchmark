@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 900px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1000px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Timing · elapsed vs phases</b> · TimingScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -179,11 +179,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="MeasurementsTrials.dc.html">3 trials</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="TariffAnalysis.dc.html">Tariff · analysis</a><a href="ResultsAnalysisTariff.dc.html">Results · tariff (M02)</a><a href="ResultsTrials.dc.html">Results · trials (M02)</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
 <h3>Notes</h3>
-<ul><li>Benchmark elapsed = Σ task process durations, tool work included; queue, planning, verification and judging are reported apart (R079).</li><li>The experiment duration (1:56:00) is clock time; with four configurations at once it is far below their summed elapsed times (R079).</li><li>Elapsed times are those of run 2026-09-28-a in results-data.mjs.</li></ul>
+<ul><li>Benchmark elapsed = Σ task process durations, tool work included; queue, planning, verification and judging are reported apart (R079).</li><li>The experiment duration (1:56:00) is clock time; with four configurations at once it is far below their summed elapsed times (R079).</li><li>Elapsed times are those of run 2026-09-28-a in results-data.mjs.</li><li>Implementation owner M10. API seam: measurements.timing(run_uid); phases remain separate.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1000}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

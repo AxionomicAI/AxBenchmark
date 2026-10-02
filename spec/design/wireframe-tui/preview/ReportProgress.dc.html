@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 920px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Generating</b> · ReportProgressScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -75,8 +75,8 @@ body{margin:0}
 <div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Machine</span><span class="B0 xd"> </span><span class="B1 xd"> all · 2     </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Config</span><span class="B0 xd"> </span><span class="B1 xd"> all · 9            </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Env</span><span class="B0 xd"> </span><span class="B1 xd"> all     </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Jobs</span><span class="B0 xd"> </span><span class="B1 xd"> all </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Judge</span><span class="B0 xd"> </span><span class="B1 xd"> all · 2 groups </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">        </span></div>
 <div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Results · 12 of 12 </span><span class="B0 ln xd">─────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B2 bd xd"> Result      Machine          Harness     Model · effort           Env     Jdg Status         Checks      Cost    Time</span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0925b-1     mike-mbp-m4    Claude Code claude-opus-5-5 high     current A   ✓ complete     21✓        $6.40   31:44</span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   A   ✓ complete     21✓        $4.82   38:12</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0925b-1     mike-mbp-m4    Claude Code claude-opus-5-5 high     current A   ✓ complete     30✓        $6.40   31:44</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   A   ✓ complete     30✓        $4.82   38:12</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-2     mi</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Generating HTML report </span><span class="B1 ac">─────────────────────────────────────────────────────────╮</span><span class="B0 xd">    $3.10   44:05</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="BS xd"> R-0924lab-1 ↓ la</span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="BS xd">    $2.35   35:20</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0925b-2     mi</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> Read 12 retained results · 0 excluded for another SHA-256                     </span><span class="B1 ac">│</span><span class="B0 bd xd">  ▲ $2.05</span><span class="B0 xd">   45:10</span><span class="B0 ln xd">│</span></div>
@@ -133,11 +133,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="ReportGenerate.dc.html">Generate</a><a href="ReportGenerateDefaults.dc.html">Weights differ</a><a href="RankingsProfileDefaults.dc.html">Profile defaults (M06)</a><a href="ReportProgress.dc.html">Progress</a><a href="ReportReady.dc.html">Path · open failed</a><a href="ReportPage.dc.html">The HTML file</a><a href="CliExchange.dc.html">CLI report</a></div>
 <h3>Notes</h3>
-<ul><li>Original measurements, grades and weights are only read (R134).</li><li>Hostile markup in competitor material stays inert text (R125, R133).</li><li>Ends in ReportReady (M02), which always shows the path.</li></ul>
+<ul><li>Original measurements, grades and weights are only read (R134).</li><li>Hostile markup in competitor material stays inert text (R125, R133).</li><li>Ends in ReportReady (M02), which always shows the path.</li><li>Implementation owner M13. API seam: job:&lt;job_id&gt;; jobs.cancel; reports.status for durable outcome/cache expiry.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":920}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

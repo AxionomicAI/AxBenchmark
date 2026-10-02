@@ -64,57 +64,57 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1340px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1260px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Task checks · T5</b> · TaskChecksScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
 <sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
-<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — R-0928a-4 · T5 checks</span><span class="B2">                       </span></div>
-<div class="r"><span class="B1"> Pi · qwen3.5-35b-a3b · exit 0 · 2✓ 2✗ · snapshot 4e7a1c9                       </span></div>
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">               </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — R-0928a-4 · T5 checks · trial 1</span><span class="B2">                  </span></div>
+<div class="r"><span class="B1"> UID run_mbp_20260928a · origin mike-mbp-m4 · config pi_default · trial 1 · ph… </span></div>
 <div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Acceptance checks · T5 </span><span class="B0 ac">─────────────────────────────────────────────────────┐</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Check Title                                              Kind     Outcome    </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.1  Products can be added to the cart                  browser  ✓ passed   </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.2  Changing a quantity updates the total              keyboard ✓ passed   </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="BA on"> T5.3  Removing an item updates the total                 keyboard</span><span class="BA on bd"> ✗ failed   </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.4  The cart survives a page reload                    browser </span><span class="B0 bd"> ✗ failed   </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">└───────────────────────────────────────────────────────────────</span><span class="B0 mu"> frozen in r1 </span><span class="B0 ac">─┘</span></div>
-<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> T5.3 · ✗ failed · application </span><span class="B0 ln">──────────────────────────────────────────────┐</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> Expected: after an item is removed, the total no longer includes it.         </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> Observed: the row disappeared but the total stayed at 64.00.                 </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> 1 open index.html directly (file://)                                       </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> 2 add “Desk lamp”, then “Notebook” twice                                   </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> 3 Tab to Remove on Desk lamp, Enter                                        </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">4 total excludes Desk lamp · still 64.00                                  </span><span class="B0"> </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Console: TypeError: cart.items.find is not a function                       </span><span class="B0"> </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Screenshots 1440×1000 + 390×844 · checked on a disposable copy              </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Check              Title                                       Outcome       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5_add             Inventory item enters cart                  ✓ passed      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5_quantity        Cart quantity changes                       ✓ passed      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> T5_remove          Cart item can be removed                    ✗ failed      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5_total           Cart total reflects contents                ✓ passed      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5_persistence     Cart survives reopening                     ✗ failed      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5_commit          T5 committed                                ✓ passed      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└────────────────────────────────────────</span><span class="B0 mu"> outcomes separate from process exit </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> T5_remove · ✗ failed · application_failure </span><span class="B0 ln">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Expected</span><span class="B0">                                                                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Remove an added cart line, then reopen.</span><span class="B0">                                    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Observed</span><span class="B0">                                                                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">The selected line remains after removal.</span><span class="B0">                                   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Target</span><span class="B0">                                                                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">T5 task snapshot 4e7a1c9 · disposable copy</span><span class="B0">                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Evidence</span><span class="B0">                                                                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">browser, data, screenshot, keyboard · remove.log</span><span class="B0">                           </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
 <div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
 <div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultOutcomes-80x24.dc.html">esc</a><a class="B2 k" href="ResultOutcomes-80x24.dc.html"> Back</a><span class="B2">  </span><a class="B2 ac bd k" href="Screenshots.dc.html">s</a><a class="B2 k" href="Screenshots.dc.html"> Shots</a><span class="B2">  </span><a class="B2 ac bd k" href="FinalRegression.dc.html">f</a><a class="B2 k" href="FinalRegression.dc.html"> Final</a><span class="B2">  </span><a class="B2 ac bd k" href="JudgeHandoff.dc.html">j</a><a class="B2 k" href="JudgeHandoff.dc.html"> Judge input</a><span class="B2">                           </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
 </sc-if>
 <sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
-<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — R-0928a-4 · T5 checks</span><span class="B2">                       </span></div>
-<div class="r"><span class="B1"> Pi · qwen3.5-35b-a3b · exit 0 · 2✓ 2✗ · snapshot 4e7a1c9                       </span></div>
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">               </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — R-0928a-4 · T5 checks · trial 1</span><span class="B2">                  </span></div>
+<div class="r"><span class="B1"> UID run_mbp_20260928a · origin mike-mbp-m4 · config pi_default · trial 1 · ph… </span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Acceptance checks · T5 </span><span class="B0 ln">─────────────────────────────────────────────────────┐</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Check Title                                              Kind     Outcome    </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T5.1  Products can be added to the cart                  browser  ✓ passed   </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T5.2  Changing a quantity updates the total              keyboard ✓ passed   </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="BS"> T5.3  Removing an item updates the total                 keyboard</span><span class="BS bd"> ✗ failed   </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">│</span><span class="B0"> T5.4  The cart survives a page reload                    browser </span><span class="B0 bd"> ✗ failed   </span><span class="B0 ln">│</span></div>
-<div class="r"><span class="B0 ln">└───────────────────────────────────────────────────────────────</span><span class="B0 mu"> frozen in r1 </span><span class="B0 ln">─┘</span></div>
-<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> T5.3 · ✗ failed · application </span><span class="B0 ac">──────────────────────────────────────────────┐</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> Expected: after an item is removed, the total no longer includes it.         </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> Observed: the row disappeared but the total stayed at 64.00.                 </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> 1 open index.html directly (file://)                                       </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> 2 add “Desk lamp”, then “Notebook” twice                                   </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">✓</span><span class="B0"> 3 Tab to Remove on Desk lamp, Enter                                        </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">4 total excludes Desk lamp · still 64.00                                  </span><span class="B0"> </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Console: TypeError: cart.items.find is not a function                       </span><span class="B0"> </span><span class="B0 ac">│</span></div>
-<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Screenshots 1440×1000 + 390×844 · checked on a disposable copy              </span><span class="B0"> </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Check              Title                                       Outcome       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T5_add             Inventory item enters cart                  ✓ passed      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T5_quantity        Cart quantity changes                       ✓ passed      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> T5_remove          Cart item can be removed                    ✗ failed      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T5_total           Cart total reflects contents                ✓ passed      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T5_persistence     Cart survives reopening                     ✗ failed      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> T5_commit          T5 committed                                ✓ passed      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└────────────────────────────────────────</span><span class="B0 mu"> outcomes separate from process exit </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> T5_remove · ✗ failed · application_failure </span><span class="B0 ac">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Expected</span><span class="B0">                                                                     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">Remove an added cart line, then reopen.</span><span class="B0">                                    </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Observed</span><span class="B0">                                                                     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">The selected line remains after removal.</span><span class="B0">                                   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Target</span><span class="B0">                                                                       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">T5 task snapshot 4e7a1c9 · disposable copy</span><span class="B0">                                 </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Evidence</span><span class="B0">                                                                     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">browser, data, screenshot, keyboard · remove.log</span><span class="B0">                           </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
 <div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
@@ -123,8 +123,8 @@ body{margin:0}
 <sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
 <div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 80ch; height: 16px"><span>Header </span></div>
 <div class="ov" data-widget="Static" data-tcss="#result-bar" style="left: 0ch; top: 16px; width: 80ch; height: 16px"><span>Static #result-bar</span></div>
-<div class="ov" data-widget="DataTable" data-tcss="#task-checks" style="left: 1ch; top: 48px; width: 78ch; height: 80px"><span>DataTable #task-checks</span></div>
-<div class="ov" data-widget="VerticalScroll" data-tcss="#check-detail" style="left: 0ch; top: 144px; width: 80ch; height: 224px"><span>VerticalScroll #check-detail</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#task-checks" style="left: 1ch; top: 48px; width: 78ch; height: 112px"><span>DataTable #task-checks</span></div>
+<div class="ov" data-widget="VerticalScroll" data-tcss="#check-detail" style="left: 0ch; top: 176px; width: 80ch; height: 192px"><span>VerticalScroll #check-detail</span></div>
 <div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
 </sc-if>
 </div>
@@ -133,33 +133,27 @@ body{margin:0}
 <aside class="lg" style="width: 440px; flex-shrink: 0">
 <div class="lg-h"><b>TaskChecksScreen</b><span class="mut">tui/screens/verification.py</span></div>
 <h3>Widget tree</h3>
-<pre>TaskChecksScreen(Screen)       one task of one result
-├─ Header
-├─ Static #result-bar
-├─ Horizontal #main
-│  ├─ Vertical #left
-│  │  ├─ DataTable #task-checks .bordered
-│  │  ├─ Static #verification-facts .kv
-│  │  └─ DataTable #final-summary .bordered
-│  └─ VerticalScroll #check-detail .pane
-│     ├─ Static #check-outcome
-│     ├─ ListView #check-steps      Playwright steps
-│     └─ Static #check-evidence .kv
-├─ Horizontal .actions
+<pre>TaskChecksScreen(Screen)       explicit trial/task/phase
+├─ Header · Static #result-bar
+├─ DataTable #task-checks .bordered
+├─ VerticalScroll #check-detail .pane
+│  ├─ Static #check-outcome
+│  ├─ Static #check-observation
+│  └─ Static #check-evidence
 └─ Footer</pre>
 <h3>IDs and classes · TCSS</h3>
-<table><tr><td><code>#left</code></td><td>width: 72;</td></tr><tr><td><code>#task-checks</code></td><td>height: 7;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#check-detail</code></td><td>width: 1fr; border: solid $foreground 30%; padding: 0 1;</td></tr><tr><td><code>.outcome-failed</code></td><td>text-style: bold;</td></tr><tr><td><code>.outcome-unverified</code></td><td>text-style: italic;</td></tr><tr><td><code>Screen.-compact #verification-facts, Screen.-compact #final-summary</code></td><td>display: none;</td></tr></table>
+<table><tr><td><code>#task-checks</code></td><td>height: auto; cursor_type = &quot;row&quot;</td></tr><tr><td><code>#check-detail</code></td><td>height: 1fr; border: solid $foreground 30%;</td></tr><tr><td><code>.outcome-failed</code></td><td>text-style: bold;</td></tr><tr><td><code>.outcome-unverified</code></td><td>text-style: italic;</td></tr></table>
 <h3>Key bindings</h3>
 <table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result’s outcomes (M02)</span></td></tr><tr><td><kbd>← →</kbd></td><td><code>previous / next task</code><br><span class="mut">Step through T1–T7</span></td></tr><tr><td><kbd>s</kbd></td><td><code>screenshots</code><br><span class="mut">Push ScreenshotsScreen</span></td></tr><tr><td><kbd>f</kbd></td><td><code>final_regression</code><br><span class="mut">Push FinalRegressionScreen</span></td></tr><tr><td><kbd>j</kbd></td><td><code>judge_input</code><br><span class="mut">Show what the judge receives</span></td></tr><tr><td><kbd>l</kbd></td><td><code>log</code><br><span class="mut">Push EvidenceViewerScreen on the check log</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>DataTable #task-checks</li><li>VerticalScroll #check-detail</li></ol>
 <h3>States and related frames</h3>
 <div class="rel"><a href="TaskChecks-80x24.dc.html">Task checks</a><a href="FinalRegression.dc.html">Final regression</a><a href="CheckOutcomes.dc.html">Not passed</a><a href="Screenshots.dc.html">Screenshots</a><a href="EvidenceViewer-80x24.dc.html">Evidence</a><a href="VerifyProgress.dc.html">In progress</a><a href="JudgeHandoff.dc.html">Judge input</a></div>
 <h3>Notes</h3>
-<ul><li>The frozen checks decide task success; exit code, agent claims and grades are separate observations (R073, R144).</li><li>Disposable copy, tooling outside the source, no manual fixes; the snapshot is preserved (R074).</li><li>Browser checks use Python Playwright with real workflows, keyboard steps, console errors and screenshots at 1440×1000 and 390×844 (R075).</li></ul>
+<ul><li>The frozen checks decide task success; exit code, agent claims and grades are separate observations (R073, R144).</li><li>Disposable copy, tooling outside the source, no manual fixes; the snapshot is preserved (R074).</li><li>Browser checks use Python Playwright with real workflows, keyboard steps, console errors and screenshots at 1440×1000 and 390×844 (R075).</li><li>Implementation owner M08. API seam: verification.task/check/evidence; explicit ResultId/TrialRef/task/phase.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1340}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1260}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

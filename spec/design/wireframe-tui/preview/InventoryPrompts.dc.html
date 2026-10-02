@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 940px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1040px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Preserved prompts</b> · PromptsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -181,11 +181,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="InventoryAbout.dc.html">Contract</a><a href="InventoryPrompts.dc.html">Prompts</a><a href="InventoryChecks.dc.html">Checks</a><a href="InventoryVariant.dc.html">Look-alike</a><a href="InventoryUpgrade.dc.html">Newer built-in</a></div>
 <h3>Notes</h3>
-<ul><li>Text is read from benchmark/tasks/ when the wireframes are built, so it is the preserved text verbatim (R020, R028).</li><li>Read-only: editing creates a new revision through M01.</li></ul>
+<ul><li>Text is read from benchmark/tasks/ when the wireframes are built, so it is the preserved text verbatim (R020, R028).</li><li>Read-only: editing creates a new revision through M01.</li><li>Implementation owner M09. API seam: templates.prompts; immutable revision, no subscription.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":940}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1040}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

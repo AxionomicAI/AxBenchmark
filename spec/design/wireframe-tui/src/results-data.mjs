@@ -20,7 +20,7 @@ export const JUDGES = {
 };
 
 const R = (id, run, machine, src, h, model, effort, env, jobs, judge, status, checks, cost, time, g, extra = {}) =>
-  ({ id, run, machine, src, h, model, effort, env, jobs, judge, status, checks, cost, time, g, ...extra });
+  ({ id, run, machine, src, h, model, effort, env, jobs, judge, status, checks, cost, time, g, run_uid: `run_${machine === "mike-mbp-m4" ? "mbp" : "lab"}_${run.replaceAll("-", "")}`, configuration_id: `${h.toLowerCase().replaceAll(" ", "_")}_${effort}`, trial_index: 1, trial_count: 1, ...extra });
 
 // checks: p passed · f failed · u unverified · n not run.  time: seconds.
 // cost: the cost that counts for rankings (D4), USD, or null when unknown. basis says how it was formed:
@@ -32,18 +32,18 @@ const R = (id, run, machine, src, h, model, effort, env, jobs, judge, status, ch
 //   the cost basis is shown). Unknown never yields verified $0. Costs are USD; display conversion uses frozen rates (R3-2).
 // partial: measurements that cover only part of the tasks; with positive weight they count as missing (D11).
 export const RESULTS = [
-  R('R-0928a-1', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Claude Code', 'claude-opus-5-5', 'medium', 'clean', 4, 'A', 'complete', { p: 21, f: 0, u: 0, n: 0 }, 4.82, 2292, [4, 5, 4, 5, 4, 4], { basis: 'estimate', sub: true, price: 'anthropic.com/pricing · 2026-09-26' }),
-  R('R-0928a-2', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Codex', 'gpt-6-sol', 'medium', 'clean', 4, 'A', 'complete', { p: 21, f: 0, u: 0, n: 0 }, 3.10, 2645, [4, 4, 5, 4, 4, 3], { basis: 'reported' }),
-  R('R-0928a-3', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Grok CLI', 'grok-4.7-fast', 'default', 'clean', 4, 'A', 'complete', { p: 20, f: 0, u: 1, n: 0 }, 0.92, 3090, [4, 4, 4, 4, 4, 4], { basis: 'estimate', price: 'x.ai/api · 2026-09-15' }),
-  R('R-0928a-4', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 4, 'A', 'complete', { p: 18, f: 3, u: 0, n: 0 }, null, 5530, [3, 3, 4, 3, 3, 3], { basis: 'unknown', local: true }),
-  R('R-0925b-1', '2026-09-25-b', 'mike-mbp-m4', 'local', 'Claude Code', 'claude-opus-5-5', 'high', 'current', 1, 'A', 'complete', { p: 21, f: 0, u: 0, n: 0 }, 6.40, 1904, [5, 4, 5, 5, 4, 4], { basis: 'reported' }),
-  R('R-0925b-2', '2026-09-25-b', 'mike-mbp-m4', 'local', 'Codex', 'gpt-6-sol', 'high', 'current', 1, 'A', 'failed', { p: 13, f: 0, u: 0, n: 8 }, 2.05, 2710, null, { failedAt: 'T5', basis: 'reported', partial: { cost: 'covers 5 of 7 tasks', time: 'covers 5 of 7 tasks' } }),
-  R('R-0921a-1', '2026-09-21-a', 'mike-mbp-m4', 'local', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 2, 'A', 'complete', { p: 21, f: 0, u: 0, n: 0 }, null, 4802, [4, 3, 4, 4, 4, 3], { basis: 'unknown', local: true }),
-  R('R-0921a-2', '2026-09-21-a', 'mike-mbp-m4', 'local', 'Grok CLI', 'grok-4.7', 'high', 'clean', 2, 'A', 'complete', { p: 21, f: 0, u: 0, n: 0 }, null, 2830, [4, 4, 4, 4, 3, 4], { basis: 'unknown' }),
-  R('R-0924lab-1', '2026-09-24-lab', 'lab-linux-4090', 'imported', 'Claude Code', 'claude-sonnet-5-5', 'medium', 'clean', 3, 'B', 'complete', { p: 21, f: 0, u: 0, n: 0 }, 2.35, 2120, [4, 4, 5, 5, 4, 3], { basis: 'reported' }),
-  R('R-0924lab-2', '2026-09-24-lab', 'lab-linux-4090', 'imported', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 3, 'B', 'complete', { p: 21, f: 0, u: 0, n: 0 }, null, 1720, [4, 3, 4, 4, 4, 3], { basis: 'unknown', local: true }),
-  R('R-0924lab-3', '2026-09-24-lab', 'lab-linux-4090', 'imported', 'Codex', 'gpt-6-sol', 'low', 'clean', 3, 'B', 'complete', { p: 21, f: 0, u: 0, n: 0 }, 1.20, 1805, [4, 4, 4, 3, 4, 3], { basis: 'estimate', price: 'openai.com/api/pricing · 2026-09-20' }),
-  R('R-0919lab-1', '2026-09-19-lab', 'lab-linux-4090', 'imported', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 1, 'B', 'complete', { p: 20, f: 1, u: 0, n: 0 }, 0.0145, 1650, [4, 3, 4, 4, 3, 3], { basis: 'energy', local: true, kwh: 0.0807, tariff: 0.18, scope: 'CPU package + GPU' }),
+  R('R-0928a-1', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Claude Code', 'claude-opus-5-5', 'medium', 'clean', 4, 'A', 'complete', { p: 30, f: 0, u: 0, n: 0 }, 4.82, 2292, [4, 5, 4, 5, 4, 4], { basis: 'estimate', sub: true, price: 'anthropic.com/pricing · 2026-09-26' }),
+  R('R-0928a-2', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Codex', 'gpt-6-sol', 'medium', 'clean', 4, 'A', 'complete', { p: 30, f: 0, u: 0, n: 0 }, 3.10, 2645, [4, 4, 5, 4, 4, 3], { basis: 'reported' }),
+  R('R-0928a-3', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Grok CLI', 'grok-4.7-fast', 'default', 'clean', 4, 'A', 'complete', { p: 29, f: 0, u: 1, n: 0 }, 0.92, 3090, [4, 4, 4, 4, 4, 4], { basis: 'estimate', price: 'x.ai/api · 2026-09-15' }),
+  R('R-0928a-4', '2026-09-28-a', 'mike-mbp-m4', 'local', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 4, 'A', 'complete', { p: 27, f: 3, u: 0, n: 0 }, null, 5530, [3, 3, 4, 3, 3, 3], { basis: 'unknown', local: true }),
+  R('R-0925b-1', '2026-09-25-b', 'mike-mbp-m4', 'local', 'Claude Code', 'claude-opus-5-5', 'high', 'current', 1, 'A', 'complete', { p: 30, f: 0, u: 0, n: 0 }, 6.40, 1904, [5, 4, 5, 5, 4, 4], { basis: 'reported' }),
+  R('R-0925b-2', '2026-09-25-b', 'mike-mbp-m4', 'local', 'Codex', 'gpt-6-sol', 'high', 'current', 1, 'A', 'failed', { p: 17, f: 0, u: 0, n: 13 }, 2.05, 2710, null, { failedAt: 'T5', basis: 'reported', partial: { cost: 'covers 5 of 7 tasks', time: 'covers 5 of 7 tasks' } }),
+  R('R-0921a-1', '2026-09-21-a', 'mike-mbp-m4', 'local', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 2, 'A', 'complete', { p: 30, f: 0, u: 0, n: 0 }, null, 4802, [4, 3, 4, 4, 4, 3], { basis: 'unknown', local: true }),
+  R('R-0921a-2', '2026-09-21-a', 'mike-mbp-m4', 'local', 'Grok CLI', 'grok-4.7', 'high', 'clean', 2, 'A', 'complete', { p: 30, f: 0, u: 0, n: 0 }, null, 2830, [4, 4, 4, 4, 3, 4], { basis: 'unknown' }),
+  R('R-0924lab-1', '2026-09-24-lab', 'lab-linux-4090', 'imported', 'Claude Code', 'claude-sonnet-5-5', 'medium', 'clean', 3, 'B', 'complete', { p: 30, f: 0, u: 0, n: 0 }, 2.35, 2120, [4, 4, 5, 5, 4, 3], { basis: 'reported' }),
+  R('R-0924lab-2', '2026-09-24-lab', 'lab-linux-4090', 'imported', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 3, 'B', 'complete', { p: 30, f: 0, u: 0, n: 0 }, null, 1720, [4, 3, 4, 4, 4, 3], { basis: 'unknown', local: true }),
+  R('R-0924lab-3', '2026-09-24-lab', 'lab-linux-4090', 'imported', 'Codex', 'gpt-6-sol', 'low', 'clean', 3, 'B', 'complete', { p: 30, f: 0, u: 0, n: 0 }, 1.20, 1805, [4, 4, 4, 3, 4, 3], { basis: 'estimate', price: 'openai.com/api/pricing · 2026-09-20' }),
+  R('R-0919lab-1', '2026-09-19-lab', 'lab-linux-4090', 'imported', 'Pi', 'qwen3.5-35b-a3b', 'default', 'clean', 1, 'B', 'complete', { p: 29, f: 1, u: 0, n: 0 }, 0.0145, 1650, [4, 3, 4, 4, 3, 3], { basis: 'energy', local: true, kwh: 0.0807, tariff: 0.18, scope: 'CPU package + GPU' }),
 ];
 export const byId = Object.fromEntries(RESULTS.map((r) => [r.id, r]));
 
@@ -164,7 +164,7 @@ export const TRIAL_CONFIGS = [
   ] },
   { h: 'Claude Code', model: 'claude-sonnet-5-5', effort: 'medium', basis: 'estimate', price: 'anthropic.com/pricing · 2026-09-26', trials: [
     T('R-0927t-4', 1, { p: 18, f: 0, u: 0, n: 0 }, 1.96, 1980, [4, 4, 4, 4.5, 4, 3.5], { inp: 2410, out: 118 }),
-    T('R-0927t-5', 2, { p: 17, f: 1, u: 0, n: 0 }, 2.21, 2140, [4, 3.5, 4, 3.5, 3.5, 3], { inp: 2705, out: 131 }),
+    T('R-0927t-5', 2, { p: 17, f: 1, u: 0, n: 0 }, 2.21, 2140, [4, 3.5, 4, 3.5, 3.5, 3], { inp: 1805, out: 131 }),
     T('R-0927t-6', 3, { p: 18, f: 0, u: 0, n: 0 }, 2.08, 2065, [4, 4, 4.5, 4, 4, 3.5], { inp: 2560, out: 124 }),
   ] },
 ];

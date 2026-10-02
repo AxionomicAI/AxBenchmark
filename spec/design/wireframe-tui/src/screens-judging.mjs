@@ -44,8 +44,8 @@ export function judging(sz, focus = 'queue', st = {}) {
     g.box(0, 9, W, H - 10, { title: 'This session gets · never gets', f: focus === 'inputs' ? 'ac' : 'ln' });
     g.region(0, 9, W, H - 10, 'Static', '#inputs');
     [['✓', 'artifact C · spec, prompts, source · rubric web v1'], ['✓', 'check outcomes · 14 shots from the final regression'], ['✗', 'cost, time, tokens · other reviews · names'], ['✗', 'which configuration made artifact C']].forEach(([gl, t], i) => { g.text(2, 10 + i, gl, gl === '✓' ? 'ac' : 'mu'); g.text(4, 10 + i, fit(t, W - 6), gl === '✓' ? '' : 'mu'); });
-    para(g, 2, 15, W - 4, 'The judge inspects only. It never edits or repairs the artifact.', 'mu');
-    footer(g, [{ k: 'enter', d: 'Open review', go: 'ReviewDetail' }, { k: 'p', d: 'Profiles', go: 'RubricProfiles' }, { k: 'd', d: 'Detach' }]);
+    para(g, 2, 15, W - 4, 'UID run_mbp_20261001a · trial 1 · original reviews. Stop settles remaining reviews as not judged.', 'mu');
+    footer(g, [{ k: 'enter', d: 'Open review', go: 'ReviewDetail' }, { k: 'p', d: 'Profiles', go: 'RubricProfiles' }, { k: 's', d: 'Stop run', go: 'StopConfirm', off: ung }, { k: 'd', d: 'Detach' }]);
     return g;
   }
   g.box(0, 2, W, 8, { f: qf ? 'ac' : 'ln', title: 'Reviews · one artifact per session, in order', sub: 'grades 1–5 in steps of 0.5' });
@@ -71,7 +71,7 @@ export function judging(sz, focus = 'queue', st = {}) {
     g.text(2, y++, 'Inspecting screenshots · 9 of 14', 'bd');
     progress(g, 2, y++, 56, 64);
     y++;
-    ['read spec/00-project.md and 7 task prompts', 'read src/ · 14 files · no file was changed', 'opened check outcomes · 21✓ at final regression', 'viewing final regression · cart · 390×844'].forEach((t, i, a) => { g.text(2, y, i === a.length - 1 ? '●' : '✓', 'ac'); g.text(4, y++, fit(t, 54), i === a.length - 1 ? 'bd' : ''); });
+    ['read spec/00-project.md and 7 task prompts', 'read src/ · 14 files · no file was changed', 'opened check outcomes · 30✓ at final regression', 'viewing final regression · cart · 390×844'].forEach((t, i, a) => { g.text(2, y, i === a.length - 1 ? '●' : '✓', 'ac'); g.text(4, y++, fit(t, 54), i === a.length - 1 ? 'bd' : ''); });
     y++;
     para(g, 2, y, 56, 'Read-only workspace copy: the judge inspects and assesses, it never repairs the application.', 'mu');
 
@@ -121,7 +121,7 @@ export function judgingTrials(sz, focus = 'queue') {
     const per = BACKEND_CATS.map((_, i) => stats(c.trials.map((t) => t.g[i])));
     return [
       { v: [c.h, 'mean', ...per.map((p) => p.mean.toFixed(2)), { t: f2(q.mean), f: 'bd' }, gates.length ? { t: '✗ trial 2 not eligible', f: 'bd' } : '✓ every trial eligible'], f: 'bd' },
-      { v: [c.model, 'min–max', ...per.map((p) => (p.min === p.max ? p.min.toFixed(1) : `${p.min.toFixed(1)}–${p.max.toFixed(1)}`)), `${f2(q.min)}–${f2(q.max)}`, gates.length ? 'check T4.2 failed · spec 3.5' : ''], f: 'mu' },
+      { v: [c.model, 'min–max', ...per.map((p) => (p.min === p.max ? p.min.toFixed(1) : `${p.min.toFixed(1)}–${p.max.toFixed(1)}`)), `${f2(q.min)}–${f2(q.max)}`, gates.length ? 'check T4_lookup failed · spec 3.5' : ''], f: 'mu' },
     ];
   });
   table(g, 1, 13, W - 2, [{ l: 'Configuration', w: 20 }, { l: '', w: 9 }, ...BACKEND_CATS.map(([, , s]) => ({ l: s, w: 8, al: 'right' })), { l: 'Q', w: 11, al: 'right' }, { l: 'Eligibility', w: W - 2 - 88 }], rows, { cursor: 0, focused: sf });
@@ -143,12 +143,12 @@ export function judgingTrials(sz, focus = 'queue') {
 
 // Screenshots are those of the final regression on the delivered artifact (D12): name · viewport.
 const EVID = [
-  ['shot cart-1440 · cart-390 · T5.2', 'Flows work; badge lags after a removal'],
+  ['shot cart-1440 · cart-390 · T5_quantity', 'Flows work; badge lags after a removal'],
   ['shot inventory-1440 · checkout-390', 'Consistent type; tight mobile header'],
   ['src/cart.js:12–96 · src/store.js', 'Small modules; one 140-line function'],
-  ['check T6.1–T6.3 · spec §Checkout', 'Stock, totals, order history match'],
-  ['check T7.1 reload · storage cleared', 'Survives reload; no input length limits'],
-  ['shot cart-390 · keyboard check T5.4', 'Labels ok; focus skips the cart dialog'],
+  ['check T6_stock–T6_readme · spec §Checkout', 'Stock, totals, order history match'],
+  ['check T5_persistence · reopen same profile', 'Survives reload; no input length limits'],
+  ['shot cart-390 · keyboard check T5_persistence', 'Labels ok; focus skips the cart dialog'],
 ];
 const ANCHOR = (v) => '■'.repeat(Math.floor(v)) + (v % 1 ? '▪' : '') + '□'.repeat(5 - Math.ceil(v));
 
@@ -221,7 +221,7 @@ export function reviewUngraded(sz, focus = 'close') {
   ]);
   y++;
   g.text(m.x, y++, 'What happens now', 'bd');
-  ['No average, zero or guess fills the gaps; the result has no quality score.', 'It stays out of quality and combined rankings and is listed with this reason.', 'Its checks (20✓ 1?) and process outcomes are unchanged.', 'A new review needs an explicit request; this one is kept beside it.'].forEach((t) => { g.text(m.x, y, '·', 'mu'); g.text(m.x + 2, y++, fit(t, m.w - 2)); });
+  ['No average, zero or guess fills the gaps; the result has no quality score.', 'It stays out of quality and combined rankings and is listed with this reason.', 'Its checks (29✓ 1?) and process outcomes are unchanged.', 'A new review needs an explicit request; this one is kept beside it.'].forEach((t) => { g.text(m.x, y, '·', 'mu'); g.text(m.x + 2, y++, fit(t, m.w - 2)); });
   buttons(g, m.right, m.bottom, [{ label: 'Open raw response', focus: focus === 'raw' }, { label: 'Close', v: 'primary', go: 'JudgingDone', focus: focus === 'close' }]);
   footer(g, [{ k: 'esc', d: 'Close', go: 'JudgingDone' }, { k: 'r', d: 'Raw response' }, { k: 'tab', d: 'Next', do: 'next' }], '');
   return g;

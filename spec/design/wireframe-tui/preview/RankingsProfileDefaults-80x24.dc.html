@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1480px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1580px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Rankings · profile defaults</b> · ResultsScreen · Rankings · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -155,11 +155,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Rankings-80x24.dc.html">Original</a><a href="RankingsProfileDefaults-80x24.dc.html">Profile defaults</a><a href="RankingsTrials.dc.html">Trials</a><a href="ScoreBreakdown.dc.html">Breakdown</a><a href="WeightsEditor.dc.html">Weights</a><a href="WeightsInvalid.dc.html">Invalid</a><a href="RankingsAlternative.dc.html">Alternative</a></div>
 <h3>Notes</h3>
-<ul><li>D13: the results of one judge group froze different weights, so the original combined ranking uses the grading profile’s default weights, labelled “Profile defaults: original weights differ across results”.</li><li>Each result’s original weights stay visible and selectable in WeightsScreen (w), plus custom weights. Quality uses one common set of category weights for every entry.</li><li>Replaces the former scoring.original_weights_differ refusal.</li></ul>
+<ul><li>D13: the results of one judge group froze different weights, so the original combined ranking uses the grading profile’s default weights, labelled “Profile defaults: original weights differ across results”.</li><li>Each result’s original weights stay visible and selectable in WeightsScreen (w), plus custom weights. Quality uses one common set of category weights for every entry.</li><li>Replaces the former scoring.original_weights_differ refusal.</li><li>Implementation owner M06. API seam: scoring.rank/weight_choices; pinned ResultFilters/judge group; M10-prepared currency and trial measures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1480}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1580}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

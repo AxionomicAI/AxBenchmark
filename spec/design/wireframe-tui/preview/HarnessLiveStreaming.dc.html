@@ -64,11 +64,11 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1220px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1340px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Live view · edit streaming</b> · HarnessLiveScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
-<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Run 2026-10-01-a · Codex · gpt-6-sol · medium · live view</span><span class="B2">                         </span></div>
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">               </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — UID run_mbp_20261001a · Codex · gpt-6-sol · medium · trial 1 · live view</span><span class="B2">                 </span></div>
 <div class="r"><span class="B1"> </span><span class="B1 ac">●</span><span class="B1"> </span><span class="B1 bd">T5 Shopping cart</span><span class="B1 mu"> · 10:58 │ </span><span class="B1">gpt-6-sol</span><span class="B1 mu"> · effort </span><span class="B1">medium </span><span class="B1 it">? unverified</span><span class="B1 mu"> │ Codex 0.98.0 · pid 48211 · clean · read-only    </span><span class="B1"> </span></div>
 <div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Throughput and context </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Output</span><span class="B0">   </span><span class="B0 bd">58.6 tok/s</span><span class="B0">  </span><span class="B0 ac">▁▂▄▆▇▆▅▇█▆▅▃▄▆▇█▇▆</span><span class="B0">  </span><span class="B0 mu">last 60 s · avg 41.8 · peak 72.0 · measured from the stream                </span><span class="B0"> </span><span class="B0 ln">│</span></div>
@@ -143,11 +143,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="HarnessLive.dc.html">Codex · thinking summarized</a><a href="HarnessLiveStreaming.dc.html">Edit streaming</a><a href="HarnessLiveLimited.dc.html">Less exposed · Grok CLI</a><a href="RunOverview.dc.html">Run overview</a><a href="RunConfig.dc.html">Configuration</a></div>
 <h3>Notes</h3>
-<ul><li>While the harness streams an edit, added lines appear as they arrive with a block caret on the newest; the pane follows unless f pauses it.</li><li>The file is final only when the harness saves it; the diff is against the previous task commit, which is the workspace this task started from.</li></ul>
+<ul><li>While the harness streams an edit, added lines appear as they arrive with a block caret on the newest; the pane follows unless f pauses it.</li><li>The file is final only when the harness saves it; the diff is against the previous task commit, which is the workspace this task started from.</li><li>Implementation owner M11. API seam: harness.live/task/file/log; bind resolved TrialRef, discard stale selection responses.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1220}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1340}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

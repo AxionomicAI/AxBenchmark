@@ -1,3 +1,12 @@
+# Application record: all original questions, assumptions, options, answers and notes
+# below are preserved history. current_assumption and old suggestions are not policy.
+# application.clauses links the current normative SPEC/module clauses; they take
+# precedence over historical wording. applied means incorporated into specification
+# and design contracts, not implemented or runtime-verified functionality.
+# refined_by identifies follow-ups/confirmations in OPEN-QUESTIONS-R2.yaml and
+# OPEN-QUESTIONS-R3.yaml; resolution records their final refinements or supersession.
+# The original response instructions are retained below as historical context.
+#
 # Open questions left to the product owner by the module Implementation sections.
 #
 # How to answer: fill in `answer` for each item. Pick one of `options` by its key
@@ -15,6 +24,12 @@ product_decisions:
       b: Exit 1 when any task failed or ended unverified.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "14-command-line-interface.md#unattended-execution-and-lifecycle"
+      refined_by: [C1, R3-3]
+      resolution: "Completed runs exit 0 despite failed or unverified tasks; later R3-3 adds default report waiting and --no-wait-report without making a failed report a failed run."
 
   - id: P2
     modules: [M09, M15]
@@ -25,6 +40,13 @@ product_decisions:
       b: "`?` opens the about screens on the Library; Help moves to F1 there."
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "15-terminal-interface.md#4-screens"
+        - "09-default-inventory-benchmark.md#4-screens"
+      refined_by: [R2-7]
+      resolution: "App-wide ? remains Help; R2-7 selects a for the built-in inventory About action."
 
   - id: P3
     modules: [M01, M02, M09]
@@ -35,6 +57,12 @@ product_decisions:
       b: Yes; show them read-only, never in comparisons or rankings.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#library-and-revision-operations"
+      refined_by: [C5]
+      resolution: "Historical README runs remain in the repository and are not shown in the app; association requires a verified SHA-256."
 
   - id: P4
     modules: [M04, M06, M07, M10]
@@ -46,6 +74,14 @@ product_decisions:
       c: Only an explicit user declaration recorded at launch.
     answer:   neither
     notes: cost is verified 0 when the api says so if is a local model and we could measure the power of the gpu we will display the kWh and we will ask the user the cost
+    application:
+      status: applied
+      clauses:
+        - "10-measurements-cost.md#cost-basis-and-currency"
+        - "04-model-catalog.md#catalog-information-contract"
+        - "06-scoring-rankings.md#eligibility-and-exceptional-data"
+      refined_by: [R2-1, R2-2, R2-3, R3-1, R3-2, R3-5]
+      resolution: "Later rounds refine the answer: verified zero requires reported zero, complete coverage and known non-subscription billing; recorded provider prices support API estimates, and measured local energy plus tariff can supply sequential-only cost estimates. Final clauses retain unverified numeric zero but exclude it from lowest-cost and positive-cost-weight rankings."
 
   - id: P5
     modules: [M03, M14]
@@ -56,6 +92,12 @@ product_decisions:
       b: Drop the sudo suggestion; only show the permission fix.
     answer: b
     notes:
+    application:
+      status: applied
+      clauses:
+        - "03-environment-readiness.md#required-readiness-behavior"
+        - "14-command-line-interface.md#purpose-and-command-contracts"
+      resolution: "Doctor shows collector permission remedies without recommending an elevated AxBenchmark process or defining a root-mode engine."
 
   - id: P6
     modules: [M01, M16]
@@ -67,6 +109,12 @@ product_decisions:
       c: Record lineage pointing at the existing SHA-256 without a new revision.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#library-and-revision-operations"
+        - "16-custom-template-planning.md#planner-selection-and-review"
+      resolution: "Approval of identical defining content is blocked with an action to open the existing revision; display renaming remains separate from identity."
 
   - id: P7
     modules: [M07, M11]
@@ -77,6 +125,15 @@ product_decisions:
       b: Allow N; each trial is a separate result run in sequence (say how to aggregate in notes).
     answer: b
     notes:  have a way to display the results of each runs and have a an average of the results
+    application:
+      status: applied
+      clauses:
+        - "07-run-configuration.md#configuration-behavior"
+        - "11-run-orchestration.md#scheduling-contract"
+        - "12-quality-judging.md#review-inputs-and-execution"
+        - "06-scoring-rankings.md#calculations"
+      refined_by: [R2-4, R3-7]
+      resolution: "R2-4 specifies fresh sequential trials, separate results and judge sessions, means/min-max and all-trial eligibility. R3-7 rejects the suggested upper limit; more than five trials warns when any competitor is non-local, with unattended execution printing the warning and continuing."
 
   - id: P8
     modules: [M11]
@@ -87,6 +144,11 @@ product_decisions:
       b: Across the whole engine; extra configurations queue.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "11-run-orchestration.md#1-engine-component"
+      resolution: "SchedulingPolicy and SuperviseRun apply configuration and per-harness slots to each run."
 
   - id: P9
     modules: [M01, M11]
@@ -98,6 +160,14 @@ product_decisions:
       c: Halt the whole run.
     answer: c
     notes: and informe the user before it makes changes to the template of the consequence to prevent this
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#identity-and-launch-invariants"
+        - "01-template-library-identity.md#library-and-revision-operations"
+        - "11-run-orchestration.md#launch-boundary-and-invariants"
+      refined_by: [R2-5, R3-6]
+      resolution: "Detected input mutation halts the whole run; later rounds require read-only approved files and an active-run revision warning. Final retention clauses apply a run-wide invalidation to sealed facts without rewriting them."
 
   - id: P10
     modules: [M07, M16]
@@ -108,6 +178,13 @@ product_decisions:
       b: Keep them in memory, and the engine does not idle-exit while unsaved drafts exist.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "07-run-configuration.md#conceptual-data-and-operations"
+        - "16-custom-template-planning.md#baseline-and-approval-invariants"
+      refined_by: [C8]
+      resolution: "Setup and planning drafts persist under ~/.axbenchmark/drafts/ across engine exit; interrupted planning reopens as failed and is never silently resumed."
 
   - id: P11
     modules: [M06, M10]
@@ -118,6 +195,12 @@ product_decisions:
       b: No; rank with it but label it partial.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "06-scoring-rankings.md#eligibility-and-exceptional-data"
+      refined_by: [C2]
+      resolution: "Partial cost excludes cost-weighted rankings while remaining visible; C2 extends the same rule to partial elapsed time when time has positive weight."
 
   - id: P12
     modules: [M08, M12]
@@ -129,6 +212,11 @@ product_decisions:
       c: Every screenshot from every browser check.
     answer: a
     notes:
+    application:
+      status: applied
+      clauses:
+        - "12-quality-judging.md#review-inputs-and-execution"
+      resolution: "Only delivered-artifact final-regression screenshots at desktop and mobile viewports enter judging; per-task screenshots remain retained evidence."
 
   - id: P13
     modules: [M06, M13]
@@ -139,7 +227,13 @@ product_decisions:
       b: Use the local template's saved default weights, labelled as such.
       c: Use the weights of the most recent local run in the group.
     answer: neither
-    notes: Profile defaults when originals differ: if all results froze the same weights, use them (labelled "original"). Otherwise, use the grading profile's SPEC §6 default weights, labelled "Profile defaults: original weights differ across results", so every machine shows the same ranking. Each result's own original weights stay visible in its detail and can be selected, along with custom weights, through the existing alternative-weights control. Raw grades and originals are never changed.
+    notes: "Profile defaults when originals differ: if all results froze the same weights, use them (labelled \"original\"). Otherwise, use the grading profile's SPEC §6 default weights, labelled \"Profile defaults: original weights differ across results\", so every machine shows the same ranking. Each result's own original weights stay visible in its detail and can be selected, along with custom weights, through the existing alternative-weights control. Raw grades and originals are never changed."
+    application:
+      status: applied
+      clauses:
+        - "06-scoring-rankings.md#weight-operations-and-validation"
+        - "../SPEC.md#editable-weights"
+      resolution: "Shared frozen weights remain original; differing originals use labelled profile defaults, with each result original still selectable as an alternative and raw records unchanged."
 
   - id: P14
     modules: [M04]
@@ -150,6 +244,11 @@ product_decisions:
       b: Yes; add an explicit "unknown" value to overrides.
     answer: b
     notes: 
+    application:
+      status: applied
+      clauses:
+        - "04-model-catalog.md#catalog-information-contract"
+      resolution: "Overrides distinguish inherit, value and explicit unknown; unknown stops lower-layer resolution."
 
   - id: P15
     modules: [M03, M16]
@@ -160,6 +259,13 @@ product_decisions:
       b: Yes, with a warning.
     answer: neither
     notes: prefer a confirmed-usable harness and error if no usable harness is found
+    application:
+      status: applied
+      clauses:
+        - "16-custom-template-planning.md#planner-selection-and-review"
+        - "03-environment-readiness.md#required-readiness-behavior"
+      refined_by: [R2-6, R3-4]
+      resolution: "Only confirmed-usable harnesses qualify; R2-6 adds an error with consented Verify now when none qualify, and R3-4 defines CLI consent."
 
   - id: P16
     modules: [M01, M09]
@@ -170,6 +276,12 @@ product_decisions:
       b: No, the user chooses; r1 stays default until changed.
     answer: neither
     notes: new installations default to the newest revision; installations with existing results keep their current default and get a notice offering r2.
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#library-and-revision-operations"
+      refined_by: [C12]
+      resolution: "The user clarified in this session to keep the current SPEC: only results on the current default prevent automatic upgrade. When the current default has no results, it moves to the newest built-in revision even if other templates have results; otherwise the default is retained with an upgrade notice. This clarification supersedes the broader historical notes. R3 C12 changes only the illustrated newer revision label to r3, not the upgrade scope."
 
   - id: P17
     modules: [M04, M16]
@@ -180,6 +292,13 @@ product_decisions:
       b: Yes; the catalog marks the harness's own default model.
     answer: b
     notes:
+    application:
+      status: applied
+      clauses:
+        - "04-model-catalog.md#catalog-information-contract"
+        - "16-custom-template-planning.md#planner-selection-and-review"
+      refined_by: [C3]
+      resolution: "The catalog records the harness default from configuration/status without a model call; an unknown default leaves the field empty and requires an explicit model selection."
 
   - id: P18
     modules: [M07, M18]
@@ -190,6 +309,13 @@ product_decisions:
       b: Yes; add it to the run configuration.
     answer: b
     notes:
+    application:
+      status: applied
+      clauses:
+        - "18-hardware-monitoring.md#conceptual-data-and-operations"
+        - "07-run-configuration.md#configuration-behavior"
+      refined_by: [C4]
+      resolution: "C4 fixes the configurable interval at 0.5–10 seconds, default 1 second, frozen at launch; each collector actual interval is retained and displayed."
 
 wireframe_gaps:
 
@@ -198,57 +324,116 @@ wireframe_gaps:
     gap: No artboard for EvidenceViewerScreen (opened from results with `l` and the Open log/snapshot/evidence buttons).
     answer: add it to the wireframe
     notes:
+    application:
+      status: applied
+      clauses:
+        - "08-verification-evidence.md#evidenceviewerscreen--artboard-evidenceviewer"
+      resolution: "EvidenceViewer has wide/compact layouts and explicit result/evidence navigation from results and task checks."
 
   - id: W2
     modules: [M06, M15, M18]
     gap: No prompt artboards for the preset name (Save preset…), the export path (Export configuration) or Export CSV on the Telemetry screen.
     answer: add it to the wireframe
     notes:
+    application:
+      status: applied
+      clauses:
+        - "15-terminal-interface.md#4-screens"
+      resolution: "The shared PromptScreen clause defines Save preset, Export configuration and Export CSV prompt artboards and caller-owned submissions."
 
   - id: W3
     modules: [M17]
     gap: No ZIP picker on the ResultPackage artboard.
     answer: add it to the wireframe
     notes:
+    application:
+      status: applied
+      clauses:
+        - "17-zip-exchange.md#4-screens"
+      resolution: "ResultPackageScreen includes the package-pick state, ZIP path/browser controls and ResultPackagePick artboard."
 
   - id: W4
     modules: [M07, M10]
     gap: No key opens CurrencyEnergyScreen from Setup.
     answer: add it to the wireframe
     notes:
+    application:
+      status: applied
+      clauses:
+        - "07-run-configuration.md#4-screens"
+        - "10-measurements-cost.md#currencyenergyscreen--artboard-currencyenergy"
+      refined_by: [C6]
+      resolution: "C6 assigns c on Setup to CurrencyEnergyScreen; currency and tariff choices are reviewed before launch."
 
   - id: W5
     modules: [M08, M11, M15]
     gap: Nothing opens VerifyProgressScreen from the run screens.
     answer: add it to the wireframe
     notes:
+    application:
+      status: applied
+      clauses:
+        - "08-verification-evidence.md#verifyprogressscreen--artboard-verifyprogress"
+      refined_by: [C7]
+      resolution: "C7 assigns p on RunConfigScreen to VerifyProgressScreen for the selected explicit trial."
 
   - id: W6
     modules: [M11, M15]
     gap: "Two compact run layouts: #lanes-table on the RunOverview board (M11) and #lane-list on RunListDetail (M15). Pick one."
     answer: keep RunListDetail 
     notes:
+    application:
+      status: applied
+      clauses:
+        - "15-terminal-interface.md#4-screens"
+        - "11-run-orchestration.md#4-screens"
+      resolution: "RunListDetail is the sole compact run layout; M15 owns the shared presentation component and M11 owns the run screen and navigation."
 
   - id: W7
     modules: [M01, M17]
     gap: "M17 nests #rejection-detail inside #import-rejected; M01's import tree shows a single notice."
     answer: us m17
     notes:
+    application:
+      status: applied
+      clauses:
+        - "17-zip-exchange.md#4-screens"
+        - "01-template-library-identity.md#4-screens"
+      resolution: "M17 owns the import-rejected state and nested rejection-detail; M01 navigates through the injected M17 exchange screen without a duplicate import dialog."
 
   - id: W8
     modules: [M14]
     gap: Board legends still list CLI exit codes 0–4; ARCHITECTURE.md fixes 0–3 (rejected package and not-found are typed errors, exit 1).
     answer: update the wireframe
     notes:
+    application:
+      status: applied
+      clauses:
+        - "14-command-line-interface.md#unattended-execution-and-lifecycle"
+      resolution: "The CLI uses exits 0–3: typed application errors, including rejected packages and not-found, use 1; parser/consent misuse uses 2 and engine transport/version failures use 3."
 
   - id: W9
     modules: [M16]
     gap: The template-creation wireframes have no field for the template name, and no artboard for editing a service row on the Setup/start/stop tab.
     answer: add a name field (prefilled from the planner's suggestion) to the plan review screen, editable before and after approval.
     notes:
+    application:
+      status: applied
+      clauses:
+        - "16-custom-template-planning.md#planner-selection-and-review"
+        - "16-custom-template-planning.md#4-screens"
+      refined_by: [R2-8]
+      resolution: "The planner-suggested template name is editable before approval and as a display name afterwards; R2-8 separately settles the service-row editor with field validation."
 
   - id: W10
     modules: [M01, M15, M16]
     gap: No TUI entry point to reopen a hidden planning session or a closed, unapproved draft.
     answer: The Library lists unfinished drafts as rows marked "draft," showing their state (planning, ready for review, failed) and last update; Enter reopens a draft where you left off, and a "Discard draft" action removes it after confirmation.
     notes:
+    application:
+      status: applied
+      clauses:
+        - "01-template-library-identity.md#library-and-revision-operations"
+        - "16-custom-template-planning.md#baseline-and-approval-invariants"
+      refined_by: [C8]
+      resolution: "Unfinished planning drafts appear in the Library with state and update time, reopen their saved state and require confirmation to discard; C8 adds durable storage across engine exit."

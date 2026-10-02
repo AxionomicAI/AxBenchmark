@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1360px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Import · SHA-256 mismatch</b> · ImportScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -189,11 +189,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="ImportTemplate.dc.html">Choose</a><a href="ImportVerifying.dc.html">Validating</a><a href="ImportRejected.dc.html">Rejected · digest</a><a href="ImportUnsafe.dc.html">Rejected · unsafe</a><a href="ImportIncomplete.dc.html">Rejected · incomplete</a><a href="ImportDuplicate.dc.html">Already present</a></div>
 <h3>Notes</h3>
-<ul><li>W7: #import-rejected holds ContentSwitcher #rejection-detail (#unsafe-detail, #incomplete-detail, #digest-detail, #other-detail), shared with M17; this frame shows #digest-detail.</li><li>Shows expected and received identities in full; nothing is partially added (R118, R141).</li><li>On 80 columns the labels stack above each 64-character digest so nothing is truncated.</li></ul>
+<ul><li>W7: #import-rejected holds ContentSwitcher #rejection-detail (#unsafe-detail, #incomplete-detail, #digest-detail, #other-detail), shared with M17; this frame shows #digest-detail.</li><li>Shows expected and received identities in full; nothing is partially added (R118, R141).</li><li>On 80 columns the labels stack above each 64-character digest so nothing is truncated.</li><li>Implementation owner M17. API seam: exchange.inspect_package/import_template; job:&lt;id&gt;; explicit jobs.cancel respects publication.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1240}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1360}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1440px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1560px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Environment · Linux collectors</b> · EnvironmentScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -192,11 +192,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Environment.dc.html">Ready</a><a href="EnvironmentAuthFailed.dc.html">Auth failed</a><a href="EnvironmentRechecked.dc.html">Rechecked</a><a href="EnvironmentOffline.dc.html">Offline</a><a href="EnvironmentNoHarness.dc.html">No harness</a><a href="EnvironmentCollectors.dc.html">Linux collectors</a></div>
 <h3>Notes</h3>
-<ul><li>All five causes are distinct: insufficient permission, missing driver or kernel interface, collector failure, unsupported hardware, missing tool (R103).</li><li>Guidance matches the cause; installing a tool is never suggested for unsupported hardware.</li><li>Unavailable metrics are labelled with their cause in results and reports (R146, M18).</li></ul>
+<ul><li>All five causes are distinct: insufficient permission, missing driver or kernel interface, collector failure, unsupported hardware, missing tool (R103).</li><li>Guidance matches the cause; installing a tool is never suggested for unsupported hardware.</li><li>Unavailable metrics are labelled with their cause in results and reports (R146, M18).</li><li>Implementation owner M03. API seam: environment.report/explain/recheck/verification_plan/verify; catalog factory.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1440}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1560}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

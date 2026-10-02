@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 900px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Grading profiles</b> · ProfilesScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -133,11 +133,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Judging.dc.html">In progress</a><a href="JudgingDone.dc.html">Finished · 1 ungraded</a><a href="JudgingTrials.dc.html">3 trials</a><a href="RankingsTrials.dc.html">Trials ranked (M06)</a><a href="ReviewUngraded.dc.html">Ungraded review</a><a href="ReviewDetail.dc.html">Complete review</a><a href="RubricProfiles.dc.html">Profiles</a><a href="JudgeCapability.dc.html">No screenshot support</a><a href="JudgeHandoff.dc.html">Judge input (M08)</a></div>
 <h3>Notes</h3>
-<ul><li>Web: UX 25, visual 15, code 20, spec 25, robustness 10, accessibility 5. Backend: developer experience, API/interface, code, spec, robustness, operability/docs, same weights (R085–R091).</li></ul>
+<ul><li>Web: UX 25, visual 15, code 20, spec 25, robustness 10, accessibility 5. Backend: developer experience, API/interface, code, spec, robustness, operability/docs, same weights (R085–R091).</li><li>Implementation owner M12. API seam: judging.profiles/get_profile; M06 weight factory.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":900}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

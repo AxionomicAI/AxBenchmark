@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1260px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1360px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Add entry · known efforts</b> · EntryPickerScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -247,7 +247,7 @@ body{margin:0}
 <div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
 </div>
 <aside class="lg" style="width: 440px; flex-shrink: 0">
-<div class="lg-h"><b>EntryPickerScreen</b><span class="mut">tui/screens/setup.py</span></div>
+<div class="lg-h"><b>EntryPickerScreen</b><span class="mut">tui/screens/entry_picker.py</span></div>
 <h3>Widget tree</h3>
 <pre>EntryPickerScreen(ModalScreen[ConfigEntry | None])   Setup · M07
 ├─ Vertical #entry-picker .dialog
@@ -265,13 +265,13 @@ body{margin:0}
 <table><tr><td><kbd>esc</kbd></td><td><code>dismiss(None)</code><br><span class="mut">Close without changes</span></td></tr><tr><td><kbd>tab / shift+tab</kbd></td><td><code>focus_next / previous</code><br><span class="mut">Move between fields</span></td></tr><tr><td><kbd>↑ ↓</kbd></td><td><code>cursor</code><br><span class="mut">Choose a model</span></td></tr><tr><td><kbd>ctrl+s</kbd></td><td><code>add</code><br><span class="mut">Add the entry to the configuration</span></td></tr></table>
 <h3>Focus order · tab</h3><ol><li>OptionList #model-options</li><li>RadioSet #effort</li><li>Select #harness</li><li>Button #add-entry</li></ol>
 <h3>States and related frames</h3>
-<div class="rel"><a href="Catalog.dc.html">Catalog</a><a href="CatalogRefreshFailed.dc.html">Refresh failed</a><a href="CatalogOverride.dc.html">Override</a><a href="CatalogRates.dc.html">Rates</a><a href="ModelPicker.dc.html">Entry · known efforts</a><a href="ModelPickerUnknown.dc.html">Entry · unknown effort</a></div>
+<div class="rel"><a href="Catalog.dc.html">Catalog</a><a href="CatalogRefreshFailed.dc.html">Refresh failed</a><a href="CatalogOverride.dc.html">Override</a><a href="CatalogBilling.dc.html">Billing</a><a href="CatalogRates.dc.html">Rates</a><a href="ModelPicker.dc.html">Entry · known efforts</a><a href="ModelPickerUnknown.dc.html">Entry · unknown effort</a></div>
 <h3>Notes</h3>
-<ul><li>Unsupported efforts are not offered; nothing is guessed from another model, provider, account or version (R065).</li><li>The catalog default is a requested setting, not proof of the effort used.</li><li>D17: the harness’s own default model (read from its config during refresh) is labelled but never preselected for a competitor entry, which always needs an explicit model.</li></ul>
+<ul><li>Unsupported efforts are not offered; nothing is guessed from another model, provider, account or version (R065).</li><li>The catalog default is a requested setting, not proof of the effort used.</li><li>D17: the harness’s own default model (read from its config during refresh) is labelled but never preselected for a competitor entry, which always needs an explicit model.</li><li>Implementation owner M04. API seam: catalog.options/check_selection; configs.add_entry/update_entry.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1260}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1360}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 920px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Imported as its own revision</b> · ImportResultsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -75,9 +75,9 @@ body{margin:0}
 <div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Machine</span><span class="B0 xd"> </span><span class="B1 xd"> all · 2     </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Config</span><span class="B0 xd"> </span><span class="B1 xd"> all · 9            </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Env</span><span class="B0 xd"> </span><span class="B1 xd"> all     </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Jobs</span><span class="B0 xd"> </span><span class="B1 xd"> all </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">  </span><span class="B0 mu xd">Judge</span><span class="B0 xd"> </span><span class="B1 xd"> all · 2 groups </span><span class="B1 mu xd">▾</span><span class="B1 xd"> </span><span class="B0 xd">        </span></div>
 <div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Results · 12 of 12 </span><span class="B0 ln xd">─────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B2 bd xd"> Result      Machine          Harness     Model · effort           Env     Jdg Status         Checks      Cost    Time</span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0925b-1     mike-mbp-m4    Claude Code claude-opus-5-5 high     current A   ✓ complete     21✓        $6.40   31:44</span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   A   ✓ complete     21✓        $4.82   38:12</span><span class="B0 ln xd">│</span></div>
-<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-2     mike-mbp-m4    Codex       gpt-6-sol medium         clean   A   ✓ complete     21✓        $3.10   44:05</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0925b-1     mike-mbp-m4    Claude Code claude-opus-5-5 high     current A   ✓ complete     30✓        $6.40   31:44</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-1     mike-mbp-m4    Claude Code claude-opus-5-5 medium   clean   A   ✓ complete     30✓        $4.82   38:12</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0928a-2     mike-mbp-m4    Codex       gpt-6-sol medium         clean   A   ✓ complete     30✓        $3.10   44:05</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="BS xd"> R-0924lab-1 ↓ l</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Imported as a separate revision </span><span class="B1 ac">──────────────────────────────────────────────────╮</span><span class="BS xd">   $2.35   35:20</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0925b-2     m</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 bd xd"> ▲ $2.05</span><span class="B0 xd">   45:10</span><span class="B0 ln xd">│</span></div>
 <div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> R-0924lab-3 ↓ l</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> 1 · Safe package boundary                                                       </span><span class="B1 ac">│</span><span class="B0 xd">   $1.20   30:05</span><span class="B0 ln xd">│</span></div>
@@ -117,7 +117,7 @@ body{margin:0}
 <div class="ctl"><span>focus · <b>—</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
 </div>
 <aside class="lg" style="width: 440px; flex-shrink: 0">
-<div class="lg-h"><b>ImportResultsScreen</b><span class="mut">tui/screens/results.py</span></div>
+<div class="lg-h"><b>ImportResultsScreen</b><span class="mut">tui/screens/exchange.py</span></div>
 <h3>Widget tree</h3>
 <pre>ImportResultsScreen(ModalScreen[ImportOutcome])
 ├─ Vertical #result-embedded .dialog
@@ -133,11 +133,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="ImportTemplate.dc.html">Import (M01)</a><a href="ResultPackagePick.dc.html">Choose result ZIP</a><a href="ImportUnsafe.dc.html">Unsafe</a><a href="ImportIncomplete.dc.html">Incomplete</a><a href="ImportRejected.dc.html">Digest mismatch</a><a href="ImportDuplicate.dc.html">Identical</a><a href="ResultPackage.dc.html">Result package</a><a href="ResultMismatch.dc.html">Template differs</a><a href="ResultEmbedded.dc.html">Separate revision</a><a href="ResultImportConflict.dc.html">Id conflict</a></div>
 <h3>Notes</h3>
-<ul><li>The embedded template passes the same validation and is registered with its results atomically (R121, R142).</li><li>Different hashes never share a comparison (R122).</li></ul>
+<ul><li>The embedded template passes the same validation and is registered with its results atomically (R121, R142).</li><li>Different hashes never share a comparison (R122).</li><li>Implementation owner M17. API seam: exchange.inspect_results; exchange.import_results(staging_id,target); selected or embedded_revision only.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":920}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

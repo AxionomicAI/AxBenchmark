@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1120px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1240px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Import results · validated</b> · ImportResultsScreen · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -162,7 +162,7 @@ body{margin:0}
 <div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
 </div>
 <aside class="lg" style="width: 440px; flex-shrink: 0">
-<div class="lg-h"><b>ImportResultsScreen</b><span class="mut">tui/screens/results.py</span></div>
+<div class="lg-h"><b>ImportResultsScreen</b><span class="mut">tui/screens/exchange.py</span></div>
 <h3>Widget tree</h3>
 <pre>ImportResultsScreen(ModalScreen[ImportOutcome])
 ├─ Vertical #import-results .dialog
@@ -183,11 +183,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Results.dc.html">Results</a><a href="ResultsTrials.dc.html">Trials</a><a href="ResultsHalted.dc.html">Halted run</a><a href="ResultsAnalysisTariff.dc.html">Analysis tariff</a><a href="ResultImport.dc.html">Import</a><a href="ResultImportConflict.dc.html">Id conflict</a><a href="ExportResult.dc.html">Export</a><a href="ReportReady.dc.html">Report</a><a href="Rankings.dc.html">Rankings</a></div>
 <h3>Notes</h3>
-<ul><li>Package checks belong to M17; this frame is the outcome M02 shows before records join.</li><li>Identical results are skipped, so re-importing is idempotent (R122).</li><li>Import never runs scripts or models and is never called certification (R123).</li></ul>
+<ul><li>M17 owns this complete exchange screen and its VM; M02 only opens its injected factory.</li><li>Identical results are skipped, so re-importing is idempotent (R122).</li><li>Import never runs scripts or models and is never called certification (R123).</li><li>Implementation owner M17. API seam: exchange.inspect_results; exchange.import_results(staging_id,target); selected or embedded_revision only.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1120}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1240}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

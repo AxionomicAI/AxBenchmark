@@ -164,7 +164,7 @@ ${[...rs].sort((a, b) => (b.g ? quality(b.g) : -1) - (a.g ? quality(a.g) : -1) |
 </tbody></table>`).join('')}</section>
 
 <section class="rp-row2"><div><h2>Task detail · R-0928a-3</h2><div class="rp-tasks">${['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map((t, i) => `<div class="rp-task${i === 6 ? ' on' : ''}"><b>${t}</b><span>${i === 6 ? '1? unverified' : '✓ passed'}</span></div>`).join('')}</div>
-<div class="rp-shots"><div class="rp-shot d">T7 · desktop 1440×1000</div><div class="rp-shot m">390×844</div><div class="rp-ev"><p><b>T7.1</b> · ? unverified — the browser was not installed; never counted as passed.</p><p class="rp-mu">Evidence: checks/T7.1.log · snapshot 9e41c07 · review excerpt shown as text.</p></div></div></div>
+<div class="rp-shots"><div class="rp-shot d">T5 · desktop 1440×1000</div><div class="rp-shot m">390×844</div><div class="rp-ev"><p><b>T5_persistence</b> · ? unverified — the browser was not installed; never counted as passed.</p><p class="rp-mu">Evidence: checks/T5_persistence.log · snapshot 4e7a1c9 · review excerpt shown as text.</p></div></div></div>
 <div><h2>Hardware · R-0928a-3</h2><div class="rp-spark"><i style="height: 30%"></i><i style="height: 55%"></i><i style="height: 72%"></i><i style="height: 64%"></i><i style="height: 80%"></i><i style="height: 58%"></i><i style="height: 47%"></i><i style="height: 69%"></i><i style="height: 75%"></i><i style="height: 40%"></i></div>
 <p class="rp-note">CPU utilisation · client machine mike-mbp-m4 · psutil, 1 s samples, 100% coverage. GPU and power: unavailable (insufficient permission). Cloud inference hardware is not measured. Shared experiment energy is shown once for the run, never split per configuration.</p></div></section>
 

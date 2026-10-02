@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2160px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2280px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Setup · configuration</b> · SetupScreen · 80×24 cells</div>
 <div class="term" style="width: 80ch; height: 384px">
@@ -163,11 +163,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Setup-80x24.dc.html">Setup</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch-80x24.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
 <h3>Notes</h3>
-<ul><li>Configurations are saved per revision and pin its SHA-256 (R019). The built-in benchmark reuses its approved tasks with no planner call (R136).</li><li>Two Claude Code entries are distinct configurations; same-harness entries queue (R017, M11).</li><li>Clean is the default policy; current is chosen per entry and never applied silently (R032).</li><li>Presets are resolved into actual weights at launch, so later preset edits cannot change the run (R033).</li><li>Trials (#trials, default 1, no upper limit) run one after another from fresh baselines; each is its own result and review (D7). More than 5 for a configuration not on a local endpoint asks to confirm the budget at launch (R3-7).</li><li>Sampling interval 0.5–10 s, default 1 s, frozen at launch and not part of template identity; a slower collector records its own interval (D18).</li><li>Display currency (#display-currency, default USD) and the optional electricity tariff are frozen with the run, with a RateSnapshot of the rates for every price currency and the display currency (R3-2). Results and reports show this run in that currency; there is no later currency switch. c opens CurrencyEnergyScreen (W4, D4).</li></ul>
+<ul><li>Configurations are saved per revision and pin its SHA-256 (R019). The built-in benchmark reuses its approved tasks with no planner call (R136).</li><li>Two Claude Code entries are distinct configurations; same-harness entries queue (R017, M11).</li><li>Clean is the default policy; current is chosen per entry and never applied silently (R032).</li><li>Presets are resolved into actual weights at launch, so later preset edits cannot change the run (R033).</li><li>Trials (#trials, default 1, no upper limit) run one after another from fresh baselines; each is its own result and review (D7). More than 5 for a configuration not on a local endpoint asks to confirm the budget at launch (R3-7).</li><li>Sampling interval 0.5–10 s, default 1 s, frozen at launch and not part of template identity; a slower collector records its own interval (D18).</li><li>Display currency (#display-currency, default USD) and the optional electricity tariff are frozen with the run, with a RateSnapshot of the rates for every price currency and the display currency (R3-2). Results and reports show this run in that currency; there is no later currency switch. c opens CurrencyEnergyScreen (W4, D4).</li><li>Implementation owner M07. API seam: configs.open/setup; configs.set_execution/set_judge/set_weights; catalog entry factory.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2160}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2280}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};

@@ -64,7 +64,7 @@ body{margin:0}
 .edge i{font-style:normal;color:var(--ln);font-size:13px}
 </style>
 </helmet>
-<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1420px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1540px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
 <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
 <div class="cap"><b>Rankings · means of trials</b> · ResultsScreen · Rankings · 120×40 cells</div>
 <div class="term" style="width: 120ch; height: 640px">
@@ -187,11 +187,11 @@ body{margin:0}
 <h3>States and related frames</h3>
 <div class="rel"><a href="Rankings.dc.html">Original</a><a href="RankingsProfileDefaults.dc.html">Profile defaults</a><a href="RankingsTrials.dc.html">Trials</a><a href="ScoreBreakdown.dc.html">Breakdown</a><a href="WeightsEditor.dc.html">Weights</a><a href="WeightsInvalid.dc.html">Invalid</a><a href="RankingsAlternative.dc.html">Alternative</a></div>
 <h3>Notes</h3>
-<ul><li>D7: a configuration ranks by the means of its trials; per-trial min–max ranges are shown on the ranked row and never change the order.</li><li>A configuration is eligible only when every trial is: the Claude Code entry is excluded with “trial ineligible” and the failing trial named.</li><li>Minimums for the score come from the qualifying means.</li></ul>
+<ul><li>D7: a configuration ranks by the means of its trials; per-trial min–max ranges are shown on the ranked row and never change the order.</li><li>A configuration is eligible only when every trial is: the Claude Code entry is excluded with “trial ineligible” and the failing trial named.</li><li>Minimums for the score come from the qualifying means.</li><li>Implementation owner M06. API seam: scoring.rank/weight_choices; pinned ResultFilters/judge group; M10-prepared currency and trial measures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
 </aside>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1420}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1540}}'>
 class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};
