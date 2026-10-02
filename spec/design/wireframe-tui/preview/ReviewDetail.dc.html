@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Review · complete · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1020px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Review · complete</b> · ReviewScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Review · result R-0928a-1</span><span class="B2">                                         </span></div>
+<div class="r"><span class="B1"> ● Local · run 2026-09-28-a · Claude Code · claude-opus-5-5 · medium · judge A · claude-opus-5-5 · high · reviewed as … </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Raw grades · rubric web v1 </span><span class="B0 ac">─────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Category              Grade        Weight Evidence references                 Why                                    </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> User experience         4.0 ■■■■□     25% T3-desktop · T5-mobile · trace T5.2 Flows work; badge lags after a removal </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> Visual quality          5.0 ■■■■■     15% shot T3-desktop · T6-mobile         Consistent type; tight mobile header   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Code quality            4.0 ■■■■□     20% src/cart.js:12–96 · src/store.js    Small modules; one 140-line function   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Business rules / spec   5.0 ■■■■■     25% check T6.1–T6.3 · spec §Checkout    Stock, totals, order history match     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Robustness              4.0 ■■■■□     10% trace T7 reload · storage cleared   Survives reload; no input length limits</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Accessibility           4.0 ■■■■□      5% shot T5-mobile · keyboard trace T5  Labels ok; focus skips the cart dialog </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 bd"> Weighted quality Q     4.40          100% computed by AxBenchmark (M06)       not a judge output                     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Each category needs a grade in 0.5 steps and an evidence reference, or the whole review stays ungraded.             </span><span class="B0"> </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────</span><span class="B0 mu"> 1 missing or largely broken · 3 usable with material gaps · 5 excellent for the scope </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Comments · required </span><span class="B0 ln">────────────────────────────────────────────────────────┐┌─</span><span class="B0 bd"> Review record </span><span class="B0 ln">──────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Code quality</span><span class="B0">                                                                </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Judge      </span><span class="B0">group A · claude-opus-5-5 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Clear module split between store, cart and views. cart.js renders the       </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Effort     </span><span class="B0">high                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> whole list on every change (one 140-line function), which the reviewer      </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Session    </span><span class="B0">fresh · 1 artifact only   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> flags as the main maintainability risk.                                     </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Reviewed   </span><span class="B0">2026-09-28 21:16 · 3:10   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Cost       </span><span class="B0">$0.38 · judging, separate </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Usability</span><span class="B0">                                                                   </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Evidence   </span><span class="B0">14 screenshots · 2 traces </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Every flow from T3 to T6 completes by mouse and keyboard. After removing    </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Raw file   </span><span class="B0">reviews/R-0928a-1.a.json  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> an item the cart badge shows the old count until the next action.           </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 bd">Limitations</span><span class="B0">                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Specification adherence</span><span class="B0">                                                     </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Could not test with a screen reader;</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Stock decreases at checkout, totals and order history match. Lookup         </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">accessibility judged from markup and</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> matches name prefixes only; the prompts leave matching open, so this is     </span><span class="B0 ln">░││</span><span class="B0"> </span><span class="B0 mu">keyboard traces.</span><span class="B0">                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> not counted against it.                                                     </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> scroll </span><span class="B0 ln">─┘└──────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                     </span><span class="BS"> Open evidence </span><span class="B0">  </span><a class="BS k" href="ScoreBreakdown.dc.html"> Score breakdown </a><span class="B0">  </span><span class="BS"> Raw response </span><span class="B0"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultReviews.dc.html">esc</a><a class="B2 k" href="ResultReviews.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">e</span><span class="B2"> Evidence  </span><a class="B2 ac bd k" href="ScoreBreakdown.dc.html">b</a><a class="B2 k" href="ScoreBreakdown.dc.html"> Breakdown</a><span class="B2">  </span><span class="B2 ac bd">r</span><span class="B2"> Raw response  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Review · result R-0928a-1</span><span class="B2">                                         </span></div>
+<div class="r"><span class="B1"> ● Local · run 2026-09-28-a · Claude Code · claude-opus-5-5 · medium · judge A · claude-opus-5-5 · high · reviewed as … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Raw grades · rubric web v1 </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Category              Grade        Weight Evidence references                 Why                                    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> User experience         4.0 ■■■■□     25% T3-desktop · T5-mobile · trace T5.2 Flows work; badge lags after a removal </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> Visual quality          5.0 ■■■■■     15% shot T3-desktop · T6-mobile         Consistent type; tight mobile header   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Code quality            4.0 ■■■■□     20% src/cart.js:12–96 · src/store.js    Small modules; one 140-line function   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Business rules / spec   5.0 ■■■■■     25% check T6.1–T6.3 · spec §Checkout    Stock, totals, order history match     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Robustness              4.0 ■■■■□     10% trace T7 reload · storage cleared   Survives reload; no input length limits</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Accessibility           4.0 ■■■■□      5% shot T5-mobile · keyboard trace T5  Labels ok; focus skips the cart dialog </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Weighted quality Q     4.40          100% computed by AxBenchmark (M06)       not a judge output                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Each category needs a grade in 0.5 steps and an evidence reference, or the whole review stays ungraded.             </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────</span><span class="B0 mu"> 1 missing or largely broken · 3 usable with material gaps · 5 excellent for the scope </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Comments · required </span><span class="B0 ac">────────────────────────────────────────────────────────┐</span><span class="B0 ln">┌─</span><span class="B0 bd"> Review record </span><span class="B0 ln">──────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Code quality</span><span class="B0">                                                                </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Judge      </span><span class="B0">group A · claude-opus-5-5 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Clear module split between store, cart and views. cart.js renders the       </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Effort     </span><span class="B0">high                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> whole list on every change (one 140-line function), which the reviewer      </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Session    </span><span class="B0">fresh · 1 artifact only   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> flags as the main maintainability risk.                                     </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Reviewed   </span><span class="B0">2026-09-28 21:16 · 3:10   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Cost       </span><span class="B0">$0.38 · judging, separate </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Usability</span><span class="B0">                                                                   </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Evidence   </span><span class="B0">14 screenshots · 2 traces </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Every flow from T3 to T6 completes by mouse and keyboard. After removing    </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Raw file   </span><span class="B0">reviews/R-0928a-1.a.json  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> an item the cart badge shows the old count until the next action.           </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Limitations</span><span class="B0">                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Specification adherence</span><span class="B0">                                                     </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Could not test with a screen reader;</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Stock decreases at checkout, totals and order history match. Lookup         </span><span class="B0 mu">█</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">accessibility judged from markup and</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> matches name prefixes only; the prompts leave matching open, so this is     </span><span class="B0 ln">░</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">keyboard traces.</span><span class="B0">                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> not counted against it.                                                     </span><span class="B0 ln">░</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                             </span><span class="B0 ln">░</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                             </span><span class="B0 ln">░</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                             </span><span class="B0 ln">░</span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">└─────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> scroll </span><span class="B0 ac">─┘</span><span class="B0 ln">└──────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                     </span><span class="BS"> Open evidence </span><span class="B0">  </span><a class="BS k" href="ScoreBreakdown.dc.html"> Score breakdown </a><span class="B0">  </span><span class="BS"> Raw response </span><span class="B0"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultReviews.dc.html">esc</a><a class="B2 k" href="ResultReviews.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">e</span><span class="B2"> Evidence  </span><a class="B2 ac bd k" href="ScoreBreakdown.dc.html">b</a><a class="B2 k" href="ScoreBreakdown.dc.html"> Breakdown</a><span class="B2">  </span><span class="B2 ac bd">r</span><span class="B2"> Raw response  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv2 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Review · result R-0928a-1</span><span class="B2">                                         </span></div>
+<div class="r"><span class="B1"> ● Local · run 2026-09-28-a · Claude Code · claude-opus-5-5 · medium · judge A · claude-opus-5-5 · high · reviewed as … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Raw grades · rubric web v1 </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Category              Grade        Weight Evidence references                 Why                                    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> User experience         4.0 ■■■■□     25% T3-desktop · T5-mobile · trace T5.2 Flows work; badge lags after a removal </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> Visual quality          5.0 ■■■■■     15% shot T3-desktop · T6-mobile         Consistent type; tight mobile header   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Code quality            4.0 ■■■■□     20% src/cart.js:12–96 · src/store.js    Small modules; one 140-line function   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Business rules / spec   5.0 ■■■■■     25% check T6.1–T6.3 · spec §Checkout    Stock, totals, order history match     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Robustness              4.0 ■■■■□     10% trace T7 reload · storage cleared   Survives reload; no input length limits</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Accessibility           4.0 ■■■■□      5% shot T5-mobile · keyboard trace T5  Labels ok; focus skips the cart dialog </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Weighted quality Q     4.40          100% computed by AxBenchmark (M06)       not a judge output                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Each category needs a grade in 0.5 steps and an evidence reference, or the whole review stays ungraded.             </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────</span><span class="B0 mu"> 1 missing or largely broken · 3 usable with material gaps · 5 excellent for the scope </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Comments · required </span><span class="B0 ln">────────────────────────────────────────────────────────┐</span><span class="B0 ac">┌─</span><span class="B0 ac bd"> Review record </span><span class="B0 ac">──────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Code quality</span><span class="B0">                                                                </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Judge      </span><span class="B0">group A · claude-opus-5-5 </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Clear module split between store, cart and views. cart.js renders the       </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Effort     </span><span class="B0">high                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> whole list on every change (one 140-line function), which the reviewer      </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Session    </span><span class="B0">fresh · 1 artifact only   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> flags as the main maintainability risk.                                     </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Reviewed   </span><span class="B0">2026-09-28 21:16 · 3:10   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Cost       </span><span class="B0">$0.38 · judging, separate </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Usability</span><span class="B0">                                                                   </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Evidence   </span><span class="B0">14 screenshots · 2 traces </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Every flow from T3 to T6 completes by mouse and keyboard. After removing    </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Raw file   </span><span class="B0">reviews/R-0928a-1.a.json  </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> an item the cart badge shows the old count until the next action.           </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0">                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 bd">Limitations</span><span class="B0">                          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Specification adherence</span><span class="B0">                                                     </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Could not test with a screen reader;</span><span class="B0"> </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Stock decreases at checkout, totals and order history match. Lookup         </span><span class="B0 mu">█</span><span class="B0 ln">│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">accessibility judged from markup and</span><span class="B0"> </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> matches name prefixes only; the prompts leave matching open, so this is     </span><span class="B0 ln">░│</span><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">keyboard traces.</span><span class="B0">                     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> not counted against it.                                                     </span><span class="B0 ln">░│</span><span class="B0 ac">│</span><span class="B0">                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░│</span><span class="B0 ac">│</span><span class="B0">                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░│</span><span class="B0 ac">│</span><span class="B0">                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░│</span><span class="B0 ac">│</span><span class="B0">                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> scroll </span><span class="B0 ln">─┘</span><span class="B0 ac">└──────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                     </span><span class="BS"> Open evidence </span><span class="B0">  </span><a class="BS k" href="ScoreBreakdown.dc.html"> Score breakdown </a><span class="B0">  </span><span class="BS"> Raw response </span><span class="B0"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultReviews.dc.html">esc</a><a class="B2 k" href="ResultReviews.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">e</span><span class="B2"> Evidence  </span><a class="B2 ac bd k" href="ScoreBreakdown.dc.html">b</a><a class="B2 k" href="ScoreBreakdown.dc.html"> Breakdown</a><span class="B2">  </span><span class="B2 ac bd">r</span><span class="B2"> Raw response  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv3 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Review · result R-0928a-1</span><span class="B2">                                         </span></div>
+<div class="r"><span class="B1"> ● Local · run 2026-09-28-a · Claude Code · claude-opus-5-5 · medium · judge A · claude-opus-5-5 · high · reviewed as … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Raw grades · rubric web v1 </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Category              Grade        Weight Evidence references                 Why                                    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> User experience         4.0 ■■■■□     25% T3-desktop · T5-mobile · trace T5.2 Flows work; badge lags after a removal </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> Visual quality          5.0 ■■■■■     15% shot T3-desktop · T6-mobile         Consistent type; tight mobile header   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Code quality            4.0 ■■■■□     20% src/cart.js:12–96 · src/store.js    Small modules; one 140-line function   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Business rules / spec   5.0 ■■■■■     25% check T6.1–T6.3 · spec §Checkout    Stock, totals, order history match     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Robustness              4.0 ■■■■□     10% trace T7 reload · storage cleared   Survives reload; no input length limits</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Accessibility           4.0 ■■■■□      5% shot T5-mobile · keyboard trace T5  Labels ok; focus skips the cart dialog </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Weighted quality Q     4.40          100% computed by AxBenchmark (M06)       not a judge output                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Each category needs a grade in 0.5 steps and an evidence reference, or the whole review stays ungraded.             </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────</span><span class="B0 mu"> 1 missing or largely broken · 3 usable with material gaps · 5 excellent for the scope </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Comments · required </span><span class="B0 ln">────────────────────────────────────────────────────────┐┌─</span><span class="B0 bd"> Review record </span><span class="B0 ln">──────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Code quality</span><span class="B0">                                                                </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Judge      </span><span class="B0">group A · claude-opus-5-5 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Clear module split between store, cart and views. cart.js renders the       </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Effort     </span><span class="B0">high                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> whole list on every change (one 140-line function), which the reviewer      </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Session    </span><span class="B0">fresh · 1 artifact only   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> flags as the main maintainability risk.                                     </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Reviewed   </span><span class="B0">2026-09-28 21:16 · 3:10   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Cost       </span><span class="B0">$0.38 · judging, separate </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Usability</span><span class="B0">                                                                   </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Evidence   </span><span class="B0">14 screenshots · 2 traces </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Every flow from T3 to T6 completes by mouse and keyboard. After removing    </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Raw file   </span><span class="B0">reviews/R-0928a-1.a.json  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> an item the cart badge shows the old count until the next action.           </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 bd">Limitations</span><span class="B0">                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Specification adherence</span><span class="B0">                                                     </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Could not test with a screen reader;</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Stock decreases at checkout, totals and order history match. Lookup         </span><span class="B0 mu">█</span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">accessibility judged from markup and</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> matches name prefixes only; the prompts leave matching open, so this is     </span><span class="B0 ln">░││</span><span class="B0"> </span><span class="B0 mu">keyboard traces.</span><span class="B0">                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> not counted against it.                                                     </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                             </span><span class="B0 ln">░││</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> scroll </span><span class="B0 ln">─┘└──────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                     </span><span class="BS"> Open evidence </span><span class="B0">  </span><a class="BS k" href="ScoreBreakdown.dc.html"> Score breakdown </a><span class="B0">  </span><span class="BS rv bd"> Raw response </span><span class="B0"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultReviews.dc.html">esc</a><a class="B2 k" href="ResultReviews.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">e</span><span class="B2"> Evidence  </span><a class="B2 ac bd k" href="ScoreBreakdown.dc.html">b</a><a class="B2 k" href="ScoreBreakdown.dc.html"> Breakdown</a><span class="B2">  </span><span class="B2 ac bd">r</span><span class="B2"> Raw response  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 120ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#review-bar" style="left: 0ch; top: 16px; width: 120ch; height: 16px"><span>Static #review-bar</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#grades" style="left: 1ch; top: 48px; width: 118ch; height: 128px"><span>DataTable #grades</span></div>
+<div class="ov" data-widget="VerticalScroll" data-tcss="#comments.pane" style="left: 0ch; top: 208px; width: 80ch; height: 288px"><span>VerticalScroll #comments.pane</span></div>
+<div class="ov" data-widget="Static" data-tcss="#review-meta.kv" style="left: 80ch; top: 208px; width: 40ch; height: 288px"><span>Static #review-meta.kv</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ReviewScreen</b><span class="mut">tui/screens/judging.py</span></div>
+<h3>Widget tree</h3>
+<pre>ReviewScreen(Screen)           enter on a review
+├─ Header · Static #review-bar
+├─ DataTable #grades .bordered    raw grade · anchor · evidence
+├─ Horizontal
+│  ├─ VerticalScroll #comments .pane   code · usability · spec
+│  └─ Static #review-meta .pane.kv     record · limitations
+├─ Horizontal .actions
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#grades</code></td><td>height: 9;</td></tr><tr><td><code>#comments</code></td><td>width: 80; height: 18;</td></tr><tr><td><code>#review-meta</code></td><td>width: 40; height: 18;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back</span></td></tr><tr><td><kbd>e</kbd></td><td><code>evidence</code><br><span class="mut">Open referenced screenshots and traces</span></td></tr><tr><td><kbd>b</kbd></td><td><code>breakdown</code><br><span class="mut">Score breakdown (M06)</span></td></tr><tr><td><kbd>r</kbd></td><td><code>raw</code><br><span class="mut">Raw judge response</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #grades</li><li>VerticalScroll #comments</li><li>Static #review-meta</li><li>Button #raw</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Judging.dc.html">In progress</a><a href="JudgingDone.dc.html">Finished · 1 ungraded</a><a href="ReviewUngraded.dc.html">Ungraded review</a><a href="ReviewDetail.dc.html">Complete review</a><a href="RubricProfiles.dc.html">Profiles</a><a href="JudgeCapability.dc.html">No screenshot support</a><a href="JudgeHandoff.dc.html">Judge input (M08)</a></div>
+<h3>Notes</h3>
+<ul><li>R-0928a-1, judge group A: the grades of results-data.mjs; Q = 4.40 as on Rankings (R084, M06).</li><li>Anchors: 1 missing or largely broken · 3 usable with material gaps · 5 excellent for the scope (R084).</li><li>Judging time 3:10 matches the Timing frame (M10).</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #grades","VerticalScroll #comments","Static #review-meta","Button #raw"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

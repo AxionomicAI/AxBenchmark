@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data widgets · empty, loading, error · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 3540px; padding: 40px 48px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 26px">
+<div style="display: flex; flex-direction: column; gap: 6px"><h1 style="margin: 0; font-size: 24px; line-height: 30px">Data widgets · loading, empty and error</h1>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: var(--mu); max-width: 1200px">Each data widget is wrapped in a ContentSwitcher (#x, #x-loading, #x-empty, #x-error). Panels are drawn at their real cell size (56×8) with the copy the app shows. Errors name the file and leave data untouched; empty states say what to do next.</p></div>
+<section class="sec"><h2>Library templates · <code>DataTable#templates</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #templates-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Library · … templates </span><span class="B0 ln">──────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B2 bd"> Name                    Type      Tasks SHA-256    </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                   </span><span class="B0 mu">Reading library…</span><span class="B0">                   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #templates-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Library · 0 of 6 templates </span><span class="B0 ln">─────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B2 bd"> Name                    Type      Tasks SHA-256    </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 bd">No templates match “graphql”              </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">        </span><span class="B0 mu">esc clear filter · n create a template         </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #templates-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Library </span><span class="B0 ln">────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Library index could not be read                   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Permission denied:</span><span class="B0">                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">~/.axbenchmark/library/index.yaml</span><span class="B0">                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="BS rv bd"> Retry </span><span class="B0">                                            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>Revision lineage · <code>Tree#revisions</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #revisions-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Revisions </span><span class="B0 ln">──────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                   </span><span class="B0 mu">Loading lineage…</span><span class="B0">                   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #revisions-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Revisions </span><span class="B0 ln">──────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">▾ Kanban board                                      </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="BS ln">└─ </span><span class="BS">r1 imported    e0b6f2d9                          </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Only r1 so far. e Revise creates r2; r1 is never</span><span class="B0">     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">modified.</span><span class="B0">                                            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #revisions-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Revisions </span><span class="B0 ln">──────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Lineage record missing                            </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Revisions are still listed by SHA-256; parent</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">links are unknown. Identity is unaffected.</span><span class="B0">         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>Ordered tasks · <code>DataTable#tasks</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #tasks-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Ordered tasks </span><span class="B0 ln">──────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 mu">Reading frozen task prompts…</span><span class="B0">             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #tasks-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Ordered tasks </span><span class="B0 ln">──────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">         </span><span class="B0 bd">This draft has no approved tasks yet          </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">      </span><span class="B0 mu">Plan and approve them before the first run       </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ac">p Plan tasks                      </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #tasks-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Ordered tasks </span><span class="B0 ln">──────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">tasks/T3-management.md is missing                 </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">The revision fails its integrity check and cannot</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">run. Restore it from the library package or a</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">template ZIP.</span><span class="B0">                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>Identity manifest · <code>DataTable#manifest</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #manifest-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Covered by the hash </span><span class="B0 ln">────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">Recomputing SHA-256 · 9 of 15 files</span><span class="B0">                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">████████████████████████████</span><span class="B0 ln">░░░░░░░░░░░░░░░░░░░</span><span class="B0 mu">  60%</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Runs and exports wait for the result.               </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #manifest-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Covered by the hash </span><span class="B0 ln">────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                   </span><span class="B0 bd">No identity yet                     </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Draft templates get a manifest and SHA-256 when</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">you approve them.</span><span class="B0">                                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #manifest-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Covered by the hash </span><span class="B0 ln">────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Digest mismatch · tasks/T2-data.md                </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Recomputed content differs from the approved</span><span class="B0">       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">manifest. Launch and export are blocked.</span><span class="B0">           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>Saved configurations · <code>DataTable#configs</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #configs-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Saved for r1 </span><span class="B0 ln">───────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 mu">Reading saved configurations…</span><span class="B0">             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #configs-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Saved for r2 </span><span class="B0 ln">───────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 bd">No saved configurations for r2             </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">     </span><span class="B0 mu">They are saved per revision; r1 keeps its 3.      </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">         </span><span class="B0 ac">n New configuration · c Copy from r1          </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #configs-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Saved for r1 </span><span class="B0 ln">───────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">configs/r1.yaml is not valid YAML                 </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Line 14: mapping values are not allowed here. The</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">file was left untouched; fix it or create a new</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">configuration.</span><span class="B0">                                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>Results for the revision · <code>DataTable#results</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #results-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Runs </span><span class="B0 ln">───────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">              </span><span class="B0 mu">Reading retained results…</span><span class="B0">               </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #results-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Runs </span><span class="B0 ln">───────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                </span><span class="B0 bd">No results for r2 yet                  </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">     </span><span class="B0 mu">Results bind to the exact revision they ran.      </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">        </span><span class="B0 ac">enter Configure run · i Import results         </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #results-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Runs </span><span class="B0 ln">───────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Results index could not be read                   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Disk read failed:</span><span class="B0">                                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">~/.axbenchmark/results/index.yaml</span><span class="B0">                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="BS rv bd"> Retry </span><span class="B0">                                            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M02 · Results for the template · <code>DataTable#results</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #results-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Results </span><span class="B0 ln">────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">              </span><span class="B0 mu">Reading retained results…</span><span class="B0">               </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #results-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Results · 0 of 12 </span><span class="B0 ln">──────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 bd">No results match these filters             </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">         </span><span class="B0 mu">machine lab-linux-4090 · env current          </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                  </span><span class="B0 ac">esc Clear filters                    </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #results-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Results </span><span class="B0 ln">────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">R-0921a-2 could not be read                       </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">results/R-0921a-2/record.yaml is truncated. Other</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">results are listed; nothing was repaired.</span><span class="B0">          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M06 · Combined ranking · <code>DataTable#combined</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #combined-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Combined </span><span class="B0 ln">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                  </span><span class="B0 mu">Computing scores…</span><span class="B0">                   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #combined-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Combined · 0 of 4 qualify </span><span class="B0 ln">──────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">         </span><span class="B0 bd">No entry qualifies for this ranking           </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">  </span><span class="B0 mu">Group B with machine lab-linux-4090: 2 failed</span><span class="B0">       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">  </span><span class="B0 mu">checks, 1 business grade 3 &lt; 4, 1 cost unknown.</span><span class="B0">     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #combined-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Combined </span><span class="B0 ln">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Ranking cannot be computed                        </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Ranking weights total 0. Edit the weights (w) or</span><span class="B0">   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">reset to the original analysis (r).</span><span class="B0">                </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M03 · Harness readiness · <code>DataTable#harnesses</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #harnesses-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Harnesses </span><span class="B0 ln">──────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 mu">Checking 4 harnesses · 2 of 4…</span><span class="B0">            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #harnesses-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Harnesses </span><span class="B0 ln">──────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">              </span><span class="B0 bd">No supported harness found               </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">    </span><span class="B0 mu">Library, ZIP exchange and reports still work.      </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 ac">d Install guides · f5 Recheck              </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #harnesses-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Harnesses </span><span class="B0 ln">──────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Codex check did not finish                        </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">codex --version timed out after 10 s. Status stays</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">unknown; nothing was assumed.</span><span class="B0">                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="BS rv bd"> Recheck </span><span class="B0">                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M04 · Catalog entries · <code>DataTable#models</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #models-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Models </span><span class="B0 ln">─────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">      </span><span class="B0 mu">Discovering models for Claude Code 3.4.1…</span><span class="B0">       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #models-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Models </span><span class="B0 ln">─────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">        </span><span class="B0 bd">No catalog entries for xAI · personal          </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">           </span><span class="B0 mu">Discovery needs authentication.             </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">           </span><span class="B0 ac">F2 Environment · o Add override             </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #models-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Models </span><span class="B0 ln">─────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">overrides.yaml is not valid YAML                  </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Line 7: duplicate key “efforts”. Overrides are</span><span class="B0">     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">ignored until fixed; nothing was rewritten.</span><span class="B0">        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M05 · Task log · <code>RichLog#log</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #log-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Log · T5 </span><span class="B0 ln">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 mu">Attaching to process 48211…</span><span class="B0">              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #log-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Log · T6 </span><span class="B0 ln">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                  </span><span class="B0 bd">T6 has not started                   </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">          </span><span class="B0 mu">It runs after T5 in a new process.           </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #log-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Log · T5 </span><span class="B0 ln">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Log stream interrupted                            </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">The process is still running; the log file is</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">intact. Reattaching from the last line…</span><span class="B0">            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M07 · Competitor entries · <code>DataTable#entries</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #entries-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Competitor entries </span><span class="B0 ln">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">        </span><span class="B0 mu">Resolving 5 entries against readiness…</span><span class="B0">        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #entries-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Competitor entries · 0 </span><span class="B0 ln">─────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                    </span><span class="B0 bd">No entries yet                     </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">     </span><span class="B0 mu">Add at least one harness, model and effort.       </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ac">a Add entry                       </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #entries-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Competitor entries </span><span class="B0 ln">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">four-harnesses.yaml pins another SHA-256          </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">The file pins 9c41d0b5 (r2), not r1. Open it from</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">r2, or save a copy for r1.</span><span class="B0">                         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M08 · Task checks · <code>DataTable#task-checks</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #task-checks-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Acceptance checks · T6 </span><span class="B0 ln">─────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">          </span><span class="B0 mu">Verifying T6 on a disposable copy…</span><span class="B0">          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #task-checks-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Acceptance checks · T6 </span><span class="B0 ln">─────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 bd">T6 has not been verified yet              </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">       </span><span class="B0 mu">Checks run after the task process ends.         </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #task-checks-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Acceptance checks · T6 </span><span class="B0 ln">─────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Verification could not start                      </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">The T6 snapshot is missing from the run folder.</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Checks stay unverified; nothing was guessed.</span><span class="B0">       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M10 · Measurements · <code>DataTable#measurements</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #measurements-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Per task and total </span><span class="B0 ln">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">          </span><span class="B0 mu">Reading usage events for 7 tasks…</span><span class="B0">           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #measurements-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Per task and total </span><span class="B0 ln">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                 </span><span class="B0 bd">No measurements yet                   </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">     </span><span class="B0 mu">T1 has not finished. Values appear per task.      </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #measurements-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Per task and total </span><span class="B0 ln">─────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">usage.jsonl could not be parsed                   </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Line 212 is malformed. Affected values stay</span><span class="B0">        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">unknown; nothing is estimated in their place.</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M11 · Run lane · <code>Vertical#lane-1</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #lane-1-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Claude Code </span><span class="B0 ln">────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 mu">Attaching to run 2026-10-01-a…</span><span class="B0">            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #lane-1-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Claude Code </span><span class="B0 ln">────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">            </span><span class="B0 bd">No configuration in this lane              </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">      </span><span class="B0 mu">Claude Code was not selected for this run.       </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #lane-1-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Claude Code </span><span class="B0 ln">────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Run state could not be read                       </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">runs/2026-10-01-a/state.json is locked. The run</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">itself is unaffected. Retrying…</span><span class="B0">                    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+<section class="sec"><h2>M12 · Review queue · <code>DataTable#reviews</code></h2>
+<div style="display: flex; gap: 28px"><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Loading</b> · #reviews-loading</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Reviews </span><span class="B0 ln">────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0"> </span><span class="B0 ln">●</span><span class="B0">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">     </span><span class="B0 mu">Preparing anonymous labels for 4 artifacts…</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Empty</b> · #reviews-empty</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Reviews </span><span class="B0 ln">────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                </span><span class="B0 bd">Nothing to review yet                  </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">    </span><span class="B0 mu">Judging starts when every configuration ends.      </span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div><div style="display: flex; flex-direction: column; gap: 6px"><span class="cap"><b>Error</b> · #reviews-error</span><div class="term" style="width: 56ch; height: 128px">
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Reviews </span><span class="B0 ln">────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 bd">✗</span><span class="B0"> </span><span class="B0 bd">Judge session could not start                     </span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Claude Code exited 1 before reviewing artifact C.</span><span class="B0">  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Recorded as not judged; no grade was invented.</span><span class="B0">     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────┘</span></div>
+</div></div></div></section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":3540}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["—"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

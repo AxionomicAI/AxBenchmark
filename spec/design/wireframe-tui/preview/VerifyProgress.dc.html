@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verifying a task · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Verifying a task</b> · VerifyProgressScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                            </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Run 2026-10-01-a · Codex · gpt-6-sol · medium</span><span class="B2 xd">                               </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> Running T5 Shopping cart · 41:12 elapsed · configuration 2 of 4 · keeps running if you detach                        </span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Tasks · one process each </span><span class="B0 ln xd">─────────────────────┐┌─</span><span class="B0 bd xd"> Invocation · requested vs effective </span><span class="B0 ln xd">──────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B2 bd xd"> #   Task                  PID    Outcome       </span><span class="B0 ln xd">││</span><span class="B2 bd xd"> Setting      Requested         Effective            Evidence       </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T1  Repository and scaff… 47102  ✓ exit 0      </span><span class="B0 ln xd">││</span><span class="B0 xd"> Harness      Codex 0.98.0      ✓ Codex 0.98.0       process        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T2  Inventory data and p… 47388  ✓ exit 0      </span><span class="B0 ln xd">││</span><span class="B0 xd"> Provider     OpenAI            ✓ OpenAI             harness log    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T3  Inventory management  47511  ✓ exit 0      </span><span class="B0 ln xd">││</span><span class="B0 xd"> Model        gpt-6-sol         ✓ gpt-6-sol          harness report </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T4  Inventory lookup      47960  ✓ exit 0      </span><span class="B0 ln xd">││</span><span class="BS xd"> Effort       medium           </span><span class="BS it xd"> ? unverified        </span><span class="BS xd"> not exposed    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="BS xd"> T5  Shopping car</span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Verifying T4 · Codex · gpt-6-sol · medium </span><span class="B1 ac">──────────────────────────────────────╮</span><span class="B0 xd">  managed config </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T6  Checkout    </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">  headless rules </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> T7  Test and fix</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> T4 snapshot preserved · commit 5b1e9a0                                        </span><span class="B1 ac">│</span><span class="B0 ln xd">─────────────────┘</span></div>
+<div class="r"><span class="B0 ln xd">└─────────────────</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> Disposable copy created · verification tools stay outside it                  </span><span class="B1 ac">│</span><span class="B0 ln xd">─────────────────┐</span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Conversation  </span><span class="B0 xd">new</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> index.html opened directly in Chromium · Playwright for Python 1.52           </span><span class="B1 ac">│</span><span class="B0 xd">wn copy          </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Task input    </span><span class="B0 xd">sha</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">●</span><span class="B1"> </span><span class="B1 bd">Running checks · 2 of 2 · T4.2 Lookup reflects the current inventory        </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">x-medium/ws      </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Carried state </span><span class="B0 xd">wor</span><span class="B1 ac">│</span><span class="B1">    </span><span class="B1 ac">████████████████████████████████████</span><span class="B1 ln">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span><span class="B1 mu">  50%</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Checks        </span><span class="B0 xd">run</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">Screenshots · desktop 1440×1000 · mobile 390×844                            </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd">                  </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">Discard the copy · keep snapshot, logs and screenshots                      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd">                  </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">not loaded       </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd">                  </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">So far</span><span class="B1">                                                                          </span><span class="B1 ac">│</span><span class="B0 xd">                 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd">                  </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> T4.1 Lookup finds a product the user asks for · passed · 1.8 s                </span><span class="B1 ac">│</span><span class="B0 xd">                 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 xd">                  </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 ln xd">─────────────────┘</span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Log · T5 · pid </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">A check that cannot run is recorded as unverified with its reason, never as</span><span class="B1">     </span><span class="B1 ac">│</span><span class="B0 ln xd">─────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B1 xd"> </span><span class="B1 mu it xd">/ Search the lo</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">passed. Generated code is never repaired, even when setup exposes a defect.</span><span class="B1">     </span><span class="B1 ac">│</span><span class="B0 xd">                 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:31:02  </span><span class="B0 bd xd">task  </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:31:02  input </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:31:09  codex </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:33:40  codex </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:35:12  codex </span><span class="B1 ac">│</span><span class="B1">                                                                          </span><a class="BA on bd rv bd k" href="RunConfig.dc.html"> Hide </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:36:55  codex </span><span class="B1 ac">│</span><span class="B1">                                                                                  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:38:20  </span><span class="B0 bd xd">policy</span><span class="B1 ac">╰──────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:39:02  codex   </span><span class="B0 xd">open http://localhost:41021 in its own browser context                                            </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:40:10  codex   </span><span class="B0 xd">edit index.html (+22 −1)                                                                          </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:41:47  codex   </span><span class="B0 xd">run npm test → 21 passed                                                                          </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:42:05  codex   </span><span class="B0 xd">git commit -m &quot;Add shopping cart&quot; → 8c2d417                                                       </span><span class="B0 ln xd">░│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">21:42:06  codex   </span><span class="B0 xd">reviewing the cart total against the specification…                                               </span><span class="B0 mu xd">█</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                     </span><span class="B0 mu xd">█</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                                                                     </span><span class="B0 mu xd">█</span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└──────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu xd"> follows new lines </span><span class="B0 ln xd">─┘</span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="RunConfig.dc.html">esc</a><a class="B2 k" href="RunConfig.dc.html"> Hide · verification continues</a><span class="B2">                                                                                      </span></div>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Vertical" data-tcss="#verify-progress" style="left: 18ch; top: 128px; width: 84ch; height: 352px"><span>Vertical #verify-progress</span></div>
+<div class="ov" data-widget="Vertical" data-tcss="#verify-steps" style="left: 21ch; top: 160px; width: 78ch; height: 112px"><span>Vertical #verify-steps</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><span>focus · <b>—</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>VerifyProgressScreen</b><span class="mut">tui/screens/run_config.py</span></div>
+<h3>Widget tree</h3>
+<pre>VerifyProgressScreen(ModalScreen[None])
+├─ Vertical #verify-progress .dialog
+│  ├─ Vertical #verify-steps
+│  │  └─ ProgressBar
+│  ├─ Static #verify-so-far
+│  └─ Horizontal .dialog-actions
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>VerifyProgressScreen</code></td><td>align: center middle; background: $background 60%;</td></tr><tr><td><code>#verify-progress</code></td><td>width: 84; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;</td></tr><tr><td><code>.dialog-actions</code></td><td>height: 1; align-horizontal: right; margin-top: 1;</td></tr><tr><td><code>ProgressBar</code></td><td>show_eta = False</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>dismiss</code><br><span class="mut">Hide; verification continues</span></td></tr></table>
+
+<h3>States and related frames</h3>
+<div class="rel"><a href="TaskChecks.dc.html">Task checks</a><a href="FinalRegression.dc.html">Final regression</a><a href="CheckOutcomes.dc.html">Not passed</a><a href="Screenshots.dc.html">Screenshots</a><a href="VerifyProgress.dc.html">In progress</a><a href="JudgeHandoff.dc.html">Judge input</a></div>
+<h3>Notes</h3>
+<ul><li>Verification progress and outcomes are supplied to the run view (R034).</li><li>Setup exposing an application defect is recorded, never repaired (R074).</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":860}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["—"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

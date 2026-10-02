@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Incomplete package · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 920px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Incomplete package</b> · ImportScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                                           </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Template library</span><span class="B2 xd">                                             </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> 4 harnesses ready · Claude Code · Codex · Grok CLI · Pi   </span><span class="B1 mu xd">◆ 1 active run · 2026-10-01-a · 3/4 running   </span><span class="B1 ac bd xd">^r</span><span class="B1 xd"> Reconnect </span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Library · 6 templates </span><span class="B0 ln xd">──────────────────────────────────────────────┐┌─</span><span class="B0 bd xd"> Inventory web app </span><span class="B0 ln xd">──────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B1 xd"> </span><span class="B1 mu it xd">/ Filter by name, type or source                                  </span><span class="B1 xd"> </span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="B0 bd xd">Inventory web app</span><span class="B0 xd">                            </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B2 bd xd">   Name                Type      Source   Tasks Rev SHA-256  Cfg Res</span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="B0 mu xd">★ Built-in · default · Frontend</span><span class="B0 xd">      </span><span class="B0 ac bd xd">?</span><span class="B0 xd"> About </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="BS xd"> ★ Inventory web app   Frontend  Built-in     7 r1  3f9c2e71   3  12</span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Inventory web app … Frontend  Custom       6 r1  8b04d6aa   1   2 </span><span class="B0 ln xd">││</span><span class="B0 xd"> Inventory website in HTML5 and vanilla       </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Orders REST </span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Template not imported · incomplete package </span><span class="B1 ac">───────────────────────────────────────╮</span><span class="B0 xd">persistence,    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Billing serv</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ml. Seven tasks </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ↓ Kanban board</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> 1 · Safe package boundary                                                       </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ↓ Recipe plann</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">2 · Template definition                                                       </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">3 · Result compatibility · not for a template ZIP                             </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">owser QA        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">4 · Existing identities · not reached                                         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">d 2026-09-12    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">5 · Register · not reached                                                    </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">37ee9e73ea2376b </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">1380bc01229ff49 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> Required content              In recipe-planner-r2.zip                         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Manifest                      ✓ format v1 · supported                          </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">cks · v1        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Specification                 ✓ spec/00-project.md                             </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">6 categories    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Task prompts · ordered        ✓ 5 · T1–T5                                      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="BS"> Acceptance checks            </span><span class="BS bd"> ✗ checks/acceptance.v1.json listed, missing      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">imported        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Setup · start · stop          ✓ protocol/services.yaml                         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Execution protocol · rubric   ✓ both present                                   </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Baseline                     </span><span class="B0 bd"> ✗ manifest lists 41 files, archive has 0         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">      </span><span class="B0 mu xd">4 entries</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">     </span><span class="B0 xd"> </span><span class="B0 mu xd">3 entries</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">The SHA-256 was not computed: an incomplete definition has no identity to</span><span class="B1">         </span><span class="B1 ac">│</span><span class="B0 mu xd">     </span><span class="B0 xd"> </span><span class="B0 mu xd">2 entries</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">compare. Nothing was added. Ask for a complete export of Recipe planner PWA r2;</span><span class="B1">   </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">the copy in your library is unaffected.</span><span class="B1">                                           </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">4/4 complete   </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                            </span><span class="BS"> Copy report </span><span class="B1">  </span><a class="BA on bd rv bd k" href="Library.dc.html"> Close </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">★ built-in default  ◆ custom  ↓ imported  Cfg configs  Res results  </span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="BA on bd xd"> ▶ Configure run </span><span class="B0 xd">  </span><span class="BS xd"> Open </span><span class="B0 xd">  </span><span class="BS xd"> Export </span><span class="B0 xd">          </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└──────────────────────────────────────────────────────</span><span class="B0 mu xd"> default first </span><span class="B0 ln xd">─┘└──────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Library.dc.html">esc</a><a class="B2 k" href="Library.dc.html"> Close</a><span class="B2">  </span><span class="B2 ac bd">c</span><span class="B2"> Copy report                                                                                               </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                                           </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Template library</span><span class="B2 xd">                                             </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> 4 harnesses ready · Claude Code · Codex · Grok CLI · Pi   </span><span class="B1 mu xd">◆ 1 active run · 2026-10-01-a · 3/4 running   </span><span class="B1 ac bd xd">^r</span><span class="B1 xd"> Reconnect </span></div>
+<div class="r"><span class="B0 ln xd">┌─</span><span class="B0 bd xd"> Library · 6 templates </span><span class="B0 ln xd">──────────────────────────────────────────────┐┌─</span><span class="B0 bd xd"> Inventory web app </span><span class="B0 ln xd">──────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B1 xd"> </span><span class="B1 mu it xd">/ Filter by name, type or source                                  </span><span class="B1 xd"> </span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="B0 bd xd">Inventory web app</span><span class="B0 xd">                            </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B2 bd xd">   Name                Type      Source   Tasks Rev SHA-256  Cfg Res</span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="B0 mu xd">★ Built-in · default · Frontend</span><span class="B0 xd">      </span><span class="B0 ac bd xd">?</span><span class="B0 xd"> About </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="BS xd"> ★ Inventory web app   Frontend  Built-in     7 r1  3f9c2e71   3  12</span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Inventory web app … Frontend  Custom       6 r1  8b04d6aa   1   2 </span><span class="B0 ln xd">││</span><span class="B0 xd"> Inventory website in HTML5 and vanilla       </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Orders REST </span><span class="B1 ac">╭─</span><span class="B1 ac bd"> Template not imported · incomplete package </span><span class="B1 ac">───────────────────────────────────────╮</span><span class="B0 xd">persistence,    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ◆ Billing serv</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ml. Seven tasks </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ↓ Kanban board</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 ac">✓</span><span class="B1"> 1 · Safe package boundary                                                       </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">  ↓ Recipe plann</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">✗</span><span class="B1"> </span><span class="B1 bd">2 · Template definition                                                       </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">3 · Result compatibility · not for a template ZIP                             </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">owser QA        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">4 · Existing identities · not reached                                         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">d 2026-09-12    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">5 · Register · not reached                                                    </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">37ee9e73ea2376b </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">1380bc01229ff49 </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> Required content              In recipe-planner-r2.zip                         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Manifest                      ✓ format v1 · supported                          </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">cks · v1        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Specification                 ✓ spec/00-project.md                             </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">6 categories    </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Task prompts · ordered        ✓ 5 · T1–T5                                      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="BA on"> Acceptance checks            </span><span class="BA on bd"> ✗ checks/acceptance.v1.json listed, missing      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">imported        </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Setup · start · stop          ✓ protocol/services.yaml                         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Execution protocol · rubric   ✓ both present                                   </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> Baseline                     </span><span class="B0 bd"> ✗ manifest lists 41 files, archive has 0         </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">      </span><span class="B0 mu xd">4 entries</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">     </span><span class="B0 xd"> </span><span class="B0 mu xd">3 entries</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">The SHA-256 was not computed: an incomplete definition has no identity to</span><span class="B1">         </span><span class="B1 ac">│</span><span class="B0 mu xd">     </span><span class="B0 xd"> </span><span class="B0 mu xd">2 entries</span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">compare. Nothing was added. Ask for a complete export of Recipe planner PWA r2;</span><span class="B1">   </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">the copy in your library is unaffected.</span><span class="B1">                                           </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 mu xd">4/4 complete   </span><span class="B0 xd"> </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                            </span><span class="BS"> Copy report </span><span class="B1">  </span><a class="BA on bd k" href="Library.dc.html"> Close </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                </span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd">                                                                      </span><span class="B0 ln xd">││</span><span class="B0 xd">                                              </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">│</span><span class="B0 xd"> </span><span class="B0 mu xd">★ built-in default  ◆ custom  ↓ imported  Cfg configs  Res results  </span><span class="B0 xd"> </span><span class="B0 ln xd">││</span><span class="B0 xd"> </span><span class="BA on bd xd"> ▶ Configure run </span><span class="B0 xd">  </span><span class="BS xd"> Open </span><span class="B0 xd">  </span><span class="BS xd"> Export </span><span class="B0 xd">          </span><span class="B0 ln xd">│</span></div>
+<div class="r"><span class="B0 ln xd">└──────────────────────────────────────────────────────</span><span class="B0 mu xd"> default first </span><span class="B0 ln xd">─┘└──────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Library.dc.html">esc</a><a class="B2 k" href="Library.dc.html"> Close</a><span class="B2">  </span><span class="B2 ac bd">c</span><span class="B2"> Copy report                                                                                               </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Vertical" data-tcss="#import" style="left: 17ch; top: 112px; width: 86ch; height: 400px"><span>Vertical #import</span></div>
+<div class="ov" data-widget="Vertical" data-tcss="#validation-order" style="left: 20ch; top: 144px; width: 80ch; height: 80px"><span>Vertical #validation-order</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#completeness" style="left: 20ch; top: 240px; width: 80ch; height: 128px"><span>DataTable #completeness</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ImportScreen</b><span class="mut">tui/screens/exchange.py</span></div>
+<h3>Widget tree</h3>
+<pre>ImportScreen(ModalScreen[ImportOutcome])
+├─ Vertical #import .dialog
+│  ├─ Vertical #validation-order
+│  ├─ DataTable #completeness
+│  ├─ Static #next-action
+│  └─ Horizontal .dialog-actions
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>ImportScreen</code></td><td>align: center middle; background: $background 60%;</td></tr><tr><td><code>#import</code></td><td>width: 86; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;</td></tr><tr><td><code>.dialog-actions</code></td><td>height: 1; align-horizontal: right; margin-top: 1;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>dismiss</code><br><span class="mut">Close</span></td></tr><tr><td><kbd>c</kbd></td><td><code>copy</code><br><span class="mut">Copy the diagnostics</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>Button #close</li><li>DataTable #completeness</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="ImportTemplate.dc.html">Import (M01)</a><a href="ImportUnsafe.dc.html">Unsafe</a><a href="ImportIncomplete.dc.html">Incomplete</a><a href="ImportRejected.dc.html">Digest mismatch</a><a href="ImportDuplicate.dc.html">Identical</a><a href="ResultPackage.dc.html">Result package</a><a href="ResultMismatch.dc.html">Template differs</a><a href="ResultEmbedded.dc.html">Separate revision</a><a href="ResultImportConflict.dc.html">Id conflict</a></div>
+<h3>Notes</h3>
+<ul><li>Completeness is checked against the template contract before identity (R115).</li><li>Diagnostics name the failed requirement and a next action (R117).</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["Button #close","DataTable #completeness"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,688 @@
+// Artboard catalogue for M02–M06: one canvas page per module, grouped into the flows of navigation.md.
+// Same legend shape as boards.mjs: Textual screen, widget tree, ids/classes with TCSS, bindings, related frames, notes.
+import { results, resultOrigin, resultOutcomes, resultReviews, rejudge, resultImport, resultImportConflict, exportResult, reportReady, rankings, scoreBreakdown, weightsEditor } from './screens-results.mjs';
+import { environment, catalog, catalogOverride, modelPicker } from './screens-readiness.mjs';
+import { runConfig, envPolicy, cleanBlocked, runIsolation } from './screens-execution.mjs';
+import { setup, judgePicker, reviewLaunch, launchRecord } from './screens-setup.mjs';
+import { taskChecks, finalRegression, checkOutcomes, screenshots, verifyProgress, judgeHandoff } from './screens-verify.mjs';
+import { inventoryAbout, inventoryPrompts, inventoryChecks, inventoryVariant } from './screens-inventory.mjs';
+
+const S = (name, title, def) => ({ name, title, ...def });
+const modalSel = (screen, id, w) => [
+  [screen, 'align: center middle; background: $background 60%;'],
+  [id, `width: ${w}; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;`],
+  ['.dialog-actions', 'height: 1; align-horizontal: right; margin-top: 1;'],
+];
+const MODAL_KEYS = (extra) => [['esc', 'dismiss(None)', 'Close without changes'], ['tab / shift+tab', 'focus_next / previous', 'Move between fields'], ...extra];
+
+// ---------------------------------------------------------------- M02 · results
+
+const RESULTS_TREE = `ResultsScreen(Screen)          AUTO_FOCUS = "#results"
+├─ Header
+├─ Static #identity-bar         template + full SHA-256 scope
+├─ TabbedContent #results-tabs
+│  ├─ TabPane #tab-results "Results"
+│  │  ├─ Horizontal #filters
+│  │  │  └─ Select × 5        machine · config · env · jobs · judge
+│  │  ├─ ContentSwitcher #results-body
+│  │  │  └─ DataTable #results .bordered
+│  │  ├─ Horizontal #result-detail
+│  │  │  ├─ VerticalScroll #result-summary .pane
+│  │  │  └─ Static #retained .pane
+│  │  └─ Horizontal .actions
+│  └─ TabPane #tab-rankings "Rankings"     (M06)
+├─ Static #summary             .-compact only
+└─ Footer`;
+const RESULTS_SEL = [
+  ['#identity-bar', 'height: 1; background: $surface; padding: 0 1;'],
+  ['#filters', 'height: 1; margin: 0 1;'],
+  ['#filters Select', 'width: auto; margin-right: 2;  compact=True'],
+  ['#results', 'height: 15; max-height: 1fr;  cursor_type = "row"'],
+  ['#result-detail', 'height: 1fr;'],
+  ['#result-summary, #retained', 'width: 1fr; border: solid $foreground 30%;'],
+  ['Screen.-compact #result-detail', 'display: none;'],
+  ['Screen.-compact #summary', 'display: block; height: 6;'],
+];
+const RESULTS_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to the template revision'],
+  ['1 · 2', 'show_tab', 'Results · Rankings'],
+  ['f', 'focus("#filters")', 'Edit filters (compact: opens a filter sheet)'],
+  ['o / enter', 'open_result', 'Push ResultScreen for the row'],
+  ['j', 'rejudge', 'Review again with a selected judge (explicit only)'],
+  ['i / x', 'import / export', 'Result ZIP import (M17) / export of a run'],
+  ['h', 'report', 'Write the standalone HTML report (M13)'],
+  ['w', 'weights', 'Push WeightsScreen (M06)'],
+];
+const RES_STATES = [['Results', 'Results'], ['Import', 'ResultImport'], ['Id conflict', 'ResultImportConflict'], ['Export', 'ExportResult'], ['Report', 'ReportReady'], ['Rankings', 'Rankings']];
+const resLegend = (notes) => ({ screen: 'ResultsScreen', file: 'tui/screens/results.py', tree: RESULTS_TREE, sel: RESULTS_SEL, keys: RESULTS_KEYS, states: RES_STATES, notes });
+
+const RESULT_TREE = `ResultScreen(Screen)           one retained result
+├─ Header
+├─ Static #result-bar
+├─ TabbedContent #result-tabs
+│  ├─ TabPane "Launch and origin"
+│  │  ├─ VerticalScroll #definition .pane
+│  │  ├─ VerticalScroll #origin .pane
+│  │  └─ Static #provenance-note .notice.-warning
+│  ├─ TabPane "Outcomes and measurements"
+│  │  ├─ DataTable #task-outcomes .bordered
+│  │  ├─ VerticalScroll #check-detail .pane
+│  │  └─ Static #coverage .pane.kv
+│  └─ TabPane "Reviews and evidence"
+│     ├─ DataTable #grades .bordered
+│     ├─ Static #review-meta .pane.kv
+│     └─ Vertical #additional-reviews .pane
+├─ Horizontal .actions
+└─ Footer`;
+const RESULT_SEL = [
+  ['#result-bar', 'height: 1; background: $surface; padding: 0 1;'],
+  ['#definition, #origin', 'width: 1fr; height: 26; border: solid $foreground 30%;'],
+  ['#task-outcomes', 'height: 11;  cursor_type = "row"'],
+  ['#check-detail, #coverage', 'width: 1fr; height: 16;'],
+  ['.kv', 'height: auto;  label column width: 12–15'],
+  ['Screen.-compact #coverage', 'display: none;'],
+];
+const RESULT_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to Results (filters kept)'],
+  ['1 · 2 · 3', 'show_tab', 'Launch and origin · Outcomes · Reviews'],
+  ['j', 'rejudge', 'Review again with a selected judge'],
+  ['x', 'export', 'Export this result’s run as a ZIP'],
+  ['l', 'logs', 'Open task logs and evidence files'],
+];
+const R1_STATES = [['Launch and origin', 'ResultOrigin'], ['Outcomes', 'ResultOutcomes'], ['Reviews', 'ResultReviews'], ['Review again', 'Rejudge']];
+const resultLegend = (notes) => ({ screen: 'ResultScreen', file: 'tui/screens/result.py', tree: RESULT_TREE, sel: RESULT_SEL, keys: RESULT_KEYS, states: R1_STATES, notes });
+
+const REJUDGE_TREE = `RejudgeScreen(ModalScreen[RejudgeRequest])
+├─ Vertical #rejudge .dialog
+│  ├─ Static #rejudge-subject
+│  ├─ Static #original-review .kv
+│  ├─ Select #rejudge-judge
+│  ├─ Static #rejudge-terms .kv
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const IMPORT_RESULTS_TREE = `ImportResultsScreen(ModalScreen[ImportOutcome])
+├─ Vertical #import-results .dialog
+│  ├─ ContentSwitcher
+│  │  ├─ Vertical #import-steps         (M17 validation)
+│  │  ├─ Vertical #import-validated
+│  │  │  ├─ DataTable #import-preview   add · skip
+│  │  │  └─ Static .notice.-warning
+│  │  └─ Vertical #import-conflict .notice.-error
+│  │     └─ Static #conflict-digests
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const EXPORT_RESULTS_TREE = `ExportResultsScreen(ModalScreen[Path | None])
+├─ Vertical #export-results .dialog
+│  ├─ SelectionList #export-selection
+│  ├─ Input #export-results-path
+│  ├─ Static #export-results-contents
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const REPORT_TREE = `ReportScreen(ModalScreen[None])
+├─ Vertical #report .dialog
+│  ├─ Static #report-path        always shown
+│  ├─ Static .notice.-warning    open failed
+│  └─ Horizontal .dialog-actions
+│     ├─ Button #copy-path
+│     ├─ Button #open-folder
+│     └─ Button #close .-primary
+└─ Footer`;
+
+const M02 = [
+  { id: 'm02-results', page: 'm02', title: 'M02 · 1 · Compare retained results', note: 'ResultsScreen lists every result bound to one template SHA-256: local and imported, filterable by machine, configuration, environment policy, concurrency and judge. The selected row shows provenance and the four retained information groups. Import, export, explicit re-review and the HTML report work from retained data without model calls.', boards: [
+    S('Results', 'Results', { sizes: ['wide', 'compact'], focus: { wide: [['results', 'DataTable #results'], ['filters', 'Select #filter-machine'], ['open', 'Button #open-result']], compact: [['results', 'DataTable #results'], ['filters', 'Select #filter-machine']] }, render: (sz, f) => results(sz, f), legend: resLegend([
+      'Only results whose template SHA-256 matches r1 are listed; another hash opens its own comparison and never mixes in (R122).',
+      'All five comparison filters are visible (R124). Machine differences are inputs, not hash mismatches.',
+      'Measured tables default to highest known cost first, unknown last (M06 R131). Unknown cost reads “unknown”, never $0.',
+      'Imported rows carry ↓ and their source machine; the summary says validated, not certified (R123).',
+    ]) }),
+    S('ResultImport', 'Import results · validated', { sizes: ['wide'], focus: { wide: [['add', 'Button #add-results'], ['table', 'DataTable #import-preview']] }, render: (sz, f) => resultImport(sz, f), legend: { screen: 'ImportResultsScreen', file: 'tui/screens/results.py', tree: IMPORT_RESULTS_TREE, sel: [...modalSel('ImportResultsScreen', '#import-results', 86), ['#import-preview', 'height: 4;']], keys: MODAL_KEYS([['ctrl+s', 'add', 'Add the new results; skipped rows stay skipped']]), states: RES_STATES, notes: ['Package checks belong to M17; this frame is the outcome M02 shows before records join.', 'Identical results are skipped, so re-importing is idempotent (R122).', 'Import never runs scripts or models and is never called certification (R123).'] } }),
+    S('ResultImportConflict', 'Import · result id conflict', { sizes: ['wide', 'compact'], focus: { wide: [['close', 'Button #close'], ['diff', 'Button #show-differences']], compact: [['close', 'Button #close'], ['diff', 'Button #show-differences']] }, render: (sz, f) => resultImportConflict(sz, f), legend: { screen: 'ImportResultsScreen', file: 'tui/screens/results.py', tree: IMPORT_RESULTS_TREE, sel: modalSel('ImportResultsScreen', '#import-results', 86), keys: MODAL_KEYS([]), states: RES_STATES, notes: ['A different payload under an existing result id is rejected; the original is never overwritten and nothing is partially added (R122).', 'Digests stack under their labels at 80 columns so all 64 cells stay visible.'] } }),
+    S('ExportResult', 'Export result ZIP', { sizes: ['wide'], focus: { wide: [['results', 'SelectionList #export-selection'], ['path', 'Input #export-results-path'], ['export', 'Button #export-zip']] }, render: (sz, f) => exportResult(sz, f), legend: { screen: 'ExportResultsScreen', file: 'tui/screens/results.py', tree: EXPORT_RESULTS_TREE, sel: [...modalSel('ExportResultsScreen', '#export-results', 84), ['#export-selection', 'height: 4; border: none;']], keys: MODAL_KEYS([['space', 'toggle', 'Include or leave out a result'], ['ctrl+s', 'export', 'Write the ZIP; the path is shown on success']]), states: RES_STATES, notes: ['Contents follow R116: exact template, selected run records and configuration, machine and harness details, outcomes, measurements with coverage, original weights, judge data, snapshots, evidence and a payload manifest.', 'Credentials and unrelated machine files are never packed (R066).'] } }),
+    S('ReportReady', 'HTML report · could not open', { sizes: ['wide'], focus: { wide: [['close', 'Button #close'], ['copy', 'Button #copy-path']] }, render: (sz, f) => reportReady(sz, f), legend: { screen: 'ReportScreen', file: 'tui/screens/results.py', tree: REPORT_TREE, sel: modalSel('ReportScreen', '#report', 86), keys: MODAL_KEYS([['c', 'copy_path', 'Copy the report path']]), states: RES_STATES, notes: ['On completion the app tries to open the report and always shows its location, also when opening fails (R035, R134).', 'Report generation uses retained results only; no model is called.'] } }),
+  ] },
+  { id: 'm02-result', page: 'm02', title: 'M02 · 2 · Inspect one result', note: 'ResultScreen exposes every retained information group for one result: definition and launch, origin and execution, measurements and outcomes, reviews and evidence. Process outcomes, acceptance checks and quality grades stay in separate columns. Re-review is always an explicit request that keeps the original.', boards: [
+    S('ResultOrigin', 'Result · launch and origin', { sizes: ['wide'], focus: { wide: [['definition', 'VerticalScroll #definition'], ['origin', 'VerticalScroll #origin']] }, render: (sz, f) => resultOrigin(sz, f), legend: resultLegend([
+      'Definition and launch: approved template and full SHA-256, packaged baseline, resolved configuration, catalog metadata at launch, original weights (R066, R134).',
+      'Origin: source result id, machine label and id, hardware and OS, local/imported provenance, harness version, timestamps, model/effort, policy, concurrency, judge (R116, R124, R143).',
+      'Requested and effective settings stay apart; an unexposed effort is “unverified” (M04/M05 R065).',
+    ]) }),
+    S('ResultOutcomes', 'Result · outcomes and measurements', { sizes: ['wide', 'compact'], focus: { wide: [['tasks', 'DataTable #task-outcomes'], ['evidence', 'VerticalScroll #check-detail'], ['log', 'Button #open-log']], compact: [['tasks', 'DataTable #task-outcomes'], ['evidence', 'Static #check-detail']] }, render: (sz, f) => resultOutcomes(sz, f), legend: resultLegend([
+      'Process (exit), checks (✓ ✗ ? ○) and measurements are separate columns; a zero exit never implies a passed check (R076).',
+      'Unverified means the check could not run (here: browser missing). It is neither passed nor failed, and keeps the result out of default shortlists (M06 R100).',
+      'Measurements show their source, coverage and limitations, which travel with exports and reports (R124).',
+      'Task totals equal the result’s cost and time on Results and Rankings.',
+    ]) }),
+    S('ResultReviews', 'Result · reviews and evidence', { sizes: ['wide'], focus: { wide: [['grades', 'DataTable #grades'], ['review', 'Static #review-meta'], ['additional', 'Button #rejudge']] }, render: (sz, f) => resultReviews(sz, f), legend: resultLegend([
+      'Raw 1–5 grades are kept as the judge gave them; Q is computed by AxBenchmark from them and the original weights (M06 R096).',
+      'Imported reviews keep their judge configuration, evidence and limitations (R082, R143).',
+      'Additional reviews appear beside the original, never instead of it.',
+    ]) }),
+    S('Rejudge', 'Review again', { sizes: ['wide'], focus: { wide: [['judge', 'Select #rejudge-judge'], ['confirm', 'Button #rejudge']] }, render: (sz, f) => rejudge(sz, f), legend: { screen: 'RejudgeScreen', file: 'tui/screens/results.py', tree: REJUDGE_TREE, sel: [...modalSel('RejudgeScreen', '#rejudge', 84), ['#rejudge-judge', 'width: 1fr;']], keys: MODAL_KEYS([['ctrl+s', 'confirm', 'Start one fresh headless review (M12)']]), states: R1_STATES, notes: ['Only explicit: no screen re-reviews automatically (R082).', 'The original review is preserved; judging cost is recorded apart from run cost.', 'Same template rubric for every review; quality and combined rankings stay separate per judge configuration (R143).'] } }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M06 · rankings and weights
+
+const RANK_TREE = `ResultsScreen › TabPane #tab-rankings
+├─ Horizontal #ranking-controls
+│  ├─ Select #judge-group           one judge configuration
+│  └─ Static #weights-label         original | alternative
+├─ DataTable #combined .bordered    eligible only
+├─ Horizontal #shortlists
+│  ├─ DataTable #lowest-cost .bordered
+│  ├─ DataTable #shortest-time .bordered
+│  └─ DataTable #highest-quality .bordered
+├─ DataTable #all-entries .bordered  everything, with reasons
+├─ Static #minimums
+└─ Horizontal .actions`;
+const RANK_SEL = [
+  ['#ranking-controls', 'height: 1; margin: 0 1;'],
+  ['#combined', 'height: auto; max-height: 9;  cursor_type = "row"'],
+  ['#shortlists DataTable', 'width: 1fr; height: 8;'],
+  ['#all-entries', 'height: auto;'],
+  ['#weights-label.-alternative', 'text-style: bold;'],
+  ['Screen.-compact #shortlists', 'layout: vertical; height: 3;  one line each'],
+  ['Screen.-compact #all-entries', 'display: none;  reasons shown as #excluded'],
+];
+const RANK_KEYS = [
+  ['1 · 2', 'show_tab', 'Results · Rankings'],
+  ['g', 'judge_group', 'Switch judge group; groups never merge'],
+  ['b / enter', 'breakdown', 'Push ScoreBreakdownScreen for the row'],
+  ['w', 'weights', 'Push WeightsScreen'],
+  ['r', 'reset', 'Reset to the original analysis (alternative only)'],
+  ['h', 'report', 'HTML report with the current weights'],
+];
+const RANK_STATES = [['Original', 'Rankings'], ['Breakdown', 'ScoreBreakdown'], ['Weights', 'WeightsEditor'], ['Invalid', 'WeightsInvalid'], ['Alternative', 'RankingsAlternative']];
+const rankLegend = (notes) => ({ screen: 'ResultsScreen · Rankings', file: 'tui/screens/results.py', tree: RANK_TREE, sel: RANK_SEL, keys: RANK_KEYS, states: RANK_STATES, notes });
+
+const BREAKDOWN_TREE = `ScoreBreakdownScreen(ModalScreen[None])
+├─ Vertical #breakdown .dialog
+│  ├─ Static #eligibility
+│  ├─ DataTable #quality-breakdown
+│  ├─ DataTable #combined-breakdown
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const WEIGHTS_TREE = `WeightsScreen(ModalScreen[WeightSet | None])
+├─ Vertical #weights .dialog
+│  ├─ Select #preset               original · defaults · saved
+│  ├─ Horizontal #weight-sets
+│  │  ├─ Vertical #quality-weights
+│  │  │  └─ (Label, Input.weight, Static.pct) × 6
+│  │  └─ Vertical #ranking-weights
+│  │     └─ (Label, Input.weight, Static.pct) × 3
+│  ├─ Static #weights-hint
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const WEIGHTS_SEL = [...modalSel('WeightsScreen', '#weights', 86), ['#weight-sets', 'height: auto; grid-size: 2; grid-gutter: 0 4;'], ['Input.weight', 'width: 7;  type="number", validate_on=["changed"]'], ['Input.weight.-invalid', 'text-style: bold underline;'], ['Static.pct', 'width: 8; text-align: right;']];
+
+const M06 = [
+  { id: 'm06-rank', page: 'm06', title: 'M06 · 1 · Rankings and eligibility', note: 'The Rankings tab ranks one judge group at a time. Combined scores, minima and shortlists are computed from retained raw grades and measurements with the M06 formulas; every number here is calculated from the same 12 results shown in M02. Failed and excluded entries stay in the full table with their reasons.', boards: [
+    S('Rankings', 'Rankings · original weights', { sizes: ['wide', 'compact'], focus: { wide: [['combined', 'DataTable #combined'], ['group', 'Select #judge-group'], ['all', 'DataTable #all-entries'], ['breakdown', 'Button #breakdown']], compact: [['combined', 'DataTable #combined'], ['group', 'Select #judge-group']] }, render: (sz, f) => rankings(sz, f), legend: rankLegend([
+      'Eligible = completed, every required check verified, valid grades, business/spec grade ≥ 4 (R100). A high Q never bypasses a gate.',
+      'Missing a positively weighted measurement excludes the entry from that ranking only; weights are never redistributed (R100).',
+      'Verified $0 minimum: each verified $0 entry earns the full cost points, positive costs earn 0 (R101). Here that puts the local Pi run first, which is the specified behavior.',
+      'Fewer than five qualify → only that many are shown (lowest cost: 4).',
+    ]) }),
+    S('ScoreBreakdown', 'Score breakdown', { sizes: ['wide'], render: (sz) => scoreBreakdown(sz), legend: { screen: 'ScoreBreakdownScreen', file: 'tui/screens/results.py', tree: BREAKDOWN_TREE, sel: modalSel('ScoreBreakdownScreen', '#breakdown', 86), keys: [['esc', 'dismiss', 'Close'], ['← →', 'previous / next', 'Step through ranked entries']], states: RANK_STATES, notes: ['Q = Σ normalized category weight × raw grade (R097).', 'Score = 100 × (w_c·minCost/cost + w_t·minTime/time + w_q·Q/5), minima from this ranking’s eligible population (R098, R099).', 'Full precision internally; rounding is display only (R131).'] } }),
+  ] },
+  { id: 'm06-weights', page: 'm06', title: 'M06 · 2 · Weights and alternatives', note: 'Two independent weight sets: quality categories (decide Q) and ranking components (decide the combined score). Each normalizes by its own total. Applying creates a labelled alternative analysis; original weights and raw grades never change, and reset returns to them.', boards: [
+    S('WeightsEditor', 'Weights · ranking 2:1:1', { sizes: ['wide'], focus: { wide: [['ranking', 'Input #weight-cost'], ['quality', 'Input #weight-ux'], ['preset', 'Select #preset'], ['apply', 'Button #apply']] }, render: (sz, f) => weightsEditor(sz, f), legend: { screen: 'WeightsScreen', file: 'tui/screens/weights.py', tree: WEIGHTS_TREE, sel: WEIGHTS_SEL, keys: MODAL_KEYS([['ctrl+s', 'apply', 'Apply as a labelled alternative'], ['ctrl+r', 'restore_defaults', 'Load web v1 defaults and 1:1:1']]), states: RANK_STATES, notes: ['Ranking 2:1:1 previews 50% · 25% · 25%, independent of category weights (R094, R095).', 'Restore defaults (product profile) and Reset to original (frozen at launch) are different actions (R096).', 'Presets save both sets to YAML for reuse (R145).'] } }),
+    S('WeightsInvalid', 'Weights · invalid values', { sizes: ['wide'], focus: { wide: [['ranking', 'Input #weight-time'], ['quality', 'Input #weight-ux']] }, render: (sz, f) => weightsEditor(sz, f, { invalid: true }), legend: { screen: 'WeightsScreen', file: 'tui/screens/weights.py', tree: WEIGHTS_TREE, sel: WEIGHTS_SEL, keys: MODAL_KEYS([]), states: RANK_STATES, notes: ['Rejected: negative, non-finite, unknown component, all-zero set; the message names the input (R145).', 'Apply and Save preset are disabled until both sets are valid. Previews show — instead of a percentage.'] } }),
+    S('RankingsAlternative', 'Rankings · alternative weights', { sizes: ['wide'], focus: { wide: [['combined', 'DataTable #combined'], ['reset', 'Button #reset']] }, render: (sz, f) => rankings(sz, f, { alt: true }), legend: rankLegend([
+      'Alternative weights are labelled on the tab row, the controls and a notice; nothing original is overwritten (R096).',
+      'Scores, minima contributions and order are recomputed without judge calls.',
+      'Export writes the alternative configuration; reports say which weights they use.',
+    ]) }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M03 · environment
+
+const ENV_TREE = `EnvironmentScreen(Screen)      F2 from any screen
+├─ Header
+├─ Static #env-summary          host · ready count · last check
+├─ Horizontal #main
+│  ├─ Vertical #checks
+│  │  ├─ DataTable #harnesses .bordered
+│  │  ├─ DataTable #runtimes .bordered
+│  │  ├─ DataTable #collectors .bordered
+│  │  └─ Static #models-summary .bordered
+│  └─ VerticalScroll #detail-pane .pane
+│     ├─ Static .detail-section × n    established · failed · unknown
+│     ├─ Static .doc-link
+│     └─ Horizontal .actions
+├─ Static #readiness-strip      .-compact only
+├─ Static #summary              .-compact only
+└─ Footer`;
+const ENV_SEL = [
+  ['#env-summary', 'height: 1; background: $surface; padding: 0 1;'],
+  ['#checks', 'width: 72;'],
+  ['#detail-pane', 'width: 1fr; border: solid $foreground 30%; padding: 0 1;'],
+  ['.pane:focus-within', 'border: solid $primary;'],
+  ['#harnesses', 'height: 7;  cursor_type = "row"'],
+  ['#collectors', 'height: 9;'],
+  ['Screen.-compact #runtimes, Screen.-compact #collectors', 'display: none;'],
+  ['Screen.-compact #readiness-strip', 'display: block; height: 2;'],
+];
+const ENV_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to the previous screen'],
+  ['f5', 'recheck', 'Run all readiness checks again in a worker'],
+  ['enter', 'details', 'Show the selected row in the detail pane'],
+  ['m', 'catalog', 'Push CatalogScreen (M04)'],
+  ['d', 'docs', 'Open the guide for the selected row'],
+  ['c', 'copy_path', 'Copy the executable or doc path'],
+];
+const ENV_STATES = [['Ready', 'Environment'], ['Auth failed', 'EnvironmentAuthFailed'], ['Rechecked', 'EnvironmentRechecked'], ['Offline', 'EnvironmentOffline'], ['No harness', 'EnvironmentNoHarness'], ['Linux collectors', 'EnvironmentCollectors']];
+const envLegend = (notes) => ({ screen: 'EnvironmentScreen', file: 'tui/screens/environment.py', tree: ENV_TREE, sel: ENV_SEL, keys: ENV_KEYS, states: ENV_STATES, notes });
+
+const M03 = [
+  { id: 'm03-env', page: 'm03', title: 'M03 · 1 · Environment readiness', note: 'EnvironmentScreen (F2) reports each prerequisite on its own: harness executable, version, authentication, models and headless probe; runtimes and browser; hardware collectors. Found is not authenticated, and authenticated is not usable. Unknown stays unknown; recheck repeats the checks without installing or changing anything.', boards: [
+    S('Environment', 'Environment · ready', { sizes: ['wide', 'compact'], focus: { wide: [['harnesses', 'DataTable #harnesses'], ['runtimes', 'DataTable #runtimes'], ['collectors', 'DataTable #collectors'], ['detail', 'Button #recheck']], compact: [['harnesses', 'DataTable #harnesses'], ['detail', 'Static #summary']] }, render: (sz, f) => environment(sz, f), legend: envLegend([
+      'Four named harnesses on macOS and Linux, each with independent findings (R005, R006, R029).',
+      'The detail pane separates what was established from what is only known later (effective effort, per-model access) (R137).',
+      'Collectors are optional and never block a run; their scope is shown (R146).',
+    ]) }),
+    S('EnvironmentAuthFailed', 'Environment · authentication failed', { sizes: ['wide', 'compact'], focus: { wide: [['detail', 'Button #recheck'], ['harnesses', 'DataTable #harnesses']], compact: [['harnesses', 'DataTable #harnesses']] }, render: (sz, f) => environment(sz, f, { authFail: true }), legend: envLegend([
+      'An authentication failure is shown as one; it is not reported as a missing install (R137).',
+      'Models for that account stay unknown instead of falling back to another account’s list.',
+      'Other harnesses stay usable; launch validation (M07) receives the specific failure.',
+    ]) }),
+    S('EnvironmentRechecked', 'Environment · rechecked', { sizes: ['wide'], render: (sz) => environment(sz, 'harnesses', { rechecked: true }), legend: envLegend([
+      'Recheck reflects changes the user made outside the app and lists what changed (R103).',
+      'Recheck never installs software or changes permissions; the toast says so.',
+    ]) }),
+    S('EnvironmentOffline', 'Environment · offline', { sizes: ['wide'], focus: { wide: [['detail', 'Button #recheck'], ['harnesses', 'DataTable #harnesses']] }, render: (sz, f) => environment(sz, f, { offline: true }), legend: envLegend([
+      'Offline is not a rejection: authentication reads “? offline” with the last verified time (R137).',
+      'Cached and bundled model data show source and age (◷) and never prove current access (M04).',
+      'A local endpoint (Pi) can still be probed and run.',
+    ]) }),
+  ] },
+  { id: 'm03-setup', page: 'm03', title: 'M03 · 2 · Missing prerequisites and collectors', note: 'With no supported harness, planning and runs are blocked with install guidance while library, ZIP exchange and saved results keep working. Collector failures are split into five causes with platform guidance; none of them blocks a benchmark.', boards: [
+    S('EnvironmentNoHarness', 'Environment · no supported harness', { sizes: ['wide'], focus: { wide: [['detail', 'Button #recheck'], ['harnesses', 'DataTable #harnesses']] }, render: (sz, f) => environment(sz, f, { noHarness: true }), legend: envLegend([
+      'Actionable block for planning and execution only (R029, R137); the library shows the same state in #env-bar.',
+      'Guides cover macOS and Linux; the app never installs a harness itself.',
+    ]) }),
+    S('EnvironmentCollectors', 'Environment · Linux collectors', { sizes: ['wide'], focus: { wide: [['collectors', 'DataTable #collectors'], ['detail', 'Button #recheck']] }, render: (sz, f) => environment(sz, f, { linux: true }), legend: envLegend([
+      'All five causes are distinct: insufficient permission, missing driver or kernel interface, collector failure, unsupported hardware, missing tool (R103).',
+      'Guidance matches the cause; installing a tool is never suggested for unsupported hardware.',
+      'Unavailable metrics are labelled with their cause in results and reports (R146, M18).',
+    ]) }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M04 · catalog
+
+const CATALOG_TREE = `CatalogScreen(Screen)          m from Environment
+├─ Header
+├─ Static #catalog-bar          version · sources · refresh state
+├─ Horizontal #main
+│  ├─ Vertical #providers-pane .pane
+│  │  ├─ Tree #providers          harness › provider · account
+│  │  └─ Static #provider-facts .kv
+│  └─ Vertical #entries
+│     ├─ DataTable #models .bordered
+│     └─ VerticalScroll #entry-detail .pane
+│        ├─ Static #entry-fields .kv
+│        ├─ DataTable #entry-sources   override › discovered › bundled
+│        └─ Horizontal .actions
+├─ Select #provider             .-compact only
+└─ Footer`;
+const CATALOG_SEL = [
+  ['#catalog-bar', 'height: 1; background: $surface; padding: 0 1;'],
+  ['#providers-pane', 'width: 32; border: solid $foreground 30%;'],
+  ['#models', 'height: auto;  cursor_type = "row"'],
+  ['#entry-detail', 'height: 1fr; border: solid $foreground 30%; padding: 0 1;'],
+  ['.unknown', 'text-style: italic;  “? unknown” cells'],
+  ['Screen.-compact #providers-pane', 'display: none;'],
+  ['Screen.-compact #provider', 'display: block;'],
+];
+const CATALOG_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to Environment'],
+  ['f5', 'refresh', 'Refresh discovery for the selected provider'],
+  ['o', 'override', 'Push OverrideScreen for the selected entry'],
+  ['/', 'filter', 'Filter models by name'],
+  ['y', 'open_yaml', 'Open the catalog YAML (baseline, cache, overrides)'],
+  ['tab', 'focus_next', 'Next pane'],
+];
+const CAT_STATES = [['Catalog', 'Catalog'], ['Refresh failed', 'CatalogRefreshFailed'], ['Override', 'CatalogOverride'], ['Entry · known efforts', 'ModelPicker'], ['Entry · unknown effort', 'ModelPickerUnknown']];
+const catLegend = (notes) => ({ screen: 'CatalogScreen', file: 'tui/screens/catalog.py', tree: CATALOG_TREE, sel: CATALOG_SEL, keys: CATALOG_KEYS, states: CAT_STATES, notes });
+
+const OVERRIDE_TREE = `OverrideScreen(ModalScreen[Override | None])
+├─ Vertical #override .dialog
+│  ├─ Static #override-subject
+│  ├─ Input #override-efforts
+│  ├─ Select #override-default
+│  ├─ RadioSet #override-image
+│  ├─ Input .override-price × 2
+│  ├─ Static #override-hint
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const PICKER_TREE = `EntryPickerScreen(ModalScreen[ConfigEntry | None])   Setup · M07
+├─ Vertical #entry-picker .dialog
+│  ├─ Horizontal #entry-target
+│  │  ├─ Select #harness
+│  │  └─ Select #provider
+│  ├─ OptionList #model-options
+│  ├─ RadioSet #effort             only known values
+│  ├─ Static #effort-hint
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+
+const M04 = [
+  { id: 'm04-catalog', page: 'm04', title: 'M04 · 1 · Model catalog', note: 'CatalogScreen shows entries per harness, provider and account, each with supported efforts, default effort, image input and pricing, and the source that supplied them: overrides beat discovered data, which beats the bundled baseline. Unknown stays unknown. A failed refresh keeps the last valid data and says how old it is.', boards: [
+    S('Catalog', 'Model catalog', { sizes: ['wide', 'compact'], focus: { wide: [['models', 'DataTable #models'], ['providers', 'Tree #providers'], ['detail', 'Button #add-override']], compact: [['models', 'DataTable #models'], ['provider', 'Select #provider']] }, render: (sz, f) => catalog(sz, f), legend: catLegend([
+      'Lookup is by harness + installed version + provider/endpoint + account + model, never by display name alone (R010, R061).',
+      'Known, unsupported and unknown are different states; unknown is never filled in (R062).',
+      'Each source is kept separately and shown per entry with its retrieval date (R064).',
+    ]) }),
+    S('CatalogRefreshFailed', 'Catalog · refresh failed', { sizes: ['wide'], focus: { wide: [['detail', 'Button #retry'], ['models', 'DataTable #models']] }, render: (sz, f) => catalog(sz, f, { failed: true }), legend: catLegend([
+      'A failed refresh preserves the last valid catalog and shows the failure beside it (R063).',
+      'Cached entries keep source and age; they are not presented as current account access (R137).',
+      'Refresh never touches overrides (R064).',
+    ]) }),
+    S('CatalogOverride', 'Override catalog entry', { sizes: ['wide'], focus: { wide: [['efforts', 'Input #override-efforts'], ['default', 'Select #override-default'], ['image', 'RadioSet #override-image'], ['save', 'Button #save']] }, render: (sz, f) => catalogOverride(sz, f), legend: { screen: 'OverrideScreen', file: 'tui/screens/catalog.py', tree: OVERRIDE_TREE, sel: [...modalSel('OverrideScreen', '#override', 80), ['.override-price', 'width: 14;']], keys: MODAL_KEYS([['ctrl+s', 'save', 'Write overrides.yaml']]), states: CAT_STATES, notes: ['Overrides win over discovered and bundled values and survive refresh (R064).', 'An override is user metadata, never evidence of authentication or effective settings (R065, R137); see ModelRejected in M05.'] } }),
+  ] },
+  { id: 'm04-picker', page: 'm04', title: 'M04 · 2 · Choosing model and effort', note: 'When an entry is added in Setup (M07), only efforts known for that exact combination are offered. If effort support is unknown, the only choice is harness default, and execution passes no effort argument.', boards: [
+    S('ModelPicker', 'Add entry · known efforts', { sizes: ['wide'], focus: { wide: [['model', 'OptionList #model-options'], ['effort', 'RadioSet #effort'], ['harness', 'Select #harness'], ['add', 'Button #add-entry']] }, render: (sz, f) => modelPicker(sz, f), legend: { screen: 'EntryPickerScreen', file: 'tui/screens/setup.py', tree: PICKER_TREE, sel: [...modalSel('EntryPickerScreen', '#entry-picker', 86), ['#model-options', 'height: 6; border: solid $foreground 30%;'], ['#effort', 'layout: horizontal;']], keys: MODAL_KEYS([['↑ ↓', 'cursor', 'Choose a model'], ['ctrl+s', 'add', 'Add the entry to the configuration']]), states: CAT_STATES, notes: ['Unsupported efforts are not offered; nothing is guessed from another model, provider, account or version (R065).', 'The catalog default is a requested setting, not proof of the effort used.'] } }),
+    S('ModelPickerUnknown', 'Add entry · unknown effort', { sizes: ['wide'], focus: { wide: [['effort', 'RadioSet #effort'], ['model', 'OptionList #model-options']] }, render: (sz, f) => modelPicker(sz, f, { unknown: true }), legend: { screen: 'EntryPickerScreen', file: 'tui/screens/setup.py', tree: PICKER_TREE, sel: modalSel('EntryPickerScreen', '#entry-picker', 86), keys: MODAL_KEYS([]), states: CAT_STATES, notes: ['Unknown effort support → only “harness default”, and M05 omits the effort argument (R065).', 'Results record the effort as harness default; the effective value appears only if the harness exposes it.'] } }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M05 · execution and isolation
+
+const RUN_TREE = `RunConfigScreen(Screen)        one configuration of a run
+├─ Header
+├─ Static #run-bar
+├─ Horizontal #upper
+│  ├─ Vertical #left
+│  │  ├─ DataTable #run-tasks .bordered   one process per task
+│  │  └─ Static #task-contract .kv
+│  └─ Vertical #right
+│     ├─ DataTable #invocation .bordered  requested vs effective
+│     └─ Static #established .pane.kv
+├─ Vertical #log-pane .bordered
+│  ├─ Input #log-search
+│  └─ RichLog #log                 auto_scroll, highlight
+├─ Static #invocation-summary     .-compact only
+└─ Footer`;
+const RUN_SEL = [
+  ['#run-bar', 'height: 1; background: $surface; padding: 0 1;'],
+  ['#left', 'width: 50;'],
+  ['#run-tasks', 'height: 10;  cursor_type = "row"'],
+  ['#invocation', 'height: 9;'],
+  ['#log-pane', 'height: 1fr;'],
+  ['#log .-blocked', 'background: $primary 24%; text-style: bold;'],
+  ['Screen.-compact #established, Screen.-compact #task-contract', 'display: none;'],
+  ['Screen.-compact #invocation-summary', 'display: block; height: 5;'],
+];
+const RUN_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to the run overview (M11)'],
+  ['/', 'focus("#log-search")', 'Search the log; n next match'],
+  ['i', 'isolation', 'Push IsolationScreen for the whole run'],
+  ['s', 'stop_configuration', 'Stop this configuration; M11 cleans up its processes'],
+  ['d', 'detach', 'Detach; the run keeps going'],
+  ['tab', 'focus_next', 'Next focus stop'],
+];
+const RUN_STATES = [['Run overview (M11)', 'RunOverview'], ['Running', 'RunConfig'], ['Blocked action', 'TaskBlocked'], ['Model rejected', 'ModelRejected'], ['Isolation', 'RunIsolation'], ['Policy', 'EnvPolicy'], ['Clean impossible', 'CleanModeBlocked']];
+const runLegend = (notes) => ({ screen: 'RunConfigScreen', file: 'tui/screens/run_config.py', tree: RUN_TREE, sel: RUN_SEL, keys: RUN_KEYS, states: RUN_STATES, notes });
+
+const POLICY_TREE = `EnvPolicyScreen(ModalScreen[EnvPolicy | None])   Setup · M07
+├─ Vertical #env-policy .dialog
+│  ├─ RadioSet #policy             clean · current
+│  ├─ DataTable #clean-matrix      per harness, this machine
+│  ├─ Static #policy-hint
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const CLEAN_TREE = `CleanBlockedScreen(ModalScreen[CleanDecision])
+├─ Vertical #clean-blocked .dialog
+│  ├─ Static .notice.-error
+│  ├─ Static #clean-cause .kv
+│  ├─ RadioSet #clean-choice       remove · current · cancel
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const ISO_TREE = `IsolationScreen(ModalScreen[None])
+├─ Vertical #isolation .dialog
+│  ├─ DataTable #isolation-table
+│  ├─ Static #isolation-hint
+│  ├─ Static #permissions .kv
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+
+const M05 = [
+  { id: 'm05-policy', page: 'm05', title: 'M05 · 1 · Environment policy', note: 'Clean mode is the default: authentication stays, personal instructions, memories, plugins, hooks and MCP servers are disabled through supported controls, and native tools stay on. Current mode is an explicit choice. When clean mode cannot be established, launch asks instead of silently falling back.', boards: [
+    S('EnvPolicy', 'Environment policy', { sizes: ['wide'], focus: { wide: [['clean', 'RadioSet #policy'], ['matrix', 'DataTable #clean-matrix'], ['save', 'Button #save']] }, render: (sz, f) => envPolicy(sz, f), legend: { screen: 'EnvPolicyScreen', file: 'tui/screens/setup.py', tree: POLICY_TREE, sel: [...modalSel('EnvPolicyScreen', '#env-policy', 86), ['#policy', 'layout: vertical; border: none;'], ['#clean-matrix', 'height: 5;']], keys: MODAL_KEYS([['ctrl+s', 'save', 'Save the policy in the configuration YAML']]), states: RUN_STATES, notes: ['Clean: the five personal integration categories are disabled per harness; ○ means the harness has none (R070).', 'Current: explicit model/effort still win; a sanitized settings fingerprint is recorded, never credentials (R071).', 'Opened from Configurations (p) in Setup (M07).'] } }),
+    S('CleanModeBlocked', 'Clean mode cannot be established', { sizes: ['wide'], focus: { wide: [['choice', 'RadioSet #clean-choice'], ['continue', 'Button #continue']] }, render: (sz, f) => cleanBlocked(sz, f), legend: { screen: 'CleanBlockedScreen', file: 'tui/screens/launch_check.py', tree: CLEAN_TREE, sel: modalSel('CleanBlockedScreen', '#clean-blocked', 84), keys: MODAL_KEYS([['enter', 'continue', 'Apply the chosen option']]), states: RUN_STATES, notes: ['Never a silent fallback to current, never “clean” for partial isolation (R070).', 'Choosing current for one entry records that entry as current with its fingerprint.'] } }),
+  ] },
+  { id: 'm05-run', page: 'm05', title: 'M05 · 2 · Invocation and isolation', note: 'Inside a run, each configuration shows one fresh process and conversation per task, what was requested next to what the harness actually reported, and the environment that was established for it. Blocked actions and rejected models are explicit outcomes. The 2×2 run overview is drawn on the M11 page.', boards: [
+    S('RunConfig', 'Run · configuration detail', { sizes: ['wide', 'compact'], focus: { wide: [['tasks', 'DataTable #run-tasks'], ['invocation', 'DataTable #invocation'], ['log', 'RichLog #log'], ['search', 'Input #log-search']], compact: [['tasks', 'DataTable #run-tasks'], ['log', 'RichLog #log']] }, render: (sz, f) => runConfig(sz, f), legend: runLegend([
+      'Each task: new process, new conversation, shared spec + its own prompt; state carries only through workspace files (R069).',
+      'Requested and effective settings are separate; an effort the harness does not expose stays “? unverified” (R065).',
+      'Established environment lists baseline copy, workspace, ports, browser context, test data, managed settings and limitations (R068, R070, R072).',
+    ]) }),
+    S('TaskBlocked', 'Run · blocked action', { sizes: ['wide'], focus: { wide: [['log', 'RichLog #log'], ['tasks', 'DataTable #run-tasks']] }, render: (sz, f) => runConfig(sz, f, { blocked: true }), legend: runLegend([
+      'Permission handling is set before launch; a blocked action returns an explicit outcome and never waits on a prompt (R072).',
+      'The task row and the log both record the blocked action; the task itself can still finish.',
+    ]) }),
+    S('ModelRejected', 'Run · model rejected', { sizes: ['wide'], focus: { wide: [['tasks', 'DataTable #run-tasks'], ['invocation', 'DataTable #invocation']] }, render: (sz, f) => runConfig(sz, f, { rejected: true }), legend: runLegend([
+      'A failed request never switches to another model (R065).',
+      'The entry came from a catalog override: overrides never prove access (M04).',
+      'Only this configuration stops; M11 continues the others and records cleanup.',
+    ]) }),
+    S('RunIsolation', 'Run · isolation', { sizes: ['wide'], render: (sz) => runIsolation(sz), legend: { screen: 'IsolationScreen', file: 'tui/screens/run_config.py', tree: ISO_TREE, sel: [...modalSel('IsolationScreen', '#isolation', 86), ['#isolation-table', 'height: 5;']], keys: [['esc', 'dismiss', 'Close'], ['enter', 'open', 'Open that configuration']], states: RUN_STATES, notes: ['Independent workspaces, ports, test data and browser contexts per configuration, also for two configurations of one harness and in sequential mode (R072).', 'Every configuration starts from an equivalent copy of the same packaged baseline (R068).'] } }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M07 · setup and launch
+
+const SETUP_TREE = `SetupScreen(Screen)            one revision-scoped configuration
+├─ Header
+├─ Static #identity-bar         pinned SHA-256 · planner used or not
+├─ Horizontal #config-row
+│  ├─ Select #configuration     configs/<revision>/*.yaml
+│  └─ Static #dirty
+├─ DataTable #entries .bordered  harness · provider · model · effort · policy
+├─ Horizontal #middle
+│  ├─ Vertical #judge-pane .pane
+│  └─ Vertical #weights-pane .pane
+│     ├─ Select #quality-preset
+│     └─ Select #ranking-preset
+├─ Vertical #execution-pane .pane
+│  └─ RadioSet #concurrency
+├─ Static #limitations | #validation
+├─ Horizontal .actions
+└─ Footer`;
+const SETUP_SEL = [
+  ['#identity-bar', 'height: 1; background: $surface; padding: 0 1;'],
+  ['#entries', 'height: 8;  cursor_type = "row"'],
+  ['#judge-pane, #weights-pane', 'width: 1fr; height: 12;'],
+  ['#execution-pane', 'height: 7;'],
+  ['#validation', 'display: none;'],
+  ['SetupScreen.-invalid #validation', 'display: block;'],
+  ['SetupScreen.-invalid #review', 'disabled: True;  via check_action'],
+  ['Screen.-compact #middle, Screen.-compact #execution-pane', 'display: none;  → #setup-summary'],
+];
+const SETUP_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to the revision’s configurations'],
+  ['a / e / del', 'add / edit / remove entry', 'Entry picker (M04) · several entries per harness'],
+  ['p', 'policy', 'Environment policy for the entry (M05)'],
+  ['j', 'judge', 'Push JudgeScreen'],
+  ['w', 'weights', 'Push WeightsScreen (M06)'],
+  ['ctrl+s', 'save', 'Save the configuration YAML; the template is untouched'],
+  ['enter', 'review', 'Push ReviewLaunchScreen (disabled while invalid)'],
+];
+const SETUP_STATES = [['Setup', 'Setup'], ['Blocking issues', 'SetupInvalid'], ['Judge', 'JudgePicker'], ['Judge fallback', 'JudgeFallback'], ['Review', 'ReviewLaunch'], ['Launch record', 'LaunchRecord']];
+const setupLegend = (notes) => ({ screen: 'SetupScreen', file: 'tui/screens/setup.py', tree: SETUP_TREE, sel: SETUP_SEL, keys: SETUP_KEYS, states: SETUP_STATES, notes });
+const JUDGE_TREE = `JudgeScreen(ModalScreen[JudgeChoice | None])
+├─ Vertical #judge .dialog
+│  ├─ Static #preselection        saved › planner › first usable
+│  ├─ Vertical #judge-fields
+│  │  ├─ Select #judge-harness
+│  │  ├─ Select #judge-model
+│  │  └─ RadioSet #judge-effort    known efforts only
+│  ├─ Static .notice.-warning     fallback only
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const REVIEW_TREE = `ReviewLaunchScreen(Screen)
+├─ Header
+├─ Static #review-bar
+├─ VerticalScroll #review
+│  ├─ Static #review-template .kv
+│  ├─ DataTable #review-entries
+│  ├─ Static #review-judging .kv
+│  ├─ Static #review-execution .kv
+│  └─ Static #review-recorded .kv
+├─ Horizontal .actions
+└─ Footer`;
+const RECORD_TREE = `LaunchRecordScreen(ModalScreen[None])
+├─ Vertical #launch-record .dialog
+│  ├─ Static .record × 4          template · configuration · weights · machine
+│  ├─ TextArea #resolved-yaml     read_only=True
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+
+const M07 = [
+  { id: 'm07-setup', page: 'm07', title: 'M07 · 1 · Configure a run', note: 'SetupScreen edits one configuration of one template revision: competitor entries (several per harness allowed), environment policy, an independent judge, both weight presets and execution settings. Saving writes YAML and never touches the template hash or earlier results. Invalid or incomplete settings are explained here and never substituted.', boards: [
+    S('Setup', 'Setup · configuration', { sizes: ['wide', 'compact'], focus: { wide: [['entries', 'DataTable #entries'], ['judge', 'Button #change-judge'], ['weights', 'Button #edit-weights'], ['execution', 'RadioSet #concurrency'], ['review', 'Button #review']], compact: [['entries', 'DataTable #entries'], ['review', 'Button #review']] }, render: (sz, f) => setup(sz, f), legend: setupLegend([
+      'Configurations are saved per revision and pin its SHA-256 (R019). The built-in benchmark reuses its approved tasks with no planner call (R136).',
+      'Two Claude Code entries are distinct configurations; same-harness entries queue (R017, M11).',
+      'Clean is the default policy; current is chosen per entry and never applied silently (R032).',
+      'Presets are resolved into actual weights at launch, so later preset edits cannot change the run (R033).',
+    ]) }),
+    S('SetupInvalid', 'Setup · blocking issues', { sizes: ['wide'], focus: { wide: [['entries', 'DataTable #entries']] }, render: (sz, f) => setup(sz, f, { invalid: true }), legend: setupLegend([
+      'Each issue names its source: M04 for an unsupported effort, M03 for authentication, M06 for unresolved weights (R032, R033).',
+      'An unsupported effort is never replaced by a supported one; weights can never stay unresolved at launch.',
+    ]) }),
+    S('JudgePicker', 'Judge · saved selection', { sizes: ['wide'], focus: { wide: [['model', 'Select #judge-model'], ['effort', 'RadioSet #judge-effort'], ['use', 'Button #use']] }, render: (sz, f) => judgePicker(sz, f), legend: { screen: 'JudgeScreen', file: 'tui/screens/setup.py', tree: JUDGE_TREE, sel: [...modalSel('JudgeScreen', '#judge', 86), ['#preselection', 'height: auto;']], keys: MODAL_KEYS([['ctrl+s', 'use', 'Use this judge']]), states: SETUP_STATES, notes: ['Preselection order: valid saved judge, then the planner configuration if planning was used, then the first usable entry (R033).', 'Each candidate is resolved against current readiness and the catalog; the judge is edited independently of the entries.'] } }),
+    S('JudgeFallback', 'Judge · fallback preselection', { sizes: ['wide'], focus: { wide: [['use', 'Button #use'], ['model', 'Select #judge-model']] }, render: (sz, f) => judgePicker(sz, f, { fallback: true }), legend: { screen: 'JudgeScreen', file: 'tui/screens/setup.py', tree: JUDGE_TREE, sel: modalSel('JudgeScreen', '#judge', 86), keys: MODAL_KEYS([]), states: SETUP_STATES, notes: ['An unusable saved judge is skipped with its reason, never assumed to work (R033).', 'If no candidate is usable, the judge stays unresolved and Setup lists it as a blocking issue.'] } }),
+  ] },
+  { id: 'm07-launch', page: 'm07', title: 'M07 · 2 · Review, launch and freeze', note: 'Before execution the complete setup is shown exactly as it will be frozen. Launch then runs the M01 identity check and freezes the template binding, the resolved configuration and the original weights as separate records, with machine and catalog metadata and no credentials.', boards: [
+    S('ReviewLaunch', 'Review before launch', { sizes: ['wide', 'compact'], focus: { wide: [['launch', 'Button #launch'], ['entries', 'DataTable #review-entries']], compact: [['launch', 'Button #launch'], ['entries', 'DataTable #review-entries']] }, render: (sz, f) => reviewLaunch(sz, f), legend: { screen: 'ReviewLaunchScreen', file: 'tui/screens/setup.py', tree: REVIEW_TREE, sel: [['#review-bar', 'height: 1; background: $surface;'], ['#review', 'height: 1fr; padding: 0 1;'], ['.section-rule', 'color: $foreground 30%;']], keys: [['esc', 'app.pop_screen', 'Back to setup'], ['c', 'copy_cli', 'Copy the equivalent unattended command (M14)'], ['ctrl+l', 'launch', 'Launch → identity check (M01)']], states: SETUP_STATES, notes: ['Shows template identity, every entry, policies, judge, grading profile, both weight sets, execution settings and limitations (R032, R033, R037).', 'What is shown is what is frozen: the screen renders the resolved launch record, not the editable configuration.'] } }),
+    S('LaunchRecord', 'Launch record', { sizes: ['wide'], render: (sz) => launchRecord(sz), legend: { screen: 'LaunchRecordScreen', file: 'tui/screens/run_config.py', tree: RECORD_TREE, sel: [...modalSel('LaunchRecordScreen', '#launch-record', 86), ['#resolved-yaml', 'height: 7;']], keys: [['esc', 'dismiss', 'Close'], ['c', 'copy_path', 'Copy the record path']], states: SETUP_STATES, notes: ['Template binding, resolved configuration and original weights are frozen separately before the first task (R067).', 'Machine and catalog metadata are captured for M02; credentials appear only as “set” (R066).'] } }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M08 · verification and evidence
+
+const CHECKS_TREE = `TaskChecksScreen(Screen)       one task of one result
+├─ Header
+├─ Static #result-bar
+├─ Horizontal #main
+│  ├─ Vertical #left
+│  │  ├─ DataTable #task-checks .bordered
+│  │  ├─ Static #verification-facts .kv
+│  │  └─ DataTable #final-summary .bordered
+│  └─ VerticalScroll #check-detail .pane
+│     ├─ Static #check-outcome
+│     ├─ ListView #check-steps      Playwright steps
+│     └─ Static #check-evidence .kv
+├─ Horizontal .actions
+└─ Footer`;
+const CHECKS_SEL = [
+  ['#left', 'width: 72;'],
+  ['#task-checks', 'height: 7;  cursor_type = "row"'],
+  ['#check-detail', 'width: 1fr; border: solid $foreground 30%; padding: 0 1;'],
+  ['.outcome-failed', 'text-style: bold;'],
+  ['.outcome-unverified', 'text-style: italic;'],
+  ['Screen.-compact #verification-facts, Screen.-compact #final-summary', 'display: none;'],
+];
+const CHECKS_KEYS = [
+  ['esc', 'app.pop_screen', 'Back to the result’s outcomes (M02)'],
+  ['← →', 'previous / next task', 'Step through T1–T7'],
+  ['s', 'screenshots', 'Push ScreenshotsScreen'],
+  ['f', 'final_regression', 'Push FinalRegressionScreen'],
+  ['j', 'judge_input', 'Show what the judge receives'],
+  ['l', 'log', 'Open the check log'],
+];
+const V_STATES = [['Task checks', 'TaskChecks'], ['Final regression', 'FinalRegression'], ['Not passed', 'CheckOutcomes'], ['Screenshots', 'Screenshots'], ['In progress', 'VerifyProgress'], ['Judge input', 'JudgeHandoff']];
+const checksLegend = (screen, tree, sel, notes) => ({ screen, file: 'tui/screens/verification.py', tree, sel, keys: CHECKS_KEYS, states: V_STATES, notes });
+const REG_TREE = `FinalRegressionScreen(Screen)
+├─ Header · Static #result-bar
+├─ DataTable #regression .bordered   at task | final artifact
+├─ Static #regression-summary .kv
+├─ Static .notice
+└─ Footer`;
+const NP_TREE = `ChecksScreen(Screen)           not passed · all results of r1
+├─ Header · Static #result-bar
+├─ Horizontal #cause-legend        4 × Static .cause
+├─ DataTable #not-passed .bordered
+├─ Static #outcome-detail .pane
+└─ Footer`;
+const SHOT_TREE = `ScreenshotsScreen(Screen)
+├─ Header · Static #result-bar
+├─ DataTable #shots .bordered
+├─ Horizontal #shot-frames
+│  ├─ Static .shot.-desktop        1440×1000 to scale
+│  └─ Static .shot.-mobile         390×844 to scale
+└─ Footer`;
+const PROG_TREE = `VerifyProgressScreen(ModalScreen[None])
+├─ Vertical #verify-progress .dialog
+│  ├─ Vertical #verify-steps
+│  │  └─ ProgressBar
+│  ├─ Static #verify-so-far
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+const HANDOFF_TREE = `JudgeInputScreen(ModalScreen[None])
+├─ Vertical #judge-input .dialog
+│  ├─ Static #given                ✓ list
+│  ├─ Static #kept-apart           ✗ list
+│  └─ Horizontal .dialog-actions
+└─ Footer`;
+
+const M08 = [
+  { id: 'm08-checks', page: 'm08', title: 'M08 · 1 · Checks and evidence', note: 'Every task is verified by its frozen acceptance checks on a disposable copy of its snapshot, with tooling outside the competitor workspace and no repairs. Each check is passed, failed or unverified; a final regression runs all checks again on the delivered artifact. Screenshots and logs stay with the task they describe.', boards: [
+    S('TaskChecks', 'Task checks · T5', { sizes: ['wide', 'compact'], focus: { wide: [['checks', 'DataTable #task-checks'], ['detail', 'VerticalScroll #check-detail'], ['final', 'DataTable #final-summary'], ['shots', 'Button #screenshots']], compact: [['checks', 'DataTable #task-checks'], ['detail', 'VerticalScroll #check-detail']] }, render: (sz, f) => taskChecks(sz, f), legend: checksLegend('TaskChecksScreen', CHECKS_TREE, CHECKS_SEL, [
+      'The frozen checks decide task success; exit code, agent claims and grades are separate observations (R073, R144).',
+      'Disposable copy, tooling outside the source, no manual fixes; the snapshot is preserved (R074).',
+      'Browser checks use Python Playwright with real workflows, keyboard steps, console errors and screenshots at 1440×1000 and 390×844 (R075).',
+    ]) }),
+    S('FinalRegression', 'Final regression', { sizes: ['wide'], focus: { wide: [['table', 'DataTable #regression'], ['open', 'Button #open-check']] }, render: (sz, f) => finalRegression(sz, f), legend: checksLegend('FinalRegressionScreen', REG_TREE, [['#regression', 'height: 24;  cursor_type = "row"'], ['.change-regressed', 'text-style: bold;']], [
+      'All checks run again on a disposable copy of the delivered artifact; earlier passes never stand in for final behavior (R074).',
+      'Task-time evidence is kept beside the final evidence. Both columns here total 18✓ 3✗ with different failing checks.',
+    ]) }),
+    S('CheckOutcomes', 'Why checks did not pass', { sizes: ['wide'], focus: { wide: [['table', 'DataTable #not-passed'], ['detail', 'Static #outcome-detail']] }, render: (sz, f) => checkOutcomes(sz, f), legend: checksLegend('ChecksScreen', NP_TREE, [['.cause', 'width: 1fr; height: 5; border: solid $foreground 30%;'], ['#not-passed', 'height: auto;']], [
+      'Application failure, missing prerequisite, verifier error and not run stay distinct, with reasons kept (R076, R144).',
+      'Inability to run a check never produces a pass; an interrupted process keeps whatever its snapshot established.',
+    ]) }),
+    S('Screenshots', 'Screenshots', { sizes: ['wide'], focus: { wide: [['list', 'DataTable #shots']] }, render: (sz, f) => screenshots(sz, f), legend: checksLegend('ScreenshotsScreen', SHOT_TREE, [['.shot', 'border: solid $foreground 30%; content-align: center middle;'], ['.shot.-desktop', 'width: 63; height: 24;'], ['.shot.-mobile', 'width: 21; height: 24;']], [
+      'Both required sizes are captured per check (R075); frames are drawn to scale as placeholders.',
+      'Images open in the system viewer; terminals are not assumed to render them.',
+    ]) }),
+  ] },
+  { id: 'm08-flow', page: 'm08', title: 'M08 · 2 · During the run and handoff to the judge', note: 'Verification progress is part of the run view. The judge receives the artifact and acceptance evidence, kept apart from measured statistics, and a later grade can never rewrite a check outcome.', boards: [
+    S('VerifyProgress', 'Verifying a task', { sizes: ['wide'], render: (sz) => verifyProgress(sz), legend: { screen: 'VerifyProgressScreen', file: 'tui/screens/run_config.py', tree: PROG_TREE, sel: [...modalSel('VerifyProgressScreen', '#verify-progress', 84), ['ProgressBar', 'show_eta = False']], keys: [['esc', 'dismiss', 'Hide; verification continues']], states: V_STATES, notes: ['Verification progress and outcomes are supplied to the run view (R034).', 'Setup exposing an application defect is recorded, never repaired (R074).'] } }),
+    S('JudgeHandoff', 'Judge input', { sizes: ['wide'], render: (sz) => judgeHandoff(sz), legend: { screen: 'JudgeInputScreen', file: 'tui/screens/verification.py', tree: HANDOFF_TREE, sel: modalSel('JudgeInputScreen', '#judge-input', 86), keys: [['esc', 'dismiss', 'Close']], states: V_STATES, notes: ['Acceptance evidence goes to the judge separately from cost, time and other measurements (R075).', 'A grade never rewrites a check outcome (R144).'] } }),
+  ] },
+];
+
+// ---------------------------------------------------------------- M09 · default benchmark
+
+const PROMPTS_TREE = `PromptsScreen(Screen)          read-only
+├─ Header
+├─ Static #prompts-bar
+├─ Horizontal
+│  ├─ Vertical .pane
+│  │  └─ Tree #prompt-files
+│  └─ MarkdownViewer #prompt-text  show_table_of_contents=False
+└─ Footer`;
+const INV_STATES = [['Contract', 'InventoryAbout'], ['Prompts', 'InventoryPrompts'], ['Checks', 'InventoryChecks'], ['Look-alike', 'InventoryVariant']];
+const M09 = [
+  { id: 'm09-default', page: 'm09', title: 'M09 · Default seven-task inventory benchmark', note: 'The built-in Inventory web app r1: an empty starting project, HTML5 and vanilla JavaScript, localStorage, the shared specification and exactly T1–T7, bundled checks and the web rubric. It runs without a planner. The prompts are packaged unchanged; anything they leave open is not checked. A look-alike with another task count is a different template.', boards: [
+    S('InventoryAbout', 'Default benchmark · contract', { sizes: ['wide'], focus: { wide: [['configure', 'Button #configure'], ['contract', 'DataTable #contract'], ['prompts', 'Button #prompts']] }, render: (sz, f) => inventoryAbout(sz, f), legend: { screen: 'InventoryAboutScreen', file: 'tui/screens/library.py', tree: `InventoryAboutScreen(ModalScreen[None])\n├─ Vertical #inventory-about .dialog\n│  ├─ DataTable #contract\n│  ├─ Static #left-open\n│  └─ Horizontal .dialog-actions\n└─ Footer`, sel: modalSel('InventoryAboutScreen', '#inventory-about', 86), keys: MODAL_KEYS([['p / c', 'prompts / checks', 'Open the prompts or the check coverage'], ['enter', 'configure', 'Setup for r1, no planning (M07)']]), states: INV_STATES, notes: ['Opened with ? from the library detail pane.', 'Empty baseline, technology, persistence, seven ordered tasks with commits, bundled checks and rubric (R020–R028).', 'The website is the competitors’ artifact, not an AxBenchmark feature.'] } }),
+    S('InventoryPrompts', 'Preserved prompts', { sizes: ['wide'], focus: { wide: [['text', 'MarkdownViewer #prompt-text'], ['files', 'Tree #prompt-files']] }, render: (sz, f) => inventoryPrompts(sz, f), legend: { screen: 'PromptsScreen', file: 'tui/screens/template.py', tree: PROMPTS_TREE, sel: [['#prompt-files', 'width: 30;'], ['#prompt-text', 'width: 1fr; border: solid $foreground 30%;']], keys: [['esc', 'app.pop_screen', 'Back'], ['↑ ↓', 'scroll', 'Scroll'], ['c', 'checks', 'Check coverage'], ['y', 'copy', 'Copy the selected file']], states: INV_STATES, notes: ['Text is read from benchmark/tasks/ when the wireframes are built, so it is the preserved text verbatim (R020, R028).', 'Read-only: editing creates a new revision through M01.'] } }),
+    S('InventoryChecks', 'Check coverage', { sizes: ['wide'], focus: { wide: [['checks', 'DataTable #coverage'], ['open', 'Static #not-checked']] }, render: (sz, f) => inventoryChecks(sz, f), legend: { screen: 'CoverageScreen', file: 'tui/screens/template.py', tree: `CoverageScreen(Screen)\n├─ Header · Static #checks-bar\n├─ DataTable #coverage .bordered\n├─ Horizontal\n│  ├─ Static #also-checked .pane\n│  └─ Static #not-checked .pane\n└─ Footer`, sel: [['#coverage', 'height: 24;'], ['#also-checked, #not-checked', 'width: 1fr;']], keys: [['esc', 'app.pop_screen', 'Back'], ['p', 'prompts', 'Preserved prompts'], ['o', 'open', 'Open checks/acceptance.v1.json']], states: INV_STATES, notes: ['Every task contract is covered, including README creation and update, persistence, lookup, checkout stock and browser QA (R021–R027).', 'Check titles are illustrative restatements; choices the prompts leave open are listed and not checked.'] } }),
+    S('InventoryVariant', 'Look-alike is not the default', { sizes: ['wide'], render: (sz) => inventoryVariant(sz), legend: { screen: 'VariantScreen', file: 'tui/screens/library.py', tree: `VariantScreen(ModalScreen[None])\n├─ Vertical #variant .dialog\n│  ├─ DataTable #variant-compare\n│  ├─ Static .notice.-warning\n│  └─ Horizontal .dialog-actions\n└─ Footer`, sel: modalSel('VariantScreen', '#variant', 86), keys: [['esc', 'dismiss', 'Close']], states: INV_STATES, notes: ['A six-task suite is a different template even with a similar name (R136).', 'Historical runs never get a verified hash from a matching name or task count (R028).'] } }),
+  ] },
+];
+
+export const MODULE_PAGES = [
+  { id: 'm02', name: '120×40 · M02 results and comparability' },
+  { id: 'm03', name: '120×40 · M03 environment readiness' },
+  { id: 'm04', name: '120×40 · M04 model catalog' },
+  { id: 'm05', name: '120×40 · M05 execution and isolation' },
+  { id: 'm06', name: '120×40 · M06 weights and rankings' },
+  { id: 'm07', name: '120×40 · M07 setup and launch' },
+  { id: 'm08', name: '120×40 · M08 verification and evidence' },
+  { id: 'm09', name: '120×40 · M09 default benchmark' },
+];
+export const MODULE_GROUPS = [...M02, ...M03, ...M04, ...M05, ...M06, ...M07, ...M08, ...M09];

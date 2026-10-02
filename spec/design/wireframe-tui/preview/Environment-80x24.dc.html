@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Environment · ready · 80×24</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 1440px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Environment · ready</b> · EnvironmentScreen · 80×24 cells</div>
+<div class="term" style="width: 80ch; height: 384px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                         </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Environment</span><span class="B2">                            </span></div>
+<div class="r"><span class="B1"> </span><span class="B1 ac">●</span><span class="B1"> mike-mbp-m4 · 4 of 4 harnesses ready · checked 21:38             </span><span class="B1 ac bd">F5</span><span class="B1"> Recheck  </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Harnesses </span><span class="B0 ac">──────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Harness       Version   Authentication    Models          Headless           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> Claude Code   3.4.1     ✓ verified        ✓ 9 · live      ✓ probe ok         </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Codex         0.98.0    ✓ verified        ✓ 6 · live      ✓ probe ok         </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Grok CLI      1.9.2     ✓ verified        ✓ 4 · live      ✓ probe ok         </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Pi            0.31.0   </span><span class="B0 mu"> ○ local endpoint </span><span class="B0"> ✓ 2 · endpoint  ✓ probe ok         </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└─────────────────────────────────────────────</span><span class="B0 mu"> found ≠ authenticated ≠ usable </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Runtimes   </span><span class="B0">✓ Python  ✓ Git  ✓ Node.js  ✓ Playwright  ✓ Chromium                </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Collectors </span><span class="B0">✓ CPU  ✓ Memory  ✓ GPU  </span><span class="B0 bd">▲ CPU power </span><span class="B0"> </span><span class="B0 bd">▲ GPU power </span><span class="B0">                   </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Claude Code 3.4.1 · ready </span><span class="B0 ln">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> ✓ executable · ✓ version 3.4.1 · ✓ authentication (status check) · ✓         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> headless probe 21:38 · ✓ clean-mode controls                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">? Effective effort is known only after a run, if the harness reports it. ?</span><span class="B0">   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Access to each model is confirmed at launch.</span><span class="B0">                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Library-80x24.dc.html">esc</a><a class="B2 k" href="Library-80x24.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">f5</span><span class="B2"> Recheck  </span><a class="B2 ac bd k" href="Catalog-80x24.dc.html">m</a><a class="B2 k" href="Catalog-80x24.dc.html"> Models</a><span class="B2">  </span><span class="B2 ac bd">d</span><span class="B2"> Docs                              </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                         </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Environment</span><span class="B2">                            </span></div>
+<div class="r"><span class="B1"> </span><span class="B1 ac">●</span><span class="B1"> mike-mbp-m4 · 4 of 4 harnesses ready · checked 21:38             </span><span class="B1 ac bd">F5</span><span class="B1"> Recheck  </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Harnesses </span><span class="B0 ln">──────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Harness       Version   Authentication    Models          Headless           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> Claude Code   3.4.1     ✓ verified        ✓ 9 · live      ✓ probe ok         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Codex         0.98.0    ✓ verified        ✓ 6 · live      ✓ probe ok         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Grok CLI      1.9.2     ✓ verified        ✓ 4 · live      ✓ probe ok         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Pi            0.31.0   </span><span class="B0 mu"> ○ local endpoint </span><span class="B0"> ✓ 2 · endpoint  ✓ probe ok         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────</span><span class="B0 mu"> found ≠ authenticated ≠ usable </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Runtimes   </span><span class="B0">✓ Python  ✓ Git  ✓ Node.js  ✓ Playwright  ✓ Chromium                </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Collectors </span><span class="B0">✓ CPU  ✓ Memory  ✓ GPU  </span><span class="B0 bd">▲ CPU power </span><span class="B0"> </span><span class="B0 bd">▲ GPU power </span><span class="B0">                   </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Claude Code 3.4.1 · ready </span><span class="B0 ac">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> ✓ executable · ✓ version 3.4.1 · ✓ authentication (status check) · ✓         </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> headless probe 21:38 · ✓ clean-mode controls                                 </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">? Effective effort is known only after a run, if the harness reports it. ?</span><span class="B0">   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Access to each model is confirmed at launch.</span><span class="B0">                                 </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Library-80x24.dc.html">esc</a><a class="B2 k" href="Library-80x24.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">f5</span><span class="B2"> Recheck  </span><a class="B2 ac bd k" href="Catalog-80x24.dc.html">m</a><a class="B2 k" href="Catalog-80x24.dc.html"> Models</a><span class="B2">  </span><span class="B2 ac bd">d</span><span class="B2"> Docs                              </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 80ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#env-summary" style="left: 0ch; top: 16px; width: 80ch; height: 16px"><span>Static #env-summary</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#harnesses" style="left: 1ch; top: 48px; width: 78ch; height: 80px"><span>DataTable #harnesses</span></div>
+<div class="ov" data-widget="Static" data-tcss="#readiness-strip" style="left: 1ch; top: 144px; width: 78ch; height: 32px"><span>Static #readiness-strip</span></div>
+<div class="ov" data-widget="Static" data-tcss="#summary" style="left: 0ch; top: 176px; width: 80ch; height: 192px"><span>Static #summary</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>EnvironmentScreen</b><span class="mut">tui/screens/environment.py</span></div>
+<h3>Widget tree</h3>
+<pre>EnvironmentScreen(Screen)      F2 from any screen
+├─ Header
+├─ Static #env-summary          host · ready count · last check
+├─ Horizontal #main
+│  ├─ Vertical #checks
+│  │  ├─ DataTable #harnesses .bordered
+│  │  ├─ DataTable #runtimes .bordered
+│  │  ├─ DataTable #collectors .bordered
+│  │  └─ Static #models-summary .bordered
+│  └─ VerticalScroll #detail-pane .pane
+│     ├─ Static .detail-section × n    established · failed · unknown
+│     ├─ Static .doc-link
+│     └─ Horizontal .actions
+├─ Static #readiness-strip      .-compact only
+├─ Static #summary              .-compact only
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#env-summary</code></td><td>height: 1; background: $surface; padding: 0 1;</td></tr><tr><td><code>#checks</code></td><td>width: 72;</td></tr><tr><td><code>#detail-pane</code></td><td>width: 1fr; border: solid $foreground 30%; padding: 0 1;</td></tr><tr><td><code>.pane:focus-within</code></td><td>border: solid $primary;</td></tr><tr><td><code>#harnesses</code></td><td>height: 7;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#collectors</code></td><td>height: 9;</td></tr><tr><td><code>Screen.-compact #runtimes, Screen.-compact #collectors</code></td><td>display: none;</td></tr><tr><td><code>Screen.-compact #readiness-strip</code></td><td>display: block; height: 2;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the previous screen</span></td></tr><tr><td><kbd>f5</kbd></td><td><code>recheck</code><br><span class="mut">Run all readiness checks again in a worker</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>details</code><br><span class="mut">Show the selected row in the detail pane</span></td></tr><tr><td><kbd>m</kbd></td><td><code>catalog</code><br><span class="mut">Push CatalogScreen (M04)</span></td></tr><tr><td><kbd>d</kbd></td><td><code>docs</code><br><span class="mut">Open the guide for the selected row</span></td></tr><tr><td><kbd>c</kbd></td><td><code>copy_path</code><br><span class="mut">Copy the executable or doc path</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #harnesses</li><li>Static #summary</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Environment-80x24.dc.html">Ready</a><a href="EnvironmentAuthFailed-80x24.dc.html">Auth failed</a><a href="EnvironmentRechecked.dc.html">Rechecked</a><a href="EnvironmentOffline.dc.html">Offline</a><a href="EnvironmentNoHarness.dc.html">No harness</a><a href="EnvironmentCollectors.dc.html">Linux collectors</a></div>
+<h3>Notes</h3>
+<ul><li>Four named harnesses on macOS and Linux, each with independent findings (R005, R006, R029).</li><li>The detail pane separates what was established from what is only known later (effective effort, per-model access) (R137).</li><li>Collectors are optional and never block a run; their scope is shown (R146).</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #harnesses","Static #summary"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

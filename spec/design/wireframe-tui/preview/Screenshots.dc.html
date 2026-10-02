@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screenshots · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 960px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Screenshots</b> · ScreenshotsScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — R-0928a-4 · T5.3 · screenshots</span><span class="B2">                                      </span></div>
+<div class="r"><span class="B1"> Captured by Playwright for Python after each browser check · 1440×1000 and 390×844 · evidence for inspection, not a p… </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> T5 screenshots · 8 </span><span class="B0 ac">─────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Check  After step                    Viewport            File                                                    Size</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> T5.3   4 · Tab to Remove, Enter      desktop 1440×1000   verify/T5/T5.3-desktop.png                            212 KB</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.3   4 · Tab to Remove, Enter      mobile 390×844      verify/T5/T5.3-mobile.png                              96 KB</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.2   3 · quantity set to 3         desktop 1440×1000   verify/T5/T5.2-desktop.png                            208 KB</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.2   3 · quantity set to 3         mobile 390×844      verify/T5/T5.2-mobile.png                              94 KB</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> T5.1   2 · added to the cart         desktop · mobile    2 files                                               301 KB</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> o open in the system viewer </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">┌─</span><span class="B0 bd"> desktop 1440×1000 </span><span class="B0 ln">───────────────────────────────────────────┐</span><span class="B0">   </span><span class="B0 ln">┌─</span><span class="B0 bd"> mobile 390×844 </span><span class="B0 ln">────┐</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">Images show what the</span><span class="B0">     </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">browser rendered after</span><span class="B0">   </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">the step. They support</span><span class="B0">   </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">inspection and judging;</span><span class="B0">  </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">the check outcome comes</span><span class="B0">  </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">from the executable</span><span class="B0">      </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">assertion alone.</span><span class="B0">         </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                      </span><span class="B0 bd">Screenshot preview</span><span class="B0">                       </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">       </span><span class="B0 bd">Preview</span><span class="B0">       </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">             </span><span class="B0 mu">terminals cannot show images reliably</span><span class="B0">             </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">       </span><span class="B0 mu">o opens</span><span class="B0">       </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                   </span><span class="B0 mu">o opens T5.3-desktop.png</span><span class="B0">                    </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">     </span><span class="B0 mu">mobile.png</span><span class="B0">      </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 mu">shape drawn to scale</span><span class="B0">                      </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">│</span><span class="B0">                                                               </span><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 ln">│</span><span class="B0">                     </span><span class="B0 ln">│</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 ln">└───────────────────────────────────────────────────────────────┘</span><span class="B0">   </span><span class="B0 ln">└─────────────────────┘</span><span class="B0">                            </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="TaskChecks.dc.html">esc</a><a class="B2 k" href="TaskChecks.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">o</span><span class="B2"> Open image  </span><span class="B2 ac bd">f</span><span class="B2"> Open folder  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                            </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 120ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#result-bar" style="left: 0ch; top: 16px; width: 120ch; height: 16px"><span>Static #result-bar</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#shots" style="left: 1ch; top: 48px; width: 118ch; height: 96px"><span>DataTable #shots</span></div>
+<div class="ov" data-widget="Horizontal" data-tcss="#shot-frames" style="left: 1ch; top: 176px; width: 91ch; height: 384px"><span>Horizontal #shot-frames</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><span>focus · <b>DataTable #shots</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ScreenshotsScreen</b><span class="mut">tui/screens/verification.py</span></div>
+<h3>Widget tree</h3>
+<pre>ScreenshotsScreen(Screen)
+├─ Header · Static #result-bar
+├─ DataTable #shots .bordered
+├─ Horizontal #shot-frames
+│  ├─ Static .shot.-desktop        1440×1000 to scale
+│  └─ Static .shot.-mobile         390×844 to scale
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>.shot</code></td><td>border: solid $foreground 30%; content-align: center middle;</td></tr><tr><td><code>.shot.-desktop</code></td><td>width: 63; height: 24;</td></tr><tr><td><code>.shot.-mobile</code></td><td>width: 21; height: 24;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result’s outcomes (M02)</span></td></tr><tr><td><kbd>← →</kbd></td><td><code>previous / next task</code><br><span class="mut">Step through T1–T7</span></td></tr><tr><td><kbd>s</kbd></td><td><code>screenshots</code><br><span class="mut">Push ScreenshotsScreen</span></td></tr><tr><td><kbd>f</kbd></td><td><code>final_regression</code><br><span class="mut">Push FinalRegressionScreen</span></td></tr><tr><td><kbd>j</kbd></td><td><code>judge_input</code><br><span class="mut">Show what the judge receives</span></td></tr><tr><td><kbd>l</kbd></td><td><code>log</code><br><span class="mut">Open the check log</span></td></tr></table>
+
+<h3>States and related frames</h3>
+<div class="rel"><a href="TaskChecks.dc.html">Task checks</a><a href="FinalRegression.dc.html">Final regression</a><a href="CheckOutcomes.dc.html">Not passed</a><a href="Screenshots.dc.html">Screenshots</a><a href="VerifyProgress.dc.html">In progress</a><a href="JudgeHandoff.dc.html">Judge input</a></div>
+<h3>Notes</h3>
+<ul><li>Both required sizes are captured per check (R075); frames are drawn to scale as placeholders.</li><li>Images open in the system viewer; terminals are not assumed to render them.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #shots"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>
