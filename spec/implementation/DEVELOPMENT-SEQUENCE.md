@@ -6,7 +6,7 @@ This is an implementation schedule for the 69 children under 18 ownership parent
 
 ## Graph and completion semantics
 
-[dependencies.json](dependencies.json) is the machine-readable schedule: exactly **70 nodes (Bootstrap + 69 children)**, each with `id`, spec-root-relative `path`, `requires`, `contracts` and `integration_gates`. `recommended_order` and the table below enumerate every node once in a valid topological order. The graph currently has **315 explicit prerequisite edges**, including Bootstrap edges and intentionally retained direct prerequisites already reachable transitively.
+[dependencies.json](dependencies.json) is the machine-readable schedule: exactly **70 nodes (Bootstrap + 69 children)**, each with `id`, spec-root-relative `path`, `requires`, `contracts` and `integration_gates`. `recommended_order` and the table below enumerate every node once in a valid topological order. The graph currently has **316 explicit prerequisite edges**, including Bootstrap edges and intentionally retained direct prerequisites already reachable transitively.
 
 - `requires` names completed child implementations needed to accept the whole consumer child. Every child requires Bootstrap. No parent IDs, screen names, adapter-capability guesses or integration-gate labels are graph nodes.
 - `contracts` names the published schemas/Protocols that may be represented by the child's declared strict fixtures. Bootstrap publishes them at the owner's paths before the producer implementation. Available contract ≠ completed producer; data from fixtures proves only the tested contract/orchestration behavior.
@@ -111,3 +111,13 @@ The five [domain judge contracts](../README.md#domain-quality-judges) extend M12
 ## SQLite results delivery
 
 [RESULTS-DATABASE.md](RESULTS-DATABASE.md) extends existing children without new nodes or edges. Bootstrap publishes schemas/transaction ports; M11.1 supplies the shared connection/marker foundation; M02.1–2 implements lossless mappings, normalized tables, migrations, analytic views and snapshots; M06.1 persists computed analysis through an injected M02 sink. M13/M14/M17 complete report, CLI and atomic exchange integrations. Temporary SQLite schema/query checks are specification evidence only; real adapters and concurrent recovery gates remain pending.
+
+## Cross-harness comparison delivery
+
+[CROSS-HARNESS-COMPARISON.md](CROSS-HARNESS-COMPARISON.md) extends existing M04 profile/model/effort ownership, M03 targeted qualification, M05 adapter isolation/observations and M07 matrix authoring/freeze. M02 supplies normalized retention; M06/M13/M14/M17 complete comparisons, clients and exchange. Bootstrap publishes ports before consumers; producer fakes remain bounded and real installed harness/gateway/model qualification remains a required integration gate. No new child node, second scheduler or scoring formula is introduced.
+
+## Existing launcher profiles
+
+R194 extends [the cross-harness contract](CROSS-HARNESS-COMPARISON.md#existing-agent-aliases-and-launcher-profiles) within current M04 inspection/registration, M05 isolation/adapters, M07 selection/freeze and M02 retention ownership. Bootstrap publishes profile/selection/plan schemas first; bounded static fixtures do not establish live profile reproduction or provider behavior. No extra registry harness, dependency node or scoring path is introduced.
+
+M16.5 requires M16.3 plus M15.1–2, not M16.4. Planner navigation is a later integration gate; manual draft editing/approval does not depend on implementing the optional planner screens. The graph now has 316 explicit prerequisite edges.

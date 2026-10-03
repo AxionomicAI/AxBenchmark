@@ -18,7 +18,7 @@ For the engineer or coding agent implementing AxBenchmark: this specification se
 
 `requires` means completed implementation prerequisites; `contracts` means Bootstrap-published declarations that the child may exercise with its specified fixtures; `integration_gates` means acceptance obligations, including explicitly deferred later-parent checks. They are different statuses. Fixture or fake-port evidence does not establish real harness, browser or sensor support; missing access is pending, never a passing skip.
 
-After Bootstrap, M01.1, M04.1, M11.1, M12.1, M15.1 and M18.1 have no other implementation prerequisites. The domain-focused alternatives include M01.1, M04.1, M12.1 and M18.1; the recommended M11/M15 path unblocks feature API and screen work first. The manifest has **70 nodes including Bootstrap and 315 explicit prerequisite edges**; these are planning facts, not completion counts. See the development sequence for milestone limits and full macOS/Linux acceptance.
+After Bootstrap, M01.1, M04.1, M11.1, M12.1, M15.1 and M18.1 have no other implementation prerequisites. The domain-focused alternatives include M01.1, M04.1, M12.1 and M18.1; the recommended M11/M15 path unblocks feature API and screen work first. The manifest has **70 nodes including Bootstrap and 316 explicit prerequisite edges**; these are planning facts, not completion counts. See the development sequence for milestone limits and full macOS/Linux acceptance.
 
 Proposed `axbenchmark/`, `tests/`, `schemas/` and package/configuration paths are relative to the **coding root, `solution/` at the repository root**. Documentation links here are relative to this README; manifest `path` values and the wireframe commands below are relative to the `spec/` directory. Future child test commands run from `solution/` after their implementation exists. Preserved benchmark inputs are in `../legacy/benchmark/tasks/` relative to that coding root.
 
@@ -52,7 +52,7 @@ Each parent owns the behavior and full acceptance contract. Each linked child na
 ## Authority, coverage and decision history
 
 - [SPEC.md](implementation/reference/SPEC.md) is the product authority. [ARCHITECTURE.md](ARCHITECTURE.md) fixes shared invariants, layers, API boundaries and ownership. Parents define their detailed behavior; children define bounded implementation work. The dependency manifest mirrors prerequisite contracts rather than creating product behavior. If documents conflict, identify and reconcile the conflict in the authoritative contract and its dependent references; do not silently choose an interpretation or weaken a gate.
-- [TRACEABILITY.md](TRACEABILITY.md) locates and assigns all **191 requirement IDs**. [CHILD-TEST-MAP.md](implementation/CHILD-TEST-MAP.md) allocates them to children, proposed tests and parent gates. Coverage and allocation do not establish runtime satisfaction.
+- [TRACEABILITY.md](TRACEABILITY.md) locates and assigns all **194 requirement IDs**. [CHILD-TEST-MAP.md](implementation/CHILD-TEST-MAP.md) allocates them to children, proposed tests and parent gates. Coverage and allocation do not establish runtime satisfaction.
 - [FINDINGS-RESOLUTION.md](implementation/FINDINGS-RESOLUTION.md) records the current dispositions and pending acceptance work for **F01–F19**. [recommendations.md](implementation/reference/recommendations.md) remains the unchanged historical review; its baseline defects and inventory counts are not the current status.
 - [Decision history](implementation/reference/decisions/OPEN-QUESTIONS.yaml), [round 2](implementation/reference/decisions/OPEN-QUESTIONS-R2.yaml) and [round 3](implementation/reference/decisions/OPEN-QUESTIONS-R3.yaml) preserve answers and original wording with `application` metadata linking applied clauses and later refinements. They are answered history, not a fresh open-question queue. `applied` means adopted in specifications/design, not runtime-verified. P16's explicit user clarification governs: **only results on the current default prevent automatic upgrade**, even when other templates have results.
 
@@ -68,11 +68,11 @@ node implementation/reference/design/wireframe-tui/src/animation.mjs
 node implementation/reference/design/wireframe-tui/src/verify.mjs
 ```
 
-The current static inventory is **170 named states, 206 size variants and 443 focus frames**. Static verification checks the generated prototype and its bindings. Browser visual inspection during this reconciliation was limited to one screenshot, with other tool attempts failing; no full visual sweep or Textual tests are claimed. Child runtime tests must still prove actual keyboard/mouse behavior, resize, calls, lifecycle and integration.
+The current static inventory is **194 named states, 233 size variants and 514 focus frames**. Static verification checks the generated prototype and its bindings. Browser visual inspection during this reconciliation was limited to one screenshot, with other tool attempts failing; no full visual sweep or Textual tests are claimed. Child runtime tests must still prove actual keyboard/mouse behavior, resize, calls, lifecycle and integration.
 
 [Shared decision engines](implementation/DECISION-ENGINES.md) define selectable System One profiles and grading backends; [benchmark statistics](implementation/BENCHMARK-STATISTICS.md) define Gen tok/s, input/output tokens, Files/LOC and optional ranking factors. Read these binding supplements with their allocated children.
 
-For the next design pass, start with the [context-analysis design handoff](implementation/CONTEXT-DESIGN-HANDOFF.md), which lists the authoritative contracts, UI owners, prototype source files and required disabled/partial states.
+For the next design pass, start with the [consolidated benchmark design handoff](implementation/BENCHMARK-DESIGN-SPEC.md). Its **45 pending design groups (BD-001–BD-045)** cover all added features, with UI owners, exact bindings, states, delivery order and acceptance gates. The [context-analysis companion](implementation/CONTEXT-DESIGN-HANDOFF.md) points to the context and decision-engine groups.
 
 [Benchmark modes](implementation/BENCHMARK-MODES.md) define one-shot prompts, ordered multi-step specification files and immutable captures of the current target folder. [The benchmark design handoff](implementation/BENCHMARK-DESIGN-SPEC.md) specifies the new/updated screens, including [Cursor CLI](implementation/M05/08-cursor-adapter.md) and [OpenCode](implementation/M05/09-opencode-adapter.md).
 
@@ -95,3 +95,9 @@ Quality reviews use the template-pinned domain rubric, separately from measured 
 [Model variants and provenance](implementation/MODEL-VARIANTS.md) specifies base-model, quantization and fine-tune comparison, with role-specific creator/date evidence, frozen serving identity and offline result filters.
 
 [Normalized results database](implementation/RESULTS-DATABASE.md) defines authoritative SQLite storage for facts, measurements, grades and versioned score snapshots, with an [executable schema](implementation/sqlite/results-v1.sql), read-only analysis views and [SQL examples](implementation/sqlite/analysis-examples.sql) for graphs and comparisons.
+
+[Cross-harness comparison and API access](implementation/CROSS-HARNESS-COMPARISON.md) defines same-model/effort matrices across all six harnesses, OpenRouter/LiteLLM profiles, isolated Claude Code/Codex configuration, truthful compatibility states and normalized route evidence for analysis.
+
+[Existing configured agents](implementation/CROSS-HARNESS-COMPARISON.md#existing-agent-aliases-and-launcher-profiles) can be selected by a registered alias/profile such as `claudeg`, preserving declared settings through isolated benchmark snapshots with explicit treatment and override provenance.
+
+[Supplement integration](implementation/SUPPLEMENT-INTEGRATION.md) maps every added feature to its parent/child owners and distinguishes documentation integration from pending runtime gates. Run `python3 implementation/validate-specs.py --require-supplement-coverage` from `spec/` for portable graph, allocation, source-digest and local-link checks.

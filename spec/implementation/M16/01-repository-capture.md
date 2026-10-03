@@ -49,7 +49,7 @@ Record `executable=true` when any POSIX source execution bit is set, before stor
 
 A completed immutable snapshot may be reused after a later job failure. An incomplete retry must still match the reviewed inventory. M16.3 recapture accepts only an open draft and `base_version`; a failed/conflicting/cancelled recapture preserves the previous complete baseline and leaves refresh issues visible. An unchanged completed capture does not require rereading a disappearing source at approval. A later inspection detecting changed facts marks the binding stale; active recapture or unresolved source change blocks approval.
 
-Approval binds one completed snapshot. Runs, retries, reuse and ZIP imports consume its packaged bytes, never refresh from the origin path. Explicit refresh of approved work first opens a new revision. M05/M08 materialize separate writable copies of the same bytes/flags for every configuration/trial; no competitor runs in the source. Capture and execution never initialize Git merely for diff evidence.
+Approval binds one completed snapshot. Runs, retries, reuse and ZIP imports consume its packaged bytes, never refresh from the origin path. Explicit refresh of approved work first opens a new revision. M05/M08 materialize separate writable copies of the same bytes/flags for every configuration/trial; no competitor runs in the source. Capture never initializes Git; new-policy execution uses M05.2 isolated trial Git setup for mandatory task commits, never source initialization or a substitute for snapshot/diff evidence.
 
 ## Source preservation and legacy compatibility
 
@@ -67,7 +67,19 @@ No screens are owned here. M01 creation and M16 capture/review views display eng
 
 Preserve parent error shapes: `baseline.target_not_found`, `baseline.not_directory`, `baseline.unreadable{path}`, `baseline.unsupported_entry{path}`, `baseline.path_collision{paths}`, `baseline.no_admitted_files`, `baseline.source_changed{changed_facts}`, `planning.inspection_stale` and `planning.capture_failed{step,cause}`. Errors preserve the source and previous complete data; no failed path silently falls back to an empty baseline.
 
+**Frozen domain contract.** Current-folder capture accepts the approved domain deliverables, including configuration/runbooks, agent source and specification documents, without requiring app entrypoints or executable code. Supplied brief/reference authority is kept distinct from candidate-owned baseline documents in the later rubric/check closure; capture itself never executes commands inside them.
+
+## Integrated requirements
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R179 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Carry `TargetInspection`/`BaselineSnapshot` exact inventory, policy token and draft-version binding into M16.3; Git is optional for current-folder capture, while M03/M05 enforce Git only before competitor execution. Source `.git` directories/pointers are administrative exclusions and never copied into trial setup. Extend source-preservation fixtures so M05 setup of approved empty/populated copies leaves source bytes/modes/index/HEAD/metadata/untracked roster unchanged; deletion of the source after capture does not invalidate packaged execution. Archived v1 readers/fixtures remain unchanged and do not require old-installation migration.
+
 ## Acceptance and faults
+
+**Domain acceptance:** Add document-only and runbook baselines with source removal and inert AGENTS/SKILL content; preserve bytes/flags and exact current-folder capture behavior.
 
 The following are planned verification commands and gates, not evidence of an existing implementation:
 

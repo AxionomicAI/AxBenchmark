@@ -133,3 +133,61 @@ SELECT run_uid,configuration_id,count(*) AS expected_trials,
        max(run_invalidated) AS run_invalidated,max(variant_excluded) AS variant_excluded
 FROM analytics_trial_v1 WHERE template_sha256=:template_sha256
 GROUP BY run_uid,configuration_id;
+
+-- query:harness_matrix
+-- One row per frozen registry cell; unavailable/unselected rows retain null scores.
+-- Select one saved analysis explicitly. EXISTS filters hops without multiplying subjects.
+SELECT h.comparison_id,h.run_uid,h.template_sha256,h.ordinal,h.harness_id,h.selected,h.readiness,
+       h.exclusion_reason,h.coverage,h.selected_harnesses,h.trials,h.expected_trial_rows,
+       h.configuration_id,h.profile_snapshot_id,h.canonical_upstream_model_id,h.upstream_revision,
+       h.effort_contract_id,h.effort_kind,h.native_level,h.budget_tokens,
+       h.gateway_locality,h.inference_locality,
+       s.analysis_id,s.harness_classification,s.comparison_classification,s.subject_status,s.freshness,
+       s.quality_num,s.quality_den,s.quality_approx,s.combined_num,s.combined_den,s.combined_approx,s.official_rank,
+       EXISTS(SELECT 1 FROM api_route_hop p WHERE p.profile_snapshot_id=h.profile_snapshot_id AND p.kind='openrouter') AS uses_openrouter,
+       h.cell_state,h.existing_agent_profile_id,h.existing_agent_profile_version,
+       h.existing_agent_profile_digest,h.existing_agent_profile_name,h.existing_agent_treatment,
+       h.existing_agent_reproduction,h.existing_agent_control_digest
+FROM analytics_harness_comparison_v1 h
+LEFT JOIN analytics_harness_comparison_score_v1 s
+  ON s.comparison_id=h.comparison_id AND s.harness_id=h.harness_id AND s.analysis_id=:comparison_analysis_id
+WHERE h.comparison_id=:comparison_id
+ORDER BY h.ordinal;
+
+-- query:existing_agent_configurations
+-- One row per ordinary run/configuration/selected role; no route or matrix row required.
+-- Control/asset filters use EXISTS so multiple settings cannot multiply configurations.
+SELECT b.run_uid,b.configuration_id,b.role,h.harness_id,p.display_name,p.profile_id,p.version,p.profile_digest,
+       b.treatment,b.reproduction,b.effort_selection,b.effective_control_digest,b.model_evidence_state,
+       b.access_binding_id,b.override_set_digest,
+       EXISTS(SELECT 1 FROM existing_agent_profile_control c WHERE c.profile_snapshot_id=p.profile_snapshot_id
+              AND c.binding_id IS NULL AND c.support_state IN ('unverified','ignored')) AS has_unverified_declarations
+FROM configuration_existing_agent_binding b
+JOIN existing_agent_profile_snapshot p USING(profile_snapshot_id)
+JOIN harness_release h USING(harness_release_id)
+WHERE b.run_uid=:existing_run_uid ORDER BY b.configuration_id,b.role;
+
+-- query:domain_evidence
+-- One row per retained observation; criterion/requirement bindings are separate children.
+SELECT result_id, run_uid, configuration_id, trial_index, context_kind,
+       observation_mode, source_role, coverage, plan_digest, final_snapshot_digest
+FROM analytics_evidence_observation_v1
+WHERE plan_id IN (SELECT plan_id FROM domain_evidence_plan WHERE template_sha256=:template_sha256)
+ORDER BY run_uid, configuration_id, length(trial_index), trial_index, result_evidence_id;
+
+-- query:judge_routes
+-- One row per finalized judge observation; the assessed subject is a separate scope.
+-- The group view has one row per group, even with multiple route hops or profile assets.
+SELECT o.observation_id,o.result_id,o.review_id,o.assessment_purpose,o.judge_group_id,j.group_digest,
+       j.backend,j.harness_release_id,j.model_checkpoint_id,j.selected_effort_contract_id,
+       j.access_profile_id,j.access_profile_version,j.access_profile_digest,j.access_binding_digest,
+       j.existing_agent_profile_id,j.existing_agent_profile_version,j.treatment,j.effective_control_digest,
+       o.requested_effort_kind,o.requested_native_level,o.requested_budget_tokens,
+       o.effective_effort_kind,o.effective_native_level,o.effective_budget_tokens,o.effective_effort_state,
+       t.run_uid AS assessed_run_uid,t.configuration_id AS assessed_configuration_id,o.observed_hops
+FROM analytics_request_route_v1 o
+JOIN analytics_judge_configuration_v1 j USING(judge_group_id)
+JOIN retained_result result ON result.result_id=o.result_id
+JOIN expected_trial t USING(expected_trial_id)
+WHERE o.judge_group_id=:judge_group_id
+ORDER BY o.publication_id,o.observation_id;

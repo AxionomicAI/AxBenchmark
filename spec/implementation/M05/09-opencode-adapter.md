@@ -14,6 +14,8 @@ Before implementation, establish executable provenance, installed release and do
 
 Read [benchmark modes](../BENCHMARK-MODES.md), [statistics](../BENCHMARK-STATISTICS.md) and [context monitoring](../CONTEXT-MONITORING.md) as binding extensions. M05.9 adds one adapter child under M05, with no separate scheduler, decision engine or project-capture service.
 
+Extend this adapter's versioned parser fixtures to emit M05.2 `ContextObservation` records for available native roles, request/phase IDs, session/agent/window boundaries, compaction/reset/truncation signals and native counters. Preserve exposure/coverage limits and stable source ranges; synthetic IDs never prove membership. Keep source-role classification, token count/method/fidelity/basis and current-input membership independent. Exposed reasoning summaries are not hidden reasoning; absent categories/counts/membership remain null/unknown. Route sanitized capture through the shared durable sink, with no classifier transport or decision feedback into the harness.
+
 ## Ownership and interfaces
 
 Own proposed files:
@@ -26,7 +28,7 @@ Implement every `HarnessAdapter` member and expose a registration factory. Pure 
 
 Start a fresh noninteractive process and conversation for every competitor task and planner/judge request. One-shot supplies its one frozen task's exact UTF-8 bytes; multi-step receives approved common context and the introduced specification prefix, retaining workspace state between fresh steps. Synthesize no planner calls, automatic QA/repair tasks or benchmark stages.
 
-Run only in the engine-owned isolated copy of the approved current-folder capture, including empty and non-Git source captures. The selected original folder stays read-only. Delegate trial Git preparation and commit requirements to the centrally frozen benchmark protocol; resolving the shared Git policy is outside M05.9.
+Run only in the engine-owned isolated copy of the approved current-folder capture, including empty and non-Git source captures. The selected original folder stays read-only. Delegate trial Git preparation and commit requirements to the centrally frozen benchmark protocol; M05.2 resolves and enforces the shared Git setup policy, while M08 classifies task compliance.
 
 Exclude continue/resume, existing-session selection, forks, sharing and remote attachment from benchmark launch construction. Native subagent activity inside a task retains distinct observation scope; it does not authorize extra engine tasks or reuse a prior task conversation.
 
@@ -69,7 +71,7 @@ Permissions are not an OS containment guarantee: V2 shell execution retains host
 
 Planner and judge consume the parent's role-specific payload/protected-root policies through this adapter. Protect authoritative inputs/artifacts, allow only declared scratch/engine records, and return the existing protection-unavailable failure before spawn when enforcement cannot be established. No repaired artifact or alternative process API is allowed.
 
-Only M03's consented verification may issue a fixed minimal diagnostic call: no explicit model/effort, all tools and file access denied, at most one spawn and a short deadline. If these controls cannot be established, return `headless_failed` without invocation. Retain `JobId`/`VerificationScope`; create no benchmark result.
+M03's default-model authentication verification may issue its separately consented fixed minimal diagnostic call: no explicit model/effort, all tools and file access denied, at most one spawn and a short deadline. If these controls cannot be established, return `headless_failed` without invocation. Retain `JobId`/`VerificationScope`; create no benchmark result.
 
 UI-judge readiness requires proven image inspection for the selected model, installed generation and approved screenshot inputs under read-only protections. Neither attachment syntax nor fallback vision metadata establishes that capability. Missing evidence remains an actionable unavailable state.
 
@@ -91,7 +93,35 @@ Keep native count fidelity, label fidelity and request/window membership indepen
 
 Every signal/log retains M05.1 engine scope, `InvocationId` and applicable `RunUid`, `TrialRef`/`ResultId` or diagnostic identity. Native session/message IDs, watched-source nonces and model-generated identity-like content cannot override engine bindings. Observation/accounting limitations remain visible independently of progress rendering.
 
+Extend `parse(record) -> Sequence[HarnessSignal]` and the owned format/golden fixtures with M10.1's `GenerationTimingObserved` and `RequestRosterObserved`; reuse the parent's declarations rather than an adapter-specific shape. Request-scoped `UsageReported` carries `request_key` and `token_policy_ref`, with explicit parent/detail inclusion and cumulative/delta/final overlap provenance. Timing points to acknowledged usage entry IDs for that exact request and token policy, preserving source clock/epoch/resolution and native-decode/proxy/measured-window basis. Emit complete roster evidence only for an evidenced terminal list covering the invocation and descendants. These are conditional parser contracts, not new vendor-capability claims; unsupported timing, request identity or detail categories remain unavailable. Native process duration, receipt arrival times and live-rate estimates cannot fill them.
+
+Consume frozen `RequestedSettings.model_variant_ref`/resolved artifact/control evidence without changing the native model selector. Extend the existing version-specific formats/parser and exposure fixtures with `VariantObserved(VariantEvidenceV1)`: requested/ref linkage, reported or confirmed effective artifact/composition, proof coverage, source/version/time, full engine invocation/TrialRef/request scope and limitations. An alias echo is reported only; content, ancestry and creator claims remain independent. Unsupported native introspection yields unverified/unavailable, never a synthesized digest or model-response-based identification. Known conflict uses M05.1–2 `harness.model_rejected(reason=variant_mismatch)` and its stop/drain contract. Discovery/inspection cannot invoke inference, download/load weights or manage a model server.
+
+**Route, comparison and profile interfaces.** Extend this adapter’s owned launch/parser/exposure/golden fixtures for **generation-bound mapping**. Consume the M04 ResolvedAccessPlanV1 and ResolvedExistingAgentPlanV1 through managed_config/launch_spec, emitting only adapter-allowlisted structured fields; never evaluate an alias. Select the exact OpenCode V1/V2 adapter/config schema and isolation/private-server policy. An OpenCode native #variant effort selector is not ModelVariantRefV1 lineage. Independently qualify LiteLLM even where OpenRouter is supported; neither generation inherits the other’s flags. Implement the separate `route_qualification_spec(plan, workspace, managed_dir)` contract with the fixed fixture tool, exact model/effort, bounded disposable session and correlated streamed continuation, or return typed unsupported before spawn. Existing `verification_spec` remains default-model auth smoke with every tool denied and model/effort omitted. Emit RouteObserved with per-main/helper/request/attempt requested/resolved/effective states and evidence gaps; link variant evidence to the same sanitized source fact. Strict requires all_competitor_inference coverage, while primary_model_only is exploratory with helper usage still counted. Named existing profiles preserve optional inherited declarations unless explicit reviewed overrides change them; required role/isolation controls remain mandatory.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R173, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R161, R162 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R182, R183 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Register through M05.7's six-entry registry, and consume M05.2's `CompetitorInputs` and `TaskCommitProtocolRef` without changing authored bytes. Supply the separately frozen mandatory commit instruction for every attempted competitor task; trial setup and history capture stay in M05.2, compliance in M08. No adapter auto-commit, missing-commit repair invocation or extra benchmark stage is permitted. Add fixture launches for unborn/empty and synthetic-baseline/populated trials, one-shot T1 and multi-step prefix continuation, preserving common instruction bytes and invocation-scoped repository evidence. Keep M09's original provisioning/check branch and all vendor-version capability limitations.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Offline vectors cover separate default-auth/targeted-route launches, wrong protocol, dropped effort, helper drift, partial roster, conflicting response echoes, stale source/profile, synthetic secret redaction and unchanged originals. Route qualification success alone does not confirm hidden effective identity. Runtime mismatch drains durable evidence and uses configuration-scoped stop with original expected trials; no model/effort fallback or second retry loop. Installed/provider tests remain separate explicitly consented gates.
+
+**Variant acceptance:** Add offline transcript/launch cases for no identity field, alias-only report, supported invocation-bound proof, changed adapter/runtime composition and mismatch before/during dispatch; retain exact version/distribution limitations and safe evidence. The shared M05 fixture runtime asserts no substitute/retry and correct affected TrialRefs. Fixture support is conditional; existing installed-version gates remain required.
+
+Extend this adapter's existing offline parser suite with duplicate final/cumulative receipts, nested parent/subagent overlap, cached/reasoning inclusion, same source across distinct trials and unsupported timing/roster fixtures. An available timing fixture must bind its usage IDs and source clock exactly; missing output, mismatched clock/policy or undiscovered requests cannot produce complete Gen tok/s. Retain source/version proof or explicit unverified status in `evidence.json`; no installed or model call is required by these fixture additions.
+
+Context fixtures must cover native-only capture, quoted role names, partial/truncated records, repeated source ranges versus repeated text at different positions, unavailable membership and compaction where the installed format exposes it. Unknown/version-unproven signals remain explicit gaps or unknowns; no new provider capability is inferred.
 
 Run offline first:
 
@@ -103,7 +133,7 @@ pytest tests/harness/adapters/test_opencode.py
 2. Provenance and discovery fixtures distinguish V1/V2 and unsupported releases; metadata/default/auth/model listing invokes zero models, preserves personal state and redacts credentials. Test unavailable/offline/rejected/unknown facts and model capability fallbacks without promoting assumptions to verified capacity.
 3. V2 lifecycle fixtures require private-server launch, isolated state/resources, frozen settings and complete descendant cleanup. Personal/shared servers and service preferences remain unchanged through concurrent trials, detach/reconnect, deadlines, cancellation and failed startup.
 4. Policy fixtures enumerate all five clean categories, V1 source precedence/managed overrides, V2 ancestor and `.opencode` ordering, global/nested instructions, compatibility warnings and reloads. Unsupported clean blocks; current preserves protections and explicit selection without personal writes or secret leakage.
-5. Permission fixtures distinguish both schemas, rule ordering and agent overrides. Exercise shell/file writes, protected roots, scratch, traversal/symlink escape and unanswered prompts. Unsupported roles produce zero spawns; verification omits model/effort and enforces its one-call/all-tools-denied contract.
+5. Permission fixtures distinguish both schemas, rule ordering and agent overrides. Exercise shell/file writes, protected roots, scratch, traversal/symlink escape and unanswered prompts. Unsupported roles produce zero spawns; default-model authentication verification omits model/effort and enforces its one-call/all-tools-denied contract.
 6. Transcript fixtures cover actual generation/version event shapes, partial/repeated content, duplicate IDs, parent/subagent overlap, terminal success/failure, malformed NDJSON, unknown fields, auth/model/config rejection and truncation. Preserve raw evidence and reject false success or duplicate accounting.
 7. Observation fixtures retain unknown usage/cost/currency/context/reasoning, unsupported clocks, missing request rosters, compaction/reset and identity-forgery attempts. Stats/export without bound request scope cannot become trial usage; no unavailable value becomes zero or fabricated throughput.
 8. Role fixtures verify approved planner/judge payloads, image-capability refusal and read-only artifacts without extra tasks. Passive native readings remain usable without context classification; classifier readiness and observer usage stay separate from competitor execution/accounting.

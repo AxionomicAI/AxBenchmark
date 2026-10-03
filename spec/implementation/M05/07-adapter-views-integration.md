@@ -2,15 +2,15 @@
 
 Parent: [M05 API/screens](../reference/modules/05-harness-execution-isolation.md#2-api-surface-harness). Requirements: R010, R044, R047, R065, R068–R072, R076–R078, R134, R137, R138, R140, R153, R154. Findings: F06 historical addressing, F09 invalidation, F10 restoration and F04/F05/F18 client transport.
 
-Outcome: four verified adapters are reachable through one engine API and pure policy/configuration/log/isolation views. Proposed implementation; parent acceptance requires recorded real-platform evidence, not fixture-only green tests.
+Outcome: six registry adapters with version-scoped verification are reachable through one engine API and pure policy/configuration/log/isolation views. Proposed implementation; parent acceptance requires recorded real-platform evidence, not fixture-only green tests.
 
 ## Entry conditions
 
-**Completed implementation prerequisites:** Bootstrap; [M05.3](03-claude-adapter.md), [M05.4](04-codex-adapter.md), [M05.5](05-grok-adapter.md), [M05.6](06-pi-adapter.md); [M03.1](../M03/01-readiness-service.md), [M04.2](../M04/02-catalog-discovery.md); M15.1 `tui-foundation` / M15.2 `tui-shell` from [ARCHITECTURE](../../ARCHITECTURE.md#executable-foundations-and-child-spec-boundaries).
+**Completed implementation prerequisites:** Bootstrap; [M05.3](03-claude-adapter.md), [M05.4](04-codex-adapter.md), [M05.5](05-grok-adapter.md), [M05.6](06-pi-adapter.md), [M05.8](08-cursor-adapter.md), [M05.9](09-opencode-adapter.md); [M03.1](../M03/01-readiness-service.md), [M04.2](../M04/02-catalog-discovery.md); M15.1 `tui-foundation` / M15.2 `tui-shell` from [ARCHITECTURE](../../ARCHITECTURE.md#executable-foundations-and-child-spec-boundaries).
 
 **Bootstrap-published contracts, allowed as injected fixtures:** M07 setup/frozen launch, M08 progress/evidence, M11 scheduler/stop/live screens, M12 judge and M16 planner callers, M14 CLI bindings; M18 awaited `ProcessTracking` interface. Inject these for view tests; actual parent integration cannot stop at that seam.
 
-All four adapter official-documentation/installed-version matrices are required inputs. A recorded unsupported capability renders as such; an unexecuted platform remains unverified.
+All six adapter official-documentation/installed-version matrices are required inputs. A recorded unsupported capability renders as such; an unexecuted platform remains unverified.
 
 ## Ownership and interfaces
 
@@ -48,7 +48,39 @@ Probe/list-models/default lookup performs no model call. M03 verification alone 
 
 Bind parent keys exactly, including `/`, `i`, `v`, `s`, `d`, `p`, escape and save. `p` passes the resolved `TrialRef` to M08. Unmount unsubscribes without stopping work. Keep wireframe/navigation source changes with the later navigation owner.
 
+Compose all six adapters with the complete M05.1 accounting union and M10 durable sink, including timing/roster records even when no client subscribes. Keep live rate DTOs labelled advisory with their exposure/source limitations; only M10's retained metric projection may be labelled Gen tok/s. The two client codecs preserve request identity, timing basis, exact values and unknown/partial source coverage without narrowing the union or guessing support from registry presence.
+
+Compose all six adapters' `VariantObserved` path with M02 `VariantEvidenceRecorder`; preserve this durable path independently of lossy live events and M10 accounting. Extend `ConfigurationExecution`, `InvocationRecordDTO`, `LiveTaskSnapshot` and `harness.settings.observed` projections with `VariantEvidenceV1`, exact refs/coverage, requested/resolved/effective distinctions, affected scope and mismatch reason. `harness.configuration.describe`/`invocation.get` read retained observations under explicit ResultId/TrialRef/invocation binding.
+
+RunConfig/ModelRejected render combined FINETUNE+QUANT, unverified/reported/confirmed limits, expected versus observed mismatch and retained halt remedy. Header/card proof cannot upgrade the badge; no substitution/retry action appears. API/picker/model-list DTOs preserve stable refs independently of native selectors and display aliases.
+
+**Route, comparison and profile interfaces.** Extend `ConfigurationExecution`, `InvocationRecordDTO`, `LiveTaskSnapshot`, `harness.configuration.describe`, `harness.invocation.get` and `harness.settings.observed` with resolved access/profile refs, treatment/effective-control digest and request-route/effective-setting coverage. M02 receipts are authoritative; live DTOs never overwrite retained observations. `harness.adapters` and policy/capability views retain all six native IDs and exact distribution/generation/version including unsupported or unverified route cells. RunConfig/RunIsolation/ModelRejected show requested versus resolved/effective model/effort/routes, helper gaps, source drift and typed mismatch; source profile labels do not become a seventh row.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R173, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R161, R162, R166 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R181, R182, R183 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+`composition.py` registers exactly the six adapter factories in shared order; registry/API/policy/default/model/log/isolation projections iterate that registry instead of duplicating a four- or five-item whitelist. Cursor/OpenCode fixtures retain actual vendor/generation/version and unavailable controls. Both adapters use the same role, process, isolation, input and scoped evidence contracts as the original four.
+
+Add an integration assertion that every shared HarnessId resolves one adapter and both clients round-trip all six policy/inspection rows. Exercise zero-model discovery, fresh task sessions, one-shot and ordered multi-step inputs, repeated same-harness queues and explicit selected subsets; installed-version gates remain separate from fixture registration. RunConfig receives frozen instruction/policy and repository-evidence refs without locally assessing commits.
+
+Compose all six adapters with the M05.2 durable ContextCaptureSink, keeping this channel independent from lossy harness live events. Live DTOs expose the resolved invocation/session/agent/window and returned context-detail capability/target; M11.5 supplies the navigation action. Render native counters, count estimates, source labels and membership/exposure limitations distinctly, including not_exposed/unknown and exposed reasoning summaries. Test slow subscribers, absent membership, two-trial nested-agent targets and closure after stop without introducing classifier transport or process feedback.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Compose all six adapters with the shared route/variant recorder and both clients; verify unknown Cursor custom routing, Grok distribution mismatch, named profiles and replay/disconnect cannot strengthen evidence. Read retained scoped rows after stop/restart, with no fresh inspection or inference.
+
+**Variant acceptance:** Round-trip all six adapter fixture states through both clients and wide/compact VMs, including unsupported evidence. Slow live subscribers cannot drop critical observations; prior-trial details stay pinned while later trials run. Known mismatch halts only its configuration and unavailable proof remains labelled usable when other gates pass.
+
+Extend `test_harness_integration.py` to delay request-timing and roster receipts separately while live queues overflow, then compare retained M10 pairs after detach/reconnect. All six adapter fixture paths preserve unavailable native timing and independent cached/reasoning coverage; no UI rate becomes a retained or ranked statistic.
 
 Run:
 
@@ -59,7 +91,7 @@ pytest tests/harness/test_harness_api.py tests/harness/test_harness_events.py te
 1. Both socket and in-process clients round-trip every query, typed failure and schema. Missing trial, wrong result/trial binding and same-label distinct runs never select unrelated historical data.
 2. Snapshot midway through updates, replay an older event, restart epoch, overflow a queue and change selected trial/topic. Newer revisions survive; log pagination fills retained entries without duplicate lines or process restart.
 3. Pilot/fake-client tests cover every board/state wide and compact, unknown effective effort, blocked lines, verbatim remedies and capability-disabled keys. Each binding issues only its declared call; cancel/escape neither spawns nor stops.
-4. Compose real M03/M04 and four adapters: inventory/default/model discovery makes zero model calls; unsupported/offline/auth states remain distinct. Verification retains only diagnostic identities and one call per consented target.
+4. Compose real M03/M04 and all six adapters: inventory/default/model discovery makes zero model calls; unsupported/offline/auth states remain distinct. Verification retains only diagnostic identities and one call per consented target.
 5. Real macOS/Linux integration records exact installed versions and current official sources for each adapter. Exercise clean/current, blocked permissions, separate same-harness configurations, sequential/parallel scheduling, fresh tasks, detach/reconnect, timeout/stop and service cleanup; untested combinations stay unverified.
 6. With real M01/M02/M11 integration, restore executable/regular baseline locally and after M17 import, preserve approved modes, and retain two trials’ outcomes/logs with idempotent operation ids. Fault durable writes and verify no false completion/export readiness.
 7. Compose M12’s exact `EnvironmentSpec.judge` inputs and M02 delivered artifact through the same M05 runtime; protected artifact/input writes and repairs fail, scratch writes succeed, unsupported protection blocks launch and authoritative bytes remain unchanged.

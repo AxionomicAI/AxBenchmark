@@ -41,7 +41,7 @@ Journal final path/digest/size before rename; recover after each checkpoint. Pre
 
 Persist outcome before reports.report.written/job.finished and copy completion state to RunStatus before its notification. On storage failure expose pending error/path and retry the same intent. Restart or expired generic job cache consults owner status; missed notifications cannot lose success/failure/cancel/skip.
 
-SystemOpener invokes macOS open/open -R or Linux xdg-open via argv without shell, bounded timeout. Record every attempt; failure is a warning in successful artifact outcome, not lost file or job failure. Recovery does not repeat an already recorded open attempt. Reveal accepts only known ledger paths and preserves path on failure.
+SystemOpener.open/reveal preserve file-path behavior; open_review_url accepts only M12's validated engine-owned LocalReviewUrl. All use bounded argv without shell, with complete credential-bearing URL arguments redacted from diagnostics. Record every attempt; failure is a warning in successful artifact outcome, not lost file or job failure. Recovery does not repeat an already recorded open attempt. Reveal accepts only known ledger paths and preserves path on failure.
 
 ## Exact boards and states
 
@@ -60,7 +60,46 @@ Mount generate calls reports.plan once; edited path/radio uses no call until ctr
 
 Progress mounts via events.subscribe([job:<id>], cursor=EventCursor) through M15 snapshot/replay manager. Apply object revisions/replacement generations; reports.status recovers expired jobs and owner state after resync. Escape/Cancel requests jobs.cancel; unmount/detach only unsubscribes. Durable success navigates to M02 ReportScreen once; other dispositions/pending errors render their reason and stop any local success-only wait.
 
+ReportPlan/ReportStatus snapshot metadata includes the selected per-capture source and optional analysis ID/cutoff/digest/status plus backend-specific JudgeGroup evidence. TASK_EVIDENCE lists native-only, pending/partial or unavailable context as content notes, not classifier-readiness blockers. Generate pins one immutable cutoff; later analysis cannot change the job/artifact. Ordinary execution/source closure and original-review settlement still gate readiness, including deliberate pending human review. Add native-only/delayed-analysis/offline fixtures proving profile absence neither starts inference nor adds a classifier barrier.
+
+`reports.plan/generate` and `ReportPlan`/job intent retain complete M06 `WeightSelectionDTO` with eight-factor maps/directions, selected metric policies and full JudgeGroup/roster pin. Forward that selection unchanged from Rankings; display enabled direction/policy and original/default/alternative resolution in ReportGenerate/Defaults. Statistics tables and dynamic combined chart remain locked report parts. Missing statistics produce explicit content/eligibility limitations rather than a fake readiness failure when disabled; pending timing/snapshot/metric durability still blocks ordinary retention. Saved engine analysis ID/input digest and immutable statistic policy versions enter the report outcome metadata.
+
+**Frozen domain contract.** ReportPlan/ReportStatus/job intents carry exact rubric/profile/version/digest plus evidence-plan/required-modality/coverage summaries from the pinned owner data. ReportGenerate/Defaults expose native matrix, domain modes and document authority/coverage limitations; no browser prerequisite, live check or profile reinterpretation is added. Only ordinary retention/original-review settlement gates publication; recorded unknown evidence remains a visible result condition.
+
+Carry complete `filters.variants: VariantFilterV1` and resolved comparison/metadata-view/annotation/control-policy pin through `reports.plan/generate`, ReportPlan, durable job intent, snapshot descriptor and outcome. ReportGenerate/Defaults show strict versus exploratory mode, weights-only/package scope, candidate/selected signature, source/proof limits and excluded full-subject counts. Return `reports.snapshot_changed` when a selected annotation/mandatory exclusion version changes before guarded commit; a read/plan never refreshes metadata or upgrades proof. Forward selection unchanged from Rankings and keep completion-report defaults As recorded with mandatory exclusions.
+
+**Saved versus local provenance.** Keep `AnalysisSnapshotRef {analysis_id, analysis_digest, input_digest, publication_id, status, freshness}` from the acknowledged M02 sink in the initial ReportSnapshot/Model/outcome and table/chart detail. Freshness is explicitly as captured; an offline file cannot know later database changes. Report job ledgers remain working output state, not score authority. Browser filter/reweight/export produces an explicit unsaved local derivation tied to that original reference; it must not reuse the ID as proof the changed analysis was saved. Graph coordinates are approximate presentation; exact pairs and retained official ordinal/tie keys define the initial saved analysis.
+
+**Route, comparison and profile interfaces.** Extend reports.plan/generate/status requests/summaries and ReportGenerate/Progress/Ready VMs with selected harness-comparison ref/policy and retained matrix/classification/coverage/treatment/evidence-cutoff summary. The job snapshots them with existing analysis/PublicationView pins and returns typed stale/persistence errors without resampling capabilities. Ready/open/download refer to the emitted immutable offline artifact, with explanatory unverified or partial coverage; creating a report never runs diagnostics.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R175, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R164, R166, R171 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+**Human completion/opener acceptance:** ReportPlan/Generate show pending original Human cases as Awaiting human review with owner refs/counts and explicit M12 reopen navigation; auto generation/open remains deferred until actual dispositions and retention. Deliberate person-wait is distinct from persistence-pending errors. Extend existing SystemOpener with open_review_url(LocalReviewUrl) for the exact validated M12 loopback target and wire it as BrowserOpener at composition, never by a judging-application import of reports adapters. Record M12 auto_open_attempted before dispatch; recovery never auto-reopens. Test headless/opener failures, submit/skip/stop receipts, additional pending review after original readiness, and credential-free report ledgers/HTML.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Job cancellation/restart and changed comparison evidence preserve prior report, saved analysis identity and no automatic re-probe. Both client flows retain explicit subset and exploratory labels and inert source/profile references.
+
+**SQLite acceptance:** A sink failure or stale input prevents a report claiming saved scores; one retained snapshot feeds initial tables/charts/outcome. Copy HTML alone, disable engine/network, reweight/filter/download and verify unsaved labels, unchanged original reference and exact Python/JS parity.
+
+**Variant acceptance:** Both clients and wide/compact screens round-trip full selections and display unknown/conflict/mismatch. Race annotation with plan/generate/publication and reconnect: changed pin cannot publish stale strict qualification, successful artifact retains the chosen view and no external source/model call occurs.
+
+**Domain acceptance:** Run six-family plan/generate/reopen fixtures with no images where unrequired, missing required native capture and mixed agent modes. Offline report generation makes no model/device/cloud/parser call and preserves frozen group/ref after later catalog changes.
+
+Extend API/job/screen tests for full schema-2 plan round trips, altered direction/policy staling a plan, unknown disabled extras, independent file/LOC partial content and delayed statistic/analysis writes. Generate the same pinned selection via API, TUI and CLI; exact engine/offline values and saved-versus-unsaved provenance agree without touching source facts.
 
 ```sh
 pytest tests/engine/reports/test_jobs.py tests/engine/reports/test_completion.py tests/engine/reports/test_recovery.py tests/engine/reports/test_opener.py tests/api/test_reports.py tests/integration/test_report_completion.py tests/tui/test_report_viewmodels.py tests/tui/test_report_generate.py tests/tui/test_report_progress.py tests/tui/test_report_navigation.py

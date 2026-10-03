@@ -10,12 +10,14 @@ Outcome: real repository/backend/Python Playwright observations on disposable co
 
 **Bootstrap-published contracts, allowed as injected fixtures:** M01 verified revision reader, M06 eligibility notes, M10 acknowledged observations/finalizer, M11 scheduler/coordinator, M12 evidence consumer, M09 inventory suite and M16 generated suite. Full inventory/judging/scheduler implementations are later real integration gates.
 
+Extend `JudgeEvidence` and its final-artifact projection with deterministic evidence manifest/coverage, immutable IDs/digests and ordered actual image references for decision grading. Preserve ResultId/full TrialRef/final-regression artifact binding; web uses its existing viewport pair and other domains their frozen evidence plan. M12 receives bounded read-only evidence through the same port for all backends; missing/oversize/modality-unavailable evidence is explicit, never silent truncation, OCR, generated description or a per-task screenshot substitute. Decision transport/capability selection and human renderer policy remain M12-owned.
+
 ## Ownership and interfaces
 
 Own proposed files under `axbenchmark/engine/verification/`:
 
-- `adapters/suite_v1.py`, `runner_process.py`, `fs_copies.py`, `journal.py`, `services_process.py`, `opener.py`, `retention.py`, `rpc.py`.
-- `adapters/verifier/__main__.py`, `context.py`, `browser.py`, `backend.py`, `repository.py`, `report.py`.
+- `adapters/suite_v1.py`, `suite_v2.py`, `runner_process.py`, `fs_copies.py`, `journal.py`, `services_process.py`, `opener.py`, `retention.py`, `rpc.py`.
+- `adapters/verifier/__main__.py`, `context.py`, `browser.py`, `backend.py`, `repository.py`, `native_mobile.py`, `devops.py`, `agentic.py`, `specification.py`, `report.py`.
 - `application/queries.py`, `judge_evidence.py`; extend M08.1 DTOs/ports without duplicating shared domain types.
 - `tests/verification/test_suite_reader.py`, `test_runner_process.py`, `test_browser_evidence.py`, `test_repository_backend.py`, `test_service_cleanup.py`, `test_evidence_retention.py`, `test_judge_handoff.py`, `test_api.py`.
 - `tests/verification/fixtures/browser/`, `backend/`, `repository/`, `reports/` for working/broken apps, two materially different conforming data implementations and malicious evidence text/path fixtures.
@@ -44,11 +46,13 @@ Use the parent's exact working/retained hierarchy and stable write operation IDs
 
 Stop/dispose failures retain logs and cleanup facts. Never delete a source snapshot or tooling directory while removing a copy; reject traversal/symlink escapes. Redact credentials in diagnostic output before retention; application observations remain inert text on API surfaces.
 
-`AcceptanceEvidence.for_judge(result_id)` resolves the exact trial and final artifact. Project behavioral check evidence recursively: no execution duration, token/cost/hardware fields, per-task screenshot refs or historical-snapshot captures. Admit only final-regression delivered-artifact screenshots, both viewports for each included capture.
+`AcceptanceEvidence.for_judge(result_id)` resolves the exact trial and final artifact. Project behavioral check evidence recursively: no execution duration, token/cost/hardware fields, per-task screenshot refs or historical-snapshot captures. Admit only final-artifact evidence required by the frozen plan: web keeps both viewports per capture; native images keep their approved matrix/build; text-domain observations require no image. Other per-task evidence remains separate and cannot replace final coverage.
 
 Final/post-task evidence remains separately queryable. `for_judge` before completed final regression raises `PhaseNotReady`; invalidated runs cannot start judging. M11 alone starts M12 after identity/finalization gates; a regression event is not a scheduler.
 
 Implement the parent's query methods, `CheckSummaries.for_trial(trial, phase)`, evidence open/reveal and snapshot provider. Historical APIs resolve ResultId; progress requires TrialRef. Error responses use integer `-32000` and stable `data.code`; do not translate fatal identity into verification failure.
+
+**Frozen domain contract.** Implement suite_v2.py and verifier/native_mobile.py, devops.py, agentic.py, specification.py through the existing runner/preflight/disposable-copy ports, only for evidenced available targets. Backend adds required API/data/invariant/recovery observations. Native captures bind source/build/package/matrix and executed lifecycle/security/accessibility outcomes. DevOps retains validation/plan/dry_run/simulation/applied/rehearsal distinctions and frozen authority; clean plans prove no deployment. Agentic runs only finite approved cases/repetitions with per-boundary simulation/replay/live and bounded permitted effects. Trusted specification parsers inspect inert supplied/candidate documents locally; no candidate hooks or implementation commands run.
 
 ## States supplied to screens
 
@@ -56,7 +60,28 @@ TaskChecks receives pending/running/completed rows, exact trial/phase and ordina
 
 No TUI rendering here. Register `verification` topic snapshots with object revisions and EventCursor; client reconnect never reruns a check. Evidence commands use an injected system opener and cannot mutate execution or acceptance facts.
 
+**Normalized retained evidence.** M08 supplies validated acceptance.v1/v2 and observation.v1/v2 tags, DomainEvidencePlan/ordered bindings and tagged ObservationContext to M02 through existing recorder ports. Normalized plan/check/coverage/mode/source-role/final-snapshot fields are authoritative; report JSON, images and product traces are inert large evidence. Preserve authored versus protocol check origin. No direct SQL or second result JSON repository belongs in verification.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R170 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+`suite_v1.py` resolves frozen protocol-origin repo checks alongside authored checks; `verifier/repository.py` consumes M05/M02 task-bound immutable history/tree/inventory proof, never a moving workspace HEAD or active imported `.git`. Verify newly reachable competitor commits, ancestry and scoped tree/filesystem equality including ignored required paths; setup commits are explicitly excluded. Missing readable advancement/dirty delivery fails; inaccessible proof is unverified with its actual cause. Commit compliance adds no behavioral coverage and is runnable with an empty authored suite.
+
+Persist complete policy/check/version/digest, origin, start/end/previous tips, ancestry, setup provenance, scope inventory and snapshot/history evidence through existing M02 attachments before outcomes. Import/export/report inspect inert proofs after workspace deletion; no Git restore/checkout, auto-commit, additional check invocation on import or competitor repair call. Extend real repository fixtures for unborn/born starts, populated setup, empty milestones, reset/amend of prior tips, dirty/untracked/ignored required output, delayed writes and restart; final history cannot heal an earlier milestone. Keep M09's original predicate branch unchanged.
+
 ## Acceptance and faults
+
+**SQLite acceptance:** With real M02, compare retained plan/context/check rows and API/ZIP projections for every family; delay durable files and row receipts independently and reject cross-trial or final-snapshot mismatches before completion/seal.
+
+**Domain acceptance:** Product inference uses the artifact integration, M11 shared artifact_verification admission scope and M10 VerificationObservations.record_auxiliary, never a grading DecisionCallId/provider bridge. Await M02 evidence and M10 auxiliary receipts, then settle the resource lease before completion/seal; cancellation/recovery retains partial/unknown observations and never replays effects. Test wrong native build, missing matrix cell, dry-run false deployment, replay false live competence, unapproved agent call (zero calls), malicious document commands, and independent missing-prerequisite versus observed defects with real owner integrations.
+
+Test wrong-trial/task/historical screenshots and mismatched image order/digest, missing final capture and a text-domain plan without images. The same admitted behavioral evidence reaches both automated strategies and the human form without competitor performance/history metadata or new checks/model calls.
 
 Run `pytest tests/verification/test_suite_reader.py tests/verification/test_runner_process.py tests/verification/test_browser_evidence.py tests/verification/test_repository_backend.py tests/verification/test_service_cleanup.py tests/verification/test_evidence_retention.py tests/verification/test_judge_handoff.py tests/verification/test_api.py`; real browser cases carry the `browser` marker and are a required integration run.
 

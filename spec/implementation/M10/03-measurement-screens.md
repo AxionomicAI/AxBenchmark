@@ -23,6 +23,8 @@ Own proposed files:
 
 M14 owns CLI command implementation, M15 owns shell/reconnect mechanisms and M02/M07/M08 own adjacent screens. No engine/accounting, collector or wireframe source changes belong here. Shared-file edits must touch only the named classes/imports/registrations.
 
+**Frozen domain contract.** Measurement detail exposes artifact_verification auxiliary usage/cost/coverage separately from competitor, grader and observer accounts, retaining evaluation/case/mode refs and unknown values from M10. The quality/evidence route receives functional observations only; no product counters enter rubric charts or competitor Gen/token/cost columns.
+
 ## Boards and state ledger
 
 | Board / screen | Required states and navigation |
@@ -34,6 +36,10 @@ M14 owns CLI command implementation, M15 owns shell/reconnect mechanisms and M02
 | CurrencyEnergy / CurrencyEnergyScreen | Setup editable display currency and tariff with cached rates; analysis frozen currency/rates plus original or alternative tariff, reset, field errors, no tariff/energy/rate, scope/coverage and pending/error states. |
 
 Wireframes currently supply these board families but remain untouched by this spec work. Reconcile any missing explicit phase/trial, unverified-zero, missing-rate or finalization-pending state in a later design task; prototype rendering alone does not satisfy these functional tests.
+
+Own `tui/screens/context.py`, `tui/viewmodels/context.py`, `tui/styles/context.tcss`, additive Measurements actions and `tests/tui/test_context_screen.py`/`test_context_navigation.py`. `ContextDetail` accepts an exact ContextTarget plus optional snapshot/AnalysisSelection; session selection uses `measurements.context.sessions`, then snapshot/history/segments/analysis queries. Both retained Measurements and M11 HarnessLive route here with resolved ResultId/full TrialRef/task/session/agent/window, never newest-trial fallback.
+
+Render current-input and observed-history tabs, independent native total/limit/phase, category count/fidelity/basis, native/predicted labels/confidence and membership, gaps, transitions and retained raw-source availability. Unknowns show their reason, not zero/empty bars. Used-percent requires the returned compatible native total/limit; no client math invents categories or membership. Reclassify shows destination/budget and engine capability/setup reason before the explicit job call; navigation/import/read stays model-free. Subscribe to exact registered events on `measurements`, discarding stale query and subscription generations.
 
 ## Load, events and actions
 
@@ -57,7 +63,35 @@ Preserve basis, declared-billing label, source/rate dates, covered/expected task
 
 Do not sum tokens/columns, convert money, price energy, compute means/minima or re-sort exact cost rows. Read ordered engine DTOs. Timing fractions used for drawing intervals do not change time measurements. Compact layout keeps coverage/currency notices and explicit trial selection available even when formation/summary panes collapse.
 
+Make **Gen tok/s**, **In tok (cached)**, **Out tok (reasoning)** and **Files / LOC** primary measured columns through `measurements.result` and `measurements.trials`. Cached/reasoning detail and file_count/loc have independent null/partial states. Final Files/LOC appears only on delivered trial/summary rows, labelled “final snapshot size (baseline included)”; task rows cannot display an invented snapshot count. Show “pooled” and exact matched N/D plus per-trial range for generation; show means/ranges and separately labelled totals for counts.
+
+Extend owned measurement VMs with source/policy/version/digest, units, complete roster, matched subset coverage, typed limitations and safe evidence/inventory references from the DTOs. Existing result/task detail loads expose the breakdown; they do not rescan, compute rates/means or classify files. Preserve advisory live-rate labels separately. Wide and compact views retain all four headings and allow scoped detail/scroll access to coverage, unmatched requests, binary/text/excluded inventories and not-recorded evidence.
+
+**Route, comparison and profile interfaces.** Extend measurement detail/cost-basis DTO consumers with route/account price scope, gateway-versus-inference locality, request/attempt coverage, inclusive charge versus additive fee and separate verification diagnostic receipts. Forward the complete ResultFilters.harness_comparison selection to measurements.cost_bases; labels come from retained evidence, never current catalog. Display gateway host overhead, helper/retry costs and unknown internal coverage without subtracting guessed model compute.
+
+## Integrated requirements
+
+R192, R193 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R187 — frozen domain profile/evidence contracts: [R187](../quality-judges/AGENTIC.md).
+
+R173, R174, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R166, R168, R172 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+**Human accounting acceptance:** Human wait/edit/save/submit timestamps are separately labelled M12 lifecycle observations with incomplete-observation limits. Model usage/API charge is not applicable and labor/host cost is unmeasured; do not manufacture an InvocationId, DecisionCallId, zero-price receipt or auxiliary inference account. Keep every competitor elapsed/token/cost/Gen/Files/LOC value and sealed measurement receipt unchanged across pending human wait, restart, submit and skip. Test those transitions while an unrelated automated run proceeds; measurement/detail views remain inspectable without opening the anonymous form.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Fake-client screens show localhost remote charges, unknown route prices/currency, duplicate receipt alternatives, separate diagnostic role and mismatch costs preserved after comparison exclusion.
+
+**Domain acceptance:** Add same-server product evaluation partial/unknown account fixtures; no UI arithmetic merges them into competitor statistics.
+
+Add both-size fixtures for generation 80 with complete pairs versus partial 400/5 out of 600 output, pooled 200 versus trial range 50–300, input mean 7/2 and independent Files known/LOC unknown. Assert matching source/policy/roster detail, baseline-included label, partial subset labels, no phantom task file counts, no derived zero/rate and unchanged scope after trial switch/reconnect.
+
+Pilot ContextDetail at both sizes with native-only, unknown membership, partial partition, pending/deferred/failed analysis, compaction, capture gaps and disabled reclassification. Switch trial/agent/window while replies are delayed; preserve scope and selected ledger cutoff, no implied classifier call or percent on incompatible denominators.
 
 Run the proposed suite:
 

@@ -12,6 +12,8 @@ Outcome: pure catalog rules and published schemas that preserve scope, uncertain
 
 Publish M04's `CatalogSelections`, `CatalogOptions`, `ExchangeRates` and DTOs before their consumers start. Publishing a Protocol does not establish its provider or a working catalog service.
 
+Expose catalog metadata as evidence for M12.4's `DecisionEngineProfile`: requested/resolved identity, available artifact revision/digest, quantization/runtime, pricing/usage semantics and supported/unsupported/unknown capability with source/version/time. Keep native decision capability separate from chat, image-name or endpoint heuristics. Catalog evidence cannot override a tested incompatibility or turn a moving alias into a frozen identity. Decision profile refs are independent of normal API-access and harness selections.
+
 ## Ownership and interfaces
 
 Own proposed files:
@@ -29,7 +31,7 @@ Keep domain objects free of I/O and API imports. M04.2 owns persistence, applica
 | Entry/context identity | Harness/version/target/account fingerprint/model distinguish entries. Display labels and changing billing observations never alter keys. |
 | Three layers | Applicable override › discovered › bundled, per field. Absence inherits; explicit unknown stops resolution and keeps override provenance. Stale versions remain evidence history only. |
 | Prices | Finite nonnegative decimal values and explicit currency; discovered/bundled provider-model prices are shared, entry overrides retain their entry/version scope. Missing prices remain unknown. |
-| Billing | AccountKey excludes harness version; declaration › endpoint/status reading › unknown. Value and unknown declarations retain `declared_by_user` and label. Cloud `local` is invalid. |
+| Billing | AccountKey excludes harness version; declaration › evidenced inference locality or route/account status reading › unknown. Value and unknown declarations retain `declared_by_user` and label. Cloud `local` is invalid. |
 | Rates | Positive finite `per_usd`, currency units per 1 USD. USD identity is 1 and cannot be overridden. No bundled/historical rate; missing/explicit-unknown remains unknown. |
 | Defaults/effort | Context default retains source/date; absent stays unknown. Unknown efforts give only `HarnessDefault`/`OMIT`; requested and effective settings remain distinct. |
 | Public evidence/forms | `SelectionEvidence`/`RateSet` are frozen-ready reads, never authentication evidence. Billing/rate forms separately retain mode/value/inherited fields; resolved values cannot reconstruct override intent. |
@@ -38,7 +40,41 @@ Keep domain objects free of I/O and API imports. M04.2 owns persistence, applica
 
 Schema fixtures include the shared numeric error envelope and `ActionState`; no local copies of shared types. M10 owns cost basis/coverage and frozen conversion; M06 owns `cost_zero_unverified` eligibility. A zero price is permitted metadata, never evidence of a verified zero charge.
 
+**Frozen domain contract.** Catalog capability requirements remain explicitly evidenced keys: image_input for web/native or other declared images; unknown/unsupported modality mapping remains unusable, never inferred from model/framework names. Preserve requested/resolved/source/version scope in SelectionEvidence and separate product-agent dependency model references from competitor and grading identities. Human renderer readiness is outside M04 model capability checks.
+
+Extend owned `domain/variants.py`, `lineage.py`, `provenance.py` and `api/catalog.py` with `ModelVariantV1`, `ModelVariantRefV1`, `CheckpointRefV1`, `LineageNodeV1`, `ArtifactManifestV1`, `AdapterCompositionV1`, `QuantizationV1`, `VariantEvidenceV1`, `ClaimV1` and `DateClaimV1`. `SelectionEvidence` carries requested ref, immutable descriptor, resolved manifest, proof coverage, creator/date/source claims and nonblocking review notices. A descriptor is distinct from EntryKey, model selector and execution fingerprint; opaque/partial identity has no complete fingerprint.
+
+Validate the ordered multi-parent DAG and per-node creator roles/date kinds/precision with explicit unknown/unavailable/conflict. Canonical execution identity hashes complete required files, active adapter order/scales/config and execution support configuration; metadata claims have their own snapshot digest. Layered variant overrides retain inherit/value/unknown and alternatives. Never inherit base-model prices/billing or treat a content hash as ancestry, authorship or loaded-model proof.
+
+**Route, comparison and profile interfaces.** Own `domain/access_profiles.py`, `effort_contracts.py`, `existing_profiles.py` and their schema/codec fixtures alongside `api/catalog.py`. Publish immutable `ApiAccessProfileV1`, `ApiRouteHopV1`, `ModelBindingV1`, `EffortContractV1`, `HarnessEffortMappingV1`, `HarnessRouteCapabilityV1`, `RoutedAccessSelectionV1`, `ResolvedAccessPlanV1`, `ExistingAgentProfileRef/V1`, `ExistingAgentProfileInspectionV1`, `ExistingAgentSelectionV1` and `ResolvedExistingAgentPlanV1`. Each exact ref binds ID/version/digest; aliases, transport protocols, upstream model/revision/variant, route hops and inference/gateway locality remain separate fields. `EffortRequest.Contract(ref)` resolves to `EffortArgument.Mapped(mapping_ref)`; native Explicit/HarnessDefault remain unchanged. `SelectionEvidence` gains optional resolved access/existing plans and required-control coverage; unsupported Contract never becomes OMIT. Reject duplicated selector/route/effort conflicts and mismatched harness/role/version. Ordinary existing treatment permits unverified optional inherited declarations and HarnessDefault without a route profile; strict comparison requires a qualified Contract. A profile ID is never a HarnessId or decision-engine profile.
+
+**Access and effort contracts — R192–R193.**
+
+Implement M04's pure profile/model/effort types and rules from [CROSS-HARNESS-COMPARISON.md](../CROSS-HARNESS-COMPARISON.md). Scope resolution/capability caches by immutable route, model binding, harness distribution/version and account evidence. Extend billing resolution with evidenced inference locality; `EndpointRef` and loopback transport cannot imply LOCAL. Exact effort mappings preserve requested native units/levels and emitted fields; unknown and not-applicable differ from default/low/zero. Add typed mapping, independent provider alias, profile version, credential-redaction and local-gateway/remote-inference vectors.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R185, R187 — frozen domain profile/evidence contracts: [R185](../quality-judges/MOBILE.md); [R187](../quality-judges/AGENTIC.md).
+
+R167, R168 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Consume all six shared HarnessId values and retain distribution/generation/version in catalog context and capability provenance. Cursor `agent` provenance and OpenCode V1/V2 context cannot be inferred from executable names; unknown defaults, effort/image/role capabilities, usage and billing remain unknown. Fixture data uses fictional models/accounts only. Extend this child's resolution/discovery/picker tests to both new adapters and all six registry entries, including absent/unusable/unsupported-version cases; model-free reads never invoke inference or substitute a default.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Codec-round-trip all new refs/plans through both client schemas, including native budget versus level versus disabled, wrong-role/harness, unknown required controls, model-alias collision, independent direct/OpenRouter/LiteLLM/chained profiles and immutable version reuse. Preserve unknown optional inherited settings, explicit empty/unset declarations and independent dual credential presence without a fabricated conflict. Reject secrets/private locators in portable projections.
+
+**Variant acceptance:** Add codec/resolution vectors for cycles, unknown parents, multi-root merges, reordered adapters, missing shards/support files, QLoRA versus inference quantization and KV-cache precision. Metadata-only correction preserves execution fingerprint while changing descriptor digest; alias collision and changed required bytes remain distinct. Round-trip role-specific creators and partial/offset dates; explicit unknown stops inference and conflicting claims survive overrides.
+
+**Domain acceptance:** Round-trip native-image supported/unknown/unsupported metadata with source and no browser-viewport assumption; product model names cannot identify the builder or mark an untested native tool/device/evaluation route READY.
+
+Add decision metadata fixtures for unknown native capabilities, discovery versus execution identity, changed artifact bindings and independent role/profile selection. Existing API-access profile success must leave both decision-role enable flags false until their explicit READY System One selection exists.
 
 Run:
 

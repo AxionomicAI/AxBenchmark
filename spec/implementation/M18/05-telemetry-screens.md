@@ -55,7 +55,15 @@ All loads use injected client workers and content-switcher loading/empty/error s
 
 Existing artboard names remain. Future board changes need source-selection/rejection rows, actual timing, explicit TrialRef and pending-finalization states; parent wires these follow-ups without changing ownership.
 
+Telemetry/Energy/Windows views display frozen decision policy, actual capture/transport/inference/residency overlap and unknown attribution from returned DTOs. Link profile/call provenance without claiming local URL implies local/exclusive execution or zero API charge means zero energy. Deferred observer work and server_state_unknown are separate states; ordinary host measurements retain their actual scope/coverage. No client subtraction or adjusted competitor energy is permitted.
+
+## Integrated requirements
+
+R165, R169 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
 ## Acceptance and fault checks
+
+Extend existing fixtures for native-only and delayed/partial analysis, explicit local overlap/unknown attribution, distinct decision/harness/human fingerprints and offline or disabled-engine operation as applicable. Assert unchanged scope/digests, no fabricated values/calls, and no reclassification triggered by viewing, export/import or navigation.
 
 Run `pytest tests/tui/test_monitoring_screen.py tests/tui/test_telemetry_screen.py tests/tui/test_energy_detail.py tests/tui/test_sequential_energy.py tests/tui/viewmodels/test_telemetry.py tests/integration/test_telemetry_navigation.py tests/integration/test_telemetry_accounting_views.py`.
 

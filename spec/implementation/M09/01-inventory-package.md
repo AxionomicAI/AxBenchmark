@@ -49,13 +49,24 @@ Use the parent's exact 30-row catalog and order. Each task's descriptor `check_i
 
 `RelationToDefault` uses M01 identity/lineage. A same-name six-task copy is a look-alike; an older valid built-in is neither the current default nor a look-alike. `choose_default` and results-based upgrade behavior stay M01-owned.
 
+**Discovery-safe registration.** `LoadBuiltins` can parse packaged bytes without persistence. M01 `RegisterBuiltins` default-pointer mutation is an operational initialization hook, deferred when the daemon starts solely for `database.path`/`database.info`; discovery must not initialize the shared SQLite marker store indirectly. Before the first library/run/mutating operation, complete normal registration and default selection through M01. This changes startup scheduling only, preserving package/input/golden bytes and default policy.
+
 ## States and screens supplied
 
 InventoryAbout gets canonical contract facts; InventoryPrompts gets exact text/order; InventoryChecks gets catalog/phase detail; InventoryVariant gets verified identities/counts. Library/DefaultChanges gets r2 availability and real change lines.
 
 Supply fixtures for invalid built-in, no contract, no checks, missing payload, same-name variant, r1/r2 with/without existing results and unavailable capabilities. No Textual rendering belongs here.
 
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Preserve the built-in v1 descriptor, all eight original input byte streams, seven tasks, suite IDs and original acceptance predicates. It projects as legacy multi-step; T7 remains the authored QA/fixes task. Its declared per-task commit protocol is the compatible legacy execution branch: no repository before T1, competitor initialization and first commit within T1, then original advancement checks. Do not preinitialize, inject new instructions, duplicate mandatory checks or strengthen historical ancestry predicates. Extend package/repository integration fixtures to select this branch beside a new-policy v2 fixture and prove original bytes/hashes/outcomes stay unchanged; archive read/export never regrades.
+
 ## Acceptance and fault fixtures
+
+**SQLite acceptance:** On a fresh data root, path/info through an auto-started daemon return absent storage with no database/default-pointer writes. The next operational library request initializes once and applies the same r1/r2 default decision and preserved package hashes.
 
 Run `pytest tests/builtin/test_package.py tests/builtin/test_canonical_package.py tests/builtin/test_default_contract.py tests/builtin/test_registration.py tests/builtin/test_contract_queries.py`.
 

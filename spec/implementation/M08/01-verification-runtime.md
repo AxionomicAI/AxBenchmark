@@ -10,13 +10,15 @@ Outcome: a headless, explicitly scoped verification operation with frozen observ
 
 **Bootstrap-published contracts, allowed as injected fixtures:** M01 `RevisionReader`/`TemplateIdentity`; M02 `ResultRecorder`/reader; M03 prerequisite assessments; M10 `VerificationObservations`/finalizer; M11 scheduler/invalidation coordinator; M06 eligibility notes. M08 publishes check/evidence/observation schemas before M02/M09 consume them. Later provider implementations are integration gates, not circular entry requirements.
 
+Extend `JudgeEvidence` and its final-artifact projection with deterministic evidence manifest/coverage, immutable IDs/digests and ordered actual image references for decision grading. Preserve ResultId/full TrialRef/final-regression artifact binding; web uses its existing viewport pair and other domains their frozen evidence plan. M12 receives bounded read-only evidence through the same port for all backends; missing/oversize/modality-unavailable evidence is explicit, never silent truncation, OCR, generated description or a per-task screenshot substitute. Decision transport/capability selection and human renderer policy remain M12-owned.
+
 ## Ownership and interfaces
 
 Own proposed files:
 
 - `axbenchmark/engine/verification/domain/checks.py`, `observations.py`, `classification.py`, `evidence.py`, `regression.py`, `errors.py`, `__init__.py`.
 - `axbenchmark/engine/verification/ports.py`; `application/interfaces.py`, `verify.py`, `cancel.py`, `reconcile.py`, `summaries.py`.
-- `axbenchmark/engine/verification/schemas/acceptance-v1.schema.json`, `observation-v1.schema.json`; `axbenchmark/api/verification.py` scoped DTO/schema publication.
+- `axbenchmark/engine/verification/schemas/acceptance-v1.schema.json`, `observation-v1.schema.json`, new closed `acceptance-v2.schema.json` and `observation-v2.schema.json` (including the v2 report envelope); `axbenchmark/api/verification.py` scoped DTO/schema publication.
 - `tests/verification/test_suite_schema.py`, `test_classification.py`, `test_trial_scope.py`, `test_runtime_lifecycle.py`, `test_durable_completion.py`, `test_identity_invalidation.py`, `test_recovery.py`.
 - `tests/verification/fixtures/contracts/` and `tests/verification/fakes.py` for phase rules, two trials, fatal identity and delayed persistence/acknowledgement.
 
@@ -48,13 +50,38 @@ M11 checks after the last task and before finalization/judging; M08 checks befor
 
 Stop/recovery drains groups, retains existing observations, marks genuinely unfinished checks not run, retries pending writes/acks and disposes only owned copies. It never silently reruns checks or reopens sealed execution facts.
 
+**Frozen domain contract.** Publish the parent DomainEvidencePlan, ObservationContext, EvidenceCoverage and closed acceptance.v2/report schemas in existing domain/ports/API locations. Keep acceptance.v1 and M09 repo/browser/keyboard/backend behavior exact; new explicit native_mobile/devops/agentic/specification kinds use the same CheckRunner and classification. Required scope derives only from approved rubric/check/support bytes. V2 observations bind actual final snapshot, target/case/source-role/evidence-mode and content digests; coverage retains missing, contradictory and unavailable evidence. Specification checks cannot execute candidate scripts; failed collection never proves a candidate omission.
+
 ## States and API
 
 No rendering ownership. Publish pending/running/complete, stage, partial evidence, ordinary failure, durability-pending and run-invalidated projections for TaskChecks, VerifyProgress, FinalRegression and CheckOutcomes.
 
 M08 verification is internal work, not a client job. Register exact `verification.*` events with explicit trial/phase, stable entry IDs or object revisions, and `EventCursor`; use shared numeric RPC errors with namespaced `data.code`. Child M08.2 implements query/RPC adapters.
 
+**Normalized retained evidence.** M08 supplies validated acceptance.v1/v2 and observation.v1/v2 tags, DomainEvidencePlan/ordered bindings and tagged ObservationContext to M02 through existing recorder ports. Normalized plan/check/coverage/mode/source-role/final-snapshot fields are authoritative; report JSON, images and product traces are inert large evidence. Preserve authored versus protocol check origin. No direct SQL or second result JSON repository belongs in verification.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R170 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R179, R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Extend `CheckDefinition`/index/outcome projections with origin `authored_acceptance|mandatory_protocol` and frozen policy/check/source/scope refs. Resolve protocol declarations through M01/M05 into the existing CheckSuite repo runner; validate unique IDs across origins and closure before launch without rewriting authored suites or `tasks.check_ids`. `verify_task` schedules the mandatory check for every attempted task after process drainage, even with zero authored checks or failed application service setup. Never-started tasks get no invented commit outcome.
+
+Consume immutable `TaskRepositoryEvidence` at that invocation cutoff. New reachable competitor commits must advance born/unborn starts, retain all earlier tips as ancestors and include every scoped delivered path/byte/deletion/executable flag without dirty staged/unstaged/untracked deliverables. Excludes/ignore rules cannot hide required files; setup commits do not count and no-change milestones may be empty. Observable violation is failed/application_failure, unavailable proof unverified with cause. Preserve process/behavior outcomes separately, and retain policy, observations and receipt refs durably before completion. Final views use the same task cutoff, not later HEAD; recovery never rechecks live history or commits.
+
+Extend lifecycle/classification/recovery tests with empty-suite one-shot/multi-step, rewritten ancestry, ignored deliverables, missing history, delayed receipt, source deletion and no-commit/no-repair recovery. Preserve M09's original check IDs/predicates without duplicate protocol entries; absent archived evidence is `not_recorded` availability, not a regraded outcome.
+
 ## Acceptance and faults
+
+**SQLite acceptance:** With real M02, compare retained plan/context/check rows and API/ZIP projections for every family; delay durable files and row receipts independently and reject cross-trial or final-snapshot mismatches before completion/seal.
+
+**Domain acceptance:** Add version/schema fixtures for all domain tags, unsafe/foreign/missing refs and invalid evidence modes; retain v1 goldens. Verify failed-versus-unverified classification, final-only evidence admission, no universal image gate and durable partial evidence after cancellation.
+
+Test wrong-trial/task/historical screenshots and mismatched image order/digest, missing final capture and a text-domain plan without images. The same admitted behavioral evidence reaches both automated strategies and the human form without competitor performance/history metadata or new checks/model calls.
 
 Run `pytest tests/verification/test_suite_schema.py tests/verification/test_classification.py tests/verification/test_trial_scope.py tests/verification/test_runtime_lifecycle.py tests/verification/test_durable_completion.py tests/verification/test_identity_invalidation.py tests/verification/test_recovery.py`.
 

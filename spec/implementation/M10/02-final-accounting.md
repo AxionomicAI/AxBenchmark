@@ -25,6 +25,10 @@ Own proposed files:
 
 Do not implement M18 counter collectors, M11 scheduling, M02 sealing or M06 eligibility. Finalizer requests durable writes/receipt from M02; the supervisor invokes sealing separately. M10.3 owns rendering.
 
+Implement `ContextClassifier.classify(ContextQuestionBatch) -> ContextDecisionBatch` through the shared DecisionEngine with one bounded Choice question per ambiguous deterministic segment. Native labels take precedence; retain predictions, raw native probabilities/confidence, disagreements and acceptance reasons without altering counts/membership. Require explicit selected READY profile and frozen native-confidence policy; ties, low/unknown confidence and malformed answers remain unclassified. Do not introduce a second retry/queue layer.
+
+Register the supplement's exact six `measurements.context.*` methods and four measurement events. `ContextTarget` binds result/invocation/session/agent/window; `AnalysisSelection` pins none or analysis ID/cutoff. Every response returns resolved TrialRef, source cutoff/digest, coverage, selected analysis/status and capabilities. Cursors bind this entire selection. Reclassify is a cancellable idempotent job freezing source/profile/pack/policies/budget; same key with changed digest conflicts. Return `measurements.context_analysis_disabled` with engine_not_configured/engine_not_ready/role_not_selected and setup route before dispatch. Append analysis entries/observer accounts through M02's SQLite-backed sink; live ranges grow only until closure, explicit reclassification pins a closed scope. Late decisions never reopen source facts or the sealing barrier.
+
 ## Interfaces and invariants
 
 Implement `MeasurementFinalizer.drain_run(run_uid)` and `.finalize_run(run_uid, telemetry_receipt, terminal_cause)` exactly. Publish `CostAnalysis.display_currency_for(pinned_runs) -> DisplayCurrencyDTO`, `.ranking_cost(EffectiveResult, tariff, display_currency=None) -> CostObservation`, and `MeasurementReader.trial_summary(TrialGroup, tariff, display_currency=None) -> TrialSummary`.
@@ -39,7 +43,7 @@ Price kWh × tariff using frozen rates. Sequential local endpoints use only thei
 
 Import M18's exact published `TelemetryFinalizationReceipt` from [its ports contract](../reference/modules/18-hardware-monitoring.md#ports-enginetelemetryportspy). Retain it complete and unchanged as `MeasurementSet.energy_evidence.telemetry_receipt`: schema version, run/collection IDs, input/collection/windows digests, full cutoff (wall time, monotonic offset, clock epoch, optional last persisted sample), status/limitations and every sorted result/trial/hardware-digest/operation-ID row. Do not reconstruct a local receipt or keep only the current trial's row. Off/unavailable receipts still name every expected trial and preserve unknown energy.
 
-Implement the parent's read queries through both clients. Current cached rates are allowed only for prelaunch accounting preview; alternatives derive from retained kWh/frozen rates and never write. Finalized local/imported views use M02 original facts; live journal values are explicitly provisional.
+Implement the parent's read queries through both clients. Current cached rates are allowed only for prelaunch accounting preview; alternative measurement projections derive purely from retained kWh/frozen rates; only the containing M06/M13 analysis wrapper may persist a derived snapshot through M02. Finalized local/imported views use M02 original facts; live journal values are explicitly provisional.
 
 Use the parent's exact [`Policy`, `M10Statistic`, `GenerationAggregate`, `ArtifactStats` and extended summary DTOs](../reference/modules/10-measurements-cost.md#shared-dtos-axbenchmarkapimeasurements), retaining full scopes, policy bytes/digests, evidence, pairings and inventories. Map statistics `known` to legacy measured `complete` only for identical fully evidenced scopes; preserve partial/unknown and independent cached/reasoning detail. Historical unrecorded fields stay null. M06 consumes these prepared values without reaggregation; original cost/time/currency/energy and verified-zero rules remain unchanged.
 
@@ -48,6 +52,8 @@ Generation uses M10.1's matched output/duration pairs: retain exact N/D and pool
 `CollectArtifactStats` reads only M02's pinned final delivered snapshot, freezing manifest/template/baseline/scope and policy digests and safe included/excluded inventories. Count regular paths once, including binary files and surviving baseline; label **final snapshot size (baseline included)**. Apply the supplement's strict text classification/UTF-8 or BOM-marked UTF-16 and LF/CRLF/CR physical-line policy; no symlink traversal, hidden required deliverables, inferred binary/zero on decode failure, sum of task snapshots or later workspace rescan.
 
 `ContextClassifier` consumes M12.4's `DecisionEngine` through `decision_context.py`; M10 owns sanitized bounded inputs, label acceptance/native-label precedence and append-only analysis under the [observer bridge policy](../CONTEXT-MONITORING.md#shared-decision-observer-bridge). `AccountDecisionCall` consumes the runtime auxiliary-accounting port with distinct purpose-scoped observer and grader accounts keyed by `DecisionCallId`/observation ID; preserve receipts, attempts, profile/model, usage, known cost and timing. `ContextObserverAccount` has role `context_observer`; neither account enters competitor usage/statistics or native invocation accounting. No ready configured profile disables analysis/reclassification with typed capability reasons and a setup CTA; native capture, generation/token/artifact statistics, deterministic rankings and offline retained views remain available without inference.
+
+**Retained storage boundary.** Durable observation journals/checkpoints remain producer working state. M02 SQLite is the authoritative retained mapping for exact call counters/timing pairs/rosters, statistics, prices/costs, source inventory, context identities/labels/counts/membership and purpose-separated auxiliary accounts. Map native/adapter-synthetic scope explicitly; context classification cannot become traffic. `append_measurements`/context/evidence operations await M02 receipts; finalized readers never fall back to journal JSON. Alternative measurement projections are pure; an M06/M13 wrapper may retain their containing derived analysis without editing execution facts.
 
 ## Awaited barrier and recovery
 
@@ -63,11 +69,50 @@ Missing/unsupported source evidence may settle as explicit partial/unknown; stor
 
 Consume exact singular `run.phase.started`, `run.phase.finished`, `run.state.changed`; ended is a timing notification, never an energy/accounting trigger. M11's phase persistence/handler is awaited; required accounting never travels on a client queue. Publish revisioned events on bare topic `measurements`, with M11's typed cursor/snapshot/resync rules.
 
+**Frozen domain contract.** Finalize and retain the separate artifact_verification auxiliary account via VerificationObservations.record_auxiliary and existing ObservationReceipt. Bind approved M08 evaluation/attempt/case/plan/final-artifact evidence and M11 lease/available settlement provenance; acknowledge captured usage before the lease settlement consumes that receipt; aggregate only exposed known/partial/unknown auxiliary usage/cost under its own purpose. Exclude it from competitor cost/time/tokens/Gen and grader/observer accounts. Drain accepted auxiliary writes before verification/finalization acknowledgement; recovery writes retained observations without rerunning product effects.
+
 ## Boards and supplied states
 
 Supply all responses for Measurements, MeasurementsPartial, TimingPhases, CostBasis and CurrencyEnergy: complete/partial/unknown, no observations, provisional, finalization pending/error, frozen/alternative tariff, declared billing, missing rate, mixed currency and exact-zero basis. No screen files or wireframes are changed here.
 
+Inject M02 `ArtifactSnapshots.pin_final(rid, view=None) -> DeliveredSnapshotLease` in `adapters/results.py`; `collect_artifact_stats.py` reads its pinned manifest and `read_file(path)` bytes, closes the lease in every outcome and binds manifest/template/baseline/scope digests in the finalizer input. This internal pre-seal reader admits a durably captured final snapshot without requiring a sealed result, preventing a finalization cycle; it neither captures a changing workspace nor scans filesystem paths supplied by clients.
+
+Implement `artifact_stats.py` with independent file/LOC availability. Complete safe manifest entries can establish regular-path file_count while unreadable/unsupported text makes loc partial/unknown. Binary files count once as files and not LOC; missing inventory prevents complete count, decode failure never proves binary. Count physical LF/CRLF/lone-CR lines after strict UTF-8 (optional BOM) or BOM-marked UTF-16 LE/BE decoding; no lossy decoding or guessed encoding. Include surviving baseline/source/tests/README/SVG and declared deliverables; freeze VCS/dependency/cache/engine-evidence exclusions and never blindly drop a delivery/build directory. Retain included/excluded path/kind/bytes/digest/classification/encoding/line/reason inventory.
+
+`MeasurementReader.trial_summary` prepares all five metrics over the complete frozen `(RunUid, ConfigurationId)` roster. Input/output/file_count/loc use exact means, totals and full-roster ranges; generation uses pooled summed paired N/D with per-trial rate range, never a mean. Unknown expected trial dominates partial, partial dominates known; observed subset values/ranges stay separately labelled. Do not gate file_count on LOC availability or require identical tokenizer IDs across models. `MeasurementSet`, `ResultMeasurements`, `TaskRowDTO`, `TotalRowDTO` and `TrialSummaryDTO` retain the parent Policy/M10Statistic/GenerationAggregate/ArtifactStats contracts through both clients and offline records; final Files/LOC are trial fields, not invented task counts.
+
+**Route, comparison and profile interfaces.** Final accounting pins correlated route/attempt source closure and actual inference-locality evidence with ordinary measurement/evidence cutoffs. No complete cost/usage claim if a gateway hides possible attempts; retain measured totals with partial/unknown coverage. Failed comparison does not erase incurred charges. Aggregate competitor helpers/retries in competitor work, keeping planner/judge/observer/verification diagnostic journals separate and joining route/variant proof only by source refs. Gateway host overhead is disclosed host telemetry, never substituted for remote API cost or model-compute attribution.
+
+## Integrated requirements
+
+R192, R193 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R189 — [human review](../M12/05-human-review-web.md).
+
+R187 — frozen domain profile/evidence contracts: [R187](../quality-judges/AGENTIC.md).
+
+R173, R174, R175, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R161, R162, R163, R164, R165, R168, R169, R171 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Extend this child's producer/retention fixtures to Cursor and generation-qualified OpenCode using the same six-registry observation contracts. Keep unexposed native usage, currency, output-generation timing and request membership unknown; neither CLI terminal duration nor a registry entry proves measurement support. Preserve scope/deduplication/receipt behavior and full frozen trial rosters for both new adapters. Add one-shot versus multi-step accounting cases without changing arithmetic: synthetic baseline Git setup precedes competitor timing, task commits made during an invocation remain within task time, and mandatory protocol verification stays a separate verification phase. No extra task or model call is charged for a commit failure.
+
+**Human accounting acceptance:** Human wait/edit/save/submit timestamps are separately labelled M12 lifecycle observations with incomplete-observation limits. Model usage/API charge is not applicable and labor/host cost is unmeasured; do not manufacture an InvocationId, DecisionCallId, zero-price receipt or auxiliary inference account. Keep every competitor elapsed/token/cost/Gen/Files/LOC value and sealed measurement receipt unchanged across pending human wait, restart, submit and skip. Test those transitions while an unrelated automated run proceeds; measurement/detail views remain inspectable without opening the anonymous form.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Finalize/recover with mismatched effective route, hidden retries, non-USD charges, inclusive duplicates and unknown settlement; cost survives exclusion without contaminating other roles. Exact throughput/zero/conversion/statistics vectors remain unchanged and no endpoint URL implies free cost.
+
+**SQLite acceptance:** Round-trip exact producer values through real SQLite and current codecs after deleting working journals. Independent unknown detail/LOC states, signed hardware values and eleven context labels survive; delayed row/outbox acknowledgement blocks seal, and retry never double-counts accepted usage.
+
+**Domain acceptance:** Delay auxiliary accounting and resource settlement independently; seal waits for durable receipts while missing prices/usage remain unknown. Real M08/M11 integration proves simulation/replay/live provenance, no fabricated DecisionCallId and no double charge or effect on restart.
+
+Extend `test_artifact_stats.py` with complete file count plus undecodable text/unknown LOC, binary-only and empty files, final newline/CRLF/lone CR/BOM cases, duplicate content at distinct paths, source-deleted and mutated-workspace snapshots, exclusions and symlink escape attempts. Add full-roster count means 2 and 5 → 7/2, pooled rates 100/2 and 900/3 → 200 with range 50–300, and missing trial/subset cases. Exact archive/API values and original cost/time/currency/zero rules remain identical after finalization/recovery; no model access or old-install backfill is required.
+
+Add native precedence and high-confidence/unknown-membership cases; stale paging/selection, disabled API/CLI bypass, reclassification idempotence and late post-seal analysis tests. Deferred local classification must leave capture/native metrics runnable, and all observer/grading receipts must remain outside competitor usage/cost/throughput.
 
 Run the proposed suite:
 

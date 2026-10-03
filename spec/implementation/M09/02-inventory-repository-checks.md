@@ -55,6 +55,12 @@ TaskChecks/FinalRegression receive individual commit outcomes with historical ta
 
 Screens retain original unavailable commit metadata and show the executable expected/observed evidence separately. Historical screenshot evidence is not admitted to M12's delivered-artifact screenshot set.
 
+## Integrated requirements
+
+R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Preserve the built-in v1 descriptor, all eight original input byte streams, seven tasks, suite IDs and original acceptance predicates. It projects as legacy multi-step; T7 remains the authored QA/fixes task. Its declared per-task commit protocol is the compatible legacy execution branch: no repository before T1, competitor initialization and first commit within T1, then original advancement checks. Do not preinitialize, inject new instructions, duplicate mandatory checks or strengthen historical ancestry predicates. Extend package/repository integration fixtures to select this branch beside a new-policy v2 fixture and prove original bytes/hashes/outcomes stay unchanged; archive read/export never regrades.
+
 ## Acceptance and faults
 
 Run `pytest tests/builtin/test_repository_checks.py tests/builtin/test_commit_advancement.py tests/builtin/test_runtime_checks.py tests/builtin/test_check_classification.py`; browser-marked direct-file cases are mandatory.

@@ -48,6 +48,19 @@ Display requirement/criterion coverage and evidence deficiencies without default
 
 Source, delivered tests, behavioral reports, product-agent evaluation traces and supplied/candidate specification documents are read-only evidence. Distinguish authority from candidate claims and simulated/replayed/live outcomes. No execution, live preview of the candidate app, device action, deployment, repairs, extra test/validator, remote evidence fetch or benchmark/profile/weight edit is offered.
 
+**Frozen domain contract.** The trusted form/evidence renderer consumes frozen ProfileDTO.comment_axes and DomainEvidencePlan/ObservationContext coverage, with six ordered exact grade controls regardless of zero weights. Backend API/data/recovery, native build/matrix/lifecycle, DevOps plan/dry-run/applied/rehearsal, product-agent per-boundary modes and supplied-brief versus candidate-document roles are labelled explicitly. Evidence or renderer gaps remain deficiencies; no screenshot requirement is inferred for text domains and no file/spec count or measured metric is a quality proxy. Existing pending/draft/submit/skip lifecycle and shared validator remain unchanged.
+
+The HTTP case/form/evidence DTOs and rendered DOM use M12.1's recursive anonymous allowlist: withhold competitor base/fine-tune/quant/adapter/merge lineage, creator-role/date-kind/source claims, manifests/hashes, requested/effective proof and annotations even in nested labels, download names or URLs. Opaque case/evidence IDs never encode variant or subject IDs. Queue order cannot sort by these withheld facets. Keep legitimate product-model terms/approved artifact semantics and original retained bytes unchanged; the form has no variant filter/detail endpoint or invented human model identity.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
 ## Post-execution lifecycle and resource release
 
 M11 admits original human judging only after **all** expected competitor trials finish or are stopped as applicable, verification and accounting are durably finalized, results are sealed, identity is current and normal original-judging admission succeeds. Stopping the whole run closes admission and settles unfinished originals; it must not open a new form afterward.
@@ -78,6 +91,8 @@ Skip settles only its case. Closing a tab or detaching settles nothing. Explicit
 
 ## Human form and assessment contract
 
+**Domain acceptance:** Extend existing all-six-profile form fixtures with native wrong-build/matrix gaps, plan-only deployment claims, mixed live/mocked agent boundaries and specification injected commands/authority overrides. Submitted evidence refs must resolve within the frozen case; incomplete grades/comments stay invalid and no candidate content executes.
+
 The desktop form places anonymous queue/coverage beside evidence and six rubric sections; a narrow mobile viewport stacks the same controls without hiding requirements or submission state. Page title, queue, evidence panels and browser metadata use only anonymous labels.
 
 Each category presents its frozen label and anchors, a required half-point selector with exactly `1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5`, **no preselected grade**, a substantive rationale field and admitted-evidence picker. Evidence selections bind alias plus digest and optional admitted range/criterion support; free-form paths/URLs cannot become references.
@@ -98,11 +113,11 @@ Use semantic labels/fieldsets, keyboard access, visible focus, linked inline err
 
 ## Durable cases, drafts and submission interfaces
 
-`HumanCase` binds opaque case ID internally to batch, reviewer, ResultId/TrialRef, ReviewId reservation, immutable artifact/rubric/scope/evidence digests and original/additional purpose. These native bindings never cross the web projection. Persist draft `version`, parts, deficiencies, state, operation log and auto-open marker under `~/.axbenchmark/judging/human/<batch_id>/` with private directories/files (0700/0600).
+`HumanCase` binds opaque case ID internally to batch, reviewer, ResultId/TrialRef, ReviewId reservation, immutable artifact/rubric/scope/evidence digests and original/additional purpose. These native bindings never cross the web projection. Persist draft `version`, parts, deficiencies, state, operation log and auto-open marker under `~/.axbenchmark/judging/human/<batch_id>/` with private directories/files (0700/0600). These are M12 working checkpoints, not a second committed review repository; M02 SQLite alone owns authoritative reviews, grades and dispositions.
 
 `AWAITING` (empty) and `DRAFT` are editable; saving increments version. `SUBMITTING` is immutable while an accepted submit/skip/cancel intent is being appended. Terminal `SUBMITTED`, `SKIPPED`, `CANCELLED` and `INVALIDATED` are read-only. A previously SUBMITTED review stays submitted under a separate invalidation overlay; never rewrite it into an unfinished state.
 
-Store atomic durable journal/checkpoint updates using fsync and rename, not browser local storage. Preserve partial drafts as explicitly uncommitted local diagnostics after skip/cancel; they are not exported as quality. Submitted ungraded content is committed review evidence and carries its deficiencies. Credential material is separate from drafts/artifacts/exports and logs.
+Store atomic durable journal/checkpoint updates using fsync and rename, not browser local storage. M02 appends review/grade/disposition/receipt rows atomically in SQLite after durable evidence; M12 working checkpoints acknowledge that receipt rather than independently publishing a review. Never hold a database transaction while waiting for a person or an opener. Preserve partial drafts as explicitly uncommitted local diagnostics after skip/cancel; they are not exported as quality. Submitted ungraded content is committed review evidence and carries its deficiencies. Credential material is separate from drafts/artifacts/exports and logs.
 
 Published ports, implemented initially with fakes:
 
@@ -117,7 +132,7 @@ class HumanEvidenceSource(Protocol):  # M02/M01 application readers
 class HumanSubmissionSink(Protocol):  # M12.2 -> M02 append/settlement
     async def commit(self, intent: HumanSubmissionIntent) -> HumanCommitReceipt: ...
 class BrowserOpener(Protocol):  # narrow URL view of extended SystemOpener
-    async def open_url(self, url: LocalReviewUrl) -> OpenAttempt: ...
+    async def open_review_url(self, url: LocalReviewUrl) -> OpenAttempt: ...
 ```
 
 `HumanSessionStore` offers durable create/load/list-pending, compare-and-save(version), prepare-intent and acknowledge-receipt; `HumanLifecycleGate` atomically admits an intent or records revocation against M11 stop/invalidation. Reuse M13's existing `SystemOpener`/`adapters/system_opener.py` at integration with a typed loopback URL target alongside its file-path operation; do not import reports adapters from judging application code. Invoke the OS opener with a bounded, validated URL argv value, never shell interpolation.
@@ -129,6 +144,8 @@ Under the lifecycle gate, atomically persist immutable intent bytes/digest, stab
 Retry/recovery replays that exact intent with the same ReviewId/digest; it must not reread a mutable draft as a new review. Lost append acknowledgement may retry the idempotent M02 operation. Publish terminal case state, original disposition and `judging.human.case.changed` only after the sink's barrier; M12.2 includes it in full-roster settlement.
 
 Identical operation-key/payload replay returns the original operation/receipt **even if its base_version is now old**. Reusing the key with different bytes/semantics returns conflict. Deduplication survives restart for the lifetime of the case; it is not a short HTTP cache. Replays cannot bypass revoked authentication or mutate another scope.
+
+**SQL acknowledgement projection.** `HumanCommitReceipt.receipt_ref` resolves the real M02 operation receipt/publication containing review/grades/finalization and original or additional disposition. The fs_human_sessions acknowledgement is a recoverable local projection only; lost acknowledgement replays the immutable admitted intent. HumanRecoveryPending keeps drafts/session intent journals outside analytical review tables, and neither database backup nor M17/report export implies inclusion of these private working files.
 
 ## Local HTTP and engine API
 
@@ -188,6 +205,10 @@ Resolve evidence only by the case's allowlisted ID/digest through M02/M01 reader
 The gateway maps DTOs/auth/errors and delegates to shared use cases; it contains no alternate grade, evidence-admission or settlement logic. Browser asset rendering never executes artifact commands. Saving an offline report or this page's HTML cannot create a reusable controller with embedded credentials; M13 output contains only committed review facts and inert evidence.
 
 ## Accounting, consumer integration and acceptance
+
+**SQLite acceptance:** After M02 commit but before working acknowledgement, raw SQL already exposes exactly one complete review/disposition; replay returns the same receipt. Before commit, both raw SQL and quality readers expose no half-review. Backup/ZIP/HTML omit draft parts and bearer credentials.
+
+**Variant acceptance:** Seed unique variant/creator/date/provenance sentinels at every nested input/manifest/label/URL layer across all six rubric families and all three backends; assert absent from automated requests and human case JSON/DOM/evidence metadata while legitimate artifact model terms remain readable. Automated judge identity stays role-separated and human schemas reject model fields.
 
 Human `AssessmentTotals` has one case per result and inference-call budget **0**. API inference charge is **not applicable**, not a fabricated zero-price model receipt; human labor cost is unmeasured unless separately modeled later. Record waiting/editing/submission wall time as human-review lifecycle data with honest observation limits, separate from competitor elapsed time, resource windows and costs.
 

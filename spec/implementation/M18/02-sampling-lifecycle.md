@@ -20,6 +20,8 @@ Outcome: one collection per experiment, shared collector resources, explicit tri
 
 M18.3/4 supply collector implementations and guide entries, not separate schedulers. M10 owns tariffs/billing/accounting and M11 owns terminal cause/seal. M18.5 owns screens.
 
+Consume M11 decision-resource/admission evidence in the frozen window/cutoff inputs, including actual warmup/inference/residency intervals, explicit live_local_overlap and server_state_unknown limitations. M12.4 alone acquires inference leases; this sampler neither waits for classification nor estimates its resource share. Persist contemporaneous overlap provenance before hardware closure/receipts with existing digests; late analysis cannot rewrite closed hardware evidence. Native sensing/closure continues while decision work defers or fails.
+
 ## Concrete ports and state
 
 Implement parent CollectorProbe/SampleSource/ProcessTreeReader, HostInfo, GuideCatalog, TelemetryStore and CsvSink ports. Publish CollectorCapabilities, MonitoringOptions, ExperimentTelemetry, ProcessTracking, EnergySource and TelemetryDescriber exactly.
@@ -49,7 +51,18 @@ Startup reconciliation closes orphan source resources; after M11 restores bindin
 
 Existing close/finalizer checkpoints retain original digest/cause/receipt/IDs after a later stop or engine loss; the newer lifecycle cause is separate. Concurrent close joins; all retries return identical receipts. No post-seal hardware/measurement append is permitted.
 
+**Normalized retained telemetry.** M18 supplies typed series/sample/unit/source/scope and exact values with the unchanged TelemetryFinalizationReceipt through M02 ports; M02 owns SQLite hardware rows and evidence references. Live sampling journals remain provisional working state. Shared host series cannot acquire competitor attribution by a SQL join; signed temperatures and unknown coverage must round-trip without float authority or zero filling.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R165, R169 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
 ## API, boards and acceptance
+
+**SQLite acceptance:** Round-trip scoped samples, signed/large exact values, gaps and full receipt rows through real M02 SQL/read API/export. Delayed hardware-row acknowledgement keeps close/finalization pending; finalized reads still work after working journals are removed.
+
+Extend existing fixtures for native-only and delayed/partial analysis, explicit local overlap/unknown attribution, distinct decision/harness/human fingerprints and offline or disabled-engine operation as applicable. Assert unchanged scope/digests, no fabricated values/calls, and no reclassification triggered by viewing, export/import or navigation.
 
 Implement the parent's telemetry.capabilities/guidance/experiment/energy/windows queries, detect job and export_csv command through both clients. Register bare telemetry and run:<run_uid> topics with shared revisions/cursors; publish only durable state.
 

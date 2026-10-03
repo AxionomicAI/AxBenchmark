@@ -25,7 +25,7 @@ Do not reopen M02 sealed facts, recalculate M10 receipts, own M12 review storage
 
 ## One terminal barrier
 
-1. Close task admission; join/cancel tasks and checks, await output/usage/evidence persistence and after-last-task/final-regression identity checks. Preserve actual partial/not-run outcomes.
+1. Close task admission; join/cancel tasks and checks, await output/usage/evidence and accepted generation-timing/request-roster persistence and after-last-task/final-regression identity checks. Preserve actual partial/not-run outcomes.
 2. Await `MeasurementFinalizer.drain_run(run_uid)` for accepted usage/exit/check/execution-phase work; no ended-event trigger or UI queue dependency.
 3. Await idempotent `ExperimentTelemetry.close(run_uid) -> TelemetryFinalizationReceipt`, including durable per-TrialRef hardware writes and last covered instant.
 4. Await `MeasurementFinalizer.finalize_run(run_uid, telemetry_receipt, terminal_cause) -> MeasurementFinalizationReceipt`. Its M02 operation-ID appends and receipt must be durable before return.
@@ -35,7 +35,9 @@ Do not reopen M02 sealed facts, recalculate M10 receipts, own M12 review storage
 
 A checkpoint fixes selected unsealed result IDs, accepted-observation cutoff/digest, telemetry receipt/digest, full launch digest and original terminal cause. Retry every pending finalizer call with those original inputs, including after engine loss or a later stop. Record later interruption separately in lifecycle/TerminalRetention; never replace finalized execution inputs to match the later outcome.
 
-If no checkpoint exists, recovery creates one partial-data checkpoint once. Missing data remains unknown/partial. Failure leaves retention_pending and readiness false with the owning typed error; no successful terminal/report claim. M02 remains authoritative for retained/imported facts.
+The durable finalization checkpoint includes accepted timing/roster acknowledgement cutoffs and the pinned final artifact manifest/lease identity required by M10 statistics; recovery cannot substitute a live workspace or let a later snapshot repair that cutoff. If no checkpoint exists, recovery creates one partial-data checkpoint once. Missing data remains unknown/partial. Failure leaves retention_pending and readiness false with the owning typed error; no successful terminal/report claim. M02 remains authoritative for retained/imported facts.
+
+**SQL barrier acknowledgement.** Checkpoints retain actual M02 SQLite operation/finalization/publication references, never a working-file substitute for seal, review/disposition or retention. Pending HumanRecoveryPending remains a working-state branch until a real submitted/ungraded/skip/cancel disposition commits. Reconcile rows+receipts+outbox as one publication after durable evidence; after commit roll forward notifications rather than withdrawing facts. No writer transaction spans M10 calculation, source copying or human input.
 
 ## Stop, invalidation and recovery
 
@@ -53,17 +55,52 @@ Every associated result/review becomes effectively interrupted/non-comparable im
 
 Originating workers await durable registration, then unwind; supervisor cleanup joins them afterward. Never make a reporting M08/M12 worker await cleanup that joins itself. Serialize invalidation, stop, judge admission and terminal/report eligibility; persisted invalidation wins comparison exclusion even if stop raced first.
 
-On startup resolve M07 commit intents, complete committed result rosters under the same UID, load invalidations before readers, reconcile orphan M05/M08/M12 resources and pending receipts/dispositions. Await `RunJudging.recover(run_uid, engine_lost)` for the complete frozen roster even with no existing batch; retain prior committed reviews/dispositions and settle the rest. No task/judge model call restarts. Lost active runs gain engine_lost lifecycle status while existing finalizer inputs remain fixed.
+On startup resolve M07 commit intents, complete committed result rosters under the same UID, load invalidations before readers, reconcile orphan M05/M08/M12 resources and pending receipts/dispositions. Await `RunJudging.recover(run_uid, engine_lost)` for the complete frozen roster even with no existing batch. Automated branches retain prior committed reviews/dispositions and settle unfinished work; HumanRecoveryPending restores pending cases and returns from startup without waiting for a person or finishing retention. No task/judge model call restarts. Interrupted competitor or automated-judge work gains engine_lost lifecycle status while existing finalizer inputs remain fixed; a restored sealed human wait remains judging with wait_reason=human_input.
 
-SIGTERM records engine_terminated, attempts the same cleanup/barrier, and leaves durable pending checkpoints if time expires. SIGKILL recovery uses last durable evidence/sample, never fabricated coverage. Client disconnect is neither interruption nor cancellation.
+SIGTERM records engine_terminated for interrupted automated execution and attempts its cleanup/barrier. For pending human hosts it checkpoints drafts/intents and revokes credentials without creating a terminal disposition; it leaves durable pending checkpoints if time expires. SIGKILL recovery uses last durable evidence/sample, never fabricated coverage. Client disconnect is neither interruption nor cancellation.
 
 Use exact M13 awaited ports `CompletionReports.ensure(run_uid) -> ReportStatus`, `.get(run_uid) -> ReportStatus`, `.wait(run_uid) -> ReportDisposition`. Ensure is idempotent by completion RunUid; get recovers durable state and wait settles succeeded/failed/cancelled/skipped. Map succeeded to RunStatus written with path/open attempt; retain the other reasons/errors. Typed reports.retention_pending/reports.persistence_pending settle waits as pending errors in completion_report, preserving their code; a later report failure/pending never retracts settled M02 retention or changes the terminal run outcome. Persist projection before notifications; clients recover with reports.status(completion_run_uid=run_uid) or report_id after generic job-cache expiry. Required work never depends on a UI event.
+
+**Frozen domain contract.** Include M08 product-evaluation producer/resource settlement and M10 verification-auxiliary acknowledgements in the existing verification/finalization drain barrier before seal. Stop/invalidation cancels approved in-flight work, retains partial outputs/unknown usage and reconciles uncertain server activity through the shared resource journal. Recovery replays durable writes/receipts only; no candidate model/tool effect or observation is rerun to fill evidence gaps. No completed grade repairs failed/unverified domain checks.
 
 ## Boards and supplied states
 
 Supply StopConfirm run/configuration gates and judge cleanup; StopCleanup terminate/cleanup/retain states; RunOverview/RunReattached finalizing, retention-pending/error, invalidation and report dispositions. M11.5 renders them; no wireframe edits here.
 
+Extend terminal steps 1–2 to join every context producer, close each M05 source and await M10 durable capture/gap/closure acknowledgements. Persist source digests/cutoffs in the checkpoint; observer completion is never required. Own `tests/integration/test_context_lifecycle.py` for delayed acknowledgements, stopped partial capture, late analysis and recovery with immutable sealed facts.
+
+Reconcile DecisionCall receipts, auxiliary-account acknowledgements and cross-run leases before clean admission. Bounded uncertain server termination persists server_state_unknown taint until independent evidence resolves activity; release worker/run locks without claiming clean hardware or killing external servers. Never resume grading inference. Preserve M12's `OriginalJudgingSettlement | HumanRecoveryPending` recovery branch: restore pending human cases and return from startup with judging/wait_reason=human_input; no fake NOT_JUDGED on disconnect, no automated resource held while waiting.
+
+The terminal checkpoint also pins accepted variant-observation receipt cutoffs/digests before seal. Drain M05's separate `VariantEvidenceRecorder` acknowledgements with process/evidence work; absent introspection settles unverified, failed persistence remains pending. Recover exact recorded observations and halt intent without probing or restarting a model. `harness.model_rejected(reason=variant_mismatch)` remains configuration-scoped; post-seal detection appends M02 attribution exclusion/annotation for affected TrialRefs. Neither enters `RunInvalidationCoordinator`, which handles approved-template `IdentityMismatch` only.
+
+**Route, comparison and profile interfaces.** Include accepted route source/variant receipt cutoffs and scoped comparison-mismatch stop intent in the existing terminal checkpoint. Known route/effort/helper drift stops only the affected configuration after durable observation, preserving incurred costs and full expected trials; never enters template invalidation or rebuilds a matrix. Recovery retains frozen six cells, source/treatment digests and expected roster even if the catalog/registry changed. Replay receipts and lease settlement for route_qualification scopes without redispatch; unresolved local inference blocks new clean measured admission while releasing worker/run locks.
+
+## Integrated requirements
+
+R192, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R187 — frozen domain profile/evidence contracts: [R187](../quality-judges/AGENTIC.md).
+
+R164, R169 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+**Human lifecycle acceptance:** Normal wait requires one actual durable submit/ungraded/skip/cancel disposition per original; drafts/tab closure/credential expiry/opener timeout do not settle. Explicit stopped/identity-invalidated recovery returns terminal settlement, while engine_lost for sealed persisted AWAITING/DRAFT returns HumanRecoveryPending after host restoration, without marking that human-only wait interrupted. Serialize stop/invalidation with immutable intent admission: drain an accepted intent to its M02 receipt before settling the remainder; preserve committed reviews under invalidation overlay. Test crash before/after every intent/append/ack, no-batch stop, idle hosts, unrelated-run progress and additional-review isolation. No browser/model restart or lease spans human input.
+
 ## Acceptance and fault matrix
+
+**Route/profile acceptance:** Crash at route receipt, mismatch stop, freeze publication and diagnostic cancellation; recover identical matrix/cost/roster and typed pending errors with zero model calls. Late evidence appends annotations/exclusions without rewriting sealed facts or erasing human pending review.
+
+**SQLite acceptance:** At every terminal checkpoint compare API and read-only SQLite under commit delays/crashes: sealed facts, original dispositions and retention agree atomically. Recover submitting Human intent to the same receipt, preserve pending draft waits and never resume model work.
+
+**Variant acceptance:** Crash before/after effective-evidence receipt and race drift with seal/stop. No facts rewrite or premature readiness; one durable annotation/exclusion after seal survives both metadata views, original grades stay intact and unrelated configurations are not invalidated.
+
+**Domain acceptance:** Interrupt after product dispatch, partial trace retention, auxiliary append and lease settlement; each checkpoint preserves stable IDs and unknown activity while preventing premature seal/clean measurement. Missing native/device/tool prerequisites remain unverified rather than invented quality or terminal success.
+
+Add lifecycle fixtures delaying source closure but completing classification, and the inverse; prove the correct seal gate. Recover uncertain local calls without clean admission, preserve pending human cases, replay prepared grades without inference and leave late context analysis outside facts_digest.
 
 ```sh
 pytest tests/engine/runs/test_stop.py tests/engine/runs/test_invalidation.py tests/engine/runs/test_finalization.py tests/engine/runs/test_recovery.py tests/engine/runs/test_terminal_races.py tests/integration/test_run_retention_barrier.py tests/integration/test_identity_during_judging.py tests/integration/test_completion_report_wait.py
@@ -71,7 +108,7 @@ pytest tests/engine/runs/test_stop.py tests/engine/runs/test_invalidation.py tes
 
 1. Delay each required handler, telemetry close, evidence/measurement append, receipt, seal and original-review disposition. No later barrier/readiness/report step overtakes it; immediate retained/export facts match live values after readiness.
 2. Crash after every checkpoint, including between two seals and after finish retention before terminal publication. Recover identical operation IDs/digests/receipts; append nothing after seal and publish terminal/report intent idempotently.
-3. Assert exact judge_run → wait signatures and full settlement roster on normal completion. Stop/invalidate before any batch and recover after engine loss: batch_for_run may be None, recover settles every trial with zero model calls. Public RUN judging.stop delegates once; internal stop never calls it recursively.
+3. Assert exact judge_run → wait signatures and full settlement roster on normal completion. Stop/invalidate before any batch and recover after engine loss: batch_for_run may be None; stopped/invalidated or automated-loss recovery settles every trial with zero model calls, while persisted human-only waits restore HumanRecoveryPending. Public RUN judging.stop delegates once; internal stop never calls it recursively.
 4. Fail a finalizer append with cause completed, then stop/kill the engine. Retry uses completed checkpoint cause/digest while run lifecycle records stopped/engine_lost separately. With no checkpoint, interrupted recovery creates one partial-data checkpoint only.
 5. Stop configuration versus run at each task/check/finalizer/judge boundary; other lanes continue for scoped stop. Repeated stop returns same ID. Completed configuration gate stays disabled during run judging while run gate remains enabled.
 6. Mutate during last task, final regression and judging after seal, including a M12 read error and a concurrent second detector. All results/reviews exclude immediately; one first overlay/cleanup, both digests/paths retained, no binding rewrite or self-join deadlock.

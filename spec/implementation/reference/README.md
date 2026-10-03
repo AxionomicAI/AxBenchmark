@@ -25,3 +25,9 @@ Start implementation from [the spec guide](../../README.md) and [Bootstrap](../B
 - [Model variants and provenance](../MODEL-VARIANTS.md): base/fine-tune/quant lineage, creator/date attribution and controlled same-benchmark comparison.
 
 - [Normalized results database](../RESULTS-DATABASE.md): SQLite structure, exact scores, reproducible analysis snapshots, safe read-only queries and migrations.
+
+- [Cross-harness comparison and API access](../CROSS-HARNESS-COMPARISON.md): one model/effort across the six-harness matrix, OpenRouter/LiteLLM routes, versioned capability evidence and queryable provenance.
+
+- [Existing agent aliases](../CROSS-HARNESS-COMPARISON.md#existing-agent-aliases-and-launcher-profiles): static profile registration, an illustrative named-profile example, isolated execution and declared/effective-setting provenance.
+
+- [Supplement integration](../SUPPLEMENT-INTEGRATION.md): feature-to-owner inventory, preserved boundaries and reproducible specification checks.

@@ -54,12 +54,12 @@ q, detach dialog, unmount and terminal close only release subscriptions/client. 
 
 | Boards / owner | Integration obligation |
 |---|---|
-| Library, LibraryNoHarness, LibraryDrafts, Environment, CollectorGuide (M01/M03) | No-harness gate only planning/execution; browse/import/saved-report remain reachable, readiness recheck updates via shell. |
+| Library, LibraryNoHarness, LibraryDrafts, Environment, CollectorGuide (M01/M03) | No-harness gate only model-dependent planning/execution; manual authoring/capture/approval and browse/import/saved-report remain reachable, readiness recheck updates via shell. |
 | Catalog, CatalogOverride, CatalogRates and BillingScreen states (M04) | Route to owned catalog screens; model/account saves stay separate, currency units per 1 USD and billing provenance are engine text/data. |
 | Setup, ReviewLaunch, TrialBudgetWarning, JudgeCapability (M07/M12) | Correct owner route and engine totals/reasons; consent Back/escape makes zero launch/verify calls; confirm once. |
-| NewTemplate, NewTemplateRepo, NewTemplateInvalid (M01) | M01 NewTemplateScreen calls M16 planning defaults/repository capture/create-request services; route its result to M16 planner screens. |
+| NewTemplate, NewTemplateRepo, NewTemplateInvalid (M01) | M01 NewTemplateScreen calls M16 inspect_target/create_manual and opens M16.5 manual progress/review; only explicit planner generation uses defaults/create_request and M16.4. |
 | PlannerVerify, PlanningProgress, PlanReview, PlanApprove (M16) | Verification consent, planning progress/edit/approval handoff; inventory/approved reuse makes no planning call. |
-| RunOverview, RunReattached, RunListDetail, HarnessLive/Streaming/Limited (M11/M15) | Four lanes/list-detail, trial-pinned logs, passive unavailable/source labels, detach/reconnect and interrupted offscreen reason. |
+| RunOverview, RunReattached, RunListDetail, HarnessLive/Streaming/Limited (M11/M15) | Six registry lanes/adaptive list-detail, trial-pinned logs, passive unavailable/source labels, detach/reconnect and interrupted offscreen reason. |
 | StopConfirm, StopCleanup, ActiveLocked, Judging/JudgingDone (M11/M12) | Completed configuration versus run stop, judge cleanup, finalizing/retention pending/error, preserved frozen inputs. |
 | ResultsTrials, TaskChecks, EvidenceViewer, MeasurementsTrials, RankingsTrials (M02/M08/M10/M06) | Distinct TrialRef/ResultId navigation during later live trial; engine measurements/currency/judge-group eligibility unchanged. |
 | ExportTemplate, ImportTemplate, ImportVerifying, ImportRejected, ImportDuplicate, ImportUnsafe, ImportIncomplete (M17) | All screens/states use M17 exchange.py/VMs/widgets; M01 Library/Template routes via injected factories. Verify validation, rejection and export return navigation. |
@@ -67,14 +67,50 @@ q, detach dialog, unmount and terminal close only release subscriptions/client. 
 | ReportGenerate/Defaults, ReportProgress, ReportReady (M13/M02) | Durable failure/cancel/skip/pending/committed-path states and expired-job recovery; offline retained generation without models. |
 | HelpKeys, CommandPalette, WidgetStates (M15) | Every real route, disabled reason, keyboard/mouse parity, wide/compact focus and reconnect state. |
 
+Compose M02 Results/M10 Measurements primary statistic columns and scoped detail → M06 eight-factor editor/breakdown → M07 preset/freeze and M13 report handoff using the same complete engine plan and measurement DTOs. Five new factors default to zero; explicit higher/lower and selected policy are required when enabled. Preserve pooled generation N/D/ranges, count means, independent Files/LOC/detail availability, source limits and baseline-included labels through resize, filters, reconnect and imported data. M15 only wires owner views; shared widgets cannot implement metric aggregation or scoring.
+
+**Frozen domain contract.** Compose all six frozen-family journeys through existing owner screens and API factories: author/approve, setup capability/target review, scoped verification/evidence, shared judging validation, rankings/report and inert exchange. Preserve rubric refs/category/comment meanings and coverage/modality/mode through navigation; a generic modality error opens M12 capability UI while domain verifier prerequisites open M03. No shell-owned alternate validator or family switch.
+
+**Route, comparison and profile interfaces.** Compose the owner screen factories for M04 access/existing profiles, M03 targeted diagnostics, M07 comparison review and M06/M13/M17 retained evidence. Preserve owner DTOs, EventCursor/revision and typed ActionState; shell adds no model/effort fallback, alias evaluator or dispatcher. Navigation from a matrix cell carries exact harness/role/profile ref and returns to the same draft revision for revalidation; stale child results cannot overwrite edited selections.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R173, R174, R175, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R166, R172 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R181, R182, R177, R178, R179, R180, R183 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Compose M01 exact-prompt/ordered-spec entry → M16.1 current-folder capture → M16.3 approval → M07 freeze → M11 task loop for both modes and empty/populated targets, without requiring a planner screen/harness for manual work. Keep seven project domains visible. Test sourceChanged/no-admitted-files/recapture, source-removed approved reuse, locked commit policy and M08 scoped pending/missing/dirty/unverified evidence using real owner APIs.
+
+All six registry harnesses, their version/generation reasons and same-harness queued entries remain reachable in 120×40 adaptive lanes and 80×24 list/detail. Retain sixth-entry focus/trial/task/log scope on resize/reconnect, and keep explicit jobs=4/5 distinct from the registry default. Missing Git blocks execution while authoring survives; no interface adds a planner, fix task, commit or model call.
+
+Register M07.3 DecisionEnginesScreen and M10.3 ContextDetail through existing feature navigation factories, retaining the four root destinations. Wire Environment/Catalog/setup remedies to the former and HarnessLive/retained Measurements to the latter with exact ResultId/TrialRef/invocation/session/agent/window and analysis pin. Shared SubscriptionHub uses registered measurements events and generation replacement; no inferred topic or engine arithmetic. Cross-feature tests retain disabled setup reasons, partial native data and local deferred/resource-unknown states without disabling unrelated harness/human/native workflows.
+
+**Human end-to-end journey:** Bind M07 Human picker → M11 post-seal Awaiting human review → M12 progress/reopen/stop/detach → M12.5 trusted browser form → M02 retained review → M06/M13/M17 inspection. Add wide/compact pending-empty/draft/save failure/conflict/submitting/storage-pending/submitted/ungraded/skipped/cancelled/invalidated/recovered/opener-failure states. Only explicit reopen invokes judging.human.reopen; attach/navigation/resize never mints credentials, starts inference or settles a case. Assert unrelated runs proceed with zero held automated resources, original report stays deferred, and additional reviews leave completed originals intact. Browser grades use the owner validator; the TUI/shell adds no form or scoring logic.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Cross-feature wide/compact journeys cover explicit static inspection→registration→selection, ordinary inherited unknowns, strict blocked mapping, partial matrix, diagnostic consent/cancel and retained inert imports; ensure navigation/back makes zero model calls.
+
+**Domain acceptance:** Exercise backend text, native matrix gaps, DevOps plan-only, bounded agent modes and document-only flows with real owners at both sizes; imported retained evidence and profile inspection make zero model or artifact calls.
+
+Extend cross-view journeys at 120×40 and 80×24: capture two full trials, retain/export/import, inspect all four primary columns, enable each new factor/direction, reject unset direction, save/reload/reset/export, then open the offline report. Compare engine Fraction/production BigInt references/contributions/order; unknown disabled extras preserve legacy scores and missing positive factors identify full failing TrialRefs. Include same-label UIDs, file-known/LOC-unknown, delayed timing/inventory writes and no decision configuration/inference.
+
+Extend existing fixtures for native-only and delayed/partial analysis, explicit local overlap/unknown attribution, distinct decision/harness/human fingerprints and offline or disabled-engine operation as applicable. Assert unchanged scope/digests, no fabricated values/calls, and no reclassification triggered by viewing, export/import or navigation.
 
 ```sh
 pytest tests/tui/test_feature_routes.py tests/tui/test_run_list_detail.py tests/tui/test_cross_view_focus.py tests/tui/test_feature_actions.py tests/integration/test_tui_no_harness.py tests/integration/test_tui_author_launch.py tests/integration/test_tui_trial_navigation.py tests/integration/test_tui_detach_reconnect.py tests/integration/test_tui_stop_report.py tests/integration/test_tui_exchange_report.py tests/integration/test_tui_cli_launcher.py tests/contracts/test_tui_imports.py
 ```
 
-1. Real storage/dispatcher and owner screens complete frontend/backend author-or-reuse → configure → launch → observe → evidence/results → ZIP/HTML journeys. No-harness import/report and approved-template reuse make zero model/planner calls. Verify existing repository source remains unchanged.
-2. Pilot all matrix routes at both sizes with keyboard/tab, palette, click/double-click and wheel. Four-lane resize preserves scope/focus/scroll; log search submits once. Assert NewTemplate routes to M01, every ZIP screen/state to M17, and shared palette/state infrastructure to M15; preserve injected Library/Results entry/return routes. Shared warnings/consent and stop cancellation make zero writes; confirmed actions submit once.
+1. Real storage/dispatcher and owner screens complete seven-domain, one-shot/multi-step author-or-reuse → configure → launch → observe → evidence/results → ZIP/HTML journeys. No-harness import/report and approved-template reuse make zero model/planner calls. Verify existing repository source remains unchanged.
+2. Pilot all matrix routes at both sizes with keyboard/tab, palette, click/double-click and wheel. Six-harness and selected-subset resize preserves scope/focus/scroll; log search submits once. Assert NewTemplate routes to M01, every ZIP screen/state to M17, and shared palette/state infrastructure to M15; preserve injected Library/Results entry/return routes. Shared warnings/consent and stop cancellation make zero writes; confirmed actions submit once.
 3. Run two trials with differing T1 logs/evidence while trial 2 is active; retained trial 1 stays selected. Import same-label/same-config runs from two origins; navigation, means/reports/exports never merge UIDs. Delay old queries across target/epoch switches and assert no stale data/error.
 4. Through actual client/daemon, inject snapshot interleaving, older object revisions, deletion/recreation, duplicate log IDs, compaction, overflow and low-seq fresh epoch. Old generation events cannot regress screens or duplicate notifications/navigation.
 5. Stop during active judging/finalization and failed-retention recovery with configurations completed. Verify actual cleanup and durable stop/review/retention/report status; no success-only wait hangs, no sealed facts are reopened, disabled config stop issues no command.

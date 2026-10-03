@@ -23,6 +23,8 @@ The inventory website is the artifact competitors must build; its shopping and s
 
 ## Frozen template contract
 
+The [mode/task-commit contract](../../BENCHMARK-MODES.md#mandatory-task-commits) classifies this unchanged v1 package as legacy multi-step with seven tasks. M09.1–2 preserve absent-repository T1, competitor initialization/first commit and the original check predicates. New-policy isolated setup/ancestry rules never retrofit this package, add duplicate checks or rehash retained input. Test both provisioning branches side by side while keeping the archive read-only. **R183**
+
 | Element | Required contract |
 |---|---|
 | Starting project | An empty project for each competitor, never a historical generated inventory application. Git initialization belongs to T1. **[R020, R021]** |
@@ -135,7 +137,7 @@ class IdentityCalculator(Protocol):        # satisfied by M01's application inte
 
 | Use case | Called by | Behavior |
 |---|---|---|
-| `LoadBuiltins` | M01 `RegisterBuiltins` at daemon start | Read packaged canonical files, use M01 codec/readers, compute identity through `IdentityCalculator`, check pin/catalog, return `BuiltinRegistration(key, sha256, revision_order, contents, violations, default_candidate)`. Invalid packages return a diagnostic registration with unavailable identity/contents where parsing failed, never an invented hash or runnable revision. M01 reports `templates.builtin_invalid` and chooses only valid candidates. |
+| `LoadBuiltins` | M01 `RegisterBuiltins` at operational initialization | Read packaged canonical files, use M01 codec/readers, compute identity through `IdentityCalculator`, check pin/catalog, return `BuiltinRegistration(key, sha256, revision_order, contents, violations, default_candidate)`. Invalid packages return a diagnostic registration with unavailable identity/contents where parsing failed, never an invented hash or runnable revision. M01 reports `templates.builtin_invalid` and chooses only valid candidates. |
 | `DescribeContract(sha256)` | M01 for `templates.contract` | `FrozenContract` for a built-in revision; `None` for any other revision. |
 | `DescribeCoverage(sha256)` | M01 for `templates.coverage` | `CheckCoverage` from the package's suite and `about.yaml`. |
 | `RelationToDefault(entries)` | M01 for `templates.list` and `templates.lookalike` | Applies `default_relation` to library entries using M01's lineage records. |
@@ -212,6 +214,8 @@ The frozen `observers.py` plus `observation_rules.v1.json` define a bounded disc
 
 All catalog contradictions use M08 `CheckContext.expect(check_id, observation)` with expected/observed/evidence. Unobservable evidence, unsupported codecs/locators, crashes and timeouts are `unverified/verifier_error`; missing installed prerequisites are `unverified/missing_prerequisite`; absent target snapshots are `unverified/not_run`. Arbitrary nonzero exits, console errors and screenshots alone prove neither a failed requirement nor a pass. Identity, retention and acknowledgement failures retain M08's fatal/unfinished handling. This limitation must appear in coverage/evidence screens; it is not permission to relabel an unsupported conforming app as failed.
 
+**R191 startup coupling.** Loading packaged builtin bytes is pure; mutating RegisterBuiltins/default-pointer selection is deferred during database discovery-only startup. `database.path/info` on an absent store must not initialize SQLite indirectly. The first operational library/run/mutating request completes ordinary registration before dispatch, preserving existing default policy and every historical package byte. M09.1/M11.1/M14.2 acceptance covers that two-step lifecycle.
+
 ### 2. API surface
 
 M09 defines no methods, jobs or events. Its data reaches clients through `templates.*` (M01). The methods and fields M09's screens and rules need are listed in section 3 so M01 can reconcile them. Reason codes that originate in M09 rules travel in M01's namespace: `templates.builtin_invalid` (with the `ContractViolation` names in `data.violations`) and `templates.no_contract`.
@@ -220,7 +224,7 @@ M09 defines no methods, jobs or events. Its data reaches clients through `templa
 
 | Name | Owner | Purpose |
 |---|---|---|
-| `BuiltinCatalog`, `ContractDescriber` (application Protocols declared in `engine.library`) and `RegisterBuiltins` at daemon start | M01 | Register `LoadBuiltins` results; choose the default among `default_candidate` revisions with `choose_default` and the `DefaultPointer`; keep a package with violations visible as built-in but never default, with `templates.builtin_invalid`. **[R008, R136]** |
+| `BuiltinCatalog`, `ContractDescriber` (application Protocols declared in `engine.library`) and `RegisterBuiltins` at operational initialization | M01 | Register `LoadBuiltins` results; choose the default among `default_candidate` revisions with `choose_default` and the `DefaultPointer`; keep a package with violations visible as built-in but never default, with `templates.builtin_invalid`. **[R008, R136]** |
 | `templates.list` `default_notice`, `templates.set_default(sha256)`, event `templates.default.changed` | M01 | The r2 notice ("what changed", non-comparability, "make default") on the Library after an upgrade. **[R028, R136]** |
 | `DefinitionCodec.write/read`, `TemplateIdentity.compute` behind `IdentityCalculator` | M01 | Build-only authoring conversion, runtime canonical reading, full manifest identity; same built-in/planner/imported bytes. Empty baseline remains explicit. **[R028, R118, F01/F10]** |
 | `templates.list` with `TemplateRow.is_default`, `source="builtin"`, `default_relation` (`default`, `lookalike`, `none`), `capabilities.can_about`, `capabilities.can_compare_default` | M01 | Library ★ marker, the `a` binding on built-in inventory rows, `#why-not-default` on look-alike rows. **[R008, R136]** |

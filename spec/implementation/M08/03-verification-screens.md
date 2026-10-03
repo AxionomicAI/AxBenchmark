@@ -25,7 +25,7 @@ Use only `axbenchmark.api`/`client`. Pure frozen view models format labels/glyph
 
 `TaskChecksScreen(result_id, trial, task_id, phase, check_id?)` calls `verification.task.get(result_id, task_id, phase)`. Assert the returned TrialRef matches the selection; previous/next changes only task. FinalRegression opens the final phase explicitly; CheckOutcomes rows carry result/trial/task/phase.
 
-`ScreenshotsScreen(result_id, task_id, phase, check_id?)` loads scoped captures; evidence actions retain that result ID and selected evidence ID. Two terminals' screenshot placeholders depict DTO dimensions; the system viewer opens actual images. Do not infer pass from image presence.
+`ScreenshotsScreen(result_id, task_id, phase, check_id?)` loads scoped captures; evidence actions retain that result ID and selected evidence ID. Screenshot placeholders depict the selected tagged capture context and DTO dimensions; the system viewer opens actual images. Do not infer pass from image presence.
 
 `VerifyProgressScreen(trial: TrialRef)` calls `verification.progress.get(trial)`. M05's `p` binding passes the already resolved trial; a historical selection never follows the active/latest trial. Hide/escape dismisses only and leaves verifier/service processes running.
 
@@ -35,7 +35,9 @@ Use M15's EventCursor `{epoch, seq}`, revision/entry deduplication and replaceme
 
 Render observed values, console output, logs, filenames and error text inert, including markup/ANSI/control-character fixtures. Resolve paths only through the engine. Sealed evidence is immutable; an unsealed result refreshes the list on its retained-outcome/seal events without changing scope.
 
-`JudgeInputScreen(result_id)` renders the engine's given/kept-apart lists. Only final-regression delivered-artifact screenshots appear in given; per-task captures and measurements remain excluded. Pending/invalidated state cannot start a judge; opening an evidence folder is merely inspection.
+`JudgeInputScreen(result_id)` renders the engine's given/kept-apart lists. Given includes only profile-admitted final-artifact domain evidence; image refs are final-regression web/native/declared captures with their frozen context; per-task captures and measurements remain excluded. Pending/invalidated state cannot start a judge; opening an evidence folder is merely inspection.
+
+**Frozen domain contract.** TaskChecks/FinalRegression/JudgeInput/EvidenceViewer consume domain ObservationContext, coverage/modality and source-role/mode fields through existing APIs. ScreenshotsScreen uses tagged capture_context and a variable list of frames: the web pair stays exact, native images identify matrix/build/state, declared images use their approved context. JudgeInput shows only admitted final-artifact refs; unrequired images are not a missing prerequisite. Render plan/dry-run/applied, simulation/replay/live and supplied/candidate-document labels with limitations, not claims of deployment or runtime success.
 
 ## Boards, states and bindings
 
@@ -44,7 +46,7 @@ Render observed values, console output, logs, filenames and error text inert, in
 | TaskChecks, wide/compact | `#task-checks` ready/loading/pending/error, ordinary failed/unverified distinctions, unavailable commit and run-invalidated notice; `s/f/j/l`, task arrows and tab use parent mappings. |
 | FinalRegression | Separate at-task/final columns, fixed/regressed/differs, missing-phase reason, pending/error; enter opens selected final check without changing trial. |
 | CheckOutcomes | Cause legend/counts and M06 effect, filtered empty/error, explicit result/trial/phase; `/`, `c`, `o`/enter preserve selected row scope. |
-| Screenshots | Paired 1440×1000/390×844 placeholders and exact evidence refs, no-capture/loading/error; `o` open and `f` reveal use selected ResultId. |
+| Screenshots | Web paired 1440×1000/390×844 placeholders or variable native/declared-image matrix/state frames with exact bound refs, no-capture/loading/error; `o` open and `f` reveal use selected ResultId. |
 | VerifyProgress | Stages, partial rows, no active verification for selected trial, pending durability and run-invalidated/error; Hide/escape never stop. |
 | JudgeHandoff | Given/excluded lists, pending/error/invalidation, final-phase folder capability; close/escape only dismiss. |
 | EvidenceViewer | Paged text/binary note, no evidence/loading/error, phase metadata, compact `e` list toggle; `o/f` and end/scroll request only selected evidence. |
@@ -53,7 +55,17 @@ Retain parent widget IDs, ContentSwitcher states, action mappings and engine wor
 
 Required later wireframe reconciliation: VerifyProgress must carry TrialRef, all evidence/check bars and links show explicit trial/phase, identity halt must not resemble an ordinary unverified check, and inventory labels/counts must be generated from M09's revised catalog. Report these changes without editing wireframes in this spec task.
 
+## Integrated requirements
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Extend existing TaskChecks/FinalRegression/CheckOutcomes/EvidenceViewer VMs with check origin, locked policy/check version/digest, repository evidence and scoped path causes returned by `verification.task.get`, `verification.regression.get`, `verification.not_passed.list` and evidence routes. Render pending/passed/missing/dirty/unverified task-commit states separately from process and behavioral outcomes; zero authored checks says “No behavioral checks declared” even when protocol passes. Show setup versus competitor origin, unavailable/not_recorded evidence and immutable at-task result in final views. Add wide/compact tests covering late task commits that cannot replace a prior failure, both modes, scoped navigation and no UI Git/process call.
+
 ## Acceptance and faults
+
+**Domain acceptance:** Add all-family wide/compact evidence and handoff fixtures: native lifecycle gaps beside actual images, no-image backend, DevOps plan-only, mixed agent modes and specification structural defect/unknown parser. Wrong trial/build/context refs never navigate, and no view executes an artifact.
 
 Run `pytest tests/tui/test_verification_viewmodels.py tests/tui/test_task_checks.py tests/tui/test_final_regression.py tests/tui/test_check_outcomes.py tests/tui/test_screenshots.py tests/tui/test_verify_progress.py tests/tui/test_judge_input.py tests/tui/test_evidence_viewer.py tests/tui/test_verification_trial_navigation.py` with Textual Pilot and import-linter checks.
 

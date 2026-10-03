@@ -37,7 +37,21 @@ Use [navigation](../reference/design/wireframe-tui/navigation.md) and the parent
 
 ImportTemplate/ImportVerifying/ImportRejected/ImportDuplicate/ExportTemplate are M17-owned states, governed exclusively by [M17 §4](../reference/modules/17-zip-exchange.md#4-screens). This child tests only injected `ExchangeScreens.import_template(selected_sha256?)` / `.export_template(sha256)` arguments, typed returned outcomes and Library/Template refresh; no picker, package-kind routing, exchange widget or view-model implementation belongs here. Wireframe source/preview modifications belong to the separate navigation refinement; required additions are explicitly listed above and in the parent.
 
+**Frozen domain contract.** Template and NewTemplate/revision view models render the seven project types, six family mapping and exact frozen rubric/evidence-plan summary returned by templates.get and M16 draft APIs. Show category/comment labels, native matrix, domain coverage/modality and approval gaps; a domain selector never silently reinterprets a retained revision. Specification projects describe document design/decomposition, agentic projects the agent software being built. Route edits through existing draft/version APIs.
+
+## Integrated requirements
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R177, R178, R180, R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+NewTemplateScreen owns independent benchmark-type and seven-domain selectors, selected target directory and either exact prompt text/prompt-file input or a numbered ordered list of at least two primary spec files. Call `planning.inspect_target` and render its mode/counts/exclusions/policy/errors; submit `planning.create_manual(..., target_inspection_id, inputs, evaluation_profile_refs, idempotency_key)` and hand the JobRef to M16.5 manual progress/review. Only explicit Generate with planner navigates through M16.4; manual actions stay enabled without a harness/Git.
+
+Use versioned byte references from engine DTOs; preserve imported CRLF/Unicode/no-final-newline content until an explicit edit. Display locked commit-policy instruction/version separately, draft issues, sourceChanged/recapture and legacy markers. Add wide/compact tests for mode switches, seven domains, ordered import/reorder, stale responses, no-harness approval navigation and exactly zero planner/default/catalog calls on manual creation.
+
 ## Acceptance and fault checks
+
+**Domain acceptance:** Add wide/compact all-family Template/NewTemplate/Revise states, unknown rubric and incomplete coverage. Text-domain fixtures contain no browser prerequisite; domain edits require a newly approved revision and preserve prior labels/grades.
 
 Run `pytest tests/tui/test_library_screen.py tests/tui/test_template_screen.py tests/tui/test_new_template_screen.py tests/tui/test_revision_screens.py tests/tui/test_library_deletion.py tests/tui/test_launch_check_screen.py tests/tui/test_library_viewmodels.py` at 120×40 and 80×24:
 

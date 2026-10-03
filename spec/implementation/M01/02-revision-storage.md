@@ -25,7 +25,24 @@ Storage owns immutable objects, read-only revision generations and transaction o
 
 Removal is post-publication garbage collection: wait for leases, retire the selected tree, add owner-write to only its directories, unlink files without changing their modes, and collect only objects unreferenced by live/built-in/staged/pinned revisions. Restore writes a verified new generation; old generation reclamation follows the same lease rule. Durable cleanup failure must be retained for recovery/readiness, not misreported as an uncommitted operation.
 
+**Frozen domain contract.** RevisionReader verifies the existing rubric/check/support closure and returns the exact frozen domain evidence-plan/rubric binding; storage never upgrades family/version on open/restore. Native matrices, approved agent case/authority plans and supplied document reference packs remain immutable defining bytes, portable after source removal.
+
+**SQLite publication binding.** Keep immutable template bytes and YAML overlays in this adapter. `PublicationView` pins the shared SQLite marker and read transaction; fsync prepared payloads before the coordinator commits its marker/operation receipt/outbox. A template-only approval still uses that same database authority. M11.1 supplies the foundation contract, M02.2 adds later result migrations; do not import its repository or create a filesystem commit marker.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R179 — [benchmark modes](../BENCHMARK-MODES.md).
+
+`FrozenRevision` and registration/storage fixtures preserve the v1/v2 descriptor discriminant and exact baseline path/byte/executable inventory. V2 populated current-folder captures remain portable after their origin disappears; every trial copies from the published immutable revision lease, never the source path. Test non-Git, dirty/untracked/binary capture payloads and empty/folder distinctions through prepare/read/restore/recovery. Preserve archived v1 objects and M09 golden identities; add no old-installation backfill or implicit format upgrade.
+
 ## Acceptance and fault checks
+
+**SQLite acceptance:** Fault durable file creation, participant readiness and the actual SQLite commit with a second read-only SQL connection. No marker or guessed-ID read admits partial revision/configuration/draft state; old leases survive. A rollback removes only newly staged unreferenced bytes.
+
+**Domain acceptance:** Add exact-byte restore/open vectors across six families and corrupted plan/support refs; legacy payloads remain unchanged.
 
 Run `pytest tests/library/test_object_store.py tests/library/test_revision_storage.py tests/library/test_registration_transactions.py tests/library/test_revision_recovery.py tests/library/test_mode_audit.py tests/library/test_read_leases.py`:
 

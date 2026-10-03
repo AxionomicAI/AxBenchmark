@@ -58,7 +58,45 @@ Subscribe to `job:<job_id>` through M15's cursor manager with `(epoch, seq)` and
 
 Render EngineError message/field/remedy and nested steps/effects without parsing prose. Conflict states show exact run/trial/result/invalidation code and both digests; colliding labels show origin and UID. Selection shows frozen trial count/missing slots and invalidation means inspection-only, never comparison eligibility.
 
+ResultPackage/ExportResult content rows expose returned statistics/policy/inventory availability with independent Files/LOC and native timing/detail limitations. Distinguish settled partial/unknown evidence (portable) from pending durable finalization (export disabled). Preview/import carries exact full frozen trial counts and original eight-factor plan metadata without claiming that an imported metric is compatible or ranked; M06 owns those decisions and M10 owns aggregation.
+
+**Frozen domain contract.** Package/ResultImport/Export view models show frozen family/version/digest, ordered category labels, required modality and domain coverage/source-role/mode summaries returned by M17. Label native missing target/build evidence, plan/dry-run versus applied observations, agent simulation/replay/live and supplied/candidate documents. Recorded unavailable evidence is not a fresh import failure; corrupt declared bindings use owner errors. No live preview, verifier or profile-upgrade action is added.
+
+PackageSummary/ResultImportPreview/ResultExportPlan VMs show returned variant refs, combined facets, ordered lineage detail, creator roles/date kinds/precision, annotation view/history and requested/effective proof limitations. Initial manifest metadata is declared-only until validation; validation cannot certify authorship or actual loaded weights. ResultImportConflict includes typed variant descriptor/annotation conflicts and both digests/paths, with add disabled. Mandatory mismatch remains an attribution exclusion in every view, distinct from template mismatch/force-merge behavior. Export contents say model metadata/evidence only, weights excluded.
+
+**Route, comparison and profile interfaces.** Extend ResultImport/Package/ExportResult VMs and existing exchange.preview/import/export DTO bindings with comparison axis/classification/coverage, profile treatment, inactive access/profile evidence and typed immutable-snapshot/binding conflicts. Preview distinguishes absent selected results from unsupported cells, preserving full matrix. Reuse after import directs an explicit local M04 registration/qualification flow, never an automatic action or imported credential lookup.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R174, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R164, R166, R171 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R177, R178, R179, R180, R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Package/Export VMs render M17 owner DTO format, benchmark/project/target mode, legacy marker, primary order/count and baseline/protocol identity. ResultPackage and export contents additionally show the presence/availability of scoped task-commit proofs, setup origin and retained verdicts separately from process/behavioral status. Unknown historical evidence is not_recorded, not newly failed. Add wide/compact both-mode/source-deleted fixtures, seven domains and malformed/cross-scope proof rejection; preview/import never runs Git, a check, planner or model and cannot override the new-launch revision gate.
+
+ResultPackage/ExportResult contents show per-capture source availability and native-only or selected analysis cutoff/status, plus sanitized backend/profile/group evidence. Preserve the engine-pinned selection through preview/export; pending or unavailable classification alone never disables a settled result export. Import remains read-only inspection followed by existing explicit publication, with no implicit profile selection, test or observer restart. Display source/analysis reference errors and unknown future protocol re-execution limits without guessing support. Add offline and late-analysis preview fixtures at both terminal sizes.
+
+**Human exchange contract and acceptance:** M02 supplies only committed human-authored reviews, self-declared reviewer/form-policy identity, exact rubric/evidence/group digests, raw grade parts/comments/limitations/deficiencies and original/additional disposition receipts. Pending original cases block finalized result export; a selected subset cannot bypass that full-run barrier. Exclude local drafts, human working journals, session tokens, loopback URLs and active controller assets. Inspect/import/round-trip graded/ungraded/skipped originals and additional groups without creating a host, automatic browser reopen, model call or new local verified identity. Display human groups and model cost not applicable; unresolved original waiting and actual persistence failure have distinct reasons. Reject forged machine fields or cross-case/result evidence through M02 codecs; retain six grades and exact score parity after offline reimport.
+
 ## Acceptance
+
+**Route/profile acceptance:** Fake-client compact/wide flows display full N/6 and inactive profiles, preserve choices on conflicting refs, and open retained evidence without probing endpoints. Import remains all-or-none and no synthetic scores/readiness appear.
+
+**Variant acceptance:** Render wide/compact declared/unverified/confirmed/conflicting variants, month dates, missing creators, same-label distinct refs and post-seal mismatch. Import/view emits no catalog save, URL fetch, model load or annotation adoption; retry/close remains scoped and full frozen trial counts stay visible.
+
+**Domain acceptance:** Add wide/compact six-family import/export fixtures with no-image text domains, missing native coverage and inert document commands. Preview/import keeps exact selected refs/groups and makes no model/device/cloud/check calls.
+
+Add both-size package/export fixtures with complete file count/unknown LOC, missing native timing, partial matched subset, v2 policy/direction metadata and pending snapshot/metric receipt. Assert existing owner calls only, no client recomputation/scanning/zero filling, and same selection/unknown states after import return navigation.
 
 Run `pytest tests/tui/test_exchange_viewmodels.py tests/tui/test_exchange_screens.py tests/tui/test_exchange_navigation.py` with fake-client `App.run_test()`/Pilot at wide size and 80×24:
 

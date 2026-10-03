@@ -12,6 +12,8 @@ Outcome: catalog browsing, selection and separate model/account/currency editors
 
 **Wireframe contract prerequisite:** navigation work resolves F16/F19: add CatalogBilling, remove billing from CatalogOverride, and correct CatalogRates to currency units per 1 USD with COP `4000`. The parent screen/API contract governs behavior while this source/artboard work is pending.
 
+Display decision-compatible metadata with tri-state source/version/time and separate requested name versus resolved artifact evidence. Navigate decision profile editing/testing/role selection to M07.3 DecisionEnginesScreen through the existing route factory; do not add native decision transport or selection to the ordinary ModelPicker. Unknown compatibility, local-name echo and unknown locality stay visible. Test that catalog edits/navigation neither enable a decision role nor invoke inference.
+
 ## Ownership and interfaces
 
 Own proposed files:
@@ -29,10 +31,11 @@ Use only `EngineClient` and parent API models. `ActionState` controls bindings; 
 |---|---|
 | Catalog (wide/compact) | Context tree/select, models/detail, default/source/age/billing/rate summary. `f5` refreshes selected context; `o` opens model override; `b` opens account billing; `x` opens rates; `y` opens read-only YAML. |
 | CatalogRefreshFailed | Keep usable rows; show distinct failure and last-valid age with Retry. Failure is a banner over content, not an empty model table. |
-| CatalogOverride | Model efforts/default/image/prices/currency only; modes inherit/value/unknown. Save emits only `catalog.save_override`; remove uses confirmation then only `catalog.remove_override`. |
+| CatalogOverride | Model efforts/default/image/prices/currency and a link to the separate variant detail editor; modes inherit/value/unknown. Save emits only `catalog.save_override`; remove uses confirmation then only `catalog.remove_override`. |
 | CatalogBilling (wide/compact) | Full account identity and all-model/all-version effect, inherited source and declaration mode. Save emits only `catalog.save_account_override(harness,target,account_id,billing)`. |
 | CatalogRates (wide/compact) | Currency units per 1 USD, COP `4000`, source/as-of/retrieved labels and USD identity. Save emits only `catalog.save_rate_override`; no editable reciprocal. |
-| ModelPicker | Explicit model selection, returned effort choices; label harness default without preselecting a competitor model. Save calls M07 add/update entry. |
+| SetupVariantDetailEditor | Versioned candidate/lineage/creator/date/evidence detail; inherit/value/unknown patches save through catalog then revalidate Setup. |
+| ModelPicker | Explicit model and optional immutable variant-ref selection, returned effort choices; label harness default without preselecting a competitor model. Save calls M07 add/update entry. |
 | ModelPickerUnknown | Only returned `harness_default` effort with omit explanation. Missing capability/authentication is not upgraded to ready. |
 | Other parent states | Loading, empty context/model list, query error/retry, unknown fields, invalid/malformed override, pending save, inline field error, cancelled refresh and no-harness selection block. Rates always retains USD identity; no collected rates is not a fabricated empty table. |
 
@@ -40,7 +43,45 @@ Billing loads `ContextDTO.billing_form` by the full account key and rates loads 
 
 Observe revisioned `catalog` plus the returned `job:<job_id>` through M15's `EventCursor` manager. Re-query visible detail/entries after relevant context/price/account changes and every snapshot replacement; rate changes reload rates. Changed topics use a fresh handoff. Cancel stale selection requests and unsubscribe on unmount without cancelling engine work.
 
+**Frozen domain contract.** Capability views display actual frozen-plan image/modality requirements and source-scoped supported/unsupported/unknown evidence. Product-agent dependency models remain functional artifact context, not builder/grader selection; native device capability is M03/M08-owned. Unknown modality cannot be solved by a guessed model-name match.
+
+Own `SetupVariantDetailEditor` in `tui/screens/catalog.py` with its catalog/entry-picker VM and fixtures. Load `catalog.entry(context_id, model_id, model_variant_ref, page_kind, cursor, limit)` and save only `VariantOverrideDraftV1` addressed node/field patches with `expected_descriptor_revision` via `catalog.save_override`. Display ordered lineage, exact roots, FINETUNE and QUANT together, source-specific presets, creator-role and date-kind/precision slots, alternatives and proof coverage. Inherit/value/unknown controls preserve form intent and Unknown remains nonblocking unless the engine supplies a selection mismatch.
+
+ModelPicker passes the selected immutable `model_variant_ref` alongside the native selector to `configs.add_entry/update_entry`; ambiguous aliases require a candidate ref. Catalog filters use stable facet IDs and precision-aware engine matches. Stale descriptor/cursor errors preserve edits, resync the detail and require Setup revalidation; no screen resolves hashes, chooses a conflicting claim or launches discovery/inference just by opening.
+
+**Route, comparison and profile interfaces.** Extend owned catalog viewmodels/screens with `AccessProfileVM`, `ExistingAgentProfileVM` and their feature-route registrations. Load/save/inspect/capabilities use `catalog.access_profiles.*`; selected-source inspect/register/list/get use `catalog.existing_agent_profiles.*`. Show immutable refs, exact installed scope, direct/OpenRouter/LiteLLM and explicit chained hops, model aliases versus upstream identity, native effort units/mapping status, gateway versus inference locality, role permissions and credential presence only. M03-owned diagnostic action gets an explicit frozen plan/budget; selection returns refs to M07 or M16 without executing. Existing treatment defaults to the reviewed named profile; clean and override treatments require explicit structured review. Preserve source/digest/version conflicts and optional inherited limitations separately.
+
+**API access profile screens — R192–R193.**
+
+Implement the profile/chain/model-binding/native-effort editors and full-registry capability matrix in [CROSS-HARNESS-COMPARISON.md](../CROSS-HARNESS-COMPARISON.md#apis-cli-and-design-engine-handoff). Use M04 structured forms and typed reasons; display credential presence only. Distinguish gateway and inference locality, declared versus observed identity and experimental vendor support versus tested execution. Explicit metadata inspection and M03 qualification are separate actions; navigation or saving never invokes a model. Preserve drafts on failed/stale responses and cover compact/wide keyboard access through M15.
+
+**Existing agent profile picker — R194.**
+
+Use [the existing-agent contract](../CROSS-HARNESS-COMPARISON.md#existing-agent-aliases-and-launcher-profiles) for source selection, static inspection, registration and versioned profile details. Show underlying harness, captured declarations, required behavior assets and evidence/limitations; keep secret/source locators out of portable previews. Static registration cannot imply runtime qualification. Distinguish optional unverified settings from required blockers, and show explicit existing/clean/transformed treatment without changing personal files.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R185, R187 — frozen domain profile/evidence contracts: [R185](../quality-judges/MOBILE.md); [R187](../quality-judges/AGENTIC.md).
+
+R167, R168 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Consume all six shared HarnessId values and retain distribution/generation/version in catalog context and capability provenance. Cursor `agent` provenance and OpenCode V1/V2 context cannot be inferred from executable names; unknown defaults, effort/image/role capabilities, usage and billing remain unknown. Fixture data uses fictional models/accounts only. Extend this child's resolution/discovery/picker tests to both new adapters and all six registry entries, including absent/unusable/unsupported-version cases; model-free reads never invoke inference or substitute a default.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Fake-client wide/compact keyboard flows exercise profile/version conflicts, unknown mapping, unchanged editor draft on stale response, unsupported Cursor/Grok distribution, independently selected source, registration versus selection, existing/clean/overridden labels and no navigation probes. No secret value/source locator appears in portable preview.
+
+**Variant acceptance:** Pilot wide/compact combined FT+QUANT, multi-root, month-only date, missing quantizer, conflicting source, unverified server and same-label candidate fixtures. Save emits one revision-checked metadata command; choose passes the exact ref, known mismatch remains blocked, and no base-price inference or model call occurs.
+
+**Domain acceptance:** Cover native image support unknown versus supported and text-only profile selection with no false browser/image failure; navigation makes no inference call.
+
+Add decision metadata fixtures for unknown native capabilities, discovery versus execution identity, changed artifact bindings and independent role/profile selection. Existing API-access profile success must leave both decision-role enable flags false until their explicit READY System One selection exists.
 
 Run:
 

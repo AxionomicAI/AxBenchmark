@@ -10,6 +10,8 @@ Outcome: an implementer can deliver Environment/CollectorGuide views and guidanc
 
 **Bootstrap-published contracts, allowed as injected fixtures:** M01 Library/Template identity navigation and capabilities; M04 Catalog entry; M18 MonitoringSettings→CollectorGuide handoff and verified guidance; M16 PlannerScreen's verification-plan/confirmation interaction; M14 doctor outcomes for parity. Their actual screens/CLI are real-integration gates, not entry dependencies. Inject navigation factories and schema-valid EngineClient responses; no private engine access.
 
+Readiness views render decision profile/version, native protocol/capability source, actual locality evidence and typed unavailable reasons separately from ordinary provider/harness rows. Route the setup remedy to M07.3 DecisionEnginesScreen. Metadata test and explicit resource-consuming inference test remain distinct actions; visiting this view never enables either role. Cover READY, missing credentials, incompatible/unknown protocol, unresolved routing and server-state-unknown with zero inferred support.
+
 ## Ownership and interfaces
 
 Own proposed files:
@@ -25,18 +27,20 @@ Use only the parent's API tables/bindings. `environment.report` and `environment
 
 On mount, use M15's `environment` snapshot subscription and follow each active `job:<job_id>`. Apply report revisions with the shared epoch/sequence cursor rules; changing a topic set starts a new handoff. On resync replace the report projection and rebind active jobs. Cancel stale explanation workers after row selection/unmount; removing a screen stops observation only. CollectorGuide shares the host's report subscription and reloads its selected explanation after report replacement.
 
+**Frozen domain contract.** Environment explanations render DomainVerificationRequirement by approved runner/target, including native toolchain/device/capture and product-agent model/tool authority/access with source/uncertainty. Keep these rows separate from harness and grader/observer readiness; text/document scopes have no invented browser dependency.
+
 ## Boards, states and actions
 
 | Exact board/state | Required view and action |
 |---|---|
-| Environment | Four harness rows plus runtimes/collectors, summary, model provenance, selected-row detail and F2 entry from the shared shell. |
+| Environment | Six registry harness rows plus runtimes/collectors, summary, model provenance, selected-row detail and F2 entry from the shared shell. |
 | EnvironmentAuthFailed | Authentication rejection and its remedy; an installed executable still displays as installed. |
 | EnvironmentRechecked | Current rows and before→after change toast only for this client's recheck; retain selection/focus. |
 | EnvironmentOffline | Unknown authentication with last-known time, cached/bundled model source/age and available local facts. |
 | EnvironmentNoHarness | Actionable plan/execute block and `still_available` data workflows; Escape returns to an operable library. |
 | EnvironmentCollectors | All five distinct causes with scope/guidance; permission failure never suggests elevated AxBenchmark. |
 | CollectorGuide (M18 artboard) | Cause, host, matching-platform commands, documentation, copy/open/recheck; mismatched-platform commands remain hidden. |
-| Parent-defined states without separate boards | First-load spinner, query/job error with retry, in-progress recheck over retained rows, missing guide/copy actions dimmed, optional `#revision-permissions` warning and detail. No fabricated empty harness table: absence still has four rows. |
+| Parent-defined states without separate boards | First-load spinner, query/job error with retry, in-progress recheck over retained rows, missing guide/copy actions dimmed, optional `#revision-permissions` warning and detail. No fabricated empty harness table: absence still has six rows. |
 
 | Action | Required call/result |
 |---|---|
@@ -46,7 +50,25 @@ On mount, use M15's `environment` snapshot subscription and follow each active `
 | CollectorGuide Recheck / `f5` | One `environment.recheck(scope="collectors")`; refresh the same explanation. |
 | CollectorGuide copy/open | Copy only returned matching-platform commands or open its guide; never execute commands. |
 
+**Route, comparison and profile interfaces.** Extend environment DTO/viewmodel rows with separate default-auth and `RouteQualificationOutcomeV1` summaries keyed by exact profile/model/effort/mapping/installed version; do not replace the auth column with route success. The explicit route diagnostic review shows fixed fixture, destination, protocol, request/attempt/token/time/cost bounds, unknown internal retry coverage and local-resource wait/settlement. Bind assessment to `environment.assess(operation=qualify_route, prerequisites=...)`, dispatch to `environment.qualify_route`, and follow/cancel its JobRef through existing jobs APIs. Metadata inspect, qualification consent and ordinary navigation remain distinct actions. Existing-profile blockers use M04 inspection/ref and preserve optional unknown versus required conflict.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R185, R187 — frozen domain profile/evidence contracts: [R185](../quality-judges/MOBILE.md); [R187](../quality-judges/AGENTIC.md).
+
+R167, R172 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R183, R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Environment VM/fixtures iterate the six registry rows, retaining Cursor vendor and OpenCode generation/version plus supported/unsupported/unverified role/control reasons. Missing Git renders an execution-only blocker and remedy; it cannot disable M01/M16 manual capture/review/approval. Add wide/compact tests reaching the sixth row and its explanation, no-harness manual navigation, and missing-Git execution refusal without any probe/verify/init side effect.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Pilot/fake-client cases cover no consent, stale plan, bounded confirmation, queued local resource, stream/tool failure, partial coverage, cancel, unresolved server state, unknown Cursor route and source-profile drift. Navigating/back/reconnect cannot dispatch or re-consent a model call.
+
+**Domain acceptance:** Exercise unavailable required native cell/model access and unknown route at both sizes; recheck uses owner metadata actions and starts no evaluation.
 
 Run:
 

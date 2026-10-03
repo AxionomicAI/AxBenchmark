@@ -26,7 +26,7 @@ M05 owns RunConfigScreen, M08 VerifyProgressScreen, M12 judging screens and M15 
 
 | Existing board | Implementation/state contract |
 |---|---|
-| RunOverview | RunScreen four harness lanes, #run-bar, #frozen, #events; loading/error/unselected lane and server capabilities. |
+| RunOverview | RunScreen registry-derived lanes for all selected harnesses, #run-bar, #frozen, #events; loading/error/unselected lane and server capabilities. |
 | RunQueued, RunSequential | Same screen, queued entries/jobs=1 DTO variants; no client scheduler or separate command. |
 | RunFailures | Actual task/check/halt statuses; effective identity interruption carries both digests and paths without hiding original facts. |
 | RunReattached | Snapshot plus observation gap; no restart, finalizing/retention/error/report outcome available immediately. |
@@ -38,6 +38,8 @@ M05 owns RunConfigScreen, M08 VerifyProgressScreen, M12 judging screens and M15 
 | ActiveLocked | Render engine restriction rows; frozen edit key opens explanation, never mutates a run. |
 
 Pending wireframe variants: RunOverview/RunReattached finalizing/retention-pending/report outcomes; StopConfirm judging/finalizing scope; StopCleanup retention error; HarnessLive/RunListDetail explicit trial identity and historical selection. Keep existing names/layout. This child specifies the changes but does not edit boards.
+
+HarnessLive's Open context action uses the returned exact task/ResultId/TrialRef/invocation/session/agent/window target and M10.3 ContextDetail factory. Show disabled exposure reasons when no target exists; never substitute another active window. Live context counters remain native observations, distinct from estimated captured history or decision annotations. Subscribe using the registered measurements/live routes and discard stale selection generations; late analysis may refresh presentation but cannot mark execution complete or trigger inference.
 
 ## Data, navigation and command boundaries
 
@@ -67,13 +69,47 @@ Live view displays source/coverage and requested versus observed settings; unkno
 
 Unmount/esc/detach sends only unsubscribe/close as applicable; none stops work. Detach/status command text uses UID so same-label imported runs cannot select another run. Render messages/field/remedy from EngineError without parsing prose.
 
+**Frozen domain contract.** Run/status and verification progress show frozen family/evidence scope and returned domain stages, target/case/mode, coverage and prerequisite gaps. Product evaluation waiting/settlement uses existing verifying/resource states, distinct from competitor measured time and later human waiting. Evidence links preserve selected trial/case/build/source role.
+
+Run/Live VMs receive frozen `model_variant_ref` and scoped `VariantEvidenceV1` from `ConfigurationStatusDTO`/M05 live projections. Show requested/resolved/effective identities and proof gaps separately, with FINETUNE+QUANT when known. A variant mismatch shows the affected configuration/trials, expected/observed evidence and model-selection halt remedy; it is not the run-wide template digest banner. Opening details preserves the selected TrialRef and never fetches live source metadata.
+
+**Route, comparison and profile interfaces.** Extend RunStatus/LaunchRecord/configuration lane VMs with frozen comparison ref, six-cell coverage, profile/treatment and requested/resolved/effective route/model/effort summaries. Show queue delay, runtime mismatch and evidence gaps separately from prelaunch blocked/unselected cells. Existing `runs.status/get_launch`, M05 configuration/invocation detail and run/harness events are the bindings; status cannot re-resolve historical profiles. Strict sequential progress shows one configuration retaining its slot across its trials; helper charges remain visible via measurements.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R166 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R177, R178, R183, R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+RunVM/status preserve frozen benchmark/project/target mode, ordered stage count/current primary and trial/configuration identity. Render one-shot T1 as the sole competitor stage, multi-step introduced stages in engine order, and task-commit pending/passed/failed/unverified evidence separately from process/check status; open M08/M05 with the selected TrialRef/task instead of issuing Git or repair actions.
+
+At 120×40, all six lanes use the parent's scrollable two-column/three-row region; compact uses M15.1 list/detail. Preserve sixth-row focus, queued same-harness rows, trial/task/log selection and scroll through resize/reconnect. Add both-mode/all-seven-domain fixtures plus missing Git/setup error, missing/dirty milestone and source-removed reuse. The renderer consumes M11's frozen scheduling limit and never caps at four or treats six registry entries as six running slots.
+
+**Human wait presentation and acceptance:** RunOverview/RunReattached display existing judging state as Awaiting human review (wait_reason=human_input), original pending/submitting counts, durable batch/case refs and owner reopen/stop actions. Route reopen through M12 JudgingScreen/judging.human.reopen once; resync/attach only reads state. Show deliberate waiting separately from persistence failure, keep completed configuration stop disabled, and never auto-open reports. Test wide/compact saved drafts, opener failure, disconnect/restart, accepted submit drain and skipped/cancelled outcomes; detach/tab close does not settle or erase state.
+
 ## Acceptance and races
+
+**Route/profile acceptance:** Wide/compact reconnection cases preserve full frozen roster, partial coverage, profile drift and actual failed/partial trials with no zero score for unavailable cells. Mismatch remains configuration-scoped; pending human cases remain pending.
+
+**Variant acceptance:** At both sizes render no metadata, alias-only report, confirmed composition, predispatch mismatch and mid-trial drift. Snapshot/reconnect retains unavailable versus mismatch and later not_run rows while other lanes continue; no local identity inference, retry or model substitution occurs.
+
+**Domain acceptance:** Add native unavailable, bounded-agent deferred/partial/unknown-settlement and inert specification-check states at both sizes without changing stop/detach or trial sequencing.
+
+Test same task IDs across trials and nested agents, delayed target replies, unavailable membership, pending/deferred classification and retained navigation. Context action calls only the owning route/query; detach and disabled setup states do not change execution.
 
 ```sh
 pytest tests/tui/test_run_screen.py tests/tui/test_run_compact.py tests/tui/test_live_screen.py tests/tui/test_stop_detach.py tests/tui/test_run_resync.py tests/tui/viewmodels/test_run.py tests/tui/viewmodels/test_live.py tests/tui/viewmodels/test_stop.py tests/integration/test_run_client_screens.py
 ```
 
-1. Pilot every ledger board in wide/compact loading/empty/error/content states. Assert four wide lanes, compact list/detail without lanes table, task/trial labels and dimmed engine-supplied actions.
+1. Pilot every ledger board in wide/compact loading/empty/error/content states. Assert all six registry lanes are reachable in the adaptive wide layout, selected subsets preserve their size, and compact list/detail has no lanes table, task/trial labels and dimmed engine-supplied actions.
 2. Select trial 1 while trial 2 is active; inspect T1 log/diff/check navigation, then rapidly switch selection. Late responses never cross scopes, and only matching TrialRef events reload historical views.
 3. Compose compact RunScreen with the real M15.1 widget and fixture M15.2 shell while M15.3 is unavailable; Selected/Search/Page/Action route once through M11 and the widget issues no API calls.
 4. Inject update between snapshots, stale revision, tombstone/recreate, lower-sequence restart and same-epoch overflow through the actual client/bus. Final UI projection equals newest snapshot/events with no duplicate log or wrong-generation update.

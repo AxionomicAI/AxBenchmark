@@ -120,6 +120,8 @@ Counter intervals straddling a trial boundary are not prorated: use only interva
 
 Domain errors: `InvalidMode`, `InvalidInterval`, `UnknownCapability`, `NotSequential`, `NoTelemetry` (result recorded with monitoring off), `UnknownResult`, `ScopeMismatch`, `CollectionConflict`, `TelemetryFinalizationConflict`, `TelemetryPersistenceFailed`. Sensor unavailability is a value/limitation; retention failure is a typed error that blocks sealing.
 
+Decision overlap is measurement provenance, not a correction formula. M18.1 extends window/energy types with frozen resource policy, actual lease/measurement interval references, DecisionCall/profile/runtime/host/residency evidence, known concurrent work and unknown attribution. M18.2 consumes M11 admission/settlement evidence and includes contemporaneous overlap in the closed inputs/receipt digests; it does not acquire decision leases or wait for classification. Capture I/O and residency may contribute host work outside inference intervals. M18.5 renders deferred/live_local_overlap/server_state_unknown and measured background scope without subtracting guessed observer energy. Known API charge zero never proves zero operating cost. Add unchanged-raw-energy, unknown-locality and late-analysis/immutable-closure fixtures. **R165, R169**
+
 #### Ports (`engine/telemetry/ports.py`)
 
 ```python
@@ -227,6 +229,8 @@ Application interfaces offered to other modules (`engine/telemetry/application/i
 | `<run dir>/telemetry/summary.json` | Derived accepted/rejected observations and raw references, EnergyScope, allocation, explicit trial-window energy, exact values, coverage and limitations. |
 
 M18 retains hardware content through M02; M10 copies the exact close receipt into its retained MeasurementSet energy evidence before sealing; finalized local and imported results are served only from M02. **Owned processes:** timeout-bounded probes and admitted streaming collectors belong to `axbenchmarkd`, never a client; close the process only after its last live collection lease ends. Collector crashes affect that collector only. Startup cleanup/recovery cannot begin new sensing for a lost run. No tariff, billing or provider-cost arithmetic lives in M18.
+
+**R191 retained telemetry mapping.** M18 keeps provisional sampling journals and immutable receipts; M02 normalizes retained hardware series/samples and evidence with exact values and declared host/trial/device scope. SQL joins cannot allocate shared energy to a competitor or replace missing coverage with zero. M18.1–2 acceptance compares receipt-bound real SQL/API/ZIP values, signed temperatures, gaps and delayed final append after deleting provisional state.
 
 ### 2. API surface (`telemetry.*`)
 

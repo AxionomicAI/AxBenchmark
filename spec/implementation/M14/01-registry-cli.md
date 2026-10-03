@@ -43,6 +43,8 @@ Queries/commands print their response DTO. Jobs use shared follow_job; deliver o
 
 Human output pairs glyphs with words and disables color for non-TTY/NO_COLOR. JSON stdout never contains human progress. Only doctor verification may prompt on stderr/read stdin; this child supplies the port/adapter, not the command policy.
 
+**Database registry surface.** Generate `database.path`/`database.info` read queries and `database.snapshot` write job from M02 schemas. Path/info use discovery-safe autostart without storage initialization; snapshot requires explicit output and uses the existing follower/cancellation/overwrite policy. Preserve nullable versions, count coverage, snapshot publication/checksum and all typed database errors in JSON/text. Client APIs never execute SQL; documented external read-only analysis is a separate supported consumer.
+
 ## Streams and scope
 
 Subscribe with EventCursor {epoch, seq}; save the last fully processed cursor even for skipped old object revisions. Apply newer keyed revisions/tombstones and stable append-entry IDs. A snapshot/resync replaces projection/dedup state and subscription generation; replay retains them. Ignore obsolete deliveries.
@@ -68,7 +70,46 @@ No retained-analysis display-currency/rate option is generated. A typed alternat
 
 Validate help/output at 120×40 and 80×24; preserve readable UID/error/field/remedy data without requiring color. CLI boards are plain terminal output, not Textual screens.
 
+Generate all measurements.context.* and decisions.* methods with exact schemas/safety/job kinds from the registry. Round-trip ContextTarget/full TrialRef, AnalysisSelection/cursor/cutoff, native null/count/label/membership, frozen profile refs, native capabilities and DecisionCall IDs. New analysis requires an explicitly selected compatible READY System One profile; preserve typed disabled reason/setup route rather than deriving readiness from generic API routes. Source/profile/saved-review queries remain read-only and model-free.
+
+Generated scoring/config/report commands expose complete owner `RankingWeightsV2` and metric-policy schemas through `api schema` and whole-request `--params`/`--params-file`; complex plans use those published JSON shapes, not a guessed three-value shorthand. Preserve exact numeric text/rational strings, all eight keys, explicit higher/lower/null directions, source policy/version/digest, matched N/D, operator, null/detail coverage and full trial refs through JSON output. Transport shape errors remain exit 2 before requests; owner-invalid weights/directions preserve field-specific exit-1 EngineErrors.
+
+**Frozen domain contract.** Generated schemas and whole-request CLI transport retain exact rubric refs/version/digest, dynamic category/comment keys, DomainEvidencePlan/ObservationContext/coverage and typed modality/required-evidence errors. M06 weight preview/validation requires rubric_ref; generated profile lookup accepts explicit retained ref/version selectors. Complex domain contexts remain owner schemas via --params/--params-file, never private frontend/backend unions or inferred browser checks.
+
+Registry schemas expose `ModelVariantRefV1`, `VariantOverrideDraftV1`, `VariantFilterV1` and comparison selections losslessly in catalog/config/result/scoring/report calls. Complex lineage/claims/filter/annotation edits use existing `--params`/`--params-file` whole-request mode; preserve exact scales, partial dates, explicit unknown/conflicts and expected revision/operation IDs rather than flattening to model/author/date strings. Generated help documents `results.annotate_variant`, typed mismatch errors and bounded cursors; no new model lifecycle command is introduced.
+
+**Route, comparison and profile interfaces.** Registry-derived CLI schemas expose all new catalog.access_profiles.*, catalog.existing_agent_profiles.*, environment.qualify_route and configs.comparison_*/existing_agent_select methods. Typed input/output preserves Contract/Mapped wire forms, per-cell bindings and exact full matrix/diagnostic scope. Existing safety metadata distinguishes metadata queries, profile/config writes and explicitly consented external diagnostic work. JSON/error/event output is sanitized; generic dispatch never evaluates shell aliases or converts source-file arguments into exported configuration.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R175, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R166, R168, R172 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+**Human registry acceptance:** Generate exactly M12.5 judging.human.status/case/reopen/save_draft/submit/skip with shared schemas and metadata. Preserve exact grade strings, base_version/ETag semantics at the owning gateway, immutable operation/receipt and conflict errors; CLI supplies no alternate validator. Generic status/schema reads never mint credentials. Explicit local reopen may return the scoped entry URL privately to that caller; redact it from generic diagnostics/events/logging and keep normal status credential-free. Test submitting versus durable receipt, expired auth, stale version and idempotent replay with zero synthetic machine fields.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Round-trip requests through both real client transports with injected owners, unknown capability and stale revision/digest errors; no missing method is replaced with local filesystem parsing, codec import or hidden probe. Secret and private locator sentinels never print.
+
+**SQLite acceptance:** Help/schema/whole-request and both transports cover missing database, exact-statistics job, paths with spaces, unsupported runtime/schema and snapshot target conflicts. Auto-start path/info creates no DB, WAL, SHM or built-in pointer; malformed snapshot output exits 2 before a call.
+
+**Variant acceptance:** Round-trip JSON/forms and full filter/comparison requests through both transports, including revision mismatch, invalid enum/precision and missing creator role/date kind. Local invalid shape exits 2 with zero requests; server errors preserve field/expected/observed/TrialRef data and no metadata command invokes inference.
+
+**Domain acceptance:** Extend registry/client JSON validation with all seven project values, six profile signatures and every evidence tag; unsupported versions/foreign keys reject using owner errors. Schema/profile/read commands perform no grader, artifact evaluation or capability inference.
+
+Extend registry/input/output and real-socket tests with schema-2 eight-key requests, invalid/missing/extra keys, missing positive direction, exact large rational values and full statistics DTOs. Verify JSON retains unknown versus zero, independent file/LOC/detail states and pooled operator; neither parsing nor human formatting performs binary-float scoring, aggregation or policy inference.
+
+Extend existing fixtures for native-only and delayed/partial analysis, explicit local overlap/unknown attribution, distinct decision/harness/human fingerprints and offline or disabled-engine operation as applicable. Assert unchanged scope/digests, no fabricated values/calls, and no reclassification triggered by viewing, export/import or navigation.
 
 ```sh
 pytest tests/cli/test_registry.py tests/cli/test_help.py tests/cli/test_inputs.py tests/cli/test_output.py tests/cli/test_errors.py tests/cli/test_streams.py tests/cli/test_launcher.py tests/cli/test_imports.py tests/integration/test_cli_registry_socket.py

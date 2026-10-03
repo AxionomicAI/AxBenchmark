@@ -4,6 +4,8 @@ Status: proposed implementation contract for internal engineers; this document i
 An engineer should be able to encode the DevOps rubric, prepare either grading backend's inputs, and reject unsupported assessments without inventing grades.
 Authority: [M12](../reference/modules/12-quality-judging.md), [M12.1](../M12/01-review-contract.md), [decision grading](../DECISION-ENGINES.md#evidence-bound-decision-grading), and [measurement exclusion](../BENCHMARK-STATISTICS.md#eligibility-compatibility-and-exact-ordering).
 
+The two automated-backend sections below also supply the frozen rubric/evidence contract to `human_review` through [M12.5](../M12/05-human-review-web.md). All three backends use M12.1's identical six-grade, evidence, three-comment-axis and limitations validator. Human readiness concerns the trusted renderer/evidence, not model capability; the existing human pending/submission lifecycle is unchanged. Only defaults sum to 100: edited weights are exact finite nonnegative values with a positive total, including individual zeroes, and never waive a required grade.
+
 ## Profile identity and approved scope
 
 - `project_type = devops`; `profile_id = devops`; `rubric_version = devops/1`; `business_category = spec`.

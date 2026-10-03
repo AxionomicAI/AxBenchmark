@@ -19,6 +19,8 @@ Outcome: deterministic pure rules preserve optional availability, measured scope
 
 No I/O, asyncio, pydantic, third-party sensor imports, scheduler imports or cost/ranking rules. M18.2 owns ports/application/retention; adapter and UI files belong to later children.
 
+Extend existing measurement/window provenance with decision-resource policy and actual lease/measurement overlap references (DecisionCall/profile/runtime/host/residency, known concurrent work and unknown attribution). Pure telemetry rules preserve experiment/process/window scopes and measured background work; context capture I/O, warm residency or inference can affect them. A local API charge of zero is unrelated to measured host cost. Never subtract an estimated observer energy share or label a contaminated window exclusive/clean.
+
 ## Contracts and rules
 
 Implement parent `classify`, `enabled_metrics`, `limitations`, `validate_interval`, `effective_interval`, `counter_delta`, `integrate_power`, `select_sources`, `non_overlapping`, `allocation`, `window_energy`, `downsample` and `guidance_for` signatures exactly.
@@ -47,7 +49,18 @@ Counter pairs crossing trial boundaries cannot be prorated; preserve uncovered e
 
 Receipt value schema is exactly the parent's TelemetryFinalizationReceipt; validate canonical digests, UID/trial roster, sorted result rows and explicit complete/partial/unavailable/off state. Runtime durability is M18.2's responsibility.
 
+**Normalized retained telemetry.** M18 supplies typed series/sample/unit/source/scope and exact values with the unchanged TelemetryFinalizationReceipt through M02 ports; M02 owns SQLite hardware rows and evidence references. Live sampling journals remain provisional working state. Shared host series cannot acquire competitor attribution by a SQL join; signed temperatures and unknown coverage must round-trip without float authority or zero filling.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R169 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
 ## Numerical and fault acceptance
+
+**SQLite acceptance:** Round-trip scoped samples, signed/large exact values, gaps and full receipt rows through real M02 SQL/read API/export. Delayed hardware-row acknowledgement keeps close/finalization pending; finalized reads still work after working journals are removed.
+
+Extend existing fixtures for native-only and delayed/partial analysis, explicit local overlap/unknown attribution, distinct decision/harness/human fingerprints and offline or disabled-engine operation as applicable. Assert unchanged scope/digests, no fabricated values/calls, and no reclassification triggered by viewing, export/import or navigation.
 
 Run `pytest tests/engine/telemetry/domain`; fixture units below are joules, monotonic seconds and watts unless stated otherwise.
 

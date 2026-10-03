@@ -51,6 +51,10 @@ M10 returns money already converted using frozen rates (price currency → USD �
 
 Approved revision files stay read-only. The CLI never changes permissions; M03 prints the engine remedy for altered modes. M01 deletion is a destructive generated command requiring `--yes`; the engine restores write permission only for removal.
 
+**Statistics and ranking inputs.** M14.1's generated/API schema and whole-request JSON paths preserve complete `RankingWeightsV2` eight-key weights/directions plus selected metric policies and exact input lexemes. M14.2 binds M06's declared `scoring rank/explain/check-weights/choices/export-weights` mappings and YAML `--weights` through owner codecs; incomplete v2 keys or positive unset directions retain field errors without defaults. Human measurement/result output includes Gen tok/s, In tok (cached), Out tok (reasoning), Files / LOC; JSON retains exact N/D, pooled/mean operators, independent null/detail states, full TrialRefs, policy/evidence and enabled references/contributions. Clients never count files, average rates, select policy or score. Add both-client/schema/golden/offline report round-trip acceptance with all model ports disabled. **R173–R176**
+
+M14.1–2 human tests use exact judging.human registry schemas and typed conflicts/receipts, no CLI validator. --no-tui/SSH keeps human quality pending after all seals, prints durable refs and explicit local reopen/attach/stop guidance, and survives detach/tab close/credential expiry. --no-wait-report never bypasses original settlement. Only the requesting client receives the private opener URL; events/logs/history suggestions are credential-free. Validate delayed M02 receipt, restart/manual reopen, run stop versus additional cancellation and report admission, with zero model work or public host fallback. **R189**
+
 ## Acceptance criteria
 
 - Exercise the original twelve product signatures and both manual-create forms, plain unattended execution and bare-TUI launch. Invalid/incomplete settings print every typed issue; no prompt or work starts. [R048–R060]
@@ -64,6 +68,8 @@ Approved revision files stay read-only. The CLI never changes permissions; M03 p
 - Six non-local trials print final LaunchStep warning/totals once across replay, terminal snapshots, cache expiry and restart via `JobStatus.initial_progress`, and continue without stdin; all-local trials print none. Report success/failure/cancel/skip/pending/reconnect/cache-expiry settles the wait; opener failure retains the path; `--no-wait-report` does not await artifact generation. [R050, R060, R134, R158]
 - Refresh failures keep catalogs/overrides/prices/rates with source and age. COP `4000` is passed/displayed as currency units/USD; account billing never piggybacks on model override. Frozen EUR reporting and unknown missing-rate values preserve records; `report --currency EUR` exits 2. [R053, R055, R063, R064, R134, R156, R157]
 - Results export makes resolver → plan(None) → export(explicit IDs) calls in order; unavailable/empty plans stop before export and raced retention changes cannot shrink the selection. Safe/idempotent package round trips and offline retained reporting work with no harness/model access; full digest mismatches, unsafe ZIPs and record conflicts add nothing. [R055–R059, R117, R120–R125]
+
+Generated API schemas and CLI presenters preserve frozen family/version/rubric digest, dynamic category/comment labels and domain evidence-plan/coverage/modality reasons. Profile inspection resolves explicit retained refs; weight preview/check passes the exact rubric ref to M06. Show native matrix, DevOps observation mode, product-agent simulation/replay/live and document authority/structural limits through the existing owner DTOs. Required image or domain-runner capability failures use typed owner reasons; no CLI fallback judge, browser assumption or candidate-command execution. Add all-six-family and missing-evidence JSON/human-output fixtures with model access disabled. **R184–R188**
 
 ## Implementation
 
@@ -128,6 +134,20 @@ SIGINT while following sets `Interrupts`, closes subscriptions, prints UID-based
 
 Normalize actual filesystem arguments (`--config`, ZIP/input/output, `--prompt-file`, repeated `--spec`, `--target-dir` and explicit directory references) lexically against the CLI cwd before sending them; do not open/stat them or reorder repeated inputs. Pass `--prompt` text unchanged; M16 validates UTF-8 and stages exact bytes. Preserve a UID or label string unchanged for engine resolution. A relative retained-directory reference must be explicit (`./…` or `../…`); a bare token is a UID/label. `--params-file` alone reads a client-supplied JSON request document; it must not become a private retained-store access path.
 
+Registry-generated catalog/config/result/scoring/report requests retain `ModelVariantRefV1`, `VariantOverrideDraftV1`, `VariantFilterV1` and comparison selection using typed owner schemas. Complex DAG/claim/filter edits use existing `--params`/`--params-file`, preserving exact scales, date precision, unknown/conflicts and revision/operation IDs; no undocumented flat flag is invented. `results.annotate_variant` is an explicit write and metadata discovery remains model-free. Present native selector versus descriptor/effective identity, creator role/date kind, Matched/exploratory/signature status, scoped mismatch and partial proof separately. Pass full filters to report/rank without local matching or scoring. **R190**
+
+#### Integrated route/profile contracts (R192–R194)
+
+Closed registry CLI schemas preserve all M03/M04/M07 route/profile commands, exact Contract/Mapped wire branches, diagnostic scopes, expected revisions and JobRef/error/event semantics. Generic and curated clients only call owner APIs; they never source/eval an alias, parse local source on the client's behalf or import an engine serializer.
+
+Curated access-profiles list/inspect bind M04; access-profiles qualify binds environment.qualify_route with exact harness/model/effort/budget and explicit bounded diagnostic confirmation. existing-agents inspect/register are separate explicit actions; configs existing-agent-select binds competitor{configuration_id} or harness_judge{} with exact profile/treatment/override ref and expected revision. Private source-file arguments do not enter exported YAML.
+
+compare-harnesses opens an existing saved configuration as a draft, creates/previews one exact common model/native-effort matrix and returns all six cells. --harnesses is explicit subset; --mode exploratory discloses uncertainty. --output calls configs.comparison_export, guarded atomic no-overwrite; otherwise return draft ID for normal save. Existing axbenchmark run --config FILE / runs.launch alone revalidates and executes. Strict jobs=1 and no silent compatible-only filtering. Text/JSON preserves immutable refs, N/6, unsupported and unknown reasons, role/treatment and requested/effective distinctions. Tests cover both client schemas, stale writes/export, consent cancel, ignored effort and secret-free output.
+
+**Same-model comparison and routed access — R192–R193.**
+
+Expose [the cross-harness API/CLI contract](../../CROSS-HARNESS-COMPARISON.md#apis-cli-and-design-engine-handoff): M04 profile operations, M03 exact-route qualification and M07 comparison draft/create/update/preview. The curated comparison command prepares a setup; existing run dispatch performs execution, with no hidden probe or second launch path. Retain all six cells, explicit selection/coverage and immutable route/model/effort evidence in text/JSON. A missing decision engine remains independently disabled even when API access is ready.
+
 ### 2. API surface
 
 M14 owns no engine methods/events. Application errors use JSON-RPC integer `error.code=-32000`, namespaced `error.data.code`, message and optional field/remedy/details, decoded into `EngineError`. InProcessClient uses the identical codec; CLI prints fields verbatim without prose parsing. `ProtocolError(rpc_code, message, data)` remains distinct from application errors and maps to exit 3 as engine/protocol incompatibility; locally malformed parser/request input exits 2 before dispatch. [F18]
@@ -153,7 +173,7 @@ M14 owns no engine methods/events. Application errors use JSON-RPC integer `erro
 | `results.resolve_run(reference) -> RunResolutionDTO`, `results.get_run(run_uid)` | M02 | UID/unambiguous label and permitted retained-directory resolution; candidate UIDs/origins on `runs.ambiguous_run`. |
 | `runs.launch(config_path,execution?) -> JobRef`, `JobStatus.initial_progress: LaunchStep`, `LaunchResult(run_uid,…)` | M11/M07 | One launch, retained final warning/totals from jobs.get/job snapshots after finish/cache expiry/restart; typed `configs.incomplete` before staging; no preview pass. |
 | `runs.status(run_uid)`, `runs.stop(run_uid,scope,configuration_id?)`, run snapshots and stop receipts | M11/M12 | Task/trial/state display; judging/finalization stop, retention/error/report projection. |
-| `judging.status(run_uid)`, `judging.batch.*`, `judging.review.finished` | M12/M11 routing | Run-related judging display; registered run stream carries the relevant events. |
+| `judging.status(run_uid)`, `judging.human.status/reopen`, `judging.batch.*`, `judging.review.finished`, `judging.human.case.changed/batch.changed` | M12/M11 routing | Run-related judging display and explicit private local reopen. Human state/counts come from owner snapshots/events; no status read auto-opens or settles a case. |
 | `harness.configuration.describe(run_uid,configuration_id)`; retained task APIs with explicit TrialRef/ResultId | M05 | Detailed settings and generated historical access without implicit trial selection. |
 | `environment.recheck`, `verification_plan`, `verify(consent,harnesses?)` | M03 | Readiness/collectors/revision modes and explicit minimal-call consent. |
 | `catalog.refresh`, price/rate events; model/account/rate command request schemas | M04 | Scope-filtered refresh, cached source ages, distinct overrides and units. |
@@ -170,13 +190,15 @@ M14 owns plain terminal artboards, not Textual screens. Presenters implement the
 | Artboard | Interaction/presenter and exact states |
 |---|---|
 | CliHelp | Root/generated help, original twelve product signatures plus both manual-create forms, required project/target/profile inputs, API review/approval access, exits 0–3; no engine mutation. |
-| CliRun (wide, compact) | RunUnattended/run: launch steps/final warning, frozen record/scheduling, queued/running/verifying/judging/finalizing/retention_pending, completed/stopped/interrupted/halted, report pending/written/failed/cancelled/skipped, detach/reconnect/resync. |
+| CliRun (wide, compact) | RunUnattended/run: launch steps/final warning, frozen record/scheduling, queued/running/verifying/judging (including wait_reason=human_input with pending/draft/submitting/receipt states)/finalizing/retention_pending, completed/stopped/interrupted/halted, report pending/written/failed/cancelled/skipped, detach/reconnect/resync. |
 | CliInvalid | RunUnattended/run: synchronous `configs.incomplete` issues/checks/remedies in engine order; no admitted launch work. |
 | CliStatusStop | ShowStatus/StopRun/status: resolved UID/origin, explicit trials, outcomes/reasons, cleanup receipt, judging/finalization stop, pending retention and refused/ambiguous target. |
 | CliDoctor | Doctor/VerifyHarnesses/RefreshModels with doctor/catalog presenters: missing harness/auth/offline/permission/altered revision modes, consent accepted/declined/nonterminal, cached prices/rates and account-vs-model labels. |
 | CliExchange | Export/Import/RegenerateReport with exchange/report presenters: progress, added/identical, identity/unsafe/conflict errors, retained readiness, report disposition/path and opener warning. Extend existing CLI examples with manual inspection/capture/draft review: exact primary-file order/refs, mode/project/derived target, profile refs, snapshot digest/exclusions, typed failure and review version. |
 
 M07 ReviewLaunch copies the engine's `LaunchPreview.cli_command`; M14 does not build that TUI text. M15's default/reattach and M11 Detach/RunReattached screens consume UID-based commands; CLI resolves `--attach RUN_REF` before invoking `TuiLauncher(attach=run_uid)`.
+
+M14.1 generates exact `measurements.context.*` and `decisions.*` schema/job/error coverage. M14.2 adds curated context sessions/snapshot/history/segments/analysis/reclassify plus decisions profiles list/save/test commands from the supplements. Context query arguments preserve ResultId/invocation/session/agent/window and pinned analysis/cursor; reclassify requires source digest, explicit decision-profile/pack refs, acceptance/budget/resource policy and idempotency key. Return native nulls/provenance and typed engine-disabled/setup reasons; profile tests distinguish model-free metadata from explicit accounted inference. Generic API route configuration never enables decision calls. Test both output modes and no-network offline reads. **R166, R168, R172**
 
 ### 5. CLI
 
@@ -216,6 +238,10 @@ Registry-generated access implements all other published operations:
 - Generated/destructive `api call` requires `--yes` or exits 2 with zero calls; this includes `templates.delete` and generic `runs.stop`. `jobs.cancel` keeps M11's `write` safety and does not acquire a new `--yes` requirement. Curated `stop RUN_REF` is the documented explicit-consent exception. No generic destructive prompt exists.
 - Preserve owner scope: M04 `models override`/`default` use entry/context APIs, `models billing` uses `catalog.save_account_override`, and `models rate CODE PER_USD` uses `catalog.save_rate_override` with currency units/USD. Billing is never added to model override. Complex owner hints must publish their typed input mapping; M14 does not infer account/context or reciprocals.
 - M01 templates, M05 harness/log/isolation, M06 scoring, M07 configs/presets/run record, M08 checks, M09 prompts/checks and M10 measurements are generated owner-hinted commands. All generated commands accept `--json`. Retained requests require ResultId/TrialRef, and display-currency/rate analysis options are absent. `tariff` is a typed TariffDTO when present, not a fabricated display-currency switch.
+
+M14.2 `commands/templates.py` binds exact one-shot text/file and ordered repeated multi-step spec flags to M16 inspect/create_manual/operation/approval APIs; no optional planner route is entered implicitly. Add parser/API fixtures for seven project types, missing Git with successful manual approval, stale source tokens, six harness filters, both mode totals and separate retained commit outcomes. Human/JSON output reads owner DTOs unchanged; no client Git or identity computation. **R177–R183**
+
+**R191 owned CLI integration.** M14.2 owns `cli/commands/database.py`, `interactions/database.py`, `presenters/database.py` and `tests/cli/test_database.py`; M14.1 generates the same schemas. Path/info return absent storage without lazy initialization, migration or built-in/default writes. Snapshot follows the M02 JobRef to path/size/publication/checksum, rejects protected/source aliases and uses default no-overwrite semantics. Test real socket/in-process JSON/text, exact-statistics job, fresh autostart and busy/version/cancel/disk errors. Direct external read-only SQL is supported; operational CLI still uses APIs.
 
 ### 6. Headless verification
 

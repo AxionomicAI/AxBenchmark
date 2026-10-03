@@ -67,7 +67,25 @@ Hide, escape, unmount and disconnect only release client subscriptions. Cancel e
 
 Preserve focus/selected planner/scroll through resize and reload where compatible with engine choices. No screen reselects fallback order, creates a model default or starts a job during reattach.
 
+**Frozen domain contract.** PlannerPicker/PlanningProgress/PlanningFailed preserve the requested project domain and proposed family/evidence scope returned by request/session DTOs. Distinguish agent software generation from specification design/decomposition and display typed scope/target/modality output failures; no UI substitutes a web rubric or starts a domain verifier. Manual input/capture paths still bypass planner screens.
+
+**Route, comparison and profile interfaces.** Extend PlannerPicker/PlannerProgress/PlannerFailed viewmodels with independent existing-profile/access route/native effort choice and source/treatment limitations via existing planning request/session APIs and M04 profile/catalog factories. Return structured PlannerSelection, never alias shell text or competitor draft selection. Explicit registration/qualification remain separate M04/M03 actions, and planner-only accounting/status uses session/job scope.
+
+## Integrated requirements
+
+R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R179, R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Planner screens are entered only from explicit multi-step generation. Display current-folder capture provenance, derived target mode and sourceChanged/exclusion issues from M16.1; no required Git revision field or planner-dependent manual route. Candidates iterate all six registry entries and version/generation/role evidence; unsupported Cursor/OpenCode planner roles stay disabled. Add navigation tests proving manual creation/reopen skips this child and planner retry reuses a complete capture or requires explicit review of changed source facts.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Picker navigation is model-free; stale or wrong-role profile blocks generate while preserving choice. No competitor matrix/dummy run is produced, manual one-shot/provided-spec paths retain no planner controls.
+
+**Domain acceptance:** Add native-matrix, bounded-agent-case and document-only generation output fixtures plus unsupported scope errors at wide/compact sizes; navigation and retry preserve request/domain/version and invoke only the authorized planner operation.
 
 ```sh
 pytest tests/tui/test_planner_selection.py tests/tui/test_planner_consent.py tests/tui/test_planning_progress.py tests/tui/test_planning_failure.py tests/tui/test_planning_reconnect.py tests/tui/test_planning_viewmodels.py tests/integration/test_planner_screen_flow.py

@@ -37,7 +37,21 @@ Automatic discovery and every run/selection/snapshot path perform zero price/rat
 
 Recorded-response fixtures exercise published data only; they contain no credentials. Price/rate refresh success certifies neither harness compatibility nor account authentication.
 
+Price resolution remains keyed to the selected provider/model and applicable route/account scope. `ModelVariantRefV1`, lineage ancestors, public-weight licenses and equal execution fingerprints confer no inherited price or billing state. `SelectionEvidence.pricing` and M07 `PriceSnapshot` preserve the selected variant's independently evidenced price or Unknown; M10 alone evaluates cost basis/coverage.
+
+**Route, comparison and profile interfaces.** Extend owned price-source resolution with `AccessPriceScope(profile_ref, ordered_route_digest, account_fingerprint, model_binding_ref, deployment, tier, source_date)`. `SelectionEvidence.pricing` returns that exact scope and provenance or unknown. Direct-provider tables do not fill a gateway charge; an exposed independent gateway fee is a separate price item, while an inclusive gateway amount is an alternative cost basis. Price refresh never qualifies transport/effort or starts a gateway; remote inference behind loopback remains priceable remote work.
+
+## Integrated requirements
+
+R193 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Test equal aliases on two routes/accounts, inclusive upstream charge versus separately evidenced fee, missing route prices/currency, unknown inference locality and stale config. No base-model/direct-provider price substitution and no localhost free-price assumption.
+
+**Variant acceptance:** A priced base and an unpriced fine-tune/quantized descendant retain different pricing states; no ancestry traversal supplies the missing price. Equal artifact bytes across accounts preserve distinct billing and route evidence. Unknown price never becomes free hosting or verified zero.
 
 Run offline:
 

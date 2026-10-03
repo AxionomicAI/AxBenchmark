@@ -6,7 +6,7 @@ Outcome: review and edit saved drafts, preview scoped regeneration and approve e
 
 ## Entry conditions
 
-**Completed implementation prerequisites:** Bootstrap, [M16.3](03-draft-approval.md) and [M16.4](04-planner-screens.md), including real client/job foundation and M15 shell.
+**Completed implementation prerequisites:** Bootstrap, [M16.3](03-draft-approval.md), M15.1–2 and inherited real client/job foundations. M16.4 planner screens are an injected navigation provider and later real integration gate for optional generation, not a prerequisite for manual review/edit/approval.
 
 **Bootstrap-published contracts, allowed as injected fixtures:** M01 revise/duplicate/approved-template factories, M10 invocation accounting and M07 configuration-copy/judge-preselection views. Their real integration remains a parent gate.
 
@@ -14,7 +14,7 @@ Use shared screen loading/error widgets, typed subscription manager and scope/ve
 
 ## Exact proposed ownership
 
-- PlanReviewScreen, TaskEditorScreen, ServiceEditScreen, RegenerateScreen and ApproveDraftScreen sections of `axbenchmark/tui/screens/planning.py`.
+- ManualCaptureScreen, ManualCaptureFailedScreen, PlanReviewScreen, TaskEditorScreen, ServiceEditScreen, RegenerateScreen and ApproveDraftScreen sections of `axbenchmark/tui/screens/planning.py`.
 - DraftVM/TaskEditorVM/ServiceEditVM/RegenerateVM/ApproveVM and builders in `axbenchmark/tui/viewmodels/planning.py`.
 - Review/editor selectors in `axbenchmark/tui/styles/planning.tcss`; corresponding factory registrations through M15's screen registry hook.
 - `tests/tui/test_draft_review.py`, `test_task_editor.py`, `test_service_editor.py`, `test_regenerate_dialog.py`, `test_draft_approve.py`, `test_draft_selected_task.py`.
@@ -38,6 +38,8 @@ M16.4 retains planner/progress/failure portions of shared files. M01 owns NewTem
 
 PlanReview has wide/compact prototype variants; test every screen/state at 120×40 and 80×24, including compact error/full-digest display. M01 Revise/ReviseActiveRun/ReviseConfirm/ReviseIdentical/RevisionSaved are host flows, not new owned screens.
 
+**Frozen domain contract.** DraftVM/ApproveVM render exact family/version/digest, six category labels, comment meanings and derived DomainEvidencePlan/coverage issues from DraftDetail/ApprovePreview. Edit the existing rubric/check/support files through versioned DraftEdit; present backend features, native matrix/lifecycle, DevOps target/mode/authority, agent case/budget/effect boundaries and supplied-brief/reference precedence without creating a client-only plan. Empty services can be valid for specification documents; no always-code/build/server assumption blocks approval.
+
 ## Selected-task and edit contracts
 
 Load planning.draft and choose persisted last_task_id if valid, else first task. One selected_task_id drives the highlighted row, detail query, check list, snapshot label, edit and regeneration actions.
@@ -48,7 +50,7 @@ Check the response task/draft/version/load token before applying it. Delayed T3 
 
 Debounce name/title/prompt edits 500 ms with base_version; serialize local pending edits and wait for their acknowledgement before Done, regeneration preview or approval preview. Conflict reloads current data with notice, never silently overwrites.
 
-Task reset/undo sends ordinary versioned edits; AddCheck/UpdateCheck retain full M08 fields and show incomplete rows as issues. RemoveCheck names the selected check. Specification editing uses SetSpecification through an editor in the Specification tab, with the same debounce/conflict contract.
+Task reset/undo sends ordinary versioned edits; AddCheck/UpdateCheck retain full M08 fields and show incomplete rows as issues. RemoveCheck names the selected check. Specification editing uses exact-byte shared/primary-file edits and AddSpec/ReplaceSpec/ReorderSpecs/RemoveSpec for v2; SetSpecification remains only for the preserved v1 shape. All edits share the debounce/conflict contract.
 
 Service save issues exactly one SetService with command/cwd/port/readiness; invalid fields show engine messages beside each control. Escape/cancel does not apply unsaved service changes. Edit capabilities come from DTOs.
 
@@ -68,7 +70,19 @@ Identical approval stays disabled with templates.identical_revision; Open existi
 
 M16.3 publishes revision/draft/provenance together; M01 revision approval additionally publishes requested config copies. Reconnect sees either old open draft or whole approved state, not an intermediate screen success.
 
+## Integrated requirements
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R177, R178, R179, R180, R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Own manual capture/failure progress from `planning.operation` plus `job:<id>`, with import/capture/validate/persist labels, no planner cost/log and no planner-picker redirect. Hide only unsubscribes; cancel waits the durable owner result. Shared review handles manual/planned/revision origins, benchmark/project/derived target mode, exact prompt or numbered ordered primary files, original/generated byte provenance, baseline exclusions and capture version. One-shot has exactly T1; supplied multi-step has >=2 files. Reorder/removal/type changes are explicit versioned edits, and no rendering normalizes bytes.
+
+Show locked “Every task must commit” policy/instruction/version/check digest separate from input text; missing protocol closure, sourceChanged, active recapture and stale preview block approval. `planning.recapture` uses base_version and reviewed inspection; preserve prior complete baseline on failure. Manual drafts have no regeneration/reset-to-generated action unless actual generated provenance exists. Add wide/compact no-harness/Git manual create→capture→edit→approve tests, CRLF byte preservation, invalid counts, seven domains, stale recapture, empty behavioral suite and no implicit planner/commit/repair calls.
+
 ## Acceptance and faults
+
+**Domain acceptance:** Add all-six-family PlanReview/Services/Edit/Approve cases at both sizes; incomplete evidence scope stays an engine field issue, and saved profile edits invalidate approval version. Native matrix or brief changes never silently waive requirements or call a model.
 
 ```sh
 pytest tests/tui/test_draft_review.py tests/tui/test_task_editor.py tests/tui/test_service_editor.py tests/tui/test_regenerate_dialog.py tests/tui/test_draft_approve.py tests/tui/test_draft_selected_task.py tests/tui/test_planning_viewmodels.py tests/integration/test_draft_editor_journey.py tests/integration/test_revision_editor_journey.py

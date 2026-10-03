@@ -154,15 +154,15 @@ All source/test paths below are proposed runtime files under `solution/`, not cl
 
 | Existing owner | Binding work / proposed additions |
 |---|---|
-| [M05.2](M05/02-isolation-observation.md), M05.3–M05.6 | Capture acknowledged usage/timing facts with request, clock, token and source basis through existing observation ports; extend adapter fixtures/tests. Unsupported native timing remains unavailable. |
+| [M05.1](M05/01-process-runtime.md), [M05.2](M05/02-isolation-observation.md), M05.3–M05.9 | Publish/drain the complete usage/process/timing/roster union, capture request/clock/token/source facts and compose the durable sink independently from advisory live views; extend all six adapters' fixtures/tests. Unsupported native timing remains unavailable. |
 | [M10.1](M10/01-task-accounting.md) | Own `axbenchmark/engine/measurements/domain/throughput.py`, additive usage/journal DTOs and `tests/engine/measurements/test_throughput.py`; deduplicate and pair accepted request facts. |
 | [M10.2](M10/02-final-accounting.md) | Own `domain/artifact_stats.py`, `application/collect_artifact_stats.py` within measurements; snapshot-reader port consumption, trial summaries/finalization and `test_artifact_stats.py`, `test_statistics_trials.py`, `test_statistics_finalization.py`. |
 | [M10.3](M10/03-measurement-screens.md) | Measurement columns/detail and source/coverage/pooled labels through existing API/view-model/screen tests. |
 | [M06.1](M06/01-scoring-service.md) | Complete weight schema/migration, directions, population compatibility, references and factors; extend `test_weights.py`, `test_eligibility.py`, `test_rankings.py` and shared scoring vectors. |
 | [M06.2](M06/02-rankings-screens.md) | Eight-factor editor, required direction controls, exact engine breakdowns, presets/reset/export and wide/compact states. |
 | [M07](reference/modules/07-run-configuration.md) | Freeze complete schema-2 weights/directions and metric policies; migrate legacy configuration input without modifying its provenance. |
-| [M02](reference/modules/02-retained-results-comparability.md) | Snapshot ports, safe manifest inventory, metric evidence storage/receipt binding and immutable retained projections. |
-| [M13](reference/modules/13-standalone-html-report.md) | Primary columns, enabled-factor charts and actual offline BigInt/rational scorer; run the shared vectors without network/model access. |
+| [M02](reference/modules/02-retained-results-comparability.md) | `ArtifactSnapshots.pin_final`/`DeliveredSnapshotLease` pre-seal manifest+bytes reader, safe inventory, metric evidence/receipt binding and immutable retained Results projections; M02.1–3 preserve independent metric/detail states. |
+| [M13](reference/modules/13-standalone-html-report.md) | M13.1–4 primary columns, enabled-factor charts, actual offline BigInt/rational scorer and full-plan job/API pins; run shared vectors without network/model access. |
 | [M14](reference/modules/14-command-line-interface.md), [M17](reference/modules/17-zip-exchange.md) | CLI fields/schema validation and archive round trips of exact values, source policies, directions, receipts and inventories. |
 | [M15.3](M15/03-tui-integration.md), [M12](reference/modules/12-quality-judging.md) | End-to-end client integration / explicit exclusion of these metrics from judge input and separate auxiliary accounting. |
 

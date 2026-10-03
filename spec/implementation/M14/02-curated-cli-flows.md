@@ -22,6 +22,10 @@ Use the [foundation boundary](../../ARCHITECTURE.md#executable-foundations-and-c
 
 Do not implement engine finalization, identity, catalog rules, ZIP validation or report rendering. Request missing provider contracts from their owner; never introduce private storage access or compatibility aliases.
 
+## Database analysis access — R191
+
+Add `axbenchmark database path`, `database info` and `database snapshot --output PATH` over the M02-owned `database.*` APIs in [RESULTS-DATABASE.md](../RESULTS-DATABASE.md). Path/info expose database/schema/view versions and read-only connection guidance; snapshot is an awaited job with an explicit output target and no overwrite by default. CLI does not open the operational writer or execute arbitrary SQL. Test JSON/text parity, paths with spaces, busy/version/storage failures, target collisions and snapshot completion. External tools may independently query the documented database read-only; snapshots support long graph/analysis work without holding the live read transaction.
+
 ## Public and internal interfaces
 
 Implement every parent signature using its call table. RUN_REF is UID or unambiguous label through results.resolve_run(reference); ambiguous labels print all candidate UIDs/labels/origins, exit 1 and issue no dependent call. report also accepts an engine-owned retained directory reference.
@@ -46,7 +50,7 @@ Manual report resolves/get_run, calls reports.generate(scope={run_uid},tariff?),
 
 Pair --tariff AMOUNT_PER_KWH with --tariff-currency CODE: both absent retains recorded tariff, either alone exits 2 before dispatch with a message naming the missing flag, both supply TariffDTO {per_kwh,currency} intact. This is tariff-denomination input; --currency/--rate display-analysis overrides remain invalid. Never infer a currency or fetch new rates.
 
-Doctor ordinary/collectors calls environment.recheck only. Verify --yes skips plan/prompt and sends one verify(consent=true); otherwise nonterminal exits 2 before connecting, interactive calls verification_plan then [y/N]. No/empty/EOF makes no verification call and exits 0. Only this interaction reads stdin.
+Doctor ordinary/collectors calls environment.recheck only. Verify --yes skips plan/prompt and sends one verify(consent=true); otherwise nonterminal exits 2 before connecting, interactive calls verification_plan then [y/N]. No/empty/EOF makes no verification call and exits 0. Only an explicitly interactive consent/authoring-review interaction reads stdin; unattended run never does.
 
 RefreshModels delegates scope selection and fallback to catalog.refresh; print context/provider/rate source URL/date or failed-source kept-value age. Rates are currency units per 1 USD (COP 4000), account billing uses save_account_override and model effort/price uses save_override. No reciprocal or cross-scope mutation.
 
@@ -67,7 +71,62 @@ All followers reuse full EventCursor, revision/tombstone/entry dedup and replace
 
 Golden output at 120×40 and 80×24, CliRun compact below 100 columns. Engine text/remedies stay authoritative; full digests on mismatch, UID/origin on ambiguity, no color dependence. M15's RunReattached/Detach are integration consumers, not M14 screens.
 
+Extend measurement/result/ranking/report human presenters with primary Gen tok/s, In tok (cached), Out tok (reasoning), Files / LOC fields from owner DTOs. Generation summaries say pooled with exact matched N/D available; token/file/LOC summaries say mean/range, final size includes baseline and missing detail remains unknown. Analysis inputs forward complete schema-2 weights/directions/policies through the registry/API path and preserve them in exported configs/reports; CLI supplies no scorer, native token estimator, artifact scanner or inferred direction. Existing tariff/currency, exit and whole-roster behavior is unchanged.
+
+**Frozen domain contract.** Curated run/status/doctor/report/exchange presenters preserve frozen family/version/category labels and domain coverage/modality limitations. Show native missing target, DevOps plan-only, agent simulation/replay/live and specification structural-only evidence honestly; approved agent evaluation budget/authority and separate verification auxiliary use are printed from owner DTOs. No unattended fallback profile, app execution or grading call is introduced; text-only domains do not print missing-browser errors absent such a check.
+
+Curated refresh/status/result/report formatting displays owner variant refs/facets, requested/resolved/effective proof, creator roles/date kinds/precision and comparison mode/confounds without claiming alias equality. Existing report/rank flows pass published `filters.variants` unchanged when selected through registry/API whole-request forms; do not invent private flags or recompute strict matching. `results.annotate_variant` uses explicit prior-snapshot and operation IDs, never automatic adoption on import/read. Print mismatch versus unverified separately and retain affected TrialRefs and exact remedy; a configuration model rejection follows existing exit/lifecycle policy.
+
+**Database command ownership.** Add `cli/commands/database.py`, `interactions/database.py`, `presenters/database.py` and `tests/cli/test_database.py` within this child. `database path` prints configured path/presence/access; `database info` prints runtime/schema/view/catalog/count coverage and reports an optional explicit statistics job; `database snapshot --output PATH` awaits M02 output path/size/pin/checksum. No-output path/info remains discovery-safe. Reuse exact shared typed errors and snapshot follower; do not inspect private database files to improve output.
+
+**Route, comparison and profile interfaces.** Bind `existing-agents inspect --alias ALIAS_NAME --source SOURCE_FILE`, `existing-agents register --inspection INSPECTION_ID --name PROFILE_NAME`, `configs existing-agent-select ... --role competitor|harness_judge`, access-profiles commands and compare-harnesses to their M04/M03/M07 methods. `compare-harnesses --config CONFIG --model-binding REF --effort-contract REF --access-profile REF --trials N` opens a revision-scoped draft; --harnesses is explicit subset, --mode exploratory discloses uncertainty, --output uses configs.comparison_export with guarded atomic no-overwrite. Otherwise return draft ID. Exact route qualification has --harness/--model-binding/--effort-contract/--budget and explicit bounded diagnostic confirmation. Existing `run --config FILE` alone launches after owner revalidation. Source paths remain local parameters; no example privately supplies them.
+
+**Cross-harness and access-profile commands — R192–R193.**
+
+Bind the curated `access-profiles list/inspect/qualify` and `compare-harnesses` commands from [CROSS-HARNESS-COMPARISON.md](../CROSS-HARNESS-COMPARISON.md#apis-cli-and-design-engine-handoff) to M04/M03/M07 APIs. Preview produces a full six-cell matrix and reviewed draft/save reference; execute via existing `axbenchmark run --config FILE` / `runs.launch`, never a separate scheduler. JSON carries all unsupported/unselected reasons, explicit effort/mapping and partial-coverage labels. Qualification requires its separately bounded diagnostic consent/budget and uses verification accounting. Parser tests ensure unsupported settings do not silently fall back and a loopback remote proxy retains remote-budget warnings.
+
+**Existing alias/profile commands — R194.**
+
+Expose the existing-agent inspect/register/select commands defined in [CROSS-HARNESS-COMPARISON.md](../CROSS-HARNESS-COMPARISON.md) through M04/M07 APIs. Print sanitized resolved harness, declaration sources, treatment, conflicts and unknown effective settings. No client shell evaluates an alias or sources startup files to make it available. Selection is explicit by profile/version/entry or matrix cell; existing run/export routes consume the reviewed draft. Test alias-not-on-PATH, dynamic-source refusal, missing profile, stale revision, credential presence-only output and explicit transformation labels.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R190 — [model variants, lineage and comparison](../MODEL-VARIANTS.md).
+
+R189 — [human review](../M12/05-human-review-web.md).
+
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R173, R175, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R166, R168, R172 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R177, R178, R180, R183, R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Add `templates create --type one-shot --prompt TEXT|--prompt-file PATH --project-type TYPE --target-dir PATH` and `--type multi-step --spec PATH --spec PATH ...` using the parent's M16 manual API bindings. Preserve repeated spec-flag order; CLI only normalizes path syntax and passes exact text/file references, while the engine stages/validates bytes. Inspect target first, present engine mode/counts/exclusions and profile issues, then create the durable manual job with idempotency binding and use the shared explicit approval flow. No-harness/Git manual create/import/edit/approve invokes no planner/readiness/catalog model calls; Generate with planner is a separate explicit route.
+
+Harness filters/completion derive all six registry IDs. Doctor/run/status render Git execution-only blockers, frozen mode/stage totals, locked commit policy and scoped commit failures/unverified causes; CLI never commits or repairs. Add parser/client tests for both modes, seven project types, ordered paths with spaces/Unicode, conflicting/invalid input forms, stale capture/approval, missing Git, Cursor/OpenCode capability errors and registry-derived jobs default with explicit 4/5 preserved. Human and JSON outputs retain the same owner fields.
+
+Own curated `context sessions RESULT_ID`, `context snapshot/history/segments RESULT_ID --invocation … --session … --agent … --window …`, `context analysis RESULT_ID ANALYSIS_ID`, and `context reclassify RESULT_ID --source-digest … --decision-profile-ref … --question-pack-ref … --acceptance-policy … --budget … --resource-policy … --idempotency-key …`. Dispatch the exact measurements.context methods; reclassify returns the cancellable M11 job/analysis ID. Add `decisions profiles list/save/test` with immutable version/digest and explicit metadata versus resource-consuming inference mode. JSON preserves every provenance field; text preserves scope/nulls/coverage, deferred state and separate observer costs. No command infers another profile or promotes a generic chat route to READY.
+
+**Human headless lifecycle:** run --no-tui follows state=judging/wait_reason=human_input as Awaiting human review with pending/submitting counts and durable batch reference. Explicit Human authorizes waiting after all seals; --no-wait-report bypasses only report following after terminal retention, never original human settlement. Print attach/status/stop and generic `api call judging.human.reopen` guidance; the initial/open-failure private handoff may show the scoped local URL, never a public bind/remote-sharing fallback. SIGINT detaches successfully and cancels nothing. Status/reconnect/restart does not auto-open a browser. Test SSH/opener failure, expired credentials/manual reopen, delayed submit receipt, skip, run stop versus additional cancellation and typed persistence errors; only real dispositions permit completion/report handling.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Parser/API tests cover inspect/register/select as separate actions, full six JSON cells, strict jobs=1, explicit subset, no implicit compatible-only launch, stale export, protected/existing output and route consent rejection. Exported blocked plans stay blocked; default-model smoke cannot satisfy qualify. No shell sourcing/private configuration read occurs.
+
+**SQLite acceptance:** Use real daemon/M02 on a fresh root for path/info without writes, then initialize operational storage and snapshot during concurrent writes. Validate JSON/text parity, absent DB snapshot error, protected/same-source targets, output collision, busy/cancel/failure and complete standalone output.
+
+**Variant acceptance:** CLI fixture flows preserve full filter/view/signature selection through rank/report, paginated metadata and offline export/import. Same-label variants remain separate, As recorded cannot clear a mismatch, conflicting annotation retries fail and no stdin prompt/model call/current metadata fetch is added.
+
+**Domain acceptance:** Add human/JSON six-family golden flows with absent native/device/model prerequisites, retained unknown evidence and offline import/report. Assert exact owner calls and zero evaluation/regrade on viewing; existing exit/wait/detach semantics remain unchanged.
+
+Add wide/compact human and JSON goldens for all four fields, pooled versus mean, partial pairs, independent files/LOC/cached/reasoning and enabled-policy exclusions. Through real clients save/load schema-2 weights, apply/reset/export and generate/import a report with all model ports disabled; compare exact values, full rosters, directions/policies, original digests and score vectors across CLI/TUI/HTML.
+
+Extend existing fixtures for native-only and delayed/partial analysis, explicit local overlap/unknown attribution, distinct decision/harness/human fingerprints and offline or disabled-engine operation as applicable. Assert unchanged scope/digests, no fabricated values/calls, and no reclassification triggered by viewing, export/import or navigation.
 
 ```sh
 pytest tests/cli/test_run.py tests/cli/test_status_stop.py tests/cli/test_references.py tests/cli/test_doctor_consent.py tests/cli/test_catalog.py tests/cli/test_exchange.py tests/cli/test_report.py tests/cli/test_artboards.py tests/integration/test_cli_flows.py tests/integration/test_cli_process_lifecycle.py tests/integration/test_cli_report_recovery.py
@@ -86,7 +145,3 @@ pytest tests/cli/test_run.py tests/cli/test_status_stop.py tests/cli/test_refere
 Compose actual M02/M03/M04/M05/M07/M10/M11/M12/M13/M17 services and storage, with deterministic external adapters; run real-socket process/consent/exit/race cases. Add real M15 default/attach launcher navigation and M17 round trips before parent acceptance; fake-client golden tests alone cannot close it.
 
 **Pending parent obligations:** all M14.1 checks and real conformance with M15 main(*, attach: RunUid | None) -> int, M11 JobStatus.initial_progress/stop/report projections, M13 reports.status and M17 plan-to-explicit-selection export. M11 canonical launch arguments and typed-error exit 1 are shared; M06/M13 own their paired tariff flag examples. Update CLI boards for UID/trials, report/retention dispositions and --tariff-currency, plus M04 rate/billing and M15 attach examples. This spec task does not edit wireframes or claim runtime tests have run.
-
-## Database analysis access — R191
-
-Add `axbenchmark database path`, `database info` and `database snapshot --output PATH` over the M02-owned `database.*` APIs in [RESULTS-DATABASE.md](../RESULTS-DATABASE.md). Path/info expose database/schema/view versions and read-only connection guidance; snapshot is an awaited job with an explicit output target and no overwrite by default. CLI does not open the operational writer or execute arbitrary SQL. Test JSON/text parity, paths with spaces, busy/version/storage failures, target collisions and snapshot completion. External tools may independently query the documented database read-only; snapshots support long graph/analysis work without holding the live read transaction.

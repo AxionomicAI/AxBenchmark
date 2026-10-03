@@ -54,13 +54,44 @@ JobContext.retain_initial_progress(payload) awaits durable write-once storage by
 
 Persisted feature outcomes survive the one-hour finished-job cache; owners reconcile interrupted jobs on restart without replaying model work. Frozen setup/planning drafts do not count as active jobs.
 
-Autostart acquires the engine instance lock and spawns detached axbenchmarkd with closed stdin/log files. Concurrent clients converge on one engine. Idle exit requires no runs, jobs or sessions for ten minutes; injected counters include pending retention. SIGHUP is ignored; SIGTERM invokes owner cleanup/checkpoint hooks.
+Autostart acquires the engine instance lock and spawns detached axbenchmarkd with closed stdin/log files. Concurrent clients converge on one engine. Idle exit requires no runs, jobs, sessions or pending human hosts for ten minutes; injected counters include pending retention and M12 human activity. SIGHUP is ignored; SIGTERM invokes owner cleanup/checkpoint hooks.
+
+**Frozen domain contract.** Extend the existing decision_resource_journal request/receipt scope union with artifact_verification {evaluation_id,attempt_id,verification_id,result_id,trial,check_id,case_id,plan_ref}, alongside decision {decision_call_id,...}. Persist the same stable lease/request IDs, resource route, queue/grant/settlement evidence and overlap/unknown activity; no synthetic DecisionCallId or second queue. M08 uses the existing owner admission port; events remain observational and cannot establish evaluation completion.
+
+**SQLite publication notifications.** Retained-fact/analysis mutation owners enqueue operation receipts and outbox rows with their shared SQLite publication marker; dispatch only after commit and deduplicate logical event IDs on recovery. Observational queues never establish durability. Working job/resource/human checkpoint files may remain file-backed. Discovery-only autostart defers store creation and mutating built-in hooks; it creates no placeholder job/receipt just to describe an absent database.
 
 ## Boards and supplied states
 
 No feature screen files. Supply job running/progress/succeeded/failed/cancelled, noncancellable commit, connection loss/reconnect and resync fixtures for all job-driven screens. M15 tests loading/content/error/replacement state; M16 uses `planning` plus `job:<job_id>`.
 
+Register `measurements.context.snapshot.recorded`, `.capture.closed`, `.analysis.updated`, `.gap.recorded` on bare `measurements` with explicit run/live routes and revisioned scoped snapshots. Only latest-snapshot projections may coalesce; durable captures/gaps/closure/analysis entries use acknowledged owner storage outside client queues. Context reclassification and decision inference-test jobs retain scope/profile/version, cancellation and receipt state across disconnect.
+
+Own `engine/daemon/adapters/decision_resource_journal.py` and inject decision queue/lease reconciliation and shutdown hooks: queued cancellation closes admission; dispatched work settles durable receipt/resource state before completion. `server_state_unknown` is a typed cleanup limitation, never clean release or an indefinitely held worker/run lock. Pending authorized observer work and unresolved resource reconciliation participate in activity accounting; no restart resumes grading inference.
+
+**Route, comparison and profile interfaces.** Extend the existing decision-resource journal and job snapshot records for route_qualification scope (job_id, verification_id, plan_digest, optional assigned invocation_id), limits/consent digest, queue/grant/settlement and unknown upstream activity. This is the same M11 fair lease queue and job cancellation, not another scheduler. Catalog access-profile update/inspection-finished and configs.comparison.updated events use existing owner topics, revisioned snapshots and EventCursor rules; observations contain sanitized refs only.
+
+## Integrated requirements
+
+R192, R193, R194 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R189 — [human review](../M12/05-human-review-web.md).
+
+R187 — frozen domain profile/evidence contracts: [R187](../quality-judges/AGENTIC.md).
+
+R166, R169 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+**Human host lifecycle:** Inject M12.5 startup/shutdown/activity hooks and revisioned judging.human.case.changed/batch.changed providers on existing judging topic, also routed to the bound run topic via trusted engine batch→RunUid identity for RunStatus/follower refresh. Pending original/additional human hosts count as activity even with zero clients; normal engine.stop refuses busy work. Setup/planning drafts alone remain idle. SIGTERM/system shutdown checkpoints human working drafts/intents and revokes credentials without skip/cancel/engine-lost dispositions. Startup reconciles immutable SUBMITTING writes, restores editable cases with rotated port/tokens and returns promptly without browser auto-open or waiting for input. Test idle-clock advance, client/tab close, restart, event overflow and additional-job cancellation versus accepted intent; only acknowledged M02 receipts publish terminal outcomes.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Persist/replay queued, cancelled, settled and server_state_unknown diagnostic requests with no trial/decision ID. Event reconnect/drop/replay cannot dispatch qualification or rerun static inspection, and profile updates stale the relevant draft without changing frozen runs.
+
+**SQLite acceptance:** Crash before/after row+outbox+marker commit and reconnect: no uncommitted event, one logical published change, pinned old reader isolation and identical operation replay. Path/info autostart remains empty-store discovery through this real lifecycle, including concurrent clients.
+
+**Domain acceptance:** Test same-ID retry/conflict, cancellation before/after grant, journal crash and delayed M02/M10 receipts for both scope tags. Unknown product inference activity blocks clean admission after restart without replaying an evaluation or holding a run lock.
+
+Exercise slow/overflowed subscribers while capture persists, late post-seal analysis, cancellation before/after dispatch and startup lease reconciliation. No client disconnect cancels engine work and no classifier delay gates execution retention.
 
 ```sh
 pytest tests/engine/daemon/test_subscription_handoff.py tests/engine/daemon/test_replay_resync.py tests/engine/daemon/test_jobs.py tests/engine/daemon/test_lifecycle.py tests/engine/daemon/test_slow_subscriber.py tests/client/test_subscription_parity.py tests/client/test_autostart.py tests/contracts/test_event_topic_registry.py
@@ -72,7 +103,7 @@ pytest tests/engine/daemon/test_subscription_handoff.py tests/engine/daemon/test
 4. Overflow one slow queue repeatedly while another subscriber reads. Each replacement is generation-safe; no old-generation update enters it and publisher/output drain remains unblocked.
 5. Duplicate append-only entry IDs do not duplicate logs. Registered replaceable meters coalesce correctly by object/TrialRef; transitions/job outcomes do not coalesce. Unknown publishers/routes/consumers fail validation.
 6. A job survives initiating-client disconnect; cancel at each owner checkpoint, retain cleanup failure, and never report cancelled before cleanup. Race cancellation with protected commit: exactly one wins.
-7. Concurrent autostart produces one daemon; drop all sessions during active fixture work and no idle exit occurs. Complete work, advance fake clock ten minutes and verify idle stop; persisted draft alone does not block exit.
+7. Concurrent autostart produces one daemon; drop all sessions during active fixture work and no idle exit occurs. Complete work, advance fake clock ten minutes and verify idle stop; persisted setup/planning draft alone does not block exit, while pending human cases do.
 8. Finish a launch fixture before subscribing, advance beyond cache/replay retention, restart and query jobs.get/job snapshot: identical initial totals/warning remain independently of latest progress. A follower prints once by job ID despite snapshot plus duplicate events; failure/cancellation after preparation retains it. Crash during initial write publishes no unretained preparation.
 9. Send SIGTERM during fixture work and verify cleanup/recovery hook acknowledgement; kill the daemon to exercise interrupted-owner reconciliation. Reconnect never silently restarts the fixture job.
 

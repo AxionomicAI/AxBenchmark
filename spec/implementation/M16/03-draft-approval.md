@@ -38,7 +38,7 @@ Reopen manual/planned drafts at shared review with the saved task; active/failed
 
 Explicit recapture of an open draft requires `base_version` and reviewed M16.1 inspection/policy tokens; retain the prior complete snapshot until success. SourceChanged, active recapture or mismatched inspection/capture/version binding blocks approval with changed facts. An unchanged completed capture can be approved without rereading a disappeared source; later explicit inspection detecting changes requires recapture/review. Refreshing approved work first opens a new revision, never mutates its packaged bytes.
 
-Checks preserve the full M08 requirement/phase/observation/failure-rule contract and declared support closure; incomplete edit rows remain explicit approval issues. Validate M12 rubric profile/applicability and web screenshot-inspection requirement from M12 requirement_for(rubric) and M08 final-regression capture declarations, never supply silent defaults.
+Checks preserve the full M08 requirement/phase/observation/failure-rule contract and declared support closure; incomplete edit rows remain explicit approval issues. Validate the exact M12 rubric profile/version/digest/applicability and required modality/coverage obligations from M12 requirement_for(rubric) and M08 domain-plan/check/support declarations, never supply silent defaults.
 
 ## Versioned canonical conversion
 
@@ -68,11 +68,30 @@ A journal retains transaction/draft/version/SHA and cleanup state. Recovery comp
 
 Discard refuses running work/approved drafts; confirmed discard removes only M16-owned unfinished state. PlannerRecord returns the explicit selection only for published planned provenance; drafts/imports without that record return None.
 
+**SQLite publication authority.** Working draft/request/session JSON and immutable approved template files remain with M16/M01. Approval fsyncs prepared participants, then the shared publisher commits receipt/outbox/SQLite marker in one short transaction, including template-only approvals with no result rows. `PublicationView` pins that marker across PlannerRecord/library/config readers. Never independently rename an approved flag into public visibility or create a second marker store.
+
 ## Board/data boundary
 
 Serve M01 manual NewTemplate, typed manual progress/failure and shared PlanReview/Reopened/Services/Edit/ServiceEdit/Approve/ApproveIdentical plus LibraryDrafts/Revise flows. Regenerate is present only when eligible. DTOs expose exact-byte references, mode/order/capture/profile issues and engine-derived capabilities; manual progress never claims LLM planning. GetDraftTask returns task id, same-task checks and engine snapshot_label; T4 maps to after T4 in both review states and one-shot T1 is its final competitor stage. UI widgets do not inspect source files or compute identity/capture validity.
 
+**Frozen domain contract.** DraftRecord/DraftDetail/ApprovePreview expose frozen rubric/profile/version/digest/signature/comment semantics and the derived DomainEvidencePlan with criterion/target/case/modalities/authority/coverage issues. Validate M12 known rubric schemas and M08 acceptance.v1/v2 bindings through existing exact-byte file edits and support closure; no extra metadata.json keys. Scope edits are preapproval versioned changes; all configurations later share the result. Static document scopes require supplied brief/reference precedence and no unrequested executable app; native/agent unsupported obligations are explicit approval issues, with host execution readiness deferred to M07/M03.
+
+## Integrated requirements
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R184, R185, R186, R187, R188 — frozen domain profile/evidence contracts: [R184](../quality-judges/BACKEND.md); [R185](../quality-judges/MOBILE.md); [R186](../quality-judges/DEVOPS.md); [R187](../quality-judges/AGENTIC.md); [R188](../quality-judges/SPECIFICATION.md).
+
+R177, R178, R179, R180, R183 — [benchmark modes](../BENCHMARK-MODES.md).
+
+Approval requires the versioned `required_per_task` policy, exact common instruction, executable protocol-check source/version/digest and deliverable-scope closure inside the existing `execution_protocol` payload. Validate via M05/M08 parsers and M01 closure; missing pieces are field/path issues and no approval is possible. Preserve authored prompt/spec bytes, including one-shot T1; protocol-origin runtime checks do not mutate an explicitly empty authored suite or descriptor check IDs. All seven project types use their approved applicable rubric and capture requirements.
+
+`DraftDTO`/`DraftApprovalPreview` expose the locked policy and check refs alongside mode/order/capture binding. Freeze them in `to_frozen`, inspect/preview and the same publication transaction; no editable switch disables commits. New legacy execution without a compatible declaration requires a separately reviewed revision; existing archive/default bytes remain intact. Extend canonical/approval tests with empty behavioral checks plus mandatory protocol, missing source/scope, collisions, exact instruction bytes, stale policy change and no-harness/Git approval followed by execution-only readiness refusal.
+
 ## Acceptance and faults
+
+**SQLite acceptance:** Fault prepared file writes and the real SQLite marker commit while reading all participants and raw publication rows. Observe old or entire approval; lost response retries original tokens/receipt and rollback never deletes pre-existing content.
+
+**Domain acceptance:** Approve/reopen/edit all six family drafts; reject missing matrix cells/declared inputs, unbounded agent cases, plan evidence claiming applied state, candidate authority replacing the supplied brief and silent category/weight redistribution. Zero-weight grades remain required; source/golden v1 bytes stay exact.
 
 ```sh
 pytest tests/engine/planning/test_draft_edits.py tests/engine/planning/test_draft_reopen.py tests/engine/planning/test_canonical_conversion.py tests/engine/planning/test_draft_approval.py tests/engine/planning/test_draft_transactions.py tests/api/test_planning_drafts.py tests/integration/test_planning_approval_publication.py tests/integration/test_planning_canonical_roundtrip.py
@@ -80,7 +99,7 @@ pytest tests/engine/planning/test_draft_edits.py tests/engine/planning/test_draf
 
 1. With no harness/model installed, all benchmark/project/target-mode combinations create durable manual jobs/drafts with zero planner/readiness/catalog calls; one shot yields exact T1, N ordered files yield N tasks. Test invalid counts/inputs, duplicate paths, idempotency conflict, disconnect/cache expiry/interruption recovery, explicit recapture and source preservation.
 2. Persist/restart/edit/reset/conflict/reorder/type-change/reopen/discard every origin; five/seven task planned multi-step remains valid. Preserve selected task, exact UTF-8/CRLF/Unicode/no-final-newline bytes, original/generated distinctions and outside-scope edits. Rendering alone never changes bytes; manual regeneration is refused.
-3. Reject each missing descriptor part, orphan/support/check/rubric mismatch, invalid service field, stale approval version/token, sourceChanged and active recapture. Block identical content; explicit approval alone registers. No generic Git/commit requirement or silent evaluation default appears.
+3. Reject each missing descriptor part, orphan/support/check/rubric mismatch, invalid service field, stale approval version/token, sourceChanged and active recapture. Block identical content; explicit approval alone registers. Git installation is not required for authoring, but the frozen mandatory commit policy/instruction/check/scope is required; no silent evaluation default appears.
 4. Strict v1/v2 M09/M16/M17 fixtures produce matching canonical bytes/manifests/digests for the same version; old v1 golden hashes/built-in bytes stay unchanged. V2 stores each primary once, modes/orders/protocol/baseline bytes/flags change identity, name/source metadata do not; explicit version upgrade changes identity and no implicit conversion occurs.
 5. Fault every prepare/acknowledge/marker/outbox boundary with concurrent library/config/draft/planner readers. Before marker see old state; after marker see complete approval and optional copies, with no partial visibility.
 6. Crash/retry response loss before/after publication; old revision/results/configs stay intact, no duplicate copy or approval event. Published planned provenance remains available; manual/imported work returns PlannerRecord=None.

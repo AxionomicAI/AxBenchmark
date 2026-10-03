@@ -14,13 +14,19 @@ Outcome: implement a headless, durably acknowledged task/invocation accounting s
 
 Own only these proposed implementation paths:
 
-- `axbenchmark/engine/measurements/domain/observations.py`, `usage.py`, `costs.py`, `currency.py`, `timing.py`, `accounting.py`, `models.py`, `errors.py`, `__init__.py`.
+- `axbenchmark/engine/measurements/domain/observations.py`, `usage.py`, `costs.py`, `currency.py`, `timing.py`, `throughput.py`, `request_observations.py`, `accounting.py`, `models.py`, `errors.py`, `__init__.py`.
 - `axbenchmark/engine/measurements/ports.py` and `application/interfaces.py` for the parent contracts; `application/record_observation.py`, `record_verification.py`, `finalize_task.py`, `invocation_account.py`.
 - `axbenchmark/engine/measurements/adapters/json_journal.py`; `axbenchmark/api/measurements.py` shared exact measured/cost/rate/billing/receipt DTO definitions and exports.
-- `tests/engine/measurements/test_usage.py`, `test_task_cost.py`, `test_currency.py`, `test_task_time.py`, `test_observation_journal.py`, `test_verification_ack.py`, `test_invocation_account.py`.
+- `tests/engine/measurements/test_usage.py`, `test_task_cost.py`, `test_currency.py`, `test_task_time.py`, `test_observation_journal.py`, `test_verification_ack.py`, `test_invocation_account.py`, `test_throughput.py`; shared `tests/fixtures/measurements/statistics.json`.
 - `tests/fixtures/measurements/task_accounting.json` and `tests/engine/measurements/fakes.py` with explicit scopes and failure/late-ack controls.
 
 M10.2 extends interfaces/DTOs additively for aggregation/finalization/query projections, owns RPC/composition and retains the original facts. Coordinate shared contract changes with producer owners. M06 owns ranking gates, M18 owns collector normalization and M02 owns sealed storage. No UI, scheduler or collector code belongs here.
+
+Own `domain/context.py`, `context_tokens.py`, `context_classification.py`, `application/record_context.py`, `adapters/context_journal.py`, shared ports/DTOs and `test_context_tokens.py`/`test_context_receipts.py`. Implement `ContextCaptureSink.accept(observation) -> ContextCaptureReceipt` and `.close(scope, cutoff, operation_id) -> ContextClosureReceipt`; acknowledge durable journal acceptance, reject same-ID changed payload/scope, and bind closure to all accepted ranges/gaps with complete/partial/unavailable/off status.
+
+Publish separate context identity/evidence sections: full result/TrialRef/task/invocation/session/agent/window/request/phase; classification native source plus optional analysis; count nullable integer, scope/method/fidelity/tokenizer/framing/basis/coverage; membership included/excluded/unknown with native evidence. Eleven fixed labels use `context-labels/1`; thinking and thinking_summary differ. Exact partitions require complete framed input token positions mapped once; crossing/unmapped positions stay unattributed. Text-only estimates never become exact, arithmetic residuals never invent categories, native totals do not imply complete partition, and unknown hidden reasoning remains null. Current-window snapshots, observed history and billed traffic are distinct. Persist sanitized evidence only, with original-versus-redacted count basis and no credential-bearing token IDs.
+
+**Retained storage boundary.** Durable observation journals/checkpoints remain producer working state. M02 SQLite is the authoritative retained mapping for exact call counters/timing pairs/rosters, statistics, prices/costs, source inventory, context identities/labels/counts/membership and purpose-separated auxiliary accounts. Map native/adapter-synthetic scope explicitly; context classification cannot become traffic. `append_measurements`/context/evidence operations await M02 receipts; finalized readers never fall back to journal JSON. Alternative measurement projections are pure; an M06/M13 wrapper may retain their containing derived analysis without editing execution facts.
 
 ## Interfaces and invariants
 
@@ -44,11 +50,50 @@ Benchmark task duration includes tool work, excluding queue/planning/external ch
 
 M08 `record_verification` preserves the parent's exact observation shape and phases, and acknowledges independently of optional UI notifications. `CheckSummaries.for_trial(trial, phase)` is the published lookup; no configuration-only fallback. The final drain/finalize state machine is M10.2's ownership.
 
+**Frozen domain contract.** Add parent VerificationAuxiliaryObservation codec and VerificationObservations.record_auxiliary to the existing durable observation journal/receipt protocol. Preserve stable evaluation/attempt/verification/check/case/ResultId/TrialRef/plan/final-artifact identity, source/mode and known/partial/unknown product usage/cost/time. Product evaluation observations never enter InvocationObservationSink competitor request rosters or become DecisionCall receipts; replay retains observation identity and no fresh charge.
+
 ## Boards and states
 
 No rendering ownership. Supply task fixtures for Measurements, MeasurementsPartial, CostBasis and task-formation panels: pending/no report, complete, partial, unknown/unexposed, declared billing, verified zero, unverified zero, missing rate, conflicting observation and persistence-pending. CurrencyEnergy uses the same exact rate/validation types. Wireframes remain unchanged.
 
+Implement the parent's [canonical request observations](../reference/modules/10-measurements-cost.md#canonical-request-observations) in the owned pure `request_observations.py`: `RequestFactScope`, `RequestKey`, `GenerationTimingObserved`, `RequestRosterObserved`. `InvocationObservationSink.accept` consumes all four M05 `InvocationFact` variants; both API codecs preserve exact rational timestamps/durations, usage IDs, source clocks, normalized token policy and scoped roster evidence. Request classes import only shared identities/exact values, so M05 may use this vocabulary without a provider dependency cycle.
+
+`throughput.py` pairs normalized acknowledged request output with its own positive compatible generation duration. Sum matched output N and durations D (including concurrent intervals) and return N/D with exact `Fraction`; retain pairs, N/D, per-basis rows, coverage and typed limitations in `GenerationAggregate`/`M10Statistic`. Whole-scope known requires a closed complete invocation-and-descendants roster; otherwise only the matched subset is numeric. Never divide full output by partial timing, average rates, union intervals or substitute process/tool/first-token time. Proven zero output requires positive matching D; missing D is unknown.
+
+Resolve parent cumulative/request overlap once before pairing and totals; cached/reasoning inclusion semantics are explicit and missing detail is null independently from its known parent. Current-context estimates/labels cannot supply native traffic. Planning, human waiting, grading, observer, probe and external verification accounts never enter competitor counts or throughput; the competitor's own nested requests and tool work retain their normal scope.
+
+**Route, comparison and profile interfaces.** Extend usage/cost source metadata with exact route/account/model/deployment/tier price scope, correlated request/attempt IDs, ordered hop refs, charge owner and inclusive-versus-additional charge basis. In the existing reducer, gateway and upstream reports of one charge are alternatives; a separately evidenced gateway fee adds once. Distinct retry/helper/discarded-response attempts remain counted even when route matching fails; unknown roster/charge coverage stays partial. Local gateway placement does not determine Billing.LOCAL or generation timing. Add `RouteQualificationObservations.record(observation: RouteQualificationObservationV1) -> ObservationReceipt` in existing auxiliary-accounting adapters: diagnostic JobId/VerificationScope/invocation/request/attempt/plan digest, verification role, measured bounds and settlement linkage; no ResultId/TrialRef/DecisionCallId required. The receipt acknowledges durable measured evidence before M03 settles the resource lease.
+
+## Integrated requirements
+
+R192, R193 — [controlled harness comparisons, API routes and existing profiles](../CROSS-HARNESS-COMPARISON.md).
+
+R191 — [authoritative SQLite results and analyses](../RESULTS-DATABASE.md).
+R189 — [human review](../M12/05-human-review-web.md).
+
+R187 — frozen domain profile/evidence contracts: [R187](../quality-judges/AGENTIC.md).
+
+R173, R176 — [benchmark statistics](../BENCHMARK-STATISTICS.md).
+
+R161, R162, R163, R164, R171 — [context monitoring](../CONTEXT-MONITORING.md) and [decision engines](../DECISION-ENGINES.md).
+
+R181, R182 — [benchmark modes](../BENCHMARK-MODES.md); [Cursor](../M05/08-cursor-adapter.md) and [OpenCode](../M05/09-opencode-adapter.md) registry contracts.
+
+Extend this child's producer/retention fixtures to Cursor and generation-qualified OpenCode using the same six-registry observation contracts. Keep unexposed native usage, currency, output-generation timing and request membership unknown; neither CLI terminal duration nor a registry entry proves measurement support. Preserve scope/deduplication/receipt behavior and full frozen trial rosters for both new adapters. Add one-shot versus multi-step accounting cases without changing arithmetic: synthetic baseline Git setup precedes competitor timing, task commits made during an invocation remain within task time, and mandatory protocol verification stays a separate verification phase. No extra task or model call is charged for a commit failure.
+
+**Human accounting acceptance:** Human wait/edit/save/submit timestamps are separately labelled M12 lifecycle observations with incomplete-observation limits. Model usage/API charge is not applicable and labor/host cost is unmeasured; do not manufacture an InvocationId, DecisionCallId, zero-price receipt or auxiliary inference account. Keep every competitor elapsed/token/cost/Gen/Files/LOC value and sealed measurement receipt unchanged across pending human wait, restart, submit and skip. Test those transitions while an unrelated automated run proceeds; measurement/detail views remain inspectable without opening the anonymous form.
+
 ## Acceptance and faults
+
+**Route/profile acceptance:** Fixtures combine inclusive gateway amount, duplicate upstream receipt, independent fee, helper attempt and discarded retry; charge each exactly once with native currency/unknown price preserved. Test loopback remote inference and unknown locality, diagnostic accounting with no benchmark result and failed persistence blocking settlement acknowledgment.
+
+**SQLite acceptance:** Round-trip exact producer values through real SQLite and current codecs after deleting working journals. Independent unknown detail/LOC states, signed hardware values and eleven context labels survive; delayed row/outbox acknowledgement blocks seal, and retry never double-counts accepted usage.
+
+**Domain acceptance:** Retry identical auxiliary observations once, reject conflicting/cross-trial IDs and preserve partial/unknown values. Same-server product calls leave competitor paired usage/time/Gen tok/s unchanged; delayed auxiliary writes prevent M08 completion without changing existing arithmetic.
+
+Run `pytest tests/engine/measurements/test_throughput.py` with the existing suite. Fixture pairs 100/2 and 300/3 yield exactly 80 (not 75), even overlapping; add untimed output 200 and retain matched 400/5 while whole throughput is partial, never 600/5. Cover exact fractional seconds, zero output/positive time, nonpositive/nonfinite clocks, mixed bases, terminal roster gaps, forward usage refs, parent/detail overlap, retries and auxiliary same-server calls. Delay timing/roster durability and assert acceptance/finalization cannot overtake it.
+
+Run context token/receipt fixtures for nonadditive chunks, repeated positions versus repeated text, cache/reasoning overlap, boundary-crossing tokens, native total with unknown categories, scoped nested agents/windows, redaction and known-zero versus unknown. Delay closure/journal acknowledgement and verify durable idempotence without waiting for classification.
 
 Run the proposed suite:
 
