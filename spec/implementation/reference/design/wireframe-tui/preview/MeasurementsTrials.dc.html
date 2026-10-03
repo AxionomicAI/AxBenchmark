@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Measurements · 3 trials per configuration · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1860px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Measurements · 3 trials per configuration</b> · MeasurementsScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Run 2026-09-27-t · Orders REST API r3 · measurements per trial</span><span class="B2">                      </span></div>
+<div class="r"><span class="B1"> ● mike-mbp-m4 · Orders REST API r3 · 2 configurations × 3 trials · jobs 2 · trials in turn, each from a fresh baseline </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Codex · gpt-6-sol · medium · 3 trials · cost reported · proxy windows </span><span class="B0 ac">──────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2">                                                                 </span><span class="B2 bd">         In tok        Out tok</span><span class="B2">                       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Trial       Checks     Elapsed       Cost   Quality    Gen tok/s       (cached)    (reasoning)            Files / LOC</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> 1 R-0927t-1 18✓          40:10      $2.84      4.08         80.0  3.12M (2.62M)     142k (40k)             27 / 1,840</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> 2 R-0927t-2 18✓          44:15      $3.12      3.90         60.0  3.48M (2.95M)     158k (46k)             29 / 1,912</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> 3 R-0927t-3 18✓          42:10      $2.97      4.35         75.0  3.31M (2.80M)     150k (43k)             28 / 1,876</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 bd"> Mean                     42:12      $2.98      4.11 70.22 pooled  3.30M (2.79M)     150k (43k)             28 / 1,876</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 mu"> Min–max            40:10–44:15 $2.84–3.12 3.90–4.35    60.0–80.0    3.12M–3.48M      142k–158k    27–29 / 1,840–1,912</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 mu"> Total                                               450.8k÷6420s          9.90M           450k     Σ sizes 84 / 5,628</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> ✓ eligible · every trial passed </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Claude Code · claude-sonnet-5-5 · medium · 3 trials · cost estimate · proxy windows </span><span class="B0 ln">────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2">                                                                 </span><span class="B2 bd">         In tok        Out tok</span><span class="B2">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Trial       Checks     Elapsed       Cost   Quality    Gen tok/s       (cached)    (reasoning)            Files / LOC</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 1 R-0927t-4 18✓          33:00      $1.96      4.10         80.0  2.41M (1.95M)     118k (30k)             25 / 1,702</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> 2 R-0927t-5</span><span class="BS bd"> 17✓ 1✗</span><span class="BS">       35:40      $2.21      3.70         84.0  1.80M (1.40M)     131k (35k)             26 / 1,790</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 3 R-0927t-6 18✓          34:25      $2.08      4.08         80.0  2.56M (2.10M)     124k (32k)             25 / 1,744</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Mean                     34:22      $2.08      3.96 81.36 pooled  2.26M (1.82M) 124.3k (32.3k)       25.33 / 1,745.33</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Min–max            33:00–35:40 $1.96–2.21 3.70–4.10    80.0–84.0    1.80M–2.56M      118k–131k    25–26 / 1,702–1,790</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Total                                               373.7k÷4593s          6.78M           373k     Σ sizes 76 / 5,236</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> ✗ not ranked · trial 2: 1 check failed </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> How trials are combined </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Each trial    </span><span class="B0">a separate result, linked to its configuration and trial index · own baseline, own judge session       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Shown         </span><span class="B0">every trial, then means (cost, time, Q, In, Out, Files, LOC), pooled Gen tok/s and min–max             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Pooled        </span><span class="B0">Codex 450,790 ÷ 6,420.008 s = 70.22 tok/s · the mean of the trial rates (71.67) is never used          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Totals        </span><span class="B0">Σ tokens stay beside the means · Σ files only sums snapshot sizes, never a project file count          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Rankings      </span><span class="B0">means and the pooled rate · eligible only when every trial of the configuration is (M06)               </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Claude Code   </span><span class="B0">trial 2 failed check T4_check2 and graded spec 3.5 → listed with that reason, not ranked               </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Default       </span><span class="B0">1 trial · Inventory r1 results have one trial each: a single row and no range                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Elapsed is the sum of each trial’s task processes; the time between trials (a fresh baseline copy) is not part of</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">any trial.</span><span class="B0">                                                                                                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultOutcomes.dc.html">esc</a><a class="B2 k" href="ResultOutcomes.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Open trial  </span><span class="B2 ac bd">t</span><span class="B2"> Timing  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                             </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Run 2026-09-27-t · Orders REST API r3 · measurements per trial</span><span class="B2">                      </span></div>
+<div class="r"><span class="B1"> ● mike-mbp-m4 · Orders REST API r3 · 2 configurations × 3 trials · jobs 2 · trials in turn, each from a fresh baseline </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Codex · gpt-6-sol · medium · 3 trials · cost reported · proxy windows </span><span class="B0 ln">──────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2">                                                                 </span><span class="B2 bd">         In tok        Out tok</span><span class="B2">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Trial       Checks     Elapsed       Cost   Quality    Gen tok/s       (cached)    (reasoning)            Files / LOC</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> 1 R-0927t-1 18✓          40:10      $2.84      4.08         80.0  3.12M (2.62M)     142k (40k)             27 / 1,840</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 2 R-0927t-2 18✓          44:15      $3.12      3.90         60.0  3.48M (2.95M)     158k (46k)             29 / 1,912</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 3 R-0927t-3 18✓          42:10      $2.97      4.35         75.0  3.31M (2.80M)     150k (43k)             28 / 1,876</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Mean                     42:12      $2.98      4.11 70.22 pooled  3.30M (2.79M)     150k (43k)             28 / 1,876</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Min–max            40:10–44:15 $2.84–3.12 3.90–4.35    60.0–80.0    3.12M–3.48M      142k–158k    27–29 / 1,840–1,912</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Total                                               450.8k÷6420s          9.90M           450k     Σ sizes 84 / 5,628</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> ✓ eligible · every trial passed </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Claude Code · claude-sonnet-5-5 · medium · 3 trials · cost estimate · proxy windows </span><span class="B0 ac">────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2">                                                                 </span><span class="B2 bd">         In tok        Out tok</span><span class="B2">                       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Trial       Checks     Elapsed       Cost   Quality    Gen tok/s       (cached)    (reasoning)            Files / LOC</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> 1 R-0927t-4 18✓          33:00      $1.96      4.10         80.0  2.41M (1.95M)     118k (30k)             25 / 1,702</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> 2 R-0927t-5</span><span class="BA on bd"> 17✓ 1✗</span><span class="BA on">       35:40      $2.21      3.70         84.0  1.80M (1.40M)     131k (35k)             26 / 1,790</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> 3 R-0927t-6 18✓          34:25      $2.08      4.08         80.0  2.56M (2.10M)     124k (32k)             25 / 1,744</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 bd"> Mean                     34:22      $2.08      3.96 81.36 pooled  2.26M (1.82M) 124.3k (32.3k)       25.33 / 1,745.33</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 mu"> Min–max            33:00–35:40 $1.96–2.21 3.70–4.10    80.0–84.0    1.80M–2.56M      118k–131k    25–26 / 1,702–1,790</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 mu"> Total                                               373.7k÷4593s          6.78M           373k     Σ sizes 76 / 5,236</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└─────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> ✗ not ranked · trial 2: 1 check failed </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> How trials are combined </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Each trial    </span><span class="B0">a separate result, linked to its configuration and trial index · own baseline, own judge session       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Shown         </span><span class="B0">every trial, then means (cost, time, Q, In, Out, Files, LOC), pooled Gen tok/s and min–max             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Pooled        </span><span class="B0">Codex 450,790 ÷ 6,420.008 s = 70.22 tok/s · the mean of the trial rates (71.67) is never used          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Totals        </span><span class="B0">Σ tokens stay beside the means · Σ files only sums snapshot sizes, never a project file count          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Rankings      </span><span class="B0">means and the pooled rate · eligible only when every trial of the configuration is (M06)               </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Claude Code   </span><span class="B0">trial 2 failed check T4_check2 and graded spec 3.5 → listed with that reason, not ranked               </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Default       </span><span class="B0">1 trial · Inventory r1 results have one trial each: a single row and no range                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Elapsed is the sum of each trial’s task processes; the time between trials (a fresh baseline copy) is not part of</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">any trial.</span><span class="B0">                                                                                                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultOutcomes.dc.html">esc</a><a class="B2 k" href="ResultOutcomes.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Open trial  </span><span class="B2 ac bd">t</span><span class="B2"> Timing  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                             </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv2 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Run 2026-09-27-t · Orders REST API r3 · measurements per trial</span><span class="B2">                      </span></div>
+<div class="r"><span class="B1"> ● mike-mbp-m4 · Orders REST API r3 · 2 configurations × 3 trials · jobs 2 · trials in turn, each from a fresh baseline </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Codex · gpt-6-sol · medium · 3 trials · cost reported · proxy windows </span><span class="B0 ln">──────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2">                                                                 </span><span class="B2 bd">         In tok        Out tok</span><span class="B2">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Trial       Checks     Elapsed       Cost   Quality    Gen tok/s       (cached)    (reasoning)            Files / LOC</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> 1 R-0927t-1 18✓          40:10      $2.84      4.08         80.0  3.12M (2.62M)     142k (40k)             27 / 1,840</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 2 R-0927t-2 18✓          44:15      $3.12      3.90         60.0  3.48M (2.95M)     158k (46k)             29 / 1,912</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 3 R-0927t-3 18✓          42:10      $2.97      4.35         75.0  3.31M (2.80M)     150k (43k)             28 / 1,876</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Mean                     42:12      $2.98      4.11 70.22 pooled  3.30M (2.79M)     150k (43k)             28 / 1,876</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Min–max            40:10–44:15 $2.84–3.12 3.90–4.35    60.0–80.0    3.12M–3.48M      142k–158k    27–29 / 1,840–1,912</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Total                                               450.8k÷6420s          9.90M           450k     Σ sizes 84 / 5,628</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> ✓ eligible · every trial passed </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Claude Code · claude-sonnet-5-5 · medium · 3 trials · cost estimate · proxy windows </span><span class="B0 ln">────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2">                                                                 </span><span class="B2 bd">         In tok        Out tok</span><span class="B2">                       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Trial       Checks     Elapsed       Cost   Quality    Gen tok/s       (cached)    (reasoning)            Files / LOC</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 1 R-0927t-4 18✓          33:00      $1.96      4.10         80.0  2.41M (1.95M)     118k (30k)             25 / 1,702</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> 2 R-0927t-5</span><span class="BS bd"> 17✓ 1✗</span><span class="BS">       35:40      $2.21      3.70         84.0  1.80M (1.40M)     131k (35k)             26 / 1,790</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> 3 R-0927t-6 18✓          34:25      $2.08      4.08         80.0  2.56M (2.10M)     124k (32k)             25 / 1,744</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Mean                     34:22      $2.08      3.96 81.36 pooled  2.26M (1.82M) 124.3k (32.3k)       25.33 / 1,745.33</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Min–max            33:00–35:40 $1.96–2.21 3.70–4.10    80.0–84.0    1.80M–2.56M      118k–131k    25–26 / 1,702–1,790</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 mu"> Total                                               373.7k÷4593s          6.78M           373k     Σ sizes 76 / 5,236</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> ✗ not ranked · trial 2: 1 check failed </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> How trials are combined </span><span class="B0 ac">────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Each trial    </span><span class="B0">a separate result, linked to its configuration and trial index · own baseline, own judge session       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Shown         </span><span class="B0">every trial, then means (cost, time, Q, In, Out, Files, LOC), pooled Gen tok/s and min–max             </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Pooled        </span><span class="B0">Codex 450,790 ÷ 6,420.008 s = 70.22 tok/s · the mean of the trial rates (71.67) is never used          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Totals        </span><span class="B0">Σ tokens stay beside the means · Σ files only sums snapshot sizes, never a project file count          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Rankings      </span><span class="B0">means and the pooled rate · eligible only when every trial of the configuration is (M06)               </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Claude Code   </span><span class="B0">trial 2 failed check T4_check2 and graded spec 3.5 → listed with that reason, not ranked               </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Default       </span><span class="B0">1 trial · Inventory r1 results have one trial each: a single row and no range                          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Elapsed is the sum of each trial’s task processes; the time between trials (a fresh baseline copy) is not part of</span><span class="B0">    </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">any trial.</span><span class="B0">                                                                                                           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ResultOutcomes.dc.html">esc</a><a class="B2 k" href="ResultOutcomes.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Open trial  </span><span class="B2 ac bd">t</span><span class="B2"> Timing  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                             </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 120ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#result-bar" style="left: 0ch; top: 16px; width: 120ch; height: 16px"><span>Static #result-bar</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#measurements" style="left: 1ch; top: 48px; width: 118ch; height: 80px"><span>DataTable #measurements</span></div>
+<div class="ov" data-widget="Static" data-tcss="#trial-summary" style="left: 1ch; top: 128px; width: 118ch; height: 48px"><span>Static #trial-summary</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#measurements-2" style="left: 1ch; top: 208px; width: 118ch; height: 80px"><span>DataTable #measurements-2</span></div>
+<div class="ov" data-widget="Static" data-tcss="#trial-summary-2" style="left: 1ch; top: 288px; width: 118ch; height: 48px"><span>Static #trial-summary-2</span></div>
+<div class="ov" data-widget="Static" data-tcss="#trial-rules.kv" style="left: 0ch; top: 352px; width: 120ch; height: 256px"><span>Static #trial-rules.kv</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>MeasurementsScreen</b><span class="mut">tui/screens/measurements.py</span></div>
+<h3>Widget tree</h3>
+<pre>MeasurementsScreen(Screen)     m from Result › Outcomes
+├─ Header
+├─ Static #result-bar
+├─ Vertical #measurements-pane .pane
+│  ├─ DataTable #measurements    per task + Σ row · per trial
+│  ├─ Static #trial-summary      mean · min–max, N trials only
+│  └─ Static #overlap-hint
+├─ Horizontal
+│  ├─ Static #formation .pane.kv     selected task
+│  └─ Static #phases .pane.kv        elapsed vs excluded
+├─ Horizontal .actions
+├─ Static #accounting           .-compact only
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#measurements</code></td><td>height: 9;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#measurements .-partial</code></td><td>text-style: bold;  value + &quot; ▲&quot;</td></tr><tr><td><code>#measurements .-unknown</code></td><td>color: $foreground 60%;  &quot;—&quot;, never 0</td></tr><tr><td><code>#trial-summary</code></td><td>height: 2; text-style: bold;  display: none with 1 trial</td></tr><tr><td><code>#formation, #phases</code></td><td>width: 1fr; height: 18;</td></tr><tr><td><code>Screen.-compact #formation, Screen.-compact #phases</code></td><td>display: none;</td></tr><tr><td><code>Screen.-compact #accounting</code></td><td>display: block; height: 1fr;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the result</span></td></tr><tr><td><kbd>t</kbd></td><td><code>timing</code><br><span class="mut">Push TimingScreen for the run</span></td></tr><tr><td><kbd>b</kbd></td><td><code>cost_basis</code><br><span class="mut">Cost basis of every result of this revision</span></td></tr><tr><td><kbd>u</kbd></td><td><code>currency</code><br><span class="mut">Display currency, exchange rates and tariff frozen at launch</span></td></tr><tr><td><kbd>g</kbd></td><td><code>throughput</code><br><span class="mut">Push ThroughputScreen: paired requests behind Gen tok/s</span></td></tr><tr><td><kbd>a</kbd></td><td><code>artifact_stats</code><br><span class="mut">Push ArtifactStatsScreen: final snapshot inventory behind Files / LOC</span></td></tr><tr><td><kbd>x</kbd></td><td><code>context</code><br><span class="mut">Push ContextDetailScreen pinned to this ResultId (M10.3)</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>open_task</code><br><span class="mut">Task checks and evidence (M08)</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #measurements</li><li>DataTable #measurements-2</li><li>Static #trial-rules</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="MeasurementsTrials.dc.html">3 trials</a><a href="ThroughputDetail.dc.html">Gen tok/s</a><a href="ArtifactStats.dc.html">Files / LOC</a><a href="ContextDetailRetained.dc.html">Context window</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="TariffAnalysis.dc.html">Tariff · analysis</a><a href="ResultsAnalysisTariff.dc.html">Results · tariff (M02)</a><a href="ResultsTrials.dc.html">Results · trials (M02)</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
+<h3>Notes</h3>
+<ul><li>D7: Orders REST API r3, run 2026-09-27-t, 2 configurations × 3 trials (the 6 results the Library lists). Fixture TRIAL_CONFIGS in results-data.mjs, shared with M02 and M12.</li><li>Each trial is its own result with its own fresh baseline and judge session; #trial-summary shows the mean of cost, time and quality and the min–max range.</li><li>Rankings use the means. Claude Code trial 2 failed a check, so that configuration is listed with the reason and not ranked.</li><li>Trials default to 1: Inventory r1 frames show one row and no #trial-summary.</li><li>R174: Gen tok/s is pooled (Σ n ÷ Σ d = 70.22 for Codex) while the trial rates 80, 60 and 75 average 71.67: the mean of rates is never used. In, Out, Files and LOC are exact means with ranges; the Total row keeps Σ tokens, and Σ files is labelled a sum of snapshot sizes.</li><li>Implementation owner M10. API seam: measurements.result/task/trials; exact/display/billing/rate provenance from M10.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1860}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #measurements","DataTable #measurements-2","Static #trial-rules"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Launch · trial budget warning · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1320px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Launch · trial budget warning</b> · ConfirmScreen (M15, shared) · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                                         </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Review before launch</span><span class="B2 xd">                                           </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> Everything below is exactly what will be frozen and run · nothing starts until Launch                                </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Template</span><span class="B0 xd"> </span><span class="B0 ln xd">─────────────────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Revision      </span><span class="B0 xd">Inventory web app · r1 · ★ built-in · Frontend · 7 approved tasks reused · no planner call               </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">SHA-256       </span><span class="B0 xd">3f9c2e710640fa4dc37ee9e73ea2376b6deb29e142b7706aa1380bc01229ff49                                         </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Baseline      </span><span class="B0 xd">empty project · e3b0c442… · one copy per entry                                                           </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">╭─</span><span class="B1 ac bd"> 6 trials · budget and subscription usage </span><span class="B1 ac">─────────────────────────────────────────╮</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Competitors · 5</span><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B2 bd xd"> #  Harness     </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">More than 5 trials per configuration will consume budget and subscription usage.</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B2 bd xd">ns              </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd">  1  Claude Code </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Each trial reruns all 7 tasks from a fresh baseline and is judged in its own</span><span class="B1">      </span><span class="B1 ac">│</span><span class="B0 xd">limits           </span></div>
+<div class="r"><span class="B0 xd">  2  Claude Code </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">session. Check your API budget and subscription limits before launching.</span><span class="B1">          </span><span class="B1 ac">│</span><span class="B0 xd"> harness)        </span></div>
+<div class="r"><span class="B0 xd">  3  Codex       </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">limits           </span></div>
+<div class="r"><span class="B0 xd">  4  Grok CLI    </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Task runs       </span><span class="B1">210 · 5 configurations × 6 trials × 7 tasks                       </span><span class="B1 ac">│</span><span class="B0 xd">rgument          </span></div>
+<div class="r"><span class="B0 xd">  5  Pi          </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Judge sessions  </span><span class="B1">30 · Claude Code · claude-opus-5-5 · high · one per trial         </span><span class="B1 ac">│</span><span class="B0 xd">etered price     </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Grading, context</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Uses budget or subscription</span><span class="B1">                                                       </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Grading       </span><span class="B0 xd">ha</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> #  Harness · model                      Billing                            Runs</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Context       </span><span class="B0 xd">na</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 1  Claude Code · claude-opus-5-5 medium subscription · declared by user      42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">ls · remote, li… </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Rubric        </span><span class="B0 xd">we</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 2  Claude Code · claude-opus-5-5 high   subscription · declared by user      42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Quality       </span><span class="B0 xd">pr</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 3  Codex · gpt-6-sol medium             api · harness status                 42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Ranking       </span><span class="B0 xd">pr</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 4  Grok CLI · grok-4.7-fast default     api · harness status                 42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd"> as schema 2     </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">5 · Pi · qwen3.5-35b-a3b · local endpoint · 42 task runs, no budget used      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Execution and en</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Σ</span><span class="B1"> </span><span class="B1 bd">168 task runs and 30 judge sessions on provider accounts                      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Concurrency   </span><span class="B0 xd">on</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ial              </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Trials        </span><span class="B0 bd xd">6 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">There is no upper limit on trials. With every configuration above 5 trials on a</span><span class="B1">   </span><span class="B1 ac">│</span><span class="B0 bd xd">essions         </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Policy        </span><span class="B0 xd">cl</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">local endpoint, this dialog is not shown.</span><span class="B1">                                         </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Monitoring    </span><span class="B0 xd">au</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Currency      </span><span class="B0 xd">di</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd"> 2026-10-01      </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Cost, energy  </span><span class="B0 xd">ta</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ed by user)      </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Optional      </span><span class="B0 xd">▲ </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">stimate          </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">│</span><span class="B1">                                               </span><a class="BS rv bd k" href="ReviewLaunch.dc.html"> Back to review </a><span class="B1">  </span><a class="BA on bd k" href="LaunchCheck.dc.html"> Launch 6 trials </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Recorded with ev</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Machine       </span><span class="B0 xd">mi</span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Catalog       </span><span class="B0 xd">catalog 2026.09.2 · discovered 21:38 for each harness version                                            </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Credentials   </span><span class="B0 xd">never recorded · keys appear as “set” in exports, logs and reports                                       </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                     </span><span class="BS xd"> Back to setup </span><span class="B0 xd">  </span><span class="BS xd"> Copy as CLI command </span><span class="B0 xd">  </span><span class="BA on bd xd"> Launch ▸ </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ReviewLaunch.dc.html">esc</a><a class="B2 k" href="ReviewLaunch.dc.html"> Back to review</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Next</button><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Activate focused button                                                            </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2 xd"> </span><span class="B2 mu xd">○</span><span class="B2 xd">                                         </span><span class="B2 bd xd">AxBenchmark</span><span class="B2 mu xd"> — Review before launch</span><span class="B2 xd">                                           </span></div>
+<div class="r"><span class="B1 xd"> </span><span class="B1 ac xd">●</span><span class="B1 xd"> Everything below is exactly what will be frozen and run · nothing starts until Launch                                </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Template</span><span class="B0 xd"> </span><span class="B0 ln xd">─────────────────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Revision      </span><span class="B0 xd">Inventory web app · r1 · ★ built-in · Frontend · 7 approved tasks reused · no planner call               </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">SHA-256       </span><span class="B0 xd">3f9c2e710640fa4dc37ee9e73ea2376b6deb29e142b7706aa1380bc01229ff49                                         </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Baseline      </span><span class="B0 xd">empty project · e3b0c442… · one copy per entry                                                           </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">╭─</span><span class="B1 ac bd"> 6 trials · budget and subscription usage </span><span class="B1 ac">─────────────────────────────────────────╮</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Competitors · 5</span><span class="B0 xd"> </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B2 bd xd"> #  Harness     </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">More than 5 trials per configuration will consume budget and subscription usage.</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B2 bd xd">ns              </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd">  1  Claude Code </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Each trial reruns all 7 tasks from a fresh baseline and is judged in its own</span><span class="B1">      </span><span class="B1 ac">│</span><span class="B0 xd">limits           </span></div>
+<div class="r"><span class="B0 xd">  2  Claude Code </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">session. Check your API budget and subscription limits before launching.</span><span class="B1">          </span><span class="B1 ac">│</span><span class="B0 xd"> harness)        </span></div>
+<div class="r"><span class="B0 xd">  3  Codex       </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">limits           </span></div>
+<div class="r"><span class="B0 xd">  4  Grok CLI    </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Task runs       </span><span class="B1">210 · 5 configurations × 6 trials × 7 tasks                       </span><span class="B1 ac">│</span><span class="B0 xd">rgument          </span></div>
+<div class="r"><span class="B0 xd">  5  Pi          </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">Judge sessions  </span><span class="B1">30 · Claude Code · claude-opus-5-5 · high · one per trial         </span><span class="B1 ac">│</span><span class="B0 xd">etered price     </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Grading, context</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Uses budget or subscription</span><span class="B1">                                                       </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Grading       </span><span class="B0 xd">ha</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B2 bd"> #  Harness · model                      Billing                            Runs</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Context       </span><span class="B0 xd">na</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 1  Claude Code · claude-opus-5-5 medium subscription · declared by user      42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">ls · remote, li… </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Rubric        </span><span class="B0 xd">we</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 2  Claude Code · claude-opus-5-5 high   subscription · declared by user      42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Quality       </span><span class="B0 xd">pr</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 3  Codex · gpt-6-sol medium             api · harness status                 42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Ranking       </span><span class="B0 xd">pr</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B0"> 4  Grok CLI · grok-4.7-fast default     api · harness status                 42</span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd"> as schema 2     </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">○</span><span class="B1"> </span><span class="B1 mu">5 · Pi · qwen3.5-35b-a3b · local endpoint · 42 task runs, no budget used      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Execution and en</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 bd">Σ</span><span class="B1"> </span><span class="B1 bd">168 task runs and 30 judge sessions on provider accounts                      </span><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Concurrency   </span><span class="B0 xd">on</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ial              </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Trials        </span><span class="B0 bd xd">6 </span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">There is no upper limit on trials. With every configuration above 5 trials on a</span><span class="B1">   </span><span class="B1 ac">│</span><span class="B0 bd xd">essions         </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Policy        </span><span class="B0 xd">cl</span><span class="B1 ac">│</span><span class="B1">  </span><span class="B1 mu">local endpoint, this dialog is not shown.</span><span class="B1">                                         </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Monitoring    </span><span class="B0 xd">au</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Currency      </span><span class="B0 xd">di</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd"> 2026-10-01      </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Cost, energy  </span><span class="B0 xd">ta</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">ed by user)      </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Optional      </span><span class="B0 xd">▲ </span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 xd">stimate          </span></div>
+<div class="r"><span class="B0 xd">                 </span><span class="B1 ac">│</span><span class="B1">                                               </span><a class="BS k" href="ReviewLaunch.dc.html"> Back to review </a><span class="B1">  </span><a class="BA on bd rv bd k" href="LaunchCheck.dc.html"> Launch 6 trials </a><span class="B1">  </span><span class="B1 ac">│</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 bd xd">Recorded with ev</span><span class="B1 ac">│</span><span class="B1">                                                                                    </span><span class="B1 ac">│</span><span class="B0 ln xd">────────────────</span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Machine       </span><span class="B0 xd">mi</span><span class="B1 ac">╰────────────────────────────────────────────────────────────────────────────────────╯</span><span class="B0 xd">                 </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Catalog       </span><span class="B0 xd">catalog 2026.09.2 · discovered 21:38 for each harness version                                            </span></div>
+<div class="r"><span class="B0 xd"> </span><span class="B0 mu xd">Credentials   </span><span class="B0 xd">never recorded · keys appear as “set” in exports, logs and reports                                       </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                                                                        </span></div>
+<div class="r"><span class="B0 xd">                                                                     </span><span class="BS xd"> Back to setup </span><span class="B0 xd">  </span><span class="BS xd"> Copy as CLI command </span><span class="B0 xd">  </span><span class="BA on bd xd"> Launch ▸ </span><span class="B0 xd"> </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="ReviewLaunch.dc.html">esc</a><a class="B2 k" href="ReviewLaunch.dc.html"> Back to review</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Next</button><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Activate focused button                                                            </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Vertical" data-tcss="#confirm" style="left: 17ch; top: 96px; width: 86ch; height: 432px"><span>Vertical #confirm</span></div>
+<div class="ov" data-widget="Static" data-tcss="#budget-totals.kv" style="left: 20ch; top: 192px; width: 80ch; height: 32px"><span>Static #budget-totals.kv</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#budget-entries" style="left: 20ch; top: 256px; width: 80ch; height: 80px"><span>DataTable #budget-entries</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ConfirmScreen (M15, shared)</b><span class="mut">tui/screens/confirm.py</span></div>
+<h3>Widget tree</h3>
+<pre>ConfirmScreen(ModalScreen[bool])   over ReviewLaunchScreen
+├─ Vertical #confirm .dialog
+│  ├─ Static #confirm-message     budget and subscription usage
+│  ├─ Static #budget-totals .kv    task runs · judge sessions
+│  ├─ DataTable #budget-entries    configurations not on a local endpoint
+│  └─ Horizontal .dialog-actions   #cancel · #ok
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>ConfirmScreen</code></td><td>align: center middle; background: $background 60%;</td></tr><tr><td><code>#confirm</code></td><td>width: 86; max-width: 100%; height: auto; border: round $primary; background: $surface; padding: 1 2;</td></tr><tr><td><code>.dialog-actions</code></td><td>height: 1; align-horizontal: right; margin-top: 1;</td></tr><tr><td><code>#budget-entries</code></td><td>height: 5;</td></tr><tr><td><code>#ok</code></td><td>variant: primary;  “Launch N trials”</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>dismiss(False)</code><br><span class="mut">Back to the review; nothing starts</span></td></tr><tr><td><kbd>tab / shift+tab</kbd></td><td><code>focus_next / previous</code><br><span class="mut">Move between buttons</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>press</code><br><span class="mut">Activate the focused button</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>Button #cancel</li><li>Button #ok</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Setup.dc.html">Setup</a><a href="SetupNoEngine.dc.html">No decision engine</a><a href="SetupGradingTextOnly.dc.html">Text-only grader</a><a href="DecisionEngines.dc.html">Decision engines</a><a href="SetupInvalid.dc.html">Blocking issues</a><a href="JudgePicker.dc.html">Judge</a><a href="JudgeFallback.dc.html">Judge fallback</a><a href="ReviewLaunch.dc.html">Review</a><a href="TrialBudgetWarning.dc.html">Budget warning</a><a href="LaunchRecord.dc.html">Launch record</a></div>
+<h3>Notes</h3>
+<ul><li>R3-7: there is no upper limit on trials. When a launch requests more than 5 trials for any configuration not on a local endpoint, M07’s launch validation returns trial_budget_warning with its totals.</li><li>Totals: task runs = configurations × trials × tasks; judge sessions = configurations × trials. The dialog states clearly that the extra trials consume budget and subscription usage.</li><li>Not shown when every configuration above 5 trials is on a local endpoint; local configurations are listed apart as using no budget.</li><li>Focus starts on Back to review. run --no-tui prints the same warning and continues; it never prompts (M14).</li><li>Implementation owner M07. API seam: configs.review totals/token → fresh confirmation → runs.launch; never a local budget calculation.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1320}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["Button #cancel","Button #ok"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

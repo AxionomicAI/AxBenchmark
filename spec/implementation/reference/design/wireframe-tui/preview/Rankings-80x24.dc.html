@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rankings · original weights · 80×24</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2020px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Rankings · original weights</b> · ResultsScreen · Rankings · 80×24 cells</div>
+<div class="term" style="width: 80ch; height: 384px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                         </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Results · r1</span><span class="B2">                           </span></div>
+<div class="r"><span class="B1"> ★ r1 · sha256 3f9c2e71…1229ff49 · 12 results · 8 local · 4 ↓                   </span></div>
+<div class="r"><span class="B0"> </span><a class="B0 mu k" href="Results-80x24.dc.html"> Results </a><span class="B0"> </span><a class="B0 bd k" href="Rankings-80x24.dc.html"> Rankings </a><span class="B0">                                        </span><span class="B0 mu">● original weights</span><span class="B0"> </span></div>
+<div class="r"><span class="B0 ln">───────────</span><span class="B0 ac bd">──────────</span><span class="B0 ln">───────────────────────────────────────────────────────────</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Group</span><span class="B0"> </span><span class="B1"> A · opus-5.5 · high  </span><span class="B1 mu">▾</span><span class="B1"> </span><span class="B0">  </span><span class="B0 mu">weights 1:1:1 · original                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Combined · cost 33.3% · time 33.3% · quality 33.3% </span><span class="B0 ac">─────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> #  Model · effort             Score  Cost pts  Time pts   Qual pts          Q</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="BA on k" href="ScoreBreakdown.dc.html"> 1  gpt-6-sol medium            85.0      33.3      24.0       27.7       4.15</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ScoreBreakdown.dc.html"> 2  claude-opus-5-5 high        80.8      16.1      33.3       31.3       4.70</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><a class="B0 k" href="ScoreBreakdown.dc.html"> 3  claude-opus-5-5 medium      78.5      21.4      27.7       29.3       4.40</a><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└─────────────────────────────────────────────────────────────</span><span class="B0 mu"> 3 of 8 qualify </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Lowest cost  </span><span class="B0 mu">1 gpt-6-sol $3.10 · 2 claude-opus-5-5 $4.82 · 3 claude-opus-5-5 …</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Shortest     </span><span class="B0 mu">1 claude-opus-5-5 31:44 · 2 claude-opus-5-5 38:12 · 3 gpt-6-sol …</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Quality      </span><span class="B0 mu">1 claude-opus-5-5 4.70 · 2 claude-opus-5-5 4.40 · 3 gpt-6-sol 4.…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Excluded from combined · 5                                                    </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0928a-3   </span><span class="B0 mu">1 unverified                                                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0928a-4   </span><span class="B0 mu">3 checks failed · spec 3 &lt; 4 · cost unknown · local endpoint, par…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0925b-2   </span><span class="B0 mu">failed at T5 · no grades · cost partial · covers 5 of 7 tasks · t…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0921a-1   </span><span class="B0 mu">cost unknown · local endpoint, parallel run: shared energy not di…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0921a-2   </span><span class="B0 mu">cost unknown                                                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="TemplateResults.dc.html">esc</a><a class="B2 k" href="TemplateResults.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">g</span><span class="B2"> Group  </span><a class="B2 ac bd k" href="WeightsEditor.dc.html">w</a><a class="B2 k" href="WeightsEditor.dc.html"> Weights</a><span class="B2">  </span><a class="B2 ac bd k" href="ScoreBreakdown.dc.html">b</a><a class="B2 k" href="ScoreBreakdown.dc.html"> Breakdown</a><span class="B2">                           </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                         </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Results · r1</span><span class="B2">                           </span></div>
+<div class="r"><span class="B1"> ★ r1 · sha256 3f9c2e71…1229ff49 · 12 results · 8 local · 4 ↓                   </span></div>
+<div class="r"><span class="B0"> </span><a class="B0 mu k" href="Results-80x24.dc.html"> Results </a><span class="B0"> </span><a class="B0 bd k" href="Rankings-80x24.dc.html"> Rankings </a><span class="B0">                                        </span><span class="B0 mu">● original weights</span><span class="B0"> </span></div>
+<div class="r"><span class="B0 ln">───────────</span><span class="B0 ac bd">──────────</span><span class="B0 ln">───────────────────────────────────────────────────────────</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Group</span><span class="B0"> </span><span class="BT"> A · opus-5.5 · high  </span><span class="BT ac bd">▾</span><span class="BT"> </span><span class="B0">  </span><span class="B0 mu">weights 1:1:1 · original                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Combined · cost 33.3% · time 33.3% · quality 33.3% </span><span class="B0 ln">─────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> #  Model · effort             Score  Cost pts  Time pts   Qual pts          Q</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="BS k" href="ScoreBreakdown.dc.html"> 1  gpt-6-sol medium            85.0      33.3      24.0       27.7       4.15</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ScoreBreakdown.dc.html"> 2  claude-opus-5-5 high        80.8      16.1      33.3       31.3       4.70</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><a class="B0 k" href="ScoreBreakdown.dc.html"> 3  claude-opus-5-5 medium      78.5      21.4      27.7       29.3       4.40</a><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└─────────────────────────────────────────────────────────────</span><span class="B0 mu"> 3 of 8 qualify </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Lowest cost  </span><span class="B0 mu">1 gpt-6-sol $3.10 · 2 claude-opus-5-5 $4.82 · 3 claude-opus-5-5 …</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Shortest     </span><span class="B0 mu">1 claude-opus-5-5 31:44 · 2 claude-opus-5-5 38:12 · 3 gpt-6-sol …</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Quality      </span><span class="B0 mu">1 claude-opus-5-5 4.70 · 2 claude-opus-5-5 4.40 · 3 gpt-6-sol 4.…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Excluded from combined · 5                                                    </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0928a-3   </span><span class="B0 mu">1 unverified                                                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0928a-4   </span><span class="B0 mu">3 checks failed · spec 3 &lt; 4 · cost unknown · local endpoint, par…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0925b-2   </span><span class="B0 mu">failed at T5 · no grades · cost partial · covers 5 of 7 tasks · t…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0921a-1   </span><span class="B0 mu">cost unknown · local endpoint, parallel run: shared energy not di…</span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> R-0921a-2   </span><span class="B0 mu">cost unknown                                                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B0">                                                                                </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="TemplateResults.dc.html">esc</a><a class="B2 k" href="TemplateResults.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">g</span><span class="B2"> Group  </span><a class="B2 ac bd k" href="WeightsEditor.dc.html">w</a><a class="B2 k" href="WeightsEditor.dc.html"> Weights</a><span class="B2">  </span><a class="B2 ac bd k" href="ScoreBreakdown.dc.html">b</a><a class="B2 k" href="ScoreBreakdown.dc.html"> Breakdown</a><span class="B2">                           </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 80ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#identity-bar" style="left: 0ch; top: 16px; width: 80ch; height: 16px"><span>Static #identity-bar</span></div>
+<div class="ov" data-widget="TabbedContent" data-tcss="#results-tabs" style="left: 0ch; top: 32px; width: 80ch; height: 32px"><span>TabbedContent #results-tabs</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#combined" style="left: 1ch; top: 96px; width: 78ch; height: 64px"><span>DataTable #combined</span></div>
+<div class="ov" data-widget="Static" data-tcss="#shortlists" style="left: 1ch; top: 176px; width: 78ch; height: 48px"><span>Static #shortlists</span></div>
+<div class="ov" data-widget="Static" data-tcss="#excluded" style="left: 1ch; top: 240px; width: 78ch; height: 96px"><span>Static #excluded</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ResultsScreen · Rankings</b><span class="mut">tui/screens/results.py</span></div>
+<h3>Widget tree</h3>
+<pre>ResultsScreen › TabPane #tab-rankings
+├─ Horizontal #ranking-controls
+│  ├─ Select #judge-group           one judge configuration
+│  ├─ Select #timing-basis          only when Gen tok/s carries weight
+│  └─ Static #weights-label         original | alternative | profile defaults
+├─ DataTable #combined .bordered    eligible only
+├─ Horizontal #shortlists
+│  ├─ DataTable #lowest-cost .bordered
+│  ├─ DataTable #shortest-time .bordered
+│  └─ DataTable #highest-quality .bordered
+├─ DataTable #all-entries .bordered  everything, with reasons · s: statistics
+├─ Static #minimums
+└─ Horizontal .actions</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#ranking-controls</code></td><td>height: 1; margin: 0 1;</td></tr><tr><td><code>#combined</code></td><td>height: auto; max-height: 9;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#shortlists DataTable</code></td><td>width: 1fr; height: 8;</td></tr><tr><td><code>#all-entries</code></td><td>height: auto;</td></tr><tr><td><code>#weights-label.-alternative</code></td><td>text-style: bold;</td></tr><tr><td><code>Screen.-compact #shortlists</code></td><td>layout: vertical; height: 3;  one line each</td></tr><tr><td><code>Screen.-compact #all-entries</code></td><td>display: none;  reasons shown as #excluded</td></tr><tr><td><code>#combined .-enabled-only</code></td><td>one points column per enabled component; zero-weight components are not drawn</td></tr><tr><td><code>#all-entries.-statistics</code></td><td>Gen tok/s · In tok (cached) · Out tok (reasoning) · Files / LOC; header_height = 2</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>1 · 2</kbd></td><td><code>show_tab</code><br><span class="mut">Results · Rankings</span></td></tr><tr><td><kbd>g</kbd></td><td><code>judge_group</code><br><span class="mut">Switch judge group; groups never merge</span></td></tr><tr><td><kbd>b / enter</kbd></td><td><code>breakdown</code><br><span class="mut">Push ScoreBreakdownScreen for the row</span></td></tr><tr><td><kbd>w</kbd></td><td><code>weights</code><br><span class="mut">Push WeightsScreen</span></td></tr><tr><td><kbd>r</kbd></td><td><code>reset</code><br><span class="mut">Reset to the original analysis (alternative only)</span></td></tr><tr><td><kbd>s</kbd></td><td><code>toggle_columns</code><br><span class="mut">Outcome ⇄ statistics columns of #all-entries</span></td></tr><tr><td><kbd>h</kbd></td><td><code>report</code><br><span class="mut">HTML report with the current weights</span></td></tr><tr><td><kbd>Save preset… · Export configuration</kbd></td><td><span class="mut">Push the shared PromptScreen (M15) for a name or a path</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #combined</li><li>Select #judge-group</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Rankings-80x24.dc.html">Original</a><a href="RankingsProfileDefaults-80x24.dc.html">Profile defaults</a><a href="RankingsTrials.dc.html">Trials</a><a href="ScoreBreakdown.dc.html">Breakdown</a><a href="WeightsEditor.dc.html">Weights</a><a href="WeightsInvalid.dc.html">Invalid</a><a href="RankingsAlternative.dc.html">Alternative</a><a href="WeightsFactors.dc.html">Weights · 8 factors</a><a href="RankingsFactors.dc.html">8 factors</a><a href="ScoreBreakdownFactors.dc.html">Breakdown · 8 factors</a></div>
+<h3>Notes</h3>
+<ul><li>Eligible = completed, every required check verified, valid grades, business/spec grade ≥ 4 (R100). A high Q never bypasses a gate.</li><li>Missing a positively weighted measurement excludes the entry from that ranking only; weights are never redistributed (R100).</li><li>Unknown or partial cost excludes an entry from cost-weighted rankings (D11): the local Pi runs ran in parallel, so their cost stays unknown (D4). Reasons such as “cost partial · covers 5 of 7 tasks” stay in the full table.</li><li>A verified $0 minimum (only when reported $0 with complete coverage and no subscription) would give each $0 entry the full cost points (R101).</li><li>Fewer than five qualify → only that many are shown (lowest cost: 4).</li><li>R175: the original plan is schema 2 with all eight keys; Gen tok/s, In tok, Out tok, Files and LOC weigh 0, are never looked up and exclude nobody, so scores and order are exactly the three-component ones (verify.mjs checks rank8 = combined for both groups). s shows their raw columns.</li><li>Implementation owner M06. API seam: scoring.rank/weight_choices; pinned ResultFilters/judge group; M10-prepared currency, trial and statistics summaries; selected metric comparison policy.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #combined","Select #judge-group"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

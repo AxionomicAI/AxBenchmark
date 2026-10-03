@@ -1,0 +1,1751 @@
+{
+  "schema_version": 1,
+  "status": "proposed implementation schedule; no runtime completion asserted",
+  "authority": "implementation/reference/SPEC.md; parent and child implementation contracts; ARCHITECTURE.md",
+  "edge_semantics": "requires lists completed child implementation prerequisites. contracts are declarations published by Bootstrap and permitted fixtures, not completed provider dependencies. integration_gates are real-provider/cross-module acceptance obligations; they never create hidden graph edges.",
+  "completion_semantics": "A child completion records its required local/service tests plus any still-open later integration gates. A completed child does not accept its parent. Parent acceptance requires all children and real-provider/platform gates with evidence; missing access is pending, never a passing skip.",
+  "recommended_order": [
+    "Bootstrap",
+    "M11.1",
+    "M11.2",
+    "M15.1",
+    "M15.2",
+    "M12.1",
+    "M12.4",
+    "M12.5",
+    "M18.1",
+    "M01.1",
+    "M01.2",
+    "M02.1",
+    "M02.2",
+    "M01.3",
+    "M03.1",
+    "M01.4",
+    "M03.2",
+    "M04.1",
+    "M04.2",
+    "M04.3",
+    "M06.1",
+    "M07.1",
+    "M07.2",
+    "M05.1",
+    "M05.2",
+    "M05.3",
+    "M08.1",
+    "M08.2",
+    "M09.1",
+    "M09.2",
+    "M09.3",
+    "M10.1",
+    "M10.2",
+    "M18.2",
+    "M12.2",
+    "M11.3",
+    "M11.4",
+    "M05.4",
+    "M05.5",
+    "M05.6",
+    "M05.8",
+    "M05.9",
+    "M05.7",
+    "M18.3",
+    "M18.4",
+    "M17.1",
+    "M17.2",
+    "M13.1",
+    "M13.2",
+    "M13.3",
+    "M13.4",
+    "M14.1",
+    "M14.2",
+    "M16.1",
+    "M16.2",
+    "M16.3",
+    "M16.4",
+    "M16.5",
+    "M04.4",
+    "M06.2",
+    "M07.3",
+    "M08.3",
+    "M09.4",
+    "M10.3",
+    "M02.3",
+    "M11.5",
+    "M12.3",
+    "M17.3",
+    "M18.5",
+    "M15.3"
+  ],
+  "delivery_groups": [
+    {
+      "name": "Preparation",
+      "children": [
+        "Bootstrap"
+      ]
+    },
+    {
+      "name": "Executable foundations",
+      "children": [
+        "M11.1",
+        "M11.2",
+        "M15.1",
+        "M15.2"
+      ]
+    },
+    {
+      "name": "Shared contracts, decision runtime and identity",
+      "children": [
+        "M12.1",
+        "M12.4",
+        "M12.5",
+        "M18.1",
+        "M01.1",
+        "M01.2",
+        "M02.1"
+      ]
+    },
+    {
+      "name": "Storage and early library/readiness flows",
+      "children": [
+        "M02.2",
+        "M01.3",
+        "M03.1",
+        "M01.4",
+        "M03.2"
+      ]
+    },
+    {
+      "name": "Catalog, scoring and saved setup",
+      "children": [
+        "M04.1",
+        "M04.2",
+        "M04.3",
+        "M06.1",
+        "M07.1",
+        "M07.2"
+      ]
+    },
+    {
+      "name": "First harness and executable verification",
+      "children": [
+        "M05.1",
+        "M05.2",
+        "M05.3",
+        "M08.1",
+        "M08.2",
+        "M09.1",
+        "M09.2",
+        "M09.3"
+      ]
+    },
+    {
+      "name": "Measured lifecycle and partial milestone",
+      "children": [
+        "M10.1",
+        "M10.2",
+        "M18.2",
+        "M12.2",
+        "M11.3",
+        "M11.4"
+      ]
+    },
+    {
+      "name": "Remaining harnesses and platform collectors",
+      "children": [
+        "M05.4",
+        "M05.5",
+        "M05.6",
+        "M05.8",
+        "M05.9",
+        "M05.7",
+        "M18.3",
+        "M18.4"
+      ]
+    },
+    {
+      "name": "Portable storage transactions",
+      "children": [
+        "M17.1",
+        "M17.2"
+      ]
+    },
+    {
+      "name": "Offline report and CLI",
+      "children": [
+        "M13.1",
+        "M13.2",
+        "M13.3",
+        "M13.4",
+        "M14.1",
+        "M14.2"
+      ]
+    },
+    {
+      "name": "Planning and approval",
+      "children": [
+        "M16.1",
+        "M16.2",
+        "M16.3",
+        "M16.4",
+        "M16.5"
+      ]
+    },
+    {
+      "name": "Remaining feature screens",
+      "children": [
+        "M04.4",
+        "M06.2",
+        "M07.3",
+        "M08.3",
+        "M09.4",
+        "M10.3",
+        "M02.3",
+        "M11.5",
+        "M12.3",
+        "M17.3",
+        "M18.5"
+      ]
+    },
+    {
+      "name": "Composed TUI and final acceptance",
+      "children": [
+        "M15.3"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Bootstrap",
+      "path": "implementation/BOOTSTRAP.md",
+      "requires": [],
+      "contracts": [
+        "Importable package/test layout; shared IDs/exact values; owner domain schemas and application/side-effect Protocols; API DTO/error/registry declarations; M11 client/protocol.py EngineClient and api/events.py EventCursor/Subscription/EventEnvelope; deterministic schema-valid fixtures and enforced import boundaries.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real runtime dispatch, clients, jobs and subscriptions are M11.1-M11.2 acceptance; real shared TUI shell is M15.1-M15.2 acceptance. No benchmark, adapter, collector or parent is accepted by Bootstrap smoke/schema tests.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M01.1",
+      "path": "implementation/M01/01-canonical-definition.md",
+      "requires": [
+        "Bootstrap"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M08 CheckFormat/suite reference schema; M12 RubricSource.parse/profile schema; M05/M08 execution/service/dependency reference schema. Fixture parsers must enforce these published shapes and return reference summaries; they cannot accept every byte string. Real parser integration remains a parent gate.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Real integration gate: M09.1 and M16.3 must call this writer, M17.1 must reject malformed canonical imports, and actual M08/M12 parsers must validate equal references. M05.2/M08.1 must restore executable behavior from the descriptor on macOS/Linux. These are later integration checks, not entry dependencies."
+      ]
+    },
+    {
+      "id": "M01.2",
+      "path": "implementation/M01/02-revision-storage.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: shared PublicationTransactions, PublicationView, transaction tokens/read leases, Clock and IdGenerator. Use a deterministic transaction coordinator that can pause at each durability boundary; M11/M17's real coordinator is not an entry dependency. M02/M07/M16 stores are represented by prepared-participant fixtures, never reached through their files.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real integration gate: with M17.2/M02.2's real publication participants, pause an embedded-template/result import while M01 reads, launches/exports through consumers and deletes. No partial collections or guessed staged access are allowed. Real M07/M16 participants must also prove approval/deletion atomicity via M01.3. Run mode and restoration cases on macOS/Linux with ordinary user permissions."
+      ]
+    },
+    {
+      "id": "M01.3",
+      "path": "implementation/M01/03-library-service.md",
+      "requires": [
+        "Bootstrap",
+        "M01.2",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 RevisionResults; M03 ReadinessGate; M07 RevisionConfigs with prepared copy/remove operations; M09 BuiltinCatalog and ContractDescriber; M16 DraftStore.inspect -> DraftApprovalInput(version, frozen) and transactional approval marker; M08 CheckIndex; M12 RubricIndex; M11 ActiveRuns returning ActiveRunRef(run_uid, run_label, origin). Shared views/tokens must match M01.2. Fixture providers must model counts, refusal cases and preparation failure, not just return success.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Real integration gate: run the same cases against M02.2, M03.1, M07.1, M09.1, M16.3 and M17.2 providers; M11.3 must serialize launch with deletion and bind the approved identity. Check real M14 commands and event refresh after reconnect. These are post-child integrations and do not add cyclic entry dependencies."
+      ]
+    },
+    {
+      "id": "M01.4",
+      "path": "implementation/M01/04-library-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M01.3",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 result routes/DTOs, M03 environment routes, M07 Setup/configuration routes, M09 inventory-inspection routes, M16 planning/editor routes, M17 exchange routes, M11 run/launch routes. Their screens/services need not be implemented for navigation tests; route targets and parameter shapes must already be published. M14 implements CLI independently.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Real integration gate: M15.3 composes these screens with actual M07/M16/M17 destinations and M01.3 service; complete create/approve/configure/reopen/import/export/delete and no-harness browsing journeys using real API connections, including reconnect during publication. M14 separately verifies delete --yes handling and engine-supplied plan tokens."
+      ]
+    },
+    {
+      "id": "M02.1",
+      "path": "implementation/M02/01-retained-records.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M08 check/evidence schemas; M10 measurement/cost/coverage/rate schemas; M12 rubric/raw-grade/review schema; M07 complete credential-free frozen launch. These must validate published fields and scopes. Real verification, accounting and judging services are later integration gates, not entry dependencies.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real integration gate: M08/M10/M12 producers serialize real outputs through these schemas; M17 archive round trips preserve the exact portable digests/bindings; M06 rejects the effective invalidated scope. Producer fixtures alone do not satisfy this gate.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M02.2",
+      "path": "implementation/M02/02-retention-services.md",
+      "requires": [
+        "Bootstrap",
+        "M02.1",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: Shared PublicationTransactions/PublicationView and a deterministic coordinator; M01 TemplateDirectory and revision publication participant; M07 LaunchRecords; M06 ScoringRules; M10 CostAnalysis/MeasurementReader/MeasurementFinalizer; M18 telemetry receipt; M11 terminal retention input; M17 prepared-package/journal coordinator. Inject exact protocols with deterministic pause/failure hooks. Scheduler, real accounting/collectors and the real archive coordinator are later gates, avoiding cycles with their dependence on M02.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real integration gate: M11.3\u20134 + M08.2 + M10.2 + M18.2 run delayed-observation and stop/recovery cases with real retention; M12.2 settles/cancels original reviews; M17.2 with M01.2\u20133 proves atomic embedded imports, prepare-receipt recovery, guarded export/lease closure and round trips; M06.1/M13.1 consume retained facts with model access disabled. Record actual provider/platform coverage separately from fixture coverage.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M02.3",
+      "path": "implementation/M02/03-results-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M02.2",
+        "M06.1",
+        "M10.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M06 ranking/weights/breakdown navigation, M08 TaskChecks/EvidenceViewer, M10 CurrencyEnergy/Measurements/CostBasis, M12 rejudge options/job, M13 report outcome/reveal, M17 ExchangeScreens.import_results(template_sha256, path?)/.export_results(run_uid) factories and M18 telemetry entry points. Inject clients and navigation factories; real owning screens remain integration gates. Do not duplicate their engines, screens or conversion rules.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real integration gate: run the same navigation through the composed engine and real M06/M08/M10/M12/M13/M17/M18 screens; import two same-label runs, inspect both trials, rejudge explicitly, invalidate a sealed run, export/import its overlay, and generate an eligible offline report. Final amounts/coverage must match retained API records. Snapshot/fake-client rendering alone is insufficient."
+      ]
+    },
+    {
+      "id": "M03.1",
+      "path": "implementation/M03/01-readiness-service.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 RevisionPermissions.audit and mode-drift schema; M05 HarnessInspection.probe/verify, HarnessProbe, VerificationOutcome, verification invocation scope and log identity; M04 context-scoped catalog overview/refresh event; M18 capability/guidance schema and its single CollectorCause enum. M03 publishes InstalledHarness/AccountObservation, ReadinessGate, ReadinessReport, AssessOperation, InstalledHarnesses and MachineIdentitySource before M04's domain work. Publication is not implementation of their providers.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Real-provider integration gate: compose M01 revision storage/restore, M04 catalog discovery, all six M05 adapters and M18 collector probes/guides on macOS and Linux. With controlled test credentials and explicit test-user consent, prove one real minimal verification call per tested harness, process cleanup and outcome/log mapping. Run a temporary approved-revision mode drift/restore cycle; prove no-harness library/ZIP/retained-report flows with real M01/M02/M13/M17 providers. Record untested platform/provider/hardware combinations; fakes never establish support."
+      ]
+    },
+    {
+      "id": "M03.2",
+      "path": "implementation/M03/02-readiness-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M03.1",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 Library/Template identity navigation and capabilities; M04 Catalog entry; M18 MonitoringSettings\u2192CollectorGuide handoff and verified guidance; M16 PlannerScreen's verification-plan/confirmation interaction; M14 doctor outcomes for parity. Their actual screens/CLI are real-integration gates, not entry dependencies. Inject navigation factories and schema-valid EngineClient responses; no private engine access.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure."
+      ],
+      "integration_gates": [
+        "Real integration gate: repeat board transitions through M03.1 and the composed M01/M04/M05/M18 providers. Reach CollectorGuide from both Environment and real MonitoringSettings; return focus correctly. With no harness, complete real library/ZIP/saved-result/report workflows. Through real M16/M15 consent and M14 doctor, prove decline/noninteractive refusal calls nothing and explicit consent calls each selected harness once, with matching readiness outcomes."
+      ]
+    },
+    {
+      "id": "M04.1",
+      "path": "implementation/M04/01-catalog-resolution.md",
+      "requires": [
+        "Bootstrap"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 InstalledHarness/AccountObservation, account fingerprints and inventory status; M05 DefaultModelReading, billing observations and requested/effective vocabulary; M07 selection/frozen-evidence inputs; M10/M06 accounting boundary fixtures. M03.1 and M05 adapters need not be implemented to exercise their exact published shapes.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Real-source/provider integration gate: M04.2\u20133 must map real M03/M05 inventory/default observations and verified price/rate responses into these exact types. M07/M10/M02/M17 must preserve COP 4000 through launch/retention/export/import and prove conversion; M06 must exercise zero-price eligibility with real accounting. Fixture-only rule tests establish none of those integrations."
+      ]
+    },
+    {
+      "id": "M04.2",
+      "path": "implementation/M04/02-catalog-discovery.md",
+      "requires": [
+        "Bootstrap",
+        "M04.1",
+        "M03.1",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M05 HarnessInspection.list_models(context, timeout) -> ModelListOutcome including default-model readings/failures; M04 PriceSource, ExchangeRateSource, PriceStore, RateStore, ExchangeRates and rate-command use-case inputs; M07/M12/M16 selection consumers. Real M05 adapters and M04.3 HTTP sources/rate services are later integration gates.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Real-provider integration gate: compose all six M05 adapters with M03.1 on macOS/Linux; record installed versions and inspect actual model/default/billing outputs without model calls. Absent output stays unknown. Compose M04.3 real sources/stores, test offline and failed refresh after valid data, and verify shutdown/cancellation cleanup. Record unsupported/unverified combinations explicitly."
+      ]
+    },
+    {
+      "id": "M04.3",
+      "path": "implementation/M04/03-price-rate-sources.md",
+      "requires": [
+        "Bootstrap",
+        "M04.1",
+        "M04.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 frozen PriceSnapshot/RateSnapshot, M10 conversion/accounting inputs and M02/M17 retention/export schemas. Their implementations are later gates; use exact owner types, not a second snapshot format.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport."
+      ],
+      "integration_gates": [
+        "Real-source/provider integration gate: perform a controlled explicit refresh against the verified current sources and retain URL/date/parser evidence; repeat with network disabled and a deliberately invalid recorded response. Separately compose M07/M10/M02/M17: save/freeze/export/import COP 4000, convert 4000 COP\u21941 USD, cover EUR/missing rates, preserve billing labels and prove later refresh cannot alter frozen evidence. M06 verifies unverified-zero exclusion and positive unknown-billing costs using real M10 results."
+      ]
+    },
+    {
+      "id": "M04.4",
+      "path": "implementation/M04/04-catalog-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M04.2",
+        "M04.3",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 configs.add_entry/update_entry and Setup navigation; M03 Environment\u2192Catalog entry; M16 planner selection consumer; M12 judge capability checks; M14 CLI parity cases. Their real screens/consumers are integration gates, not entry dependencies.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Real-source/provider integration gate: through real M04 services, edit account A with two models while account B remains unchanged; edit one model without changing billing; save/reopen rates; refresh/offline/failure transitions retain provenance. Compose actual M07 Setup, M03 Environment, M16/M12 consumers and M14 commands; verify matching scope/errors and M15.3 navigation. Real M07/M10/M02/M17 must prove the COP freeze/conversion/export round trip; the UI test does not compute it."
+      ]
+    },
+    {
+      "id": "M05.1",
+      "path": "implementation/M05/01-process-runtime.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 RevisionReader/semantic baseline; M02 ResultRecorder and EvidenceRef; M07 frozen inputs; M10 acknowledged observation sink; M11 invalidation/scheduler consumers; M12/M16 role inputs; M03 diagnostic JobId; M18 ProcessTracking.started/exited application interface. Their complete feature implementations are later parent integration gates.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline."
+      ],
+      "integration_gates": [
+        "Pending parent obligations: M05.2 resources/restoration, M05.3\u2013M05.6 verified adapters, M05.7 API/views, and real M02/M10/M11 retention/finalization plus M03/M12/M16 caller integrations and real M18 process registration/flush. Judge requests use the same runtime with M05.2\u2019s protected-root environment. The Bootstrap fixture path alone cannot complete M05."
+      ]
+    },
+    {
+      "id": "M05.2",
+      "path": "implementation/M05/02-isolation-observation.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M01.1",
+        "M01.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 installed inventory; M07 frozen entries; M08 verification leases; M10 observations; M11 invalidation/topic providers; M16 unregistered BaselineSnapshot; M12 judge factory inputs and M02 delivered SnapshotRef. Real M08/M11/M16 integration remains a parent gate.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Pending parent obligations: real adapter judge-root/clean controls, M12/M02 delivered-artifact integration, M17 imported round trip, M08 disposable copies, M11 invalidation/stop scheduling, M10 retained observations and M05.7 views. Fixture isolation does not establish a supported harness sandbox.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M05.3",
+      "path": "implementation/M05/03-claude-adapter.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M05.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 inventory/account observations, M04 catalog contexts/selection evidence, M07 frozen inputs, M12 judge payloads and M16 planner payloads. Full provider services are not adapter entry dependencies.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Installed-version/platform gate: run tests/harness/adapters/test_claude_code_installed.py on macOS and Linux against recorded exact installed versions. Compare help/status/config outputs and documented controls; exercise real clean/current setup, fresh sessions, blocked permissions, drainage, stop and child cleanup with explicit test consent for any model calls. Missing credentials/platforms remain unverified, never passing skips.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M05.4",
+      "path": "implementation/M05/04-codex-adapter.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M05.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 installed-version/account schema, M04 selection/effort evidence, M07 frozen launch, M12/M16 judge/planner payloads. Full feature implementations remain later integration gates.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Installed-version/platform gate: run tests/harness/adapters/test_codex_installed.py on macOS/Linux with exact binary/version evidence. Reconcile current official docs with installed help/config/status, then test real role launches, clean/current controls, requested/effective values, blocked actions, detach, timeout and process-tree cleanup. Include real protected-root judge checks. Model-call checks require explicit test consent; absence of credentials or a platform is recorded as unverified.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M05.5",
+      "path": "implementation/M05/05-grok-adapter.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M05.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 executable inventory, M04 provider/account catalog context, M07 frozen settings and M12/M16 role payloads. Their implementations are later integration gates.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Installed-version/platform gate: run tests/harness/adapters/test_grok_cli_installed.py on macOS/Linux for the recorded distribution/version. Compare current official docs with help/status/config output, then exercise headless launch, actual permission behavior, clean/current limitations, fresh sessions, output parsing, deadline and child cleanup. Obtain explicit test consent for model calls; record missing platform/credentials as unverified.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M05.6",
+      "path": "implementation/M05/06-pi-adapter.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M05.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 version/account inventory, M04 catalog/effort evidence, M07 frozen entries and M12/M16 role payloads. Full feature services are later integration gates.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Installed-version/platform gate: run tests/harness/adapters/test_pi_installed.py on macOS/Linux for exact recorded versions. Verify current official documentation against installed help/config/status, then exercise supported provider contexts, clean/current controls, fresh sessions, explicit setting behavior, blocked actions, detach, deadline and cleanup. Any actual model calls need explicit test consent; missing credentials/platforms remain unverified.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M05.7",
+      "path": "implementation/M05/07-adapter-views-integration.md",
+      "requires": [
+        "Bootstrap",
+        "M05.3",
+        "M05.4",
+        "M05.5",
+        "M05.6",
+        "M03.1",
+        "M04.2",
+        "M15.1",
+        "M15.2",
+        "M05.8",
+        "M05.9"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 setup/frozen launch, M08 progress/evidence, M11 scheduler/stop/live screens, M12 judge and M16 planner callers, M14 CLI bindings; M18 awaited ProcessTracking interface. Inject these for view tests; actual parent integration cannot stop at that seam.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Pending parent obligations: real M07/M08/M10/M11/M12/M16 end-to-end scheduling, verification, accounting, finalization and role behavior; M14 CLI parity and M15 cross-screen navigation. Integration fixtures cannot certify absent provider services or a missing installed-platform test."
+      ]
+    },
+    {
+      "id": "M06.1",
+      "path": "implementation/M06/01-scoring-service.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 EffectiveResult, TrialGroup, RetainedResultReader, PublicationView; M10 CostAnalysis, MeasurementReader, complete cost/display DTOs; M12 ProfileCatalog; M07 WeightPresets/preset YAML shape. Fixtures preserve full TrialRefs, frozen counts, immutable facts and overlay versions. Inject protocols only, with missing/late/error hooks; real producers are the integration gate below.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Compose real M02 retention/import, M10 measurement projections, M12 profiles/reviews and M07 presets. Complete a repeated-trial retained run, seal/review, export/import and compare exact ranks, all money metadata and original fact digests; then append run invalidation and verify fresh reads reject the entire UID. Repeat same-label different-UID runs and the currency/zero fixtures through real accounting. No new model calls are needed for analysis.",
+        "M14 owns paired --tariff AMOUNT_PER_KWH --tariff-currency CODE parser/dispatch tests for scoring rank/explain: both absent uses recorded tariffs, either alone exits 2 without requests, both forward the exact TariffDTO; display-currency/rate overrides remain forbidden.",
+        "Require M13's real report adapter to construct this domain Population, call only analyse_population on its captured pin, and reject later invalidation at guarded publication. Require M13's actual offline BigInt scorer to pass the same JSON vectors under its test runner, including reasons, subject IDs, minima, exact values and display passthrough. Stub JavaScript or Python-only parity does not satisfy this gate.",
+        "Run the BENCHMARK-STATISTICS eight-factor exact vectors through real engine and production offline JavaScript; include direction/policy differences, incompatible cohorts, full-trial missing values, zero conventions and default three-factor equivalence."
+      ]
+    },
+    {
+      "id": "M06.2",
+      "path": "implementation/M06/02-rankings-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M06.1",
+        "M07.1",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 ResultsScreen host/filter/inspection navigation; M10 currency/tariff DTOs and CurrencyEnergyScreen handoff; M13 ReportGenerateScreen; M12 ProfilesScreen and M07 setup callers. Inject schema-valid client responses and navigation factories until those owners integrate their real screens. Do not make their full implementations entry dependencies.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Through real EngineClient/M06.1 and M02 ResultsScreen, inspect retained repeated trials, change filters/judge/weights/tariff, save/reload a real M07 preset, export/reload weights and generate a real M13 report. Compare exact engine order and all currency/billing metadata with the report generated through M06.1's pinned analyse_population seam; confirm originals and retained fact digests are unchanged. Invalidate the sealed run and verify all mounted views refresh.",
+        "Run the BENCHMARK-STATISTICS eight-factor exact vectors through real engine and production offline JavaScript; include direction/policy differences, incompatible cohorts, full-trial missing values, zero conventions and default three-factor equivalence."
+      ]
+    },
+    {
+      "id": "M07.1",
+      "path": "implementation/M07/01-configuration-drafts.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 RevisionReader and approval/deletion coordinator; M03 AssessOperation; M04 CatalogSelections/CatalogOptions; M05 policy vocabulary; M06 WeightValidation.validate(profile_id, quality, ranking); M10 accounting, M11 scheduling, M12 profiles and JudgeRequirements.check(template: Sha256, judge: JudgeSelection) -> JudgeCheck/session_count(configurations, trials), M16 planner and M18 monitoring inputs. Their complete implementations are not prerequisites. M07.2 replaces fact-source fakes.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Compose real M01 approval/deletion with this store and M16's transaction-aware draft approval marker. Inject failure at each participant boundary and verify library counts/config lists/draft state in one read view. Connect real M06 validation/preset callers and reopen persisted drafts through M07.3 after an engine restart.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M07.2",
+      "path": "implementation/M07/02-launch-preparation.md",
+      "requires": [
+        "Bootstrap",
+        "M07.1",
+        "M03.1",
+        "M04.1",
+        "M04.2",
+        "M04.3",
+        "M06.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 verified revision reader; M05 HarnessInspection.assess_policy; M10 AccountingValidation; M11 SchedulingVocabulary, ExecutionDefaults, UID reservation and launch-job coordinator; M12 JudgeRequirements/profile/session count; M16 PlannerRecord; M18 MonitoringOptions; M02 RunBinding/ResultRecorder. The scheduler, judging worker and collectors are later integrations, preventing dependency cycles.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Compose real M01 identity, M05 policy, M10 accounting, M11 scheduler, M12 judge requirements and M18 monitoring. Review/launch through TUI and M14 CLI; inspect M02's exact per-trial frozen binding and M17 round-trip. Crash after commit and midway through result binding: recover the same UID/roster without execution before completeness or deletion of frozen evidence.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M07.3",
+      "path": "implementation/M07/03-setup-review-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M07.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 LaunchCheckScreen; M04 EntryPickerScreen; M05 environment/clean-policy screens; M06 WeightsScreen; M10 CurrencyEnergyScreen(mode=\"setup\"); M12 JudgeCapabilityScreen factory from axbenchmark/tui/screens/judge_capability.py; M18 MonitoringScreen; M11 launch-job responses. Use injected screen factories/client responses until real owners integrate; do not duplicate their screens or make every parent a prerequisite.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Through real EngineClient/M07 and integrated M01/M04/M05/M06/M10/M12/M18 screens (including the real M12 capability factory and all four Action returns), save/restart/reopen, adjust setup, review and launch with M11. Compare frozen M02 records against the approved preview. Run the same YAML via M14 with six provider trials: stderr shows warning/totals, stdin is never read, execution continues; repeat all-local and five-trial exceptions.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M08.1",
+      "path": "implementation/M08/01-verification-runtime.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1",
+        "M02.1",
+        "M05.1",
+        "M05.2",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 RevisionReader/TemplateIdentity; M02 ResultRecorder/reader; M03 prerequisite assessments; M10 VerificationObservations/finalizer; M11 scheduler/invalidation coordinator; M06 eligibility notes. M08 publishes check/evidence/observation schemas before M02/M09 consume them. Later provider implementations are integration gates, not circular entry requirements.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Compose M01 reads, M02 durable retention, M05 snapshots/resources, M08.2 real processes, M10 journal/finalizer and M11 coordinator. Delay storage/accounting, invalidate the last-task/final-read path, restart, then export/import retained facts and verify unchanged scope/outcomes and invalidation."
+      ]
+    },
+    {
+      "id": "M08.2",
+      "path": "implementation/M08/02-verification-adapters.md",
+      "requires": [
+        "Bootstrap",
+        "M08.1",
+        "M02.2",
+        "M03.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 verified revision reader, M06 eligibility notes, M10 acknowledged observations/finalizer, M11 scheduler/coordinator, M12 evidence consumer, M09 inventory suite and M16 generated suite. Full inventory/judging/scheduler implementations are later real integration gates.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Run approved frontend, backend and existing-repository templates through real M01/M02/M05/M08/M10/M11 services; immediately export/import and report after finalization, comparing phase/trial evidence and summaries. Run M09's exact versioned inventory suite on both conforming implementations and documented defects. Verify M12 consumes only the admitted final-artifact evidence."
+      ]
+    },
+    {
+      "id": "M08.3",
+      "path": "implementation/M08/03-verification-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M08.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 results-screen navigation, M05 run-configuration navigation, M06 eligibility text, M11 run status/invalidation, M12 judge-input context and M14 CLI parity. Their feature screens need not be reimplemented in this child; real navigation is a parent gate.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Compose real M02 retained readers, M05 navigation, M08 runtime/adapters, M10 awaited accounting and M11/M15 subscription handling. Navigate a two-trial frontend run and an imported result through all boards, stop/invalidate during verification, detach/reconnect and resize. Inspect actual paired PNGs/system-opener behavior on supported platforms.",
+        "Run R149 frontend/backend/existing-repository workflows with M06 score explanations and M14 CLI/API parity. UI fake fixtures establish presentation only; the headless run and retained evidence must independently agree."
+      ]
+    },
+    {
+      "id": "M09.1",
+      "path": "implementation/M09/01-inventory-package.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1",
+        "M01.2",
+        "M01.3"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M08 CheckFormat/acceptance.v1, M12 RubricSource/web profile, M05/M08 protocol/service/dependency formats, M02 result counts, M07 configuration and M11 launch interfaces. Full verifier/judge/scheduler implementations are later integration gates."
+      ],
+      "integration_gates": [
+        "After M09.2\u20133 complete, replace fixture source injection with the real complete payload, run real M08/M12 parsers, pin it once and exercise registration plus planner-free M07/M11 launch. Assert zero planner calls and an empty workspace per configuration/trial.",
+        "With real M16/M17, equivalent built-in/planned/imported definitions have equal descriptor/manifest/prompt bytes and digest on macOS/Linux. Export excludes authoring/display files; no source history changes."
+      ]
+    },
+    {
+      "id": "M09.2",
+      "path": "implementation/M09/02-inventory-repository-checks.md",
+      "requires": [
+        "Bootstrap",
+        "M09.1",
+        "M08.1",
+        "M08.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M11 scheduling, M10 phase-summary consumer, M06 eligibility, M12 judge projection and M17 exchange. Fixture invocation records may model history; real history and Playwright adapters must execute this child's gate."
+      ],
+      "integration_gates": [
+        "Run these checks through real M05 snapshots, M08 disposable runner and M02 retention, then query both phases. Verify no changed source bytes or leaked browser/process resources. M10 totals preserve phase separation."
+      ]
+    },
+    {
+      "id": "M09.3",
+      "path": "implementation/M09/03-inventory-behavior-checks.md",
+      "requires": [
+        "Bootstrap",
+        "M09.2",
+        "M08.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M11 scheduler, M10 summary acknowledgement/finalizer, M12 judge input and M17 exchange. These providers can be fixture-injected during check development; parent integration requires actual implementations."
+      ],
+      "integration_gates": [
+        "Run the actual complete packaged suite through M01/M05/M08/M02 on both conforming fixtures and defects, using real browser and Git adapters. M09.1 now freezes the released pin; M10 queries agree on per-phase counts and evidence is durable before completion."
+      ]
+    },
+    {
+      "id": "M09.4",
+      "path": "implementation/M09/04-inventory-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M09.3",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 Setup navigation/configuration, M01 Library/Template/DefaultChanges screens and M08 evidence views. Publish the M01 CoverageDTO extension before screen implementation; a private fake-only field is insufficient."
+      ],
+      "integration_gates": [
+        "With real M01/M09 queries and M15 navigation, browse default \u2192 about \u2192 prompts \u2192 checks \u2192 file \u2192 configure, open a look-alike and inspect upgrade notice at both sizes without a harness. Then launch through M07/M11 and verify no planner invocation.",
+        "Compare real M08/M10 phase outcomes with catalog details, M02 retained results and M13/M17 consumers. Regenerate design previews from changed sources and verify catalog/target labels before parent sign-off."
+      ]
+    },
+    {
+      "id": "M10.1",
+      "path": "implementation/M10/01-task-accounting.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M04 pricing/billing/rate values; M07 frozen LaunchRecords; M05 InvocationScope/InvocationFact/ExposureProfile and InvocationObservationSink; M08 VerificationObservation/CheckSummary/CheckPhase; M02 result/trial binding reader; M11 durable phase/timeline publisher. Publish M10 receipts/DTOs at Bootstrap before those consumers are implemented. Inject protocols without importing producer adapters; real implementations are a later gate.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "Agentic artifact evaluation uses M08-scoped verification receipts, the existing M11 managed-inference admission gate and a separate M10 verification auxiliary account; no System One purpose or competitor-metric expansion. Read implementation/quality-judges/AGENTIC.md.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Use real M05 usage/exit normalization, M07 frozen launch records and M08 durable summaries against this journal. Delay every producer's acknowledgement and verify its owning operation cannot complete first. Exercise at least two trials with distinct T1 facts and the actual supported harness fixture parser; adapter/current-version verification remains M05's obligation.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ],
+      "requires_note": "M11.1-M11.2 are required to accept the whole child API/registry work, even though isolated domain work can begin from Bootstrap."
+    },
+    {
+      "id": "M10.2",
+      "path": "implementation/M10/02-final-accounting.md",
+      "requires": [
+        "Bootstrap",
+        "M10.1",
+        "M02.2",
+        "M18.1",
+        "M11.1",
+        "M11.2",
+        "M12.4"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 LaunchRecords; M08 CheckSummaries; M11 RunTimeline/supervision; M18 EnergySource/ExperimentTelemetry close receipt; M06 consumer DTO/gate interfaces. M18's real collector service and M11 scheduler/recovery are later integration gates, not circular prerequisites. M02's recorder/reader are real for this child's retention tests.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "Agentic artifact evaluation uses M08-scoped verification receipts, the existing M11 managed-inference admission gate and a separate M10 verification auxiliary account; no System One purpose or competitor-metric expansion. Read implementation/quality-judges/AGENTIC.md.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Compose real M05/M07/M08/M11 scheduler/recovery and M18 collector closure with M02/M10. Complete sequential and parallel repeated-trial runs, then delayed-output stop/interruption; immediately export via M17 and report via M13 after readiness. Compare retained/live/imported/report facts and the unchanged M18 receipt, verify closed-source digests and prove no post-seal append. Test actual M06 zero gates and USD score/order invariance across display currencies.",
+        "Real macOS/Linux energy source/reset behavior and current harness/rate-source support require owner verification; fixture normalization is not platform certification. Pending parent obligations: M10.3 screens, M14 CLI, M15 navigation and all real M06/M13/M17 consumer gates. A headless fake telemetry run cannot complete M10.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims.",
+        "Exercise shared runtime bridge disabled without a ready profile, paired request-generation timing, final immutable artifact inventory, pooled/mean full-trial statistics and M02 receipt binding; match live/retained/CLI/offline values and unchanged legacy ranking when new weights are zero."
+      ]
+    },
+    {
+      "id": "M10.3",
+      "path": "implementation/M10/03-measurement-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M10.2",
+        "M15.1",
+        "M15.2",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 Results/Result route targets and result/filter DTOs; M07 Setup draft/save return contract; M08 explicit TaskChecks result/trial/task/phase route; M06 ranking DTO passthrough; engine exact cost/display/coverage/error models. Other feature screens may be route spies for this child's isolated tests; their real navigation is the parent gate.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility."
+      ],
+      "integration_gates": [
+        "Compose actual M02 Results/Result, M07 Setup, M08 TaskChecks, M10 API and M15 shell. Navigate retained repeated trials through live updates, inspect timing/billing/currency, apply/reset a tariff and verify retained digests unchanged. Exercise socket reconnect/resize while a delayed finalization completes; confirm explicit trial/phase navigation and typed errors remain correct.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M11.1",
+      "path": "implementation/M11/01-engine-client-api.md",
+      "requires": [
+        "Bootstrap"
+      ],
+      "contracts": [
+        "Published contracts injected with fixtures: feature use cases, startup/recovery hooks, activity/readiness providers and future run services. Loading contracts must not instantiate or import feature adapters. No completed M01\u2013M10/M12/M18 implementation is an entry requirement.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Agentic artifact evaluation uses M08-scoped verification receipts, the existing M11 managed-inference admission gate and a separate M10 verification auxiliary account; no System One purpose or competitor-metric expansion. Read implementation/quality-judges/AGENTIC.md.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "M11.2 must extend these same clients/dispatcher for jobs and subscriptions. Then run real M01 library and M03 readiness APIs through this seam with their fixture infrastructure; they may not replace the client with a private shortcut.",
+        "Require macOS/Linux socket/lock permission evidence; one platform's tests do not certify the other. Verify M14 and M15 decode the same typed failure without prose parsing before parent completion.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M11.2",
+      "path": "implementation/M11/02-events-jobs-lifecycle.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1"
+      ],
+      "contracts": [
+        "Injected published contracts: TopicProvider snapshots, feature registrations, activity counters, startup/shutdown/reconciliation hooks and fake job work. No M11.3 scheduler or real M05/M12/M18 provider is required. The later composition wires those hooks without replacing this infrastructure.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Agentic artifact evaluation uses M08-scoped verification receipts, the existing M11 managed-inference admission gate and a separate M10 verification auxiliary account; no System One purpose or competitor-metric expansion. Read implementation/quality-judges/AGENTIC.md.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Run early M01/M03 jobs with real dispatcher/bus and injected expensive providers. M10 required phase handlers must execute from durable timeline handoff; M16 planning finishes with registered planning/job topics. M15 applies cursor/generation rules through its actual hub.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M11.3",
+      "path": "implementation/M11/03-run-scheduler.md",
+      "requires": [
+        "Bootstrap",
+        "M11.2",
+        "M01.1",
+        "M01.2",
+        "M02.1",
+        "M02.2",
+        "M05.1",
+        "M05.2",
+        "M07.1",
+        "M07.2",
+        "M08.1",
+        "M08.2",
+        "M10.1",
+        "M10.2"
+      ],
+      "contracts": [
+        "Injected published contracts: M12 RunJudging (judge_run -> BatchId, wait/stop/recover -> OriginalJudgingSettlement, batch_for_run -> BatchId | None), M18 ExperimentTelemetry/close receipt and M11.4 invalidation/terminal coordinator. The child can prove scheduling and the terminal handoff with fakes; real M12.2/M18.2 lifecycle behavior is the M11.4 acceptance gate. M07's SchedulingVocabulary port is already published at Bootstrap, avoiding a setup/scheduler cycle.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Agentic artifact evaluation uses M08-scoped verification receipts, the existing M11 managed-inference admission gate and a separate M10 verification auxiliary account; no System One purpose or competitor-metric expansion. Read implementation/quality-judges/AGENTIC.md.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Compose real M01/M02/M05/M07/M08/M10 services with temporary durable stores and actual supported harness fixtures/processes. Verify M07 full binding, M02 scope/operation-ID checks and M10 acknowledgements without private state shortcuts.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M11.4",
+      "path": "implementation/M11/04-stop-recovery-invalidation.md",
+      "requires": [
+        "Bootstrap",
+        "M11.3",
+        "M12.2",
+        "M18.2"
+      ],
+      "contracts": [
+        "Published contracts allowed as fixtures during unit work: M13 CompletionReports.ensure/get/wait and reports.status durable outcome and M17 export consumer. Require their real integrations before parent acceptance. No dependency on M11.5 or M15 screens.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Agentic artifact evaluation uses M08-scoped verification receipts, the existing M11 managed-inference admission gate and a separate M10 verification auxiliary account; no System One purpose or competitor-metric expansion. Read implementation/quality-judges/AGENTIC.md.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Require real M02/M05/M07/M08/M10/M12/M18 services in fault tests. Complete sequential local-energy and parallel repeated-trial runs; exercise stop during judging and template mutation after seal. M17 export/import and M13 immediate report must agree with retained measurements and overlay eligibility.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M11.5",
+      "path": "implementation/M11/05-run-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M11.4",
+        "M05.7",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Published consumer contracts injected during screen tests: M12 JudgingScreen routing, M13 report disposition/open actions, M14 command presentation and M01 Library navigation. Their real navigation/report/CLI gates remain parent obligations, not duplicate implementations here.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Compose actual M11 services/client subscriptions with M15 shell and M05 observation. Run repeated trials, detach/reattach, stop during real judging, invalidate after seal and recover pending retention. Exercise M14 CLI alongside the TUI: controls and waits must agree while either client disconnects.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ],
+      "requires_note": "The named M05 observation/query service resolves to M05.7 application/queries.py and adapters/rpc.py, which consumes M05.2 live observations."
+    },
+    {
+      "id": "M12.1",
+      "path": "implementation/M12/01-review-contract.md",
+      "requires": [
+        "Bootstrap"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 canonical rubric references/read lease, M04 capability/selection provenance, M03 readiness, M08 JudgeEvidence/behavioral projection and M02 review/TerminalRetention schemas. Publish this child's profile/rubric/requirements types before M01/M06/M07/M09/M16 implementations need them; no adapter import cycle.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md: retained generation/token/artifact measurements remain excluded from judge inputs; admitted source/artifact evidence remains available.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Use real M01 canonical rubric reader, M04 capability provenance, M08 final-regression handoff and M12.2 parser/prompt path. Compare complete input payload trees against admitted refs; run M06 reweighting without altering raw grades or verification outcomes."
+      ]
+    },
+    {
+      "id": "M12.2",
+      "path": "implementation/M12/02-judging-worker.md",
+      "requires": [
+        "Bootstrap",
+        "M12.1",
+        "M05.1",
+        "M05.2",
+        "M02.2",
+        "M08.2",
+        "M10.1",
+        "M11.1",
+        "M11.2",
+        "M12.4",
+        "M12.5"
+      ],
+      "contracts": [
+        "Published contracts allowed as fixtures: M11 run lifecycle admission/invalidation/stop and M13/M17 consumer ports; M01/M03/M04/M06/M07 reads where not inherited. Use fakes for isolated orchestration, then real providers at the gate. M11.4 requires this child, so do not require completed M11.4 here.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md: retained generation/token/artifact measurements remain excluded from judge inputs; admitted source/artifact evidence remains available.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "6. Compose real M01/M02/M05/M08/M10/M11/M12 and supported judge adapter; verify process-tree cleanup, separate cost and final screenshots. Immediately M13-report and M17-export/import committed reviews/groups; invalidate after seal and verify every consumer excludes the scope.",
+        "Exercise both harness_review and decision_rubric strategies with shared M12.4, exact question-pack/raw-review validation, independent ready-profile gates, auxiliary DecisionCall accounting, cross-run local leases and recovery with zero grading inference. Preserve backend/profile/pack group identity and code-composed commentary in real M02/M13/M17 round trips."
+      ]
+    },
+    {
+      "id": "M12.3",
+      "path": "implementation/M12/03-judging-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M12.2",
+        "M06.1",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M02 ResultReviews/RejudgeScreen, M07 JudgeScreen/Setup, M08 EvidenceViewerScreen/JudgeInputScreen, M04 OverrideScreen, M06 ScoreBreakdownScreen/WeightsScreen and M11 RunScreen/stop/report statuses. Full consumer screens are real integration gates, not duplicate ownership here.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md: retained generation/token/artifact measurements remain excluded from judge inputs; admitted source/artifact evidence remains available.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership."
+      ],
+      "integration_gates": [
+        "Through real EngineClient and M12/M11/M02/M05/M06/M07/M08/M15 owners, launch multiple trials, detach/reattach, inspect ungraded review, stop during judging, recover after engine loss and inspect identity invalidation after seal. Exercise explicit additional rejudge, separate grouping and M13 report/M17 import navigation; no private engine calls."
+      ]
+    },
+    {
+      "id": "M13.1",
+      "path": "implementation/M13/01-offline-report-artifact.md",
+      "requires": [
+        "Bootstrap",
+        "M02.2",
+        "M06.1",
+        "M10.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 template labels, M06 GradingProfiles backed by M12, M08 CheckIndex, M18 TelemetryDescriber, M11 lifecycle/publication guard and cancellation token, M12 original settlement. Fake pending/invalidated snapshots test admission; actual scheduler/judging/telemetry joins remain later integration gates.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Compose real M02/M06/M10 now. Before parent acceptance, M11/M12 must demonstrate delayed finalization and judging, invalidation after seal and guarded publish; M17 must preserve imported facts/evidence/rates. M18 must supply actual scope/coverage labels. Fixture guards alone do not certify lifecycle safety.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M13.2",
+      "path": "implementation/M13/02-browser-analysis.md",
+      "requires": [
+        "Bootstrap",
+        "M13.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 preset YAML schema; M06 ScoringMessages, Population/Analysis wire projection (including resolved ProfileSpec alongside matching profile_id) and normative vectors; M10 complete frozen-currency projections and its USD view when the generated scope is mixed. Fixtures may simulate missing/invalidated records, but cannot replace real Python scoring/accounting parity.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Use M06's actual scorer and M10's actual prepared projections for parity, not a stub scoring service. Compose real M02 imported/missing-trial/invalidated populations. Pass artifacts to M13.3/M13.4 and M14/M15; verify a generated alternative and browser-exported alternative agree exactly.",
+        "Run the BENCHMARK-STATISTICS eight-factor exact vectors through real engine and production offline JavaScript; include direction/policy differences, incompatible cohorts, full-trial missing values, zero conventions and default three-factor equivalence."
+      ]
+    },
+    {
+      "id": "M13.3",
+      "path": "implementation/M13/03-report-charts.md",
+      "requires": [
+        "Bootstrap",
+        "M13.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M18 TimelineDescription (physical scope/source/coverage/limitations and samples); M06 ranking reasons and group summaries; M10 money/billing/rate contributor projections. Actual collector scope/attribution and M18 service composition remain a parent gate.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Use actual M06/M10 projections and M02 retained/imported records for chart/table equality. Integrate M18's actual telemetry descriptors and measurements from sequential/parallel runs; compare USD/basis/coverage with immediate report and M17 re-import. Do not infer real collector support from fabricated samples.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims.",
+        "Run the BENCHMARK-STATISTICS eight-factor exact vectors through real engine and production offline JavaScript; include direction/policy differences, incompatible cohorts, full-trial missing values, zero conventions and default three-factor equivalence."
+      ]
+    },
+    {
+      "id": "M13.4",
+      "path": "implementation/M13/04-report-jobs-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M13.3",
+        "M11.1",
+        "M11.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M11 scheduler/lifecycle gate and RunStatus report projection, M12 original settlement, M02 ReportScreen factory, M06 AnalysisSelection, M14 command adapters. Real M11.4/M12.2/M14/M15 completion integration is mandatory before parent acceptance, not a circular entry condition.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Compose M02/M06/M10/M11/M12/M13 with real storage and lifecycle gates, M14 CLI and M15 navigation. Re-run delayed finalization, judging stop, post-seal invalidation and recovery; M17 import/export and M18 telemetry must agree with report snapshots. Fakes alone cannot close this gate."
+      ]
+    },
+    {
+      "id": "M14.1",
+      "path": "implementation/M14/01-registry-cli.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, injectable as fakes: shared RunUid/TrialRef/DTO/error/cursor definitions, module method/CLI hints, TuiLauncher, feature use cases and report-owner status recovery. Follow the foundation boundary; loading a contract cannot instantiate feature adapters.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Gate this child on real registry/Unix-socket/client execution with injected feature services, not fake EngineClient alone. M14.2 must reuse this substrate and add real engine feature/process tests before M14 is complete.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M14.2",
+      "path": "implementation/M14/02-curated-cli-flows.md",
+      "requires": [
+        "Bootstrap",
+        "M14.1",
+        "M02.1",
+        "M02.2",
+        "M03.1",
+        "M04.1",
+        "M04.2",
+        "M04.3",
+        "M05.1",
+        "M05.2",
+        "M07.2",
+        "M11.3",
+        "M11.4",
+        "M12.2",
+        "M13.4",
+        "M17.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as test fakes: TuiLauncher/M15 navigation, deterministic harness/browser/sensor/price/rate adapters and clock/fault ports. Fakes are allowed at external process/provider boundaries, not as a substitute for real run/results/report persistence or dispatch in this child's integration gate.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Compose actual M02/M03/M04/M05/M07/M10/M11/M12/M13/M17 services and storage, with deterministic external adapters; run real-socket process/consent/exit/race cases. Add real M15 default/attach launcher navigation and M17 round trips before parent acceptance; fake-client golden tests alone cannot close it.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M15.1",
+      "path": "implementation/M15/01-tui-foundation.md",
+      "requires": [
+        "Bootstrap"
+      ],
+      "contracts": [
+        "Bootstrap contracts injected as fixtures: feature DTO responses, capability flags, registered methods/topics/events and revisioned snapshots. No completed M11 daemon/scheduler, M01/M03 services, M15.2 shell or production feature screen is required. Do not replace published contracts with private DTOs.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline."
+      ],
+      "integration_gates": [
+        "An independent screen consumer can run these checked-in bases/widgets with FakeEngineClient; M15.2 must run them against real M11.1\u20132 before feature-screen integration. Foundation success makes no feature/provider claim."
+      ]
+    },
+    {
+      "id": "M15.2",
+      "path": "implementation/M15/02-tui-shell.md",
+      "requires": [
+        "Bootstrap",
+        "M15.1",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap contracts injected as fixtures: templates.list, environment.recheck, runs projections, job/report owner recovery responses and all five view factories. No scheduler, harness, collector, planning/report engine or actual feature screen is needed. Real owner recovery is the M15.3 gate.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline."
+      ],
+      "integration_gates": [
+        "Gate on actual M11.1\u20132 clients/daemon/bus plus fixture providers and the runnable fixture app, not FakeEngineClient alone. Early M01/M03 API and screen children can now use checked-in foundations without completing orchestration."
+      ]
+    },
+    {
+      "id": "M15.3",
+      "path": "implementation/M15/03-tui-integration.md",
+      "requires": [
+        "Bootstrap",
+        "M15.2",
+        "M01.4",
+        "M02.3",
+        "M03.2",
+        "M04.4",
+        "M05.7",
+        "M06.2",
+        "M07.3",
+        "M08.3",
+        "M09.4",
+        "M10.3",
+        "M11.5",
+        "M12.3",
+        "M13.4",
+        "M16.4",
+        "M16.5",
+        "M17.3",
+        "M18.5",
+        "M14.1",
+        "M14.2"
+      ],
+      "contracts": [
+        "Bootstrap contracts still injectable for faults: controllable process/collector/model outputs, clock and delayed query/job/retention responses. They support deterministic race testing but cannot replace real storage, dispatcher, lifecycle, finalization or screens at this integration gate. Unavailable supported-host verification remains explicitly pending.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Cursor CLI is HarnessId cursor_cli, appended after Pi (M05.8); OpenCode is opencode, appended after Cursor (M05.9). Harness discovery/selection/scheduling/views consume the six-entry registry, not a four-harness ceiling.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership."
+      ],
+      "integration_gates": [
+        "Require real owned services, persistent finalization/retention, M11 Unix-socket lifetime and process cleanup, plus actual Textual owner screens. Deterministic provider fixtures prove races; separately record supported macOS/Linux harness and collector checks and unavailable hardware limitations. Do not mark parent complete from fixtures alone.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M16.1",
+      "path": "implementation/M16/01-repository-capture.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 AssessOperation for create gating; M05 typed unregistered baseline/WorkspaceProvisioner; M08 semantic restoration. Their real adapters are later integration gates, not requirements to implement them here.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline."
+      ],
+      "integration_gates": [
+        "Run source-preservation tests with actual Git on supported macOS/Linux. Integrate M16.3 \u2192 M01 storage \u2192 M05/M08 copying \u2192 M17 export/import: launchers restore 0755, regular files 0644 and directories 0755; approved storage remains 0444/0555."
+      ]
+    },
+    {
+      "id": "M16.2",
+      "path": "implementation/M16/02-planning-jobs.md",
+      "requires": [
+        "Bootstrap",
+        "M16.1",
+        "M03.1",
+        "M04.1",
+        "M04.2",
+        "M05.1",
+        "M05.2",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M08 CheckFormat and M12 RubricSource; M16.3 draft sink with optimistic versioning; M10 invocation accounting; concrete M05 harness adapters. Fixture validators enforce actual schemas, not unconditional acceptance.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Compose real M03/M04 readiness/catalog, M05 adapters, M08/M12 validators, M10 accounting and M16.3 storage over actual M11 clients. Record real supported-harness generation/cancel/cleanup checks; scripted adapters do not certify vendor support."
+      ]
+    },
+    {
+      "id": "M16.3",
+      "path": "implementation/M16/03-draft-approval.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1",
+        "M01.2",
+        "M01.3",
+        "M08.1",
+        "M12.1",
+        "M16.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M07 RevisionConfigs prepared copy operations, M09 canonical-equivalence fixtures, M17 canonical import/export and M05/M08 restored workspaces. Complete those providers for the real parent gates.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Require real M01/M07/M16 transaction participants and M09/M17 canonical round trip, plus M05/M08 executable restoration from approved/imported flags. Launch saved templates through M07/M11 and assert zero planner calls.",
+        "Mandatory full M16 gate: actual M16.2 planner-generated v2 drafts feed this same draft sink and approval transaction; manual one-shot and provided-spec creation already work with no installed harness. Validate byte/order/current-folder preservation and v1 compatibility through real M01/M05/M08/M12/M17 consumers."
+      ],
+      "requires_note": "Manual creation/approval consumes real current-folder capture M16.1; M16.2 is an optional runtime producer with a mandatory later full-parent integration gate, not a completed prerequisite."
+    },
+    {
+      "id": "M16.4",
+      "path": "implementation/M16/04-planner-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M16.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M16.3 unfinished/draft records, M01 entry/reopen screen factories and M16.5 PlanReview destination. Use real providers before parent acceptance, without cyclic screen entry dependencies.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Run M01 entry/library \u2192 real planning/verification services \u2192 this UI \u2192 M16.5 review through M11 socket clients. Verify M14 consent parity, actual M05 cleanup and unchanged source repository."
+      ]
+    },
+    {
+      "id": "M16.5",
+      "path": "implementation/M16/05-draft-editor-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M16.3",
+        "M16.4"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 revise/duplicate/approved-template factories, M10 invocation accounting and M07 configuration-copy/judge-preselection views. Their real integration remains a parent gate.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Require real M01/M07/M16 approval and M10 cost providers plus M11 cursor/socket behavior. Complete author \u2192 edit/regenerate \u2192 approve \u2192 saved reuse with zero planner calls on later runs, then M05/M08 execution and M17 canonical/executable round trip."
+      ]
+    },
+    {
+      "id": "M17.1",
+      "path": "implementation/M17/01-archive-contract.md",
+      "requires": [
+        "Bootstrap",
+        "M01.1",
+        "M02.1"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 payload/reference parsers for checks, services and rubrics; M02 ImportRegistrar.read_incoming(staged_result_dir, staged_run_dir) and immutable ExportBundle content; shared IDs/TrialRef, clock and typed errors. M01/M02 filesystem registration, M11 jobs and real collectors are not entry dependencies.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real integration gate: M17.2 + real M01.2\u20133/M02.2 must import actual M09/M16 canonical packages on macOS and Linux. M05/M08 restore executable behavior from descriptor flags while approved revision modes remain 0444/0555. Record which OS checks were run.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M17.2",
+      "path": "implementation/M17/02-exchange-transactions.md",
+      "requires": [
+        "Bootstrap",
+        "M17.1",
+        "M01.2",
+        "M01.3",
+        "M02.2",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M03 MachineIdentitySource; M11/M10/M18 finalized-run producer; M12 review producer; M05 launch action. The real M01/M02 participants and shared marker adapter are required here; fixtures for them are only fault-test controls, not the completion gate.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "Real integration gate: real M01/M02/shared-marker adapters on macOS/Linux; M11.3\u20134/M08.2/M10.2/M18.2 finalized energy/stop cases and M12.2 original-review settlement; M06/M13 reject imported invalidations; M14 CLI submits explicit planned IDs. Fake sensors/harnesses do not establish provider support.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M17.3",
+      "path": "implementation/M17/03-exchange-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M17.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts, allowed as injected fixtures: M01 Library/Template and M02 Results navigation factories/DTOs, M15 route registry, clipboard and file picker platform service. M17 owns every exchange destination. Early M01/M02 entry tests inject M17 factories, and this child injects return destinations; real Library/Results screens are later integration gates, never circular prerequisites.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md extends retained generation/token/artifact measurements and configurable ranking factors with explicit direction, coverage and metric-policy compatibility.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Read implementation/BENCHMARK-DESIGN-SPEC.md for additive one-shot/ordered multi-step, current-folder capture, six-harness and Cursor/OpenCode states; existing context, decision-engine and statistics design contracts remain binding.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced.",
+        "Read implementation/M12/05-human-review-web.md: human_review is a third backend for every frozen domain rubric, with browser drafts/explicit submission, credential-scoped local form, nonblocking human wait, human-specific recovery and original settlement. Measurements, grading arithmetic and offline reports keep their existing ownership.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Real integration gate: M01.4 Library/Template and M02.3 Results entrypoints + M15.3 shell with real M17.2 API and all M17 exchange destinations: no-harness export/import, identical retry, conflict rejection and separate-revision journey. M14 validates the same error/selection flow headlessly; screen tests alone do not prove archive safety/publication."
+      ]
+    },
+    {
+      "id": "M18.1",
+      "path": "implementation/M18/01-telemetry-domain.md",
+      "requires": [
+        "Bootstrap"
+      ],
+      "contracts": [
+        "Bootstrap-published contracts allowed as fixtures: Capability/Guidance and the single CollectorCause vocabulary for M03; MonitoringChoice for M07; TelemetryFinalizationReceipt/EnergySource values for M10/M11; frozen run/trial windows. Publish these owner contracts early; later implementations cannot replace them with local variants.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport."
+      ],
+      "integration_gates": [
+        "No UI owned. Supply fixtures for MonitoringSettings intervals/availability; CollectorGuide five causes; Telemetry gaps/off/none; EnergyDetail wrap/reset/duplicate-source rows; SequentialEnergy repeated trials and background labels.",
+        "Real-source counter continuity/modulus/bound claims require versioned official documentation and supported-host evidence in M18.3\u20134. A synthetic wrap vector proves arithmetic only."
+      ]
+    },
+    {
+      "id": "M18.2",
+      "path": "implementation/M18/02-sampling-lifecycle.md",
+      "requires": [
+        "Bootstrap",
+        "M18.1",
+        "M02.2",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Published contracts allowed as fixtures: M11 RunContext configuration/scheduling/TrialRef windows and frozen roster/cutoff; M05 TaskScope/InvocationId lifecycle; M07 MonitoringChoice; M10 MeasurementReader/Finalizer. M11.3\u20134 scheduler/recovery and real collectors are integration gates, not circular entry dependencies.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport."
+      ],
+      "integration_gates": [
+        "Real integration gate: compose real M02/M05/M07/M10/M11.3\u20134 with M18.3/4 on supported hosts; sequential and parallel repeated trials, stop/shutdown/engine-loss, immediate retained/report/ZIP agreement. Fixture collectors do not establish hardware support.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M18.3",
+      "path": "implementation/M18/03-macos-collectors.md",
+      "requires": [
+        "Bootstrap",
+        "M18.2"
+      ],
+      "contracts": [
+        "Published contracts allowed as fixtures: M03 environment explanation/recheck, M07 monitoring draft, M05 scoped process associations and M11 RunContext. Real provider wiring remains required before parent acceptance; this child adds no scheduler dependency.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport."
+      ],
+      "integration_gates": [
+        "Run the marked integration suite on an explicitly recorded supported Mac with available tools/permissions. Capture versions, device IDs, capabilities, actual intervals and independently observable output; demonstrate clean shutdown, optional denial/unavailability and M02 retained evidence. Do not intentionally reset real counters merely to test arithmetic.",
+        "Verify M03 recheck/explanation and M18.2\u2192M10\u2192M02 close/finalization using real observed data. Report exact tested combinations and remaining gaps; a macmon fixture or one supported Mac is not certification of all Macs/powermetrics versions."
+      ]
+    },
+    {
+      "id": "M18.4",
+      "path": "implementation/M18/04-linux-collectors.md",
+      "requires": [
+        "Bootstrap",
+        "M18.2"
+      ],
+      "contracts": [
+        "Published contracts allowed as fixtures: M03 explanation/recheck, M05 process scope, M07 frozen monitoring and M11 run/trial windows. M18.3 is not an entry dependency; platform adapters register independently through M18.2's dispatcher/loader hooks.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport."
+      ],
+      "integration_gates": [
+        "Run each marked powercap/NVIDIA/AMD gate only on available supported hardware; capture exact OS/kernel/device/driver/tool/permissions and independent readings. Verify timestamps/units, optional absence/denial, shutdown and retained source/scope. Recorded GPU output is parser evidence, not a real-GPU pass.",
+        "Compose real M03 discovery/recheck and M18.2\u2192M10\u2192M02 close on sequential and parallel runs, then M11 stop/recovery without resumed sampling. List every unavailable/untested combination explicitly; no requirement to obtain a sensor merely to benchmark."
+      ]
+    },
+    {
+      "id": "M18.5",
+      "path": "implementation/M18/05-telemetry-screens.md",
+      "requires": [
+        "Bootstrap",
+        "M18.3",
+        "M18.4",
+        "M10.2",
+        "M15.1",
+        "M15.2"
+      ],
+      "contracts": [
+        "Published contracts allowed as fixtures: M02 ResultScreen capabilities/TrialRef, M03 CollectorGuideScreen/environment explanation, M07 SetupView/configs.set_execution and M10 CurrencyEnergyScreen/recorded costs. M14 CLI/M13 reports are consumer gates, not UI code dependencies.",
+        "implementation/CONTEXT-MONITORING.md: binding context capture/count/classification/membership, closure, observer configuration and analysis contracts; owner schemas published at Bootstrap. Existing child ownership is extended by its allocation table; no new prerequisite is implied.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport."
+      ],
+      "integration_gates": [
+        "Navigate actual M07 Setup \u2192 Monitoring \u2192 M03 guide/recheck; M02 retained result \u2192 Telemetry \u2192 Energy/Windows/CSV; M10 accounting views. Compare finalized local/imported M02 facts and M13 report timelines, including no-sensor and stopped partial runs.",
+        "Verify supported-host sensor data through the completed platform gates; UI fixtures alone do not prove real sensors. Cross-platform absence remains nonblocking and explicitly shown.",
+        "Context monitoring: execute this owner\u2019s acceptance in implementation/CONTEXT-MONITORING.md with real retention/lifecycle/clients and offline exchange; native harness and live TypeSafe accuracy evidence remain explicit pending gates, not fixture claims."
+      ]
+    },
+    {
+      "id": "M12.4",
+      "path": "implementation/M12/04-decision-engines-runtime.md",
+      "requires": [
+        "Bootstrap",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "implementation/DECISION-ENGINES.md: shared System One profiles, capabilities, requests, DecisionCall receipts, resource admission and auxiliary accounting. Bootstrap publishes strict owner ports; consumer implementations are later integration gates.",
+        "implementation/DECISION-ENGINES.md extends this owner\u2019s declared interfaces/fixtures and integration obligations; M12.4 alone owns shared System One transport.",
+        "implementation/BENCHMARK-STATISTICS.md: retained generation/token/artifact measurements remain excluded from judge inputs; admitted source/artifact evidence remains available.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "Domain quality profiles: implementation/quality-judges/BACKEND.md, MOBILE.md, DEVOPS.md, AGENTIC.md and SPECIFICATION.md extend existing M12 owners and consumers. Freeze profile/rubric/evidence requirements; keep quality opinions separate from deterministic competitor measurements and acceptance outcomes; preserve legacy rubric identities. No new child or transport is introduced."
+      ],
+      "integration_gates": [
+        "Compose actual M03/M04 diagnostics/catalog, M07 freeze, M10 context bridge/accounting, M11 cross-run resource admission and M12 grading; verify role isolation, cancellation/recovery and credential destinations. Actual TypeSafe/local System One compatibility and model quality require recorded deployment evidence; fixtures do not certify them."
+      ]
+    },
+    {
+      "id": "M05.8",
+      "path": "implementation/M05/08-cursor-adapter.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M05.2"
+      ],
+      "contracts": [
+        "M05 complete HarnessAdapter/observation/protection contracts; BENCHMARK-MODES current-folder copies and one-shot/step input delivery; M03/M04/M07 declarations published at Bootstrap.",
+        "implementation/BENCHMARK-MODES.md: one_shot vs multi_step, one primary spec per ordered stage, derived target mode, immutable current-folder capture and strict v1/v2 definition dispatch; existing owner responsibilities extend without another pipeline.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "Verify actual macOS/Linux Cursor CLI vendor/version, documented headless/model/auth/permission/isolation controls, structured events and missing metrics; compose M05.7 readiness/catalog/setup/lifecycle and roles. Docs/fixtures alone do not certify installed behavior."
+      ]
+    },
+    {
+      "id": "M05.9",
+      "path": "implementation/M05/09-opencode-adapter.md",
+      "requires": [
+        "Bootstrap",
+        "M05.1",
+        "M05.2"
+      ],
+      "contracts": [
+        "Shared HarnessAdapter, immutable trial workspace and role protections from M05.1\u20132; versioned OpenCode V1/V2 evidence, fresh private lifecycle, explicit provider/model/variant and scoped JSON observations.",
+        "Read implementation/BENCHMARK-MODES.md, BENCHMARK-STATISTICS.md and CONTEXT-MONITORING.md; no separate scheduler, capture service or decision engine.",
+        "BENCHMARK-MODES.md binds mandatory per-task Git commits in each isolated trial repository, frozen protocol checks and retained commit evidence. Source-folder capture/manual authoring remains Git-independent; no engine completion commit or extra competitor repair task may hide a failure.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service."
+      ],
+      "integration_gates": [
+        "M05.7 six-adapter integration; actual macOS/Linux binary/version/provider tests, M03/M04 metadata discovery, M07 settings freeze, M11 process/server cleanup, M12 protected judging and M16 planning, retained M10 context/statistics through M02. Missing platform/provider evidence stays pending."
+      ]
+    },
+    {
+      "id": "M12.5",
+      "path": "implementation/M12/05-human-review-web.md",
+      "requires": [
+        "Bootstrap",
+        "M12.1",
+        "M11.1",
+        "M11.2"
+      ],
+      "contracts": [
+        "Shared human_review selection, reviewer/form policy identities, draft/submit/disposition schemas, HumanSubmissionSink and evidence-reader/opener Protocols published through M12.1/Bootstrap. Later M12.2/M02/M13 implementations are injected fixtures, not cyclic prerequisites.",
+        "implementation/MODEL-VARIANTS.md extends model identity, composable fine-tune/quant lineage, role-specific creator/date claims, frozen requested/effective evidence and same-template comparison facets. Keep content identity distinct from provenance, unknown/declared claims explicit, legacy facts immutable and all scoring/measurement formulas unchanged. No new child or model-training/loading service.",
+        "implementation/RESULTS-DATABASE.md binds authoritative normalized SQLite result/measurement/review/score storage and read-only analytics. M11/shared owns connection/marker foundations; M02.2 owns tables/migrations/views/snapshots; M06 owns exact computed analyses. Keep pure scoring independent of its append-only sink, private import staging outside the live DB and rows/receipts/publication marker in one commit. No new graph edge; provider integration remains required."
+      ],
+      "integration_gates": [
+        "M12.2 original/additional review settlement with real M02 idempotent append; M11 pending-human/stop/recovery/idle behavior; M07/M12.3/M14 selection and reopen; real browser loopback security, draft/submit/skip races and all six rubric forms; M13 offline completion reports and M17 credential-free committed-review exchange. Runtime/platform evidence remains pending."
+      ]
+    }
+  ],
+  "application_root": "solution/",
+  "node_paths_relative_to": "spec/"
+}

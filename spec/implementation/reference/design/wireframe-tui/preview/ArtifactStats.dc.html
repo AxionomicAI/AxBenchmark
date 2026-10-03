@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Files / LOC · final snapshot · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1340px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Files / LOC · final snapshot</b> · ArtifactStatsScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Result R-0928a-3 · Files / LOC · final delivered snapshot</span><span class="B2">                         </span></div>
+<div class="r"><span class="B1"> ● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · harness default · clean · jobs 4 · r1 3f9c2e71 … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> 38 files / 2,914 LOC · final snapshot size (baseline included) </span><span class="B0 ln">─────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Snapshot   </span><span class="B0">final delivered · after T7 · commit 9b31e07      </span><span class="B0 mu">Files      </span><span class="B0">38 regular paths · each counted once          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Manifest   </span><span class="B0">sha256 cba29b21… · immutable, pinned             </span><span class="B0 mu">           </span><span class="B0">binary assets count as files, never as lines  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Scope      </span><span class="B0">delivered workspace · fixed by template r1       </span><span class="B0 mu">LOC        </span><span class="B0">2,914 physical text lines                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Policy     </span><span class="B0">files-loc v1 · frozen with the manifest          </span><span class="B0 mu">           </span><span class="B0">blank lines, comments and docs included       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Baseline   </span><span class="B0">5 template files survive · 61 lines              </span><span class="B0 mu">           </span><span class="B0">not logical code size, never quality          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Included · by kind </span><span class="B0 ac">─────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Kind            Extensions       Files     LOC   Encoding                  Examples                                  </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Source          js · html · css     18   2,050   UTF-8                     js/app.js · js/cart.js · index.html       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Tests           js                   9     512   UTF-8                     tests/cart.test.js · tests/orders.test.js </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Documentation   md                   3     168   UTF-8                     README.md · docs/decisions.md             </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> Text assets     svg · json           6     184   UTF-8 · 1 UTF-16 LE BOM   assets/icon.svg · data/sample.json        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> Binary assets   png · ico            2</span><span class="B0 mu">       —</span><span class="B0">  </span><span class="B0 mu"> binary · no lines        </span><span class="B0"> assets/logo.png · favicon.ico             </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 bd"> Σ                                   38   2,914   strict decoding, no guess                                           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> enter lists the paths </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Excluded · same rules for every result </span><span class="B0 ln">─────────────────┐┌─</span><span class="B0 bd"> Lines </span><span class="B0 ln">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Path              Entries  Reason                        </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Endings    </span><span class="B0">LF, CRLF and lone CR each end one line        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> .git/                 214  VCS metadata                  </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Last line  </span><span class="B0">counts once if text follows the last ending   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> node_modules/       1,180  declared dependency path      </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Encodings  </span><span class="B0">UTF-8 (BOM optional) · UTF-16 with a BOM      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> .axbenchmark/          46  engine evidence               </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Unknown    </span><span class="B0">undecodable text → LOC partial, never 0       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> public/fixtures         1  symlink · never followed      </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Frozen     </span><span class="B0">later workspace edits never change counts     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Ranking effect </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Original    </span><span class="B0">Files and LOC weigh 0 · not looked up · they exclude nobody                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">If weighted </span><span class="B0">two independent factors, each with a direction · trial means rank; a Σ over trials is just snapshot siz… </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Partial LOC </span><span class="B0">R-0919lab-1 · data/seed.csv · unmarked Windows-1252, not guessed · its file count stays complete         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">More files or lines never means better quality. Delivered code, tests and docs still reach the judge as evidence;</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">these counts do not.</span><span class="B0">                                                                                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Measurements.dc.html">esc</a><a class="B2 k" href="Measurements.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Paths  </span><a class="B2 ac bd k" href="ThroughputDetail.dc.html">g</a><a class="B2 k" href="ThroughputDetail.dc.html"> Gen tok/s</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                               </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Result R-0928a-3 · Files / LOC · final delivered snapshot</span><span class="B2">                         </span></div>
+<div class="r"><span class="B1"> ● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · harness default · clean · jobs 4 · r1 3f9c2e71 … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> 38 files / 2,914 LOC · final snapshot size (baseline included) </span><span class="B0 ln">─────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Snapshot   </span><span class="B0">final delivered · after T7 · commit 9b31e07      </span><span class="B0 mu">Files      </span><span class="B0">38 regular paths · each counted once          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Manifest   </span><span class="B0">sha256 cba29b21… · immutable, pinned             </span><span class="B0 mu">           </span><span class="B0">binary assets count as files, never as lines  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Scope      </span><span class="B0">delivered workspace · fixed by template r1       </span><span class="B0 mu">LOC        </span><span class="B0">2,914 physical text lines                     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Policy     </span><span class="B0">files-loc v1 · frozen with the manifest          </span><span class="B0 mu">           </span><span class="B0">blank lines, comments and docs included       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Baseline   </span><span class="B0">5 template files survive · 61 lines              </span><span class="B0 mu">           </span><span class="B0">not logical code size, never quality          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Included · by kind </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Kind            Extensions       Files     LOC   Encoding                  Examples                                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Source          js · html · css     18   2,050   UTF-8                     js/app.js · js/cart.js · index.html       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Tests           js                   9     512   UTF-8                     tests/cart.test.js · tests/orders.test.js </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Documentation   md                   3     168   UTF-8                     README.md · docs/decisions.md             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> Text assets     svg · json           6     184   UTF-8 · 1 UTF-16 LE BOM   assets/icon.svg · data/sample.json        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Binary assets   png · ico            2</span><span class="B0 mu">       —</span><span class="B0">  </span><span class="B0 mu"> binary · no lines        </span><span class="B0"> assets/logo.png · favicon.ico             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Σ                                   38   2,914   strict decoding, no guess                                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> enter lists the paths </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Excluded · same rules for every result </span><span class="B0 ac">─────────────────┐</span><span class="B0 ln">┌─</span><span class="B0 bd"> Lines </span><span class="B0 ln">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Path              Entries  Reason                        </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Endings    </span><span class="B0">LF, CRLF and lone CR each end one line        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> .git/                 214  VCS metadata                  </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Last line  </span><span class="B0">counts once if text follows the last ending   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> node_modules/       1,180  declared dependency path      </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Encodings  </span><span class="B0">UTF-8 (BOM optional) · UTF-16 with a BOM      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> .axbenchmark/          46  engine evidence               </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Unknown    </span><span class="B0">undecodable text → LOC partial, never 0       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> public/fixtures         1  symlink · never followed      </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Frozen     </span><span class="B0">later workspace edits never change counts     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                          </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────┘</span><span class="B0 ln">└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Ranking effect </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Original    </span><span class="B0">Files and LOC weigh 0 · not looked up · they exclude nobody                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">If weighted </span><span class="B0">two independent factors, each with a direction · trial means rank; a Σ over trials is just snapshot siz… </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Partial LOC </span><span class="B0">R-0919lab-1 · data/seed.csv · unmarked Windows-1252, not guessed · its file count stays complete         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">More files or lines never means better quality. Delivered code, tests and docs still reach the judge as evidence;</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">these counts do not.</span><span class="B0">                                                                                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Measurements.dc.html">esc</a><a class="B2 k" href="Measurements.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Paths  </span><a class="B2 ac bd k" href="ThroughputDetail.dc.html">g</a><a class="B2 k" href="ThroughputDetail.dc.html"> Gen tok/s</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                               </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv2 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                      </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Result R-0928a-3 · Files / LOC · final delivered snapshot</span><span class="B2">                         </span></div>
+<div class="r"><span class="B1"> ● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · harness default · clean · jobs 4 · r1 3f9c2e71 … </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> 38 files / 2,914 LOC · final snapshot size (baseline included) </span><span class="B0 ac">─────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Snapshot   </span><span class="B0">final delivered · after T7 · commit 9b31e07      </span><span class="B0 mu">Files      </span><span class="B0">38 regular paths · each counted once          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Manifest   </span><span class="B0">sha256 cba29b21… · immutable, pinned             </span><span class="B0 mu">           </span><span class="B0">binary assets count as files, never as lines  </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Scope      </span><span class="B0">delivered workspace · fixed by template r1       </span><span class="B0 mu">LOC        </span><span class="B0">2,914 physical text lines                     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Policy     </span><span class="B0">files-loc v1 · frozen with the manifest          </span><span class="B0 mu">           </span><span class="B0">blank lines, comments and docs included       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Baseline   </span><span class="B0">5 template files survive · 61 lines              </span><span class="B0 mu">           </span><span class="B0">not logical code size, never quality          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Included · by kind </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Kind            Extensions       Files     LOC   Encoding                  Examples                                  </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Source          js · html · css     18   2,050   UTF-8                     js/app.js · js/cart.js · index.html       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Tests           js                   9     512   UTF-8                     tests/cart.test.js · tests/orders.test.js </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Documentation   md                   3     168   UTF-8                     README.md · docs/decisions.md             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> Text assets     svg · json           6     184   UTF-8 · 1 UTF-16 LE BOM   assets/icon.svg · data/sample.json        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> Binary assets   png · ico            2</span><span class="B0 mu">       —</span><span class="B0">  </span><span class="B0 mu"> binary · no lines        </span><span class="B0"> assets/logo.png · favicon.ico             </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Σ                                   38   2,914   strict decoding, no guess                                           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> enter lists the paths </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Excluded · same rules for every result </span><span class="B0 ln">─────────────────┐┌─</span><span class="B0 bd"> Lines </span><span class="B0 ln">──────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Path              Entries  Reason                        </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Endings    </span><span class="B0">LF, CRLF and lone CR each end one line        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> .git/                 214  VCS metadata                  </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Last line  </span><span class="B0">counts once if text follows the last ending   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> node_modules/       1,180  declared dependency path      </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Encodings  </span><span class="B0">UTF-8 (BOM optional) · UTF-16 with a BOM      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> .axbenchmark/          46  engine evidence               </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Unknown    </span><span class="B0">undecodable text → LOC partial, never 0       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> public/fixtures         1  symlink · never followed      </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Frozen     </span><span class="B0">later workspace edits never change counts     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Ranking effect </span><span class="B0 ln">─────────────────────────────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Original    </span><span class="B0">Files and LOC weigh 0 · not looked up · they exclude nobody                                              </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">If weighted </span><span class="B0">two independent factors, each with a direction · trial means rank; a Σ over trials is just snapshot siz… </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Partial LOC </span><span class="B0">R-0919lab-1 · data/seed.csv · unmarked Windows-1252, not guessed · its file count stays complete         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">More files or lines never means better quality. Delivered code, tests and docs still reach the judge as evidence;</span><span class="B0">    </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">these counts do not.</span><span class="B0">                                                                                                 </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Measurements.dc.html">esc</a><a class="B2 k" href="Measurements.dc.html"> Back</a><span class="B2">  </span><span class="B2 ac bd">enter</span><span class="B2"> Paths  </span><a class="B2 ac bd k" href="ThroughputDetail.dc.html">g</a><a class="B2 k" href="ThroughputDetail.dc.html"> Gen tok/s</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                               </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 120ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#result-bar" style="left: 0ch; top: 16px; width: 120ch; height: 16px"><span>Static #result-bar</span></div>
+<div class="ov" data-widget="Static" data-tcss="#snapshot.kv" style="left: 0ch; top: 32px; width: 120ch; height: 128px"><span>Static #snapshot.kv</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#artifact-stats" style="left: 1ch; top: 176px; width: 118ch; height: 128px"><span>DataTable #artifact-stats</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#excluded" style="left: 1ch; top: 336px; width: 58ch; height: 80px"><span>DataTable #excluded</span></div>
+<div class="ov" data-widget="Static" data-tcss="#line-rules" style="left: 60ch; top: 320px; width: 60ch; height: 128px"><span>Static #line-rules</span></div>
+<div class="ov" data-widget="Static" data-tcss="#artifact-effect" style="left: 0ch; top: 448px; width: 120ch; height: 160px"><span>Static #artifact-effect</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ArtifactStatsScreen</b><span class="mut">tui/screens/measurements.py</span></div>
+<h3>Widget tree</h3>
+<pre>ArtifactStatsScreen(Screen)    a from Measurements or Results
+├─ Header · Static #result-bar
+├─ Static #snapshot .kv           snapshot, manifest, scope, policy
+├─ DataTable #artifact-stats      included, by kind · enter: paths
+├─ Horizontal
+│  ├─ DataTable #excluded         path · entries · reason
+│  └─ Static #line-rules .kv
+├─ Static #artifact-effect
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#snapshot</code></td><td>height: 8;  two .kv columns</td></tr><tr><td><code>#artifact-stats</code></td><td>height: 8;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#artifact-stats .-binary</code></td><td>color: $foreground 60%;  file counted, LOC “—”</td></tr><tr><td><code>#excluded</code></td><td>height: 6;  identical rules for the whole comparison</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to measurements</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>paths</code><br><span class="mut">Included inventory of the kind: path, bytes, digest, encoding, lines</span></td></tr><tr><td><kbd>g</kbd></td><td><code>throughput</code><br><span class="mut">Gen tok/s of the same result</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #artifact-stats</li><li>DataTable #excluded</li><li>Static #snapshot</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="MeasurementsTrials.dc.html">3 trials</a><a href="ThroughputDetail.dc.html">Gen tok/s</a><a href="ArtifactStats.dc.html">Files / LOC</a><a href="ContextDetailRetained.dc.html">Context window</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="TariffAnalysis.dc.html">Tariff · analysis</a><a href="ResultsAnalysisTariff.dc.html">Results · tariff (M02)</a><a href="ResultsTrials.dc.html">Results · trials (M02)</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
+<h3>Notes</h3>
+<ul><li>R174: 38 regular files / 2,914 physical text lines of the immutable final delivered snapshot (after T7), labelled final snapshot size (baseline included). Kinds sum to the STATS fixture.</li><li>Binary assets count as files and never as lines. VCS metadata, declared dependency paths and engine evidence are excluded by the frozen policy; the symlink is listed, not followed.</li><li>Lines: LF, CRLF and lone CR each end one line; strict UTF-8 or BOM-marked UTF-16; an undecodable or unmarked file makes LOC partial (R-0919lab-1), never 0.</li><li>Counts never imply quality. Delivered code, tests and docs still reach the judge as evidence; the counts do not (M12).</li><li>Implementation owner M10. API seam: measurements.result trial-scoped file_count/loc observation and retained snapshot inventory (M02 snapshot reader); counting policy digest.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1340}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #artifact-stats","DataTable #excluded","Static #snapshot"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

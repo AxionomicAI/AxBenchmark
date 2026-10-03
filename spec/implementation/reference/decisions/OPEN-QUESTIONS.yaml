@@ -1,0 +1,439 @@
+# Application record: all original questions, assumptions, options, answers and notes
+# below are preserved history. current_assumption and old suggestions are not policy.
+# application.clauses links the current normative SPEC/module clauses; they take
+# precedence over historical wording. applied means incorporated into specification
+# and design contracts, not implemented or runtime-verified functionality.
+# refined_by identifies follow-ups/confirmations in OPEN-QUESTIONS-R2.yaml and
+# OPEN-QUESTIONS-R3.yaml; resolution records their final refinements or supersession.
+# The original response instructions are retained below as historical context.
+#
+# Open questions left to the product owner by the module Implementation sections.
+#
+# How to answer: fill in `answer` for each item. Pick one of `options` by its key
+# (e.g. `answer: b`), or write your own text. Add anything else under `notes`.
+# Leave `answer` empty to keep the current assumption for now.
+
+product_decisions:
+
+  - id: P1
+    modules: [M11, M14]
+    question: Should `run --no-tui` exit 1 when a run completes but some tasks failed?
+    current_assumption: Only stopped or interrupted runs exit 1.
+    options:
+      a: Keep it; completed runs exit 0 even with failed tasks.
+      b: Exit 1 when any task failed or ended unverified.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/14-command-line-interface.md#unattended-execution-and-lifecycle"
+      refined_by: [C1, R3-3]
+      resolution: "Completed runs exit 0 despite failed or unverified tasks; later R3-3 adds default report waiting and --no-wait-report without making a failed report a failed run."
+
+  - id: P2
+    modules: [M09, M15]
+    question: M09 wants `?` on the Library to open the inventory "about" screens, but `?` is the app-wide Help key. Which wins?
+    current_assumption: Binding not added.
+    options:
+      a: "`?` stays Help; open the about screens with another key (say which in notes)."
+      b: "`?` opens the about screens on the Library; Help moves to F1 there."
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/15-terminal-interface.md#4-screens"
+        - "../modules/09-default-inventory-benchmark.md#4-screens"
+      refined_by: [R2-7]
+      resolution: "App-wide ? remains Help; R2-7 selects a for the built-in inventory About action."
+
+  - id: P3
+    modules: [M01, M02, M09]
+    question: Should old README runs that match the default template only by name (no SHA-256) exist as "unlinked historical results"?
+    current_assumption: M01 and M09 mention them; M02 has no such concept.
+    options:
+      a: No; historical runs stay in the repository and are not shown in the app.
+      b: Yes; show them read-only, never in comparisons or rankings.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/01-template-library-identity.md#library-and-revision-operations"
+      refined_by: [C5]
+      resolution: "Historical README runs remain in the repository and are not shown in the app; association requires a verified SHA-256."
+
+  - id: P4
+    modules: [M04, M06, M07, M10]
+    question: What proves a cost is a verified $0 for the ranking rule (R101)?
+    current_assumption: Undecided.
+    options:
+      a: Only a local endpoint with no provider, recorded in the frozen launch.
+      b: (a), or a reported $0 with complete usage coverage.
+      c: Only an explicit user declaration recorded at launch.
+    answer:   neither
+    notes: cost is verified 0 when the api says so if is a local model and we could measure the power of the gpu we will display the kWh and we will ask the user the cost
+    application:
+      status: applied
+      clauses:
+        - "../modules/10-measurements-cost.md#cost-basis-and-currency"
+        - "../modules/04-model-catalog.md#catalog-information-contract"
+        - "../modules/06-scoring-rankings.md#eligibility-and-exceptional-data"
+      refined_by: [R2-1, R2-2, R2-3, R3-1, R3-2, R3-5]
+      resolution: "Later rounds refine the answer: verified zero requires reported zero, complete coverage and known non-subscription billing; recorded provider prices support API estimates, and measured local energy plus tariff can supply sequential-only cost estimates. Final clauses retain unverified numeric zero but exclude it from lowest-cost and positive-cost-weight rankings."
+
+  - id: P5
+    modules: [M03, M14]
+    question: The CLI wireframe suggests `sudo axbenchmark doctor --collectors`, which under root would start a separate engine with root's state. What should happen?
+    current_assumption: Undecided.
+    options:
+      a: Under root, doctor runs in-process and keeps no saved state.
+      b: Drop the sudo suggestion; only show the permission fix.
+    answer: b
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/03-environment-readiness.md#required-readiness-behavior"
+        - "../modules/14-command-line-interface.md#purpose-and-command-contracts"
+      resolution: "Doctor shows collector permission remedies without recommending an elevated AxBenchmark process or defining a root-mode engine."
+
+  - id: P6
+    modules: [M01, M16]
+    question: Approving a duplicate or revision whose benchmark content did not change.
+    current_assumption: The preview reports `existing_identity`; the approval outcome is undecided.
+    options:
+      a: Block approval and point to the existing revision.
+      b: No-op; open the existing revision.
+      c: Record lineage pointing at the existing SHA-256 without a new revision.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/01-template-library-identity.md#library-and-revision-operations"
+        - "../modules/16-custom-template-planning.md#planner-selection-and-review"
+      resolution: "Approval of identical defining content is blocked with an action to open the existing revision; display renaming remains separate from identity."
+
+  - id: P7
+    modules: [M07, M11]
+    question: How should more than one trial per configuration behave?
+    current_assumption: "`trials` is carried in the frozen launch with default 1."
+    options:
+      a: Allow only 1 for now; remove the field from the setup UI.
+      b: Allow N; each trial is a separate result run in sequence (say how to aggregate in notes).
+    answer: b
+    notes:  have a way to display the results of each runs and have a an average of the results
+    application:
+      status: applied
+      clauses:
+        - "../modules/07-run-configuration.md#configuration-behavior"
+        - "../modules/11-run-orchestration.md#scheduling-contract"
+        - "../modules/12-quality-judging.md#review-inputs-and-execution"
+        - "../modules/06-scoring-rankings.md#calculations"
+      refined_by: [R2-4, R3-7]
+      resolution: "R2-4 specifies fresh sequential trials, separate results and judge sessions, means/min-max and all-trial eligibility. R3-7 rejects the suggested upper limit; more than five trials warns when any competitor is non-local, with unattended execution printing the warning and continuing."
+
+  - id: P8
+    modules: [M11]
+    question: With two runs active at the same time, do the "4 active / 1 per harness" limits apply per run or across the engine?
+    current_assumption: Per run.
+    options:
+      a: Per run.
+      b: Across the whole engine; extra configurations queue.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/11-run-orchestration.md#1-engine-component"
+      resolution: "SchedulingPolicy and SuperviseRun apply configuration and per-harness slots to each run."
+
+  - id: P9
+    modules: [M01, M11]
+    question: If the template is found changed during a run, should that configuration halt?
+    current_assumption: The invalidation is recorded and execution continues.
+    options:
+      a: Keep going and record the invalidation.
+      b: Halt that configuration; others continue.
+      c: Halt the whole run.
+    answer: c
+    notes: and informe the user before it makes changes to the template of the consequence to prevent this
+    application:
+      status: applied
+      clauses:
+        - "../modules/01-template-library-identity.md#identity-and-launch-invariants"
+        - "../modules/01-template-library-identity.md#library-and-revision-operations"
+        - "../modules/11-run-orchestration.md#launch-boundary-and-invariants"
+      refined_by: [R2-5, R3-6]
+      resolution: "Detected input mutation halts the whole run; later rounds require read-only approved files and an active-run revision warning. Final retention clauses apply a run-wide invalidation to sealed facts without rewriting them."
+
+  - id: P10
+    modules: [M07, M16]
+    question: Should setup and planning drafts survive an engine exit?
+    current_assumption: Drafts live in memory; they survive a client disconnect but not an engine exit.
+    options:
+      a: Persist drafts to disk.
+      b: Keep them in memory, and the engine does not idle-exit while unsaved drafts exist.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/07-run-configuration.md#conceptual-data-and-operations"
+        - "../modules/16-custom-template-planning.md#baseline-and-approval-invariants"
+      refined_by: [C8]
+      resolution: "Setup and planning drafts persist under ~/.axbenchmark/drafts/ across engine exit; interrupted planning reopens as failed and is never silently resumed."
+
+  - id: P11
+    modules: [M06, M10]
+    question: Does a partial cost measurement count as missing for ranking eligibility?
+    current_assumption: Undecided; M06 reads M10's cost basis and coverage.
+    options:
+      a: Yes; partial excludes the entry from cost-weighted rankings.
+      b: No; rank with it but label it partial.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/06-scoring-rankings.md#eligibility-and-exceptional-data"
+      refined_by: [C2]
+      resolution: "Partial cost excludes cost-weighted rankings while remaining visible; C2 extends the same rule to partial elapsed time when time has positive weight."
+
+  - id: P12
+    modules: [M08, M12]
+    question: Which screenshots go to the judge?
+    current_assumption: Undecided; boards disagree.
+    options:
+      a: Final-regression screenshots only (desktop and mobile).
+      b: One desktop and one mobile per task.
+      c: Every screenshot from every browser check.
+    answer: a
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/12-quality-judging.md#review-inputs-and-execution"
+      resolution: "Only delivered-artifact final-regression screenshots at desktop and mobile viewports enter judging; per-task screenshots remain retained evidence."
+
+  - id: P13
+    modules: [M06, M13]
+    question: When results in one judge group were frozen with different ranking weights, which weights does the original combined ranking use?
+    current_assumption: The engine returns `scoring.original_weights_differ` and does not rank.
+    options:
+      a: Keep refusing; the user must pick an alternative weight set.
+      b: Use the local template's saved default weights, labelled as such.
+      c: Use the weights of the most recent local run in the group.
+    answer: neither
+    notes: "Profile defaults when originals differ: if all results froze the same weights, use them (labelled \"original\"). Otherwise, use the grading profile's SPEC §6 default weights, labelled \"Profile defaults: original weights differ across results\", so every machine shows the same ranking. Each result's own original weights stay visible in its detail and can be selected, along with custom weights, through the existing alternative-weights control. Raw grades and originals are never changed."
+    application:
+      status: applied
+      clauses:
+        - "../modules/06-scoring-rankings.md#weight-operations-and-validation"
+        - "../SPEC.md#editable-weights"
+      resolution: "Shared frozen weights remain original; differing originals use labelled profile defaults, with each result original still selectable as an alternative and raw records unchanged."
+
+  - id: P14
+    modules: [M04]
+    question: Can a saved model-catalog override set a field back to "unknown"?
+    current_assumption: No; an empty override field states nothing, so lower layers still apply.
+    options:
+      a: No (keep as is).
+      b: Yes; add an explicit "unknown" value to overrides.
+    answer: b
+    notes: 
+    application:
+      status: applied
+      clauses:
+        - "../modules/04-model-catalog.md#catalog-information-contract"
+      resolution: "Overrides distinguish inherit, value and explicit unknown; unknown stops lower-layer resolution."
+
+  - id: P15
+    modules: [M03, M16]
+    question: Does a harness whose readiness is undetermined (for example auth unknown while offline) count as usable for the planner fallback?
+    current_assumption: Only fully usable harnesses count.
+    options:
+      a: No (keep as is).
+      b: Yes, with a warning.
+    answer: neither
+    notes: prefer a confirmed-usable harness and error if no usable harness is found
+    application:
+      status: applied
+      clauses:
+        - "../modules/16-custom-template-planning.md#planner-selection-and-review"
+        - "../modules/03-environment-readiness.md#required-readiness-behavior"
+      refined_by: [R2-6, R3-4]
+      resolution: "Only confirmed-usable harnesses qualify; R2-6 adds an error with consented Verify now when none qualify, and R3-4 defines CLI consent."
+
+  - id: P16
+    modules: [M01, M09]
+    question: If a later release ships a new default revision (r2), does the default move to it?
+    current_assumption: Undecided; r1 is never edited.
+    options:
+      a: Yes, the default moves to the newest built-in revision.
+      b: No, the user chooses; r1 stays default until changed.
+    answer: neither
+    notes: new installations default to the newest revision; installations with existing results keep their current default and get a notice offering r2.
+    application:
+      status: applied
+      clauses:
+        - "../modules/01-template-library-identity.md#library-and-revision-operations"
+      refined_by: [C12]
+      resolution: "The user clarified in this session to keep the current SPEC: only results on the current default prevent automatic upgrade. When the current default has no results, it moves to the newest built-in revision even if other templates have results; otherwise the default is retained with an upgrade notice. This clarification supersedes the broader historical notes. R3 C12 changes only the illustrated newer revision label to r3, not the upgrade scope."
+
+  - id: P17
+    modules: [M04, M16]
+    question: Should the planner preselect a default model per harness and provider?
+    current_assumption: No default model; M04's catalog does not mark one.
+    options:
+      a: No; the user always picks.
+      b: Yes; the catalog marks the harness's own default model.
+    answer: b
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/04-model-catalog.md#catalog-information-contract"
+        - "../modules/16-custom-template-planning.md#planner-selection-and-review"
+      refined_by: [C3]
+      resolution: "The catalog records the harness default from configuration/status without a model call; an unknown default leaves the field empty and requires an explicit model selection."
+
+  - id: P18
+    modules: [M07, M18]
+    question: Should the 1-second hardware sampling interval be configurable?
+    current_assumption: Fixed engine default, recorded with results.
+    options:
+      a: No (keep fixed).
+      b: Yes; add it to the run configuration.
+    answer: b
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/18-hardware-monitoring.md#conceptual-data-and-operations"
+        - "../modules/07-run-configuration.md#configuration-behavior"
+      refined_by: [C4]
+      resolution: "C4 fixes the configurable interval at 0.5–10 seconds, default 1 second, frozen at launch; each collector actual interval is retained and displayed."
+
+wireframe_gaps:
+
+  - id: W1
+    modules: [M02, M08]
+    gap: No artboard for EvidenceViewerScreen (opened from results with `l` and the Open log/snapshot/evidence buttons).
+    answer: add it to the wireframe
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/08-verification-evidence.md#evidenceviewerscreen--artboard-evidenceviewer"
+      resolution: "EvidenceViewer has wide/compact layouts and explicit result/evidence navigation from results and task checks."
+
+  - id: W2
+    modules: [M06, M15, M18]
+    gap: No prompt artboards for the preset name (Save preset…), the export path (Export configuration) or Export CSV on the Telemetry screen.
+    answer: add it to the wireframe
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/15-terminal-interface.md#4-screens"
+      resolution: "The shared PromptScreen clause defines Save preset, Export configuration and Export CSV prompt artboards and caller-owned submissions."
+
+  - id: W3
+    modules: [M17]
+    gap: No ZIP picker on the ResultPackage artboard.
+    answer: add it to the wireframe
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/17-zip-exchange.md#4-screens"
+      resolution: "ResultPackageScreen includes the package-pick state, ZIP path/browser controls and ResultPackagePick artboard."
+
+  - id: W4
+    modules: [M07, M10]
+    gap: No key opens CurrencyEnergyScreen from Setup.
+    answer: add it to the wireframe
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/07-run-configuration.md#4-screens"
+        - "../modules/10-measurements-cost.md#currencyenergyscreen--artboard-currencyenergy"
+      refined_by: [C6]
+      resolution: "C6 assigns c on Setup to CurrencyEnergyScreen; currency and tariff choices are reviewed before launch."
+
+  - id: W5
+    modules: [M08, M11, M15]
+    gap: Nothing opens VerifyProgressScreen from the run screens.
+    answer: add it to the wireframe
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/08-verification-evidence.md#verifyprogressscreen--artboard-verifyprogress"
+      refined_by: [C7]
+      resolution: "C7 assigns p on RunConfigScreen to VerifyProgressScreen for the selected explicit trial."
+
+  - id: W6
+    modules: [M11, M15]
+    gap: "Two compact run layouts: #lanes-table on the RunOverview board (M11) and #lane-list on RunListDetail (M15). Pick one."
+    answer: keep RunListDetail 
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/15-terminal-interface.md#4-screens"
+        - "../modules/11-run-orchestration.md#4-screens"
+      resolution: "RunListDetail is the sole compact run layout; M15 owns the shared presentation component and M11 owns the run screen and navigation."
+
+  - id: W7
+    modules: [M01, M17]
+    gap: "M17 nests #rejection-detail inside #import-rejected; M01's import tree shows a single notice."
+    answer: us m17
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/17-zip-exchange.md#4-screens"
+        - "../modules/01-template-library-identity.md#4-screens"
+      resolution: "M17 owns the import-rejected state and nested rejection-detail; M01 navigates through the injected M17 exchange screen without a duplicate import dialog."
+
+  - id: W8
+    modules: [M14]
+    gap: Board legends still list CLI exit codes 0–4; ARCHITECTURE.md fixes 0–3 (rejected package and not-found are typed errors, exit 1).
+    answer: update the wireframe
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/14-command-line-interface.md#unattended-execution-and-lifecycle"
+      resolution: "The CLI uses exits 0–3: typed application errors, including rejected packages and not-found, use 1; parser/consent misuse uses 2 and engine transport/version failures use 3."
+
+  - id: W9
+    modules: [M16]
+    gap: The template-creation wireframes have no field for the template name, and no artboard for editing a service row on the Setup/start/stop tab.
+    answer: add a name field (prefilled from the planner's suggestion) to the plan review screen, editable before and after approval.
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/16-custom-template-planning.md#planner-selection-and-review"
+        - "../modules/16-custom-template-planning.md#4-screens"
+      refined_by: [R2-8]
+      resolution: "The planner-suggested template name is editable before approval and as a display name afterwards; R2-8 separately settles the service-row editor with field validation."
+
+  - id: W10
+    modules: [M01, M15, M16]
+    gap: No TUI entry point to reopen a hidden planning session or a closed, unapproved draft.
+    answer: The Library lists unfinished drafts as rows marked "draft," showing their state (planning, ready for review, failed) and last update; Enter reopens a draft where you left off, and a "Discard draft" action removes it after confirmation.
+    notes:
+    application:
+      status: applied
+      clauses:
+        - "../modules/01-template-library-identity.md#library-and-revision-operations"
+        - "../modules/16-custom-template-planning.md#baseline-and-approval-invariants"
+      refined_by: [C8]
+      resolution: "Unfinished planning drafts appear in the Library with state and update time, reopen their saved state and require confirmation to discard; C8 adds durable storage across engine exit."

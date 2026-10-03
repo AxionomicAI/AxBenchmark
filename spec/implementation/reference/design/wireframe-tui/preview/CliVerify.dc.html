@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>doctor --verify · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1440px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>doctor --verify</b> · axbenchmark doctor --verify · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<div class="r"><span class="B2">                                            </span><span class="B2 mu">zsh — mike@mike-mbp-m4: ~/bench</span><span class="B2">                                             </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="EnvironmentAuthFailed.dc.html">axbenchmark doctor</a><span class="B0 bd">                                                                                                  </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   ? Claude Code </span><span class="B0 mu">3.4.1    </span><span class="B0"> login found         headless operation not confirmed yet                                     </span></div>
+<div class="r"><span class="B0">   ? Codex       </span><span class="B0 mu">0.98.0   </span><span class="B0"> login found         headless operation not confirmed yet                                     </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ✗ Grok CLI   </span><span class="B0"> </span><span class="B0 mu">1.9.2    </span><span class="B0"> </span><span class="B0 bd">auth failed (401)  </span><span class="B0"> </span><span class="B0 bd">run &quot;grok login&quot;, then axbenchmark doctor again                        </span><span class="B0">  </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ✗ Pi         </span><span class="B0"> </span><span class="B0 mu">0.31.0   </span><span class="B0"> </span><span class="B0 bd">local endpoint     </span><span class="B0"> </span><span class="B0 bd">localhost:8080 not reachable · start llama-server                      </span><span class="B0">  </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">No harness is confirmed usable · planning and runs need one · confirm with: axbenchmark doctor --verify               </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">axbenchmark doctor --verify                                                                                         </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> Confirms login and headless operation with one minimal call per harness that can be called:                            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">  headless · no model or effort argument (the harness default) · no tools · 60 s deadline · a few tokens may be billed</span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   Claude Code 3.4.1 · one minimal model call                                                                           </span></div>
+<div class="r"><span class="B0">   Codex 0.98.0      · one minimal model call                                                                           </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">  Grok CLI and Pi are skipped until their failure is fixed                                                            </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> Verify these 2 harnesses now? [y/N] y                                                                                  </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> Claude Code </span><span class="B0 mu">3.4.1    </span><span class="B0"> confirmed · 4.1 s   logged in · headless ok · default model claude-opus-5-5                  </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> Codex       </span><span class="B0 mu">0.98.0   </span><span class="B0"> confirmed · 6.8 s   logged in · headless ok · default model gpt-6-sol                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">Recorded in readiness 2026-10-02 09:02 (M03) · 2 of 4 usable · planning now preselects Claude Code                    </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">The default is No: Enter, n or end of input prints “No verification call was made.” and exits 0.                      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu"># in a script there is no terminal to ask: consent must be given with --yes                                           </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">axbenchmark doctor --verify &lt; /dev/null                                                                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">✗ doctor --verify makes one minimal model call per harness and needs consent: run it in a terminal or pass --yes      </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">echo $?                                                                                                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">2    # usage · nothing was sent, no model was called                                                                  </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">axbenchmark doctor --verify --harness codex --yes &lt; /dev/null                                                       </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> Consent given with --yes · Codex 0.98.0 · one minimal model call                                                       </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> Codex       </span><span class="B0 mu">0.98.0   </span><span class="B0"> confirmed · 6.2 s   logged in · headless ok · replaces the 09:02 outcome                     </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">echo $?                                                                                                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> 0                                                                                                                      </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Without --verify, doctor never calls a model. Each outcome keeps its time; a later failure replaces it.               </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 rv"> </span><span class="B0">                                                                                                                    </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+
+</sc-if>
+</div>
+<div class="ctl"><span>focus · <b>—</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>axbenchmark doctor --verify</b><span class="mut">axbenchmark/cli.py</span></div>
+<h3>Widget tree</h3>
+<pre>doctor --verify [--harness H] [--yes]
+├─ terminal: [y/N] listing the harnesses
+├─ --yes: no prompt
+├─ no terminal, no --yes → exit 2
+├─ one minimal call per callable harness
+└─ outcome recorded in readiness (M03)</pre>
+<h3>Output contract</h3>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
+<h3>Arguments and exit codes</h3>
+<table><tr><td><kbd>--verify</kbd></td><td><span class="mut">headless, no model or effort argument, no tools, 60 s deadline</span></td></tr><tr><td><kbd>--yes</kbd></td><td><span class="mut">consent without a prompt; required without a terminal</span></td></tr><tr><td><kbd>exit 0</kbd></td><td><span class="mut">checks ran, whatever their outcome · or consent declined</span></td></tr><tr><td><kbd>exit 2</kbd></td><td><span class="mut">no terminal and no --yes · nothing sent</span></td></tr></table>
+
+<h3>States and related frames</h3>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliStatistics.dc.html">Statistics · weights</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<h3>Notes</h3>
+<ul><li>D15: the CLI form of “Verify now”. Undetermined harnesses are confirmed with the user’s consent; failed ones are skipped until fixed.</li><li>The recorded outcome drives planner preselection (PlannerPicker) and readiness everywhere.</li><li>Without --verify, doctor never calls a model.</li><li>R3-4: on a terminal the [y/N] prompt lists the harnesses and that each makes one minimal model call; the default is No (“No verification call was made.”, exit 0). --yes consents without a prompt. Without a terminal and without --yes: exit 2, a message naming --yes, nothing sent.</li><li>Implementation owner M14. API seam: M14 curated CLI over published registry; results.resolve_run before UID-only calls; engine/jobs/reports durable status. See M14.2 exact command fixtures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["—"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

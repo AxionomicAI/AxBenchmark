@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Live view · Codex · 80×24</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1144px; height: 2140px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Live view · Codex</b> · HarnessLiveScreen · 80×24 cells</div>
+<div class="term" style="width: 80ch; height: 384px">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                    </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Live · Codex · trial 1</span><span class="B2">                      </span></div>
+<div class="r"><span class="B1"> </span><span class="B1 ac">●</span><span class="B1"> </span><span class="B1 bd">T5 Shopping cart</span><span class="B1 mu"> · 10:58 │ </span><span class="B1">gpt-6-sol</span><span class="B1 mu"> · effort </span><span class="B1">medium </span><span class="B1 it">? unverified</span><span class="B1">            </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">Out </span><span class="B0 bd">46.3 tok/s</span><span class="B0"> </span><span class="B0 ac">▁▂▄▆▇▆▅▇█▆</span><span class="B0"> </span><span class="B0 mu">│ Context </span><span class="B0 bd">84.2k of 272k</span><span class="B0"> </span><span class="B0 ac">████</span><span class="B0 ln">░░░░░░░░</span><span class="B0"> </span><span class="B0 bd">31%</span><span class="B0">             </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Code being written · src/cart.js </span><span class="B0 ac">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  58</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">  return true;                                                          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  59</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">}                                                                       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  60</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">                                                                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  61</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">export function removeItem(id) {                                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  62</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">  const line = cart.get(id);                                            </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  63</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">  if (!line) return;                                                    </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  64</span><span class="B0"> </span><span class="B0 mu">−</span><span class="B0 mu dm">  cart.delete(id);                                                     </span><span class="B0"> </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BT ln">  64</span><span class="BT"> </span><span class="BT ac">+</span><span class="BT">  cart.delete(id);                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BT ln">  65</span><span class="BT"> </span><span class="BT ac">+</span><span class="BT">  stock.release(id, line.qty);                                          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BT ln">  66</span><span class="BT"> </span><span class="BT ac">+</span><span class="BT">  recalcTotals();                                                       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BT ln">  67</span><span class="BT"> </span><span class="BT ac">+</span><span class="BT">  badge.update(cart.size);                                              </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BT ln">  68</span><span class="BT"> </span><span class="BT ac">+</span><span class="BT">  storage.save(cart);                                                   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 ln">  69</span><span class="B0"> </span><span class="B0 mu"> </span><span class="B0">}                                                                       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> saved </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Thinking · summarized · 1.4k tok </span><span class="B0 ln">───────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu it">The total must use the price at the moment an item is added. Spec §Cart:</span><span class="B0">     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu it">totals update on every quantity change and stock never goes below 0.</span><span class="B0">         </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu it">removeItem does not release stock or recalculate — fix that path first, the…</span><span class="B0"> </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="RunOverview.dc.html">esc</a><a class="B2 k" href="RunOverview.dc.html"> Run</a><span class="B2">  </span><span class="B2 ac bd">t</span><span class="B2"> Hide thinking  </span><span class="B2 ac bd">a</span><span class="B2"> Actions  </span><a class="B2 ac bd k" href="ContextDetail-80x24.dc.html">c</a><a class="B2 k" href="ContextDetail-80x24.dc.html"> Context</a><span class="B2">  </span><span class="B2 ac bd">f</span><span class="B2"> Follow  </span><span class="B2 ac bd">[ ]</span><span class="B2"> File  </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 80ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#live-task" style="left: 0ch; top: 16px; width: 80ch; height: 16px"><span>Static #live-task</span></div>
+<div class="ov" data-widget="Static" data-tcss="#live-meters" style="left: 0ch; top: 32px; width: 80ch; height: 16px"><span>Static #live-meters</span></div>
+<div class="ov" data-widget="Vertical" data-tcss="#live-code.pane" style="left: 0ch; top: 48px; width: 80ch; height: 240px"><span>Vertical #live-code.pane</span></div>
+<div class="ov" data-widget="Collapsible" data-tcss="#live-thinking" style="left: 0ch; top: 288px; width: 80ch; height: 80px"><span>Collapsible #live-thinking</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 368px; width: 80ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><span>focus · <b>Vertical #live-code</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>HarnessLiveScreen</b><span class="mut">tui/screens/live.py</span></div>
+<h3>Widget tree</h3>
+<pre>HarnessLiveScreen(Screen)      v on a lane · v in RunConfigScreen
+├─ Header
+├─ Static #live-task             task · model · effort · harness
+├─ Vertical #live-meters .pane   tok/s · context · task tokens
+│  ├─ Sparkline #live-rate
+│  └─ ProgressBar #live-context
+├─ Horizontal
+│  ├─ RichLog #live-activity     thinking (Collapsible) · actions
+│  └─ Vertical
+│     ├─ Vertical #live-code .pane
+│     │  ├─ Tabs #live-files     files changed in this task
+│     │  └─ TextArea #live-diff  read_only · follows the stream
+│     └─ Vertical #live-context-window .pane   (M10.3 projection)
+│        ├─ Static .native       native used / limit, snapshot
+│        ├─ Static .labels       label sources, analysis state
+│        └─ DataTable #live-context-categories
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#live-task</code></td><td>height: 1; padding: 0 1; background: $surface;</td></tr><tr><td><code>#live-meters</code></td><td>height: 5;</td></tr><tr><td><code>#live-activity</code></td><td>width: 52;  auto_scroll = True</td></tr><tr><td><code>#live-code</code></td><td>width: 1fr; height: 18;</td></tr><tr><td><code>#live-context-window</code></td><td>height: 1fr;  latest committed snapshot of the selected agent/window</td></tr><tr><td><code>#live-context-categories .-unknown</code></td><td>color: $foreground 60%;  &quot;?&quot; with its reason, never 0</td></tr><tr><td><code>#live-diff .-added</code></td><td>background: $primary 24%;</td></tr><tr><td><code>Screen.-compact #live-activity</code></td><td>display: none;  a toggles it as an overlay</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to the run; nothing in the run changes</span></td></tr><tr><td><kbd>t</kbd></td><td><code>toggle_thinking</code><br><span class="mut">Show or hide thinking; dimmed when the harness exposes none</span></td></tr><tr><td><kbd>f</kbd></td><td><code>toggle_follow</code><br><span class="mut">Pause or resume following the stream</span></td></tr><tr><td><kbd>[ · ]</kbd></td><td><code>previous_file / next_file</code><br><span class="mut">Files changed in this task</span></td></tr><tr><td><kbd>/</kbd></td><td><code>search</code><br><span class="mut">Search thinking and actions</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>open_configuration</code><br><span class="mut">RunConfigScreen for this configuration (M05)</span></td></tr><tr><td><kbd>c</kbd></td><td><code>open_context</code><br><span class="mut">ContextDetailScreen (M10.3) for the resolved task/trial/session/agent/window</span></td></tr><tr><td><kbd>x</kbd></td><td><code>configure_decision_engine</code><br><span class="mut">Shown when no engine is configured: the decision-engine setup route (M07); never starts analysis</span></td></tr><tr><td><kbd>tab</kbd></td><td><code>focus_next</code><br><span class="mut">Code, then thinking and actions</span></td></tr></table>
+
+<h3>States and related frames</h3>
+<div class="rel"><a href="HarnessLive-80x24.dc.html">Codex · thinking summarized</a><a href="HarnessLiveStreaming.dc.html">Edit streaming</a><a href="HarnessLiveLimited.dc.html">Less exposed · Grok CLI</a><a href="HarnessLiveContextOff.dc.html">No decision engine</a><a href="ContextDetail-80x24.dc.html">Context detail (M10)</a><a href="RunOverview.dc.html">Run overview</a><a href="RunConfig-80x24.dc.html">Configuration</a></div>
+<h3>Notes</h3>
+<ul><li>Opened with v from the focused lane of RunScreen or from RunConfigScreen; esc returns to the run. Observation only (R042, R044, R047).</li><li>The task line names the task, model and effort as requested and as observed: Codex does not expose effort, so it stays “? unverified” (M05).</li><li>tok/s is output tokens per second over the last second, measured from the stream when the harness reports no rate. It is live and advisory: the retained Gen tok/s (M10) is computed afterwards from paired request windows, and this value is never stored or ranked. Context is the current conversation’s use; every task is a new conversation, so it restarts per task.</li><li>Thinking is shown only as the harness gives it and is labelled “summarized” when it is a summary; it is never presented as the full reasoning.</li><li>Token figures keep the M10 rules: cached ⊂ input and reasoning ⊂ output are shown apart and never added.</li><li>R161–R166: the Context window sub-window shows the latest committed snapshot (r31) of the main agent’s current window w2: the native used/limit for that same model, request and phase, then text-token estimates per category with their label source. Shares are of the 79.6k estimate, never of the native 84.2k; the 4.6k difference is not allocated.</li><li>Labels are native where Codex gives roles; 14 ambiguous blocks go to the configured TypeSafe decision engine, accepted only at native confidence ≥ 0.80 (11 accepted, 1 low, 2 pending → unclassified). Unexposed system/developer input is “?”, never 0. c opens ContextDetail; 80×24 keeps c in the footer.</li><li>Implementation owner M11. API seam: harness.live/task/file/log; measurements.context.snapshot (latest, resolved ContextTarget) + snapshot.recorded events; bind resolved TrialRef, discard stale selection responses.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1144,"height":2140}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["Vertical #live-code"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

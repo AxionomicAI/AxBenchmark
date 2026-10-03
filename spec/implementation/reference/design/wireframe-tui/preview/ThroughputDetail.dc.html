@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gen tok/s · paired requests · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1340px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>Gen tok/s · paired requests</b> · ThroughputScreen · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<sc-if value="{{ fv0 }}" hint-placeholder-val="{{ true }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                   </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Result R-0928a-3 · Gen tok/s · per-request generation throughput</span><span class="B2">                     </span></div>
+<div class="r"><span class="B1"> ● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · harness default · clean · jobs 4 · r1 3f9c2e71 … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> ▲ Partial matched subset · never divided as if complete </span><span class="B0 ln">────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Gen tok/s   </span><span class="B0 bd">▲ 116.98 · per-request, not wall clock      </span><span class="B0">    </span><span class="B0 mu">Basis      </span><span class="B0">proxy stream window v1 · start → end          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Matched     </span><span class="B0">165,038 output tok ÷ 1,410.800 s                </span><span class="B0 mu">Covers     </span><span class="B0">output incl. reasoning (68k ⊂ 173k)           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Requests    </span><span class="B0">41 of 44 paired · 3 T5 streams have no end      </span><span class="B0 mu">Clock      </span><span class="B0">proxy monotonic · per request · 1 ms          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Coverage    </span><span class="B0">95.3% of 173,118 output tokens                  </span><span class="B0 mu">Policies   </span><span class="B0">tok-norm v1 3c1a9e0f… · pair v1 7b2d41aa…     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Never       </span><span class="B0">✗ 173,118 ÷ 1,410.800 s = 122.71                </span><span class="B0 mu">Evidence   </span><span class="B0">44 receipts · 41 timing pairs · digests       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             all output over only the paired windows         </span><span class="B0 mu">Not used   </span><span class="B0">task time · time to first token · tool time   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└───────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> exact values · rounded only here </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Requests · T3 overlap and T5 · 10 of 44 </span><span class="B0 ac">────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B2 bd"> Request Task Agent       Start        End          Window s       Output tok   Rate  Pair                            </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r3-4    T3   sub · tests 21:16:10.402 21:16:49.006   38.604            4,520  117.1  ✓ paired · overlaps r3-5, summed</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r3-5    T3   sub · lint  21:16:12.950 21:16:40.118   27.168            3,180  117.0  ✓ paired · overlaps r3-4, summed</span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-1    T5   main        21:31:04.211 21:31:50.411   46.200            5,400  116.9  ✓ paired                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-2    T5   main        21:32:20.007 21:33:12.307   52.300            6,120  117.0  ✓ paired                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-3    T5   sub · cart  21:33:40.660 21:34:23.260   42.600            4,980  116.9  ✓ paired                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-4    T5   main        21:35:01.118 21:35:49.818   48.700            5,700  117.0  ✓ paired                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-5    T5   main        21:36:30.500 21:37:11.700   41.200            4,800  116.5  ✓ paired                        </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="BA on"> r5-6    T5   main        21:38:02.300</span><span class="BA on bd"> — no end    </span><span class="BA on">        —            2,960      — </span><span class="BA on bd"> ✗ stream cut · no end           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-7    T5   sub · ui    21:38:05.940</span><span class="B0 bd"> — no end    </span><span class="B0">        —            2,480      — </span><span class="B0 bd"> ✗ stream cut · no end           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> r5-8    T5   main        21:39:12.025</span><span class="B0 bd"> — no end    </span><span class="B0">        —            2,640      — </span><span class="B0 bd"> ✗ stream cut · no end           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0 bd"> Σ T5         5 of 8                                 231.000 27,000 of 35,080  116.9  unpaired 8,080 stay in output   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> enter opens the request log </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Rules applied </span><span class="B0 ln">──────────────────────────────────────────┐┌─</span><span class="B0 bd"> Ranking effect </span><span class="B0 ln">─────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">Concurrent subagent windows are summed, never unioned:</span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Original    </span><span class="B0">weight 0 · not looked up · excludes nobody   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">r3-4 and r3-5 overlap for 27.168 s and both count in</span><span class="B0">   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">If weighted </span><span class="B0">excluded · metric_partial · Gen tok/s        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">full.</span><span class="B0">                                                  </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Pi results  </span><span class="B0">native decode · a separate cohort            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">A request enters the rate only with its own output and</span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">a positive window of the same basis.</span><span class="B0">                   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Gen tok/s describes the whole tested configuration,</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">Proxy windows are never relabelled as native decode,</span><span class="B0">   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">including the proxy. It is not a model speed claim and</span><span class="B0">   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">and the mean of rates is never used.</span><span class="B0">                   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">never enters the judge’s input.</span><span class="B0">                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Measurements.dc.html">esc</a><a class="B2 k" href="Measurements.dc.html"> Back</a><span class="B2">  </span><a class="B2 ac bd k" href="EvidenceViewer.dc.html">enter</a><a class="B2 k" href="EvidenceViewer.dc.html"> Request log</a><span class="B2">  </span><a class="B2 ac bd k" href="ArtifactStats.dc.html">a</a><a class="B2 k" href="ArtifactStats.dc.html"> Files / LOC</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                       </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv1 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                   </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Result R-0928a-3 · Gen tok/s · per-request generation throughput</span><span class="B2">                     </span></div>
+<div class="r"><span class="B1"> ● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · harness default · clean · jobs 4 · r1 3f9c2e71 … </span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> ▲ Partial matched subset · never divided as if complete </span><span class="B0 ac">────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Gen tok/s   </span><span class="B0 bd">▲ 116.98 · per-request, not wall clock      </span><span class="B0">    </span><span class="B0 mu">Basis      </span><span class="B0">proxy stream window v1 · start → end          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Matched     </span><span class="B0">165,038 output tok ÷ 1,410.800 s                </span><span class="B0 mu">Covers     </span><span class="B0">output incl. reasoning (68k ⊂ 173k)           </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Requests    </span><span class="B0">41 of 44 paired · 3 T5 streams have no end      </span><span class="B0 mu">Clock      </span><span class="B0">proxy monotonic · per request · 1 ms          </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Coverage    </span><span class="B0">95.3% of 173,118 output tokens                  </span><span class="B0 mu">Policies   </span><span class="B0">tok-norm v1 3c1a9e0f… · pair v1 7b2d41aa…     </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 mu">Never       </span><span class="B0">✗ 173,118 ÷ 1,410.800 s = 122.71                </span><span class="B0 mu">Evidence   </span><span class="B0">44 receipts · 41 timing pairs · digests       </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">             all output over only the paired windows         </span><span class="B0 mu">Not used   </span><span class="B0">task time · time to first token · tool time   </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                                                                                      </span><span class="B0 ac">│</span></div>
+<div class="r"><span class="B0 ac">└───────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> exact values · rounded only here </span><span class="B0 ac">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Requests · T3 overlap and T5 · 10 of 44 </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Request Task Agent       Start        End          Window s       Output tok   Rate  Pair                            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r3-4    T3   sub · tests 21:16:10.402 21:16:49.006   38.604            4,520  117.1  ✓ paired · overlaps r3-5, summed</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r3-5    T3   sub · lint  21:16:12.950 21:16:40.118   27.168            3,180  117.0  ✓ paired · overlaps r3-4, summed</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-1    T5   main        21:31:04.211 21:31:50.411   46.200            5,400  116.9  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-2    T5   main        21:32:20.007 21:33:12.307   52.300            6,120  117.0  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-3    T5   sub · cart  21:33:40.660 21:34:23.260   42.600            4,980  116.9  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-4    T5   main        21:35:01.118 21:35:49.818   48.700            5,700  117.0  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-5    T5   main        21:36:30.500 21:37:11.700   41.200            4,800  116.5  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> r5-6    T5   main        21:38:02.300</span><span class="BS bd"> — no end    </span><span class="BS">        —            2,960      — </span><span class="BS bd"> ✗ stream cut · no end           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-7    T5   sub · ui    21:38:05.940</span><span class="B0 bd"> — no end    </span><span class="B0">        —            2,480      — </span><span class="B0 bd"> ✗ stream cut · no end           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-8    T5   main        21:39:12.025</span><span class="B0 bd"> — no end    </span><span class="B0">        —            2,640      — </span><span class="B0 bd"> ✗ stream cut · no end           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Σ T5         5 of 8                                 231.000 27,000 of 35,080  116.9  unpaired 8,080 stay in output   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> enter opens the request log </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Rules applied </span><span class="B0 ln">──────────────────────────────────────────┐┌─</span><span class="B0 bd"> Ranking effect </span><span class="B0 ln">─────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">Concurrent subagent windows are summed, never unioned:</span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Original    </span><span class="B0">weight 0 · not looked up · excludes nobody   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">r3-4 and r3-5 overlap for 27.168 s and both count in</span><span class="B0">   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">If weighted </span><span class="B0">excluded · metric_partial · Gen tok/s        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">full.</span><span class="B0">                                                  </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Pi results  </span><span class="B0">native decode · a separate cohort            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">A request enters the rate only with its own output and</span><span class="B0"> </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">a positive window of the same basis.</span><span class="B0">                   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">Gen tok/s describes the whole tested configuration,</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">Proxy windows are never relabelled as native decode,</span><span class="B0">   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">including the proxy. It is not a model speed claim and</span><span class="B0">   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">   </span><span class="B0 mu">and the mean of rates is never used.</span><span class="B0">                   </span><span class="B0 ln">││</span><span class="B0"> </span><span class="B0 mu">never enters the judge’s input.</span><span class="B0">                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">││</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Measurements.dc.html">esc</a><a class="B2 k" href="Measurements.dc.html"> Back</a><span class="B2">  </span><a class="B2 ac bd k" href="EvidenceViewer.dc.html">enter</a><a class="B2 k" href="EvidenceViewer.dc.html"> Request log</a><span class="B2">  </span><a class="B2 ac bd k" href="ArtifactStats.dc.html">a</a><a class="B2 k" href="ArtifactStats.dc.html"> Files / LOC</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                       </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ fv2 }}" hint-placeholder-val="{{ false }}">
+<div class="r"><span class="B2"> </span><span class="B2 mu">○</span><span class="B2">                   </span><span class="B2 bd">AxBenchmark</span><span class="B2 mu"> — Result R-0928a-3 · Gen tok/s · per-request generation throughput</span><span class="B2">                     </span></div>
+<div class="r"><span class="B1"> ● Local · mike-mbp-m4 · run 2026-09-28-a · Grok CLI · grok-4.7-fast · harness default · clean · jobs 4 · r1 3f9c2e71 … </span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> ▲ Partial matched subset · never divided as if complete </span><span class="B0 ln">────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Gen tok/s   </span><span class="B0 bd">▲ 116.98 · per-request, not wall clock      </span><span class="B0">    </span><span class="B0 mu">Basis      </span><span class="B0">proxy stream window v1 · start → end          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Matched     </span><span class="B0">165,038 output tok ÷ 1,410.800 s                </span><span class="B0 mu">Covers     </span><span class="B0">output incl. reasoning (68k ⊂ 173k)           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Requests    </span><span class="B0">41 of 44 paired · 3 T5 streams have no end      </span><span class="B0 mu">Clock      </span><span class="B0">proxy monotonic · per request · 1 ms          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Coverage    </span><span class="B0">95.3% of 173,118 output tokens                  </span><span class="B0 mu">Policies   </span><span class="B0">tok-norm v1 3c1a9e0f… · pair v1 7b2d41aa…     </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Never       </span><span class="B0">✗ 173,118 ÷ 1,410.800 s = 122.71                </span><span class="B0 mu">Evidence   </span><span class="B0">44 receipts · 41 timing pairs · digests       </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">             all output over only the paired windows         </span><span class="B0 mu">Not used   </span><span class="B0">task time · time to first token · tool time   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└───────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> exact values · rounded only here </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ln">┌─</span><span class="B0 bd"> Requests · T3 overlap and T5 · 10 of 44 </span><span class="B0 ln">────────────────────────────────────────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B2 bd"> Request Task Agent       Start        End          Window s       Output tok   Rate  Pair                            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r3-4    T3   sub · tests 21:16:10.402 21:16:49.006   38.604            4,520  117.1  ✓ paired · overlaps r3-5, summed</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r3-5    T3   sub · lint  21:16:12.950 21:16:40.118   27.168            3,180  117.0  ✓ paired · overlaps r3-4, summed</span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-1    T5   main        21:31:04.211 21:31:50.411   46.200            5,400  116.9  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-2    T5   main        21:32:20.007 21:33:12.307   52.300            6,120  117.0  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-3    T5   sub · cart  21:33:40.660 21:34:23.260   42.600            4,980  116.9  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-4    T5   main        21:35:01.118 21:35:49.818   48.700            5,700  117.0  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-5    T5   main        21:36:30.500 21:37:11.700   41.200            4,800  116.5  ✓ paired                        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="BS"> r5-6    T5   main        21:38:02.300</span><span class="BS bd"> — no end    </span><span class="BS">        —            2,960      — </span><span class="BS bd"> ✗ stream cut · no end           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-7    T5   sub · ui    21:38:05.940</span><span class="B0 bd"> — no end    </span><span class="B0">        —            2,480      — </span><span class="B0 bd"> ✗ stream cut · no end           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0"> r5-8    T5   main        21:39:12.025</span><span class="B0 bd"> — no end    </span><span class="B0">        —            2,640      — </span><span class="B0 bd"> ✗ stream cut · no end           </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0 bd"> Σ T5         5 of 8                                 231.000 27,000 of 35,080  116.9  unpaired 8,080 stay in output   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">│</span><span class="B0">                                                                                                                      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ln">└────────────────────────────────────────────────────────────────────────────────────────</span><span class="B0 mu"> enter opens the request log </span><span class="B0 ln">─┘</span></div>
+<div class="r"><span class="B0 ac">┌─</span><span class="B0 ac bd"> Rules applied </span><span class="B0 ac">──────────────────────────────────────────┐</span><span class="B0 ln">┌─</span><span class="B0 bd"> Ranking effect </span><span class="B0 ln">─────────────────────────────────────────┐</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">Concurrent subagent windows are summed, never unioned:</span><span class="B0"> </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Original    </span><span class="B0">weight 0 · not looked up · excludes nobody   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">r3-4 and r3-5 overlap for 27.168 s and both count in</span><span class="B0">   </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">If weighted </span><span class="B0">excluded · metric_partial · Gen tok/s        </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">full.</span><span class="B0">                                                  </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Pi results  </span><span class="B0">native decode · a separate cohort            </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">A request enters the rate only with its own output and</span><span class="B0"> </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">a positive window of the same basis.</span><span class="B0">                   </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">Gen tok/s describes the whole tested configuration,</span><span class="B0">      </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0"> </span><span class="B0 ac">●</span><span class="B0"> </span><span class="B0 mu">Proxy windows are never relabelled as native decode,</span><span class="B0">   </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">including the proxy. It is not a model speed claim and</span><span class="B0">   </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">   </span><span class="B0 mu">and the mean of rates is never used.</span><span class="B0">                   </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0"> </span><span class="B0 mu">never enters the judge’s input.</span><span class="B0">                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                          </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                          </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">│</span><span class="B0">                                                          </span><span class="B0 ac">│</span><span class="B0 ln">│</span><span class="B0">                                                          </span><span class="B0 ln">│</span></div>
+<div class="r"><span class="B0 ac">└──────────────────────────────────────────────────────────┘</span><span class="B0 ln">└──────────────────────────────────────────────────────────┘</span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B2"> </span><a class="B2 ac bd k" href="Measurements.dc.html">esc</a><a class="B2 k" href="Measurements.dc.html"> Back</a><span class="B2">  </span><a class="B2 ac bd k" href="EvidenceViewer.dc.html">enter</a><a class="B2 k" href="EvidenceViewer.dc.html"> Request log</a><span class="B2">  </span><a class="B2 ac bd k" href="ArtifactStats.dc.html">a</a><a class="B2 k" href="ArtifactStats.dc.html"> Files / LOC</a><span class="B2">  </span><button type="button" class="B2 ac bd k" onClick="{{ next }}">tab</button><button type="button" class="B2 k" onClick="{{ next }}"> Focus</button><span class="B2">                                                       </span><a class="B2 ac bd k" href="CommandPalette.dc.html">^p</a><a class="B2 k" href="CommandPalette.dc.html"> </a><a class="B2 mu k" href="CommandPalette.dc.html">Palette</a><span class="B2"> </span></div>
+</sc-if>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+<div class="ov" data-widget="Header" data-tcss="" style="left: 0ch; top: 0px; width: 120ch; height: 16px"><span>Header </span></div>
+<div class="ov" data-widget="Static" data-tcss="#result-bar" style="left: 0ch; top: 16px; width: 120ch; height: 16px"><span>Static #result-bar</span></div>
+<div class="ov" data-widget="Static" data-tcss="#throughput-value.kv" style="left: 0ch; top: 32px; width: 120ch; height: 144px"><span>Static #throughput-value.kv</span></div>
+<div class="ov" data-widget="DataTable" data-tcss="#requests" style="left: 1ch; top: 192px; width: 118ch; height: 192px"><span>DataTable #requests</span></div>
+<div class="ov" data-widget="Static" data-tcss="#throughput-rules" style="left: 0ch; top: 416px; width: 60ch; height: 192px"><span>Static #throughput-rules</span></div>
+<div class="ov" data-widget="Static" data-tcss="#throughput-effect" style="left: 60ch; top: 416px; width: 60ch; height: 192px"><span>Static #throughput-effect</span></div>
+<div class="ov" data-widget="Footer" data-tcss="" style="left: 0ch; top: 624px; width: 120ch; height: 16px"><span>Footer </span></div>
+</sc-if>
+</div>
+<div class="ctl"><button type="button" class="kb" onClick="{{ prev }}">shift+tab</button><button type="button" class="kb" onClick="{{ next }}">tab · next focus</button><span>focus {{ focusStep }} · <b>{{ focusName }}</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>ThroughputScreen</b><span class="mut">tui/screens/measurements.py</span></div>
+<h3>Widget tree</h3>
+<pre>ThroughputScreen(Screen)       g from Measurements or Results
+├─ Header · Static #result-bar
+├─ Static #throughput-value .kv    value, matched n ÷ d, coverage, basis
+├─ DataTable #requests .bordered   request · window · output · pair
+├─ Horizontal
+│  ├─ Static #throughput-rules .pane
+│  └─ Static #throughput-effect .pane
+└─ Footer</pre>
+<h3>IDs and classes · TCSS</h3>
+<table><tr><td><code>#throughput-value</code></td><td>height: 9;  two .kv columns</td></tr><tr><td><code>#requests</code></td><td>height: 15;  cursor_type = &quot;row&quot;</td></tr><tr><td><code>#requests .-unpaired</code></td><td>text-style: bold;  “✗ stream cut · no end”</td></tr><tr><td><code>#throughput-rules, #throughput-effect</code></td><td>width: 1fr; height: 12;</td></tr></table>
+<h3>Key bindings</h3>
+<table><tr><td><kbd>esc</kbd></td><td><code>app.pop_screen</code><br><span class="mut">Back to measurements</span></td></tr><tr><td><kbd>enter</kbd></td><td><code>open_request_log</code><br><span class="mut">Evidence of the request (M08 viewer)</span></td></tr><tr><td><kbd>a</kbd></td><td><code>artifact_stats</code><br><span class="mut">Files / LOC of the same result</span></td></tr></table>
+<h3>Focus order · tab</h3><ol><li>DataTable #requests</li><li>Static #throughput-value</li><li>Static #throughput-rules</li></ol>
+<h3>States and related frames</h3>
+<div class="rel"><a href="Measurements.dc.html">Complete</a><a href="MeasurementsPartial.dc.html">Halted · partial</a><a href="MeasurementsTrials.dc.html">3 trials</a><a href="ThroughputDetail.dc.html">Gen tok/s</a><a href="ArtifactStats.dc.html">Files / LOC</a><a href="ContextDetailRetained.dc.html">Context window</a><a href="TimingPhases.dc.html">Timing</a><a href="CostBasis.dc.html">Cost basis</a><a href="CurrencyEnergy.dc.html">Currency and energy</a><a href="TariffAnalysis.dc.html">Tariff · analysis</a><a href="ResultsAnalysisTariff.dc.html">Results · tariff (M02)</a><a href="ResultsTrials.dc.html">Results · trials (M02)</a><a href="ResultOutcomes.dc.html">Outcomes tab</a></div>
+<h3>Notes</h3>
+<ul><li>R174: R-0928a-3 Gen tok/s = 165,038 ÷ 1,410.800 s = 116.98, a partial matched subset of 41 of 44 requests. The full 173,118 output tokens are never divided by the matched seconds (✗ 122.71).</li><li>r3-4 and r3-5 are concurrent subagent streams overlapping 27.168 s; both windows count in full. Per-request throughput is neither wall-clock speed nor service capacity.</li><li>Each window binds request, clock and basis (proxy_stream_window v1); native decode is a separate basis and is never converted. Task time, time to first token and tool time are never used.</li><li>Exact rationals are stored; this screen rounds for display only. Fixture rows reconcile with GROK_GEN T5 (27,000 of 35,080 tokens, 231.000 s).</li><li>Implementation owner M10. API seam: measurements.result/task scoped generation_rate observation: request pairs, basis, coverage, policy digest and limitations; never recomputed client-side.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1340}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["DataTable #requests","Static #throughput-value","Static #throughput-rules"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

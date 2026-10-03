@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Report · standalone HTML · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+
+.rp{display:flex;flex-direction:column;border:1px solid var(--ln);background:var(--bg);font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--fg)}
+.rp-chrome{display:flex;gap:24px;align-items:center;padding:8px 14px;background:var(--pn);font-size:12px;color:var(--mu);font-family:inherit}
+.rp-url{flex:1;padding:3px 10px;background:var(--sf);color:var(--fg)}
+.rp-page{display:flex;flex-direction:column;gap:36px;padding:32px 40px 40px}
+.rp h1{margin:0;font-size:30px;line-height:36px}.rp h2{margin:0 0 12px;font-size:17px;line-height:22px}.rp h3{margin:18px 0 8px;font-size:13px;color:var(--mu)}
+.rp h4{margin:0 0 8px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+.rp p{margin:0}.rp-mu,.rp .mu{color:var(--mu)}
+.rp-eyebrow{font-size:12px;color:var(--mu);margin-bottom:6px!important}
+.rp-sha{margin:8px 0 4px!important;font-size:13px}.rp-sha code{font-family:'JetBrains Mono', ui-monospace, monospace;font-size:12.5px}
+.rp-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid var(--ln)}
+.rp-badge{padding:6px 12px;border:1px solid var(--ac);font-size:13px;white-space:nowrap}
+.rp-controls{display:grid;grid-template-columns:1.1fr 1.4fr .9fr 1.1fr 1fr;gap:16px 24px;padding:16px;background:var(--sf)}
+.rp-controls .rp-note{grid-column:1 / -1}
+.rp-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-content:flex-start}.rp-ctl h4{width:100%}
+.rp-ctl label{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--mu)}
+.rp-sel,.rp-in{padding:3px 8px;border:1px solid var(--ln);background:var(--bg);color:var(--fg);font-size:13px}.rp-in{min-width:38px;text-align:right}
+.rp-act{align-content:center;gap:8px}
+.rp-btn{padding:6px 12px;border:1px solid var(--ln);font-size:13px;min-height:32px}.rp-pri{background:var(--ac);color:var(--on);border-color:var(--ac);font-weight:700}
+.rp-note{font-size:12.5px;line-height:18px;color:var(--mu);margin-top:8px!important}
+.rp-row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.rp-row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+.rp-card{padding:14px;border:1px solid var(--ln)}
+.rp-bar,.rp-stack{display:grid;grid-template-columns:18px minmax(0,1fr) 120px 62px;gap:8px;align-items:center;font-size:12.5px;line-height:24px}
+.rp-stack{grid-template-columns:minmax(0,1fr) 320px 48px}
+.rp-n{color:var(--mu)}.rp-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rp-v{text-align:right;font-variant-numeric:tabular-nums}
+.rp-track{display:flex;height:12px;background:var(--sf)}.rp-track i{display:block;height:100%;background:var(--ac)}
+.rp-wide i.c{background:var(--ln)}.rp-wide i.t{background:var(--mu)}.rp-wide i.q{background:var(--ac)}
+.rp-legend{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:12px;color:var(--mu);margin:8px 0 10px}.rp-legend span{display:flex;gap:6px;align-items:center}
+.rp-k{display:inline-block;width:12px;height:12px}.rp-k.c{background:var(--ln)}.rp-k.t{background:var(--mu)}.rp-k.q{background:var(--ac)}
+.rp-ramp{display:inline-block;width:60px;height:10px;background:linear-gradient(90deg,var(--ln),var(--ac))}
+.rp-svg{display:block;max-width:100%;height:auto;font-size:11px}.rp-svg text{fill:var(--mu)}.rp-svg .rp-al{fill:var(--fg)}
+.rp-grid{stroke:var(--ln);stroke-opacity:.35}.rp-axis{stroke:var(--ln)}
+.rp-ul{margin:4px 0 0;padding-left:18px;font-size:12.5px;line-height:19px}
+.rp-t{width:100%;border-collapse:collapse;font-size:12.5px;line-height:18px}
+.rp-t th{text-align:left;padding:6px 8px;background:var(--pn);font-weight:700;white-space:nowrap}
+.rp-t td{padding:5px 8px;border-bottom:1px solid color-mix(in srgb,var(--ln) 45%,transparent);white-space:nowrap}
+.rp-t .n{text-align:right;font-variant-numeric:tabular-nums}.rp-t .b{font-weight:700}
+.rp-tasks{display:flex;gap:6px;margin-bottom:12px}.rp-task{display:flex;flex-direction:column;gap:2px;padding:6px 10px;border:1px solid var(--ln);font-size:12px}.rp-task span{color:var(--mu)}.rp-task.on{border-color:var(--ac)}
+.rp-shots{display:grid;grid-template-columns:240px 72px minmax(0,1fr);gap:12px;align-items:start}
+.rp-shot{display:flex;align-items:center;justify-content:center;border:1px dashed var(--ln);color:var(--mu);font-size:11px;text-align:center}.rp-shot.d{height:166px}.rp-shot.m{height:156px}
+.rp-ev{display:flex;flex-direction:column;gap:6px;font-size:12.5px;line-height:18px}
+.rp-spark{display:flex;align-items:flex-end;gap:6px;height:110px;padding:8px;border:1px solid var(--ln)}.rp-spark i{flex:1;background:var(--ac);opacity:.75}
+.rp-foot{padding-top:16px;border-top:1px solid var(--ln);font-size:12.5px;color:var(--mu)}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 3040px; padding: 40px 48px; overflow: hidden">
+<div class="rp">
+<div class="rp-chrome"><span>●  ●  ●</span><span class="rp-url">file:///Users/mike/.axbenchmark/reports/inventory-web-app-r1-3f9c2e71-2026-10-01.html</span><span>offline · no network requests</span></div>
+<div class="rp-page">
+<header class="rp-head"><div><p class="rp-eyebrow">AxBenchmark report · M13 · wireframe of the generated file</p><h1>Inventory web app r1</h1>
+<p class="rp-sha">SHA-256 <code>3f9c2e710640fa4dc37ee9e73ea2376b6deb29e142b7706aa1380bc01229ff49</code></p>
+<p class="rp-mu">Generated 2026-10-01 22:31 from 12 retained results (8 local, 4 imported) · 2 judge groups · no model calls · one standalone HTML file</p>
+<p class="rp-mu">Costs in USD, the display currency frozen with all four runs · computed and ranked in USD with each run’s frozen rates</p></div>
+<div class="rp-badge">● Original weights</div></header>
+
+<section class="rp-controls">
+<div class="rp-ctl"><h4>Filters</h4><label>Machine <span class="rp-sel">all ▾</span></label><label>Configuration <span class="rp-sel">all ▾</span></label><label>Judge group <span class="rp-sel">A · opus-5.5 · high ▾</span></label></div>
+<div class="rp-ctl"><h4>Quality weights</h4><label>UX <span class="rp-in">25</span></label><label>Visual <span class="rp-in">15</span></label><label>Code <span class="rp-in">20</span></label><label>Spec <span class="rp-in">25</span></label><label>Robust <span class="rp-in">10</span></label><label>A11y <span class="rp-in">5</span></label></div>
+<div class="rp-ctl"><h4>Ranking weights · eight, normalized together</h4><label>Cost <span class="rp-in">1</span></label><label>Time <span class="rp-in">1</span></label><label>Quality <span class="rp-in">1</span></label><label>Gen tok/s <span class="rp-in">0</span> <span class="rp-sel">— ▾</span></label><label>In tok <span class="rp-in">0</span> <span class="rp-sel">— ▾</span></label><label>Out tok <span class="rp-in">0</span> <span class="rp-sel">— ▾</span></label><label>Files <span class="rp-in">0</span> <span class="rp-sel">— ▾</span></label><label>LOC <span class="rp-in">0</span> <span class="rp-sel">— ▾</span></label><label>Timing basis <span class="rp-sel">proxy stream window v1 ▾</span></label></div>
+<div class="rp-ctl"><h4>Analysis setting</h4><label>Electricity tariff <span class="rp-in">0.18</span> USD/kWh</label><span class="rp-mu" style="font-size: 12px">frozen with each run · a changed value is labelled “alternative” and recalculates energy estimates only</span></div>
+<div class="rp-ctl rp-act"><span class="rp-btn rp-pri">Apply as alternative</span><span class="rp-btn">Reset to original</span><span class="rp-btn">Export alternative report</span></div>
+<p class="rp-note">Each set must be finite and ≥ 0 with a positive total; unknown categories are rejected, and a statistic needs higher or lower before its weight can be positive (M06). Direction is your priority, never a grade; more output, files or lines never means better quality. Applying relabels the page “Alternative weights” and updates tables, rankings, colors and stacks together. A changed tariff is an alternative too. Original records never change.</p>
+</section>
+
+<section><h2>Direct top five · judge group A</h2><div class="rp-row3">
+<div class="rp-card"><h4>Lowest cost</h4>
+<div class="rp-bar"><span class="rp-n">1</span><span class="rp-l">R-0928a-2 · Codex · gpt-6-sol · medium</span><span class="rp-track"><i style="width: 48%"></i></span><span class="rp-v">$3.10</span></div><div class="rp-bar"><span class="rp-n">2</span><span class="rp-l">R-0928a-1 · Claude Code · claude-opus-5-5 · medium</span><span class="rp-track"><i style="width: 75%"></i></span><span class="rp-v">$4.82</span></div><div class="rp-bar"><span class="rp-n">3</span><span class="rp-l">R-0925b-1 · Claude Code · claude-opus-5-5 · high</span><span class="rp-track"><i style="width: 100%"></i></span><span class="rp-v">$6.40</span></div>
+<p class="rp-note">Only 3 eligible entries have a complete, known cost. R-0921a-1 (cost unknown · local endpoint, parallel run: shared energy not divided); R-0921a-2 (cost unknown): listed below, not ranked.</p></div>
+<div class="rp-card"><h4>Shortest elapsed time</h4>
+<div class="rp-bar"><span class="rp-n">1</span><span class="rp-l">R-0925b-1 · Claude Code · claude-opus-5-5 · high</span><span class="rp-track"><i style="width: 40%"></i></span><span class="rp-v">31:44</span></div><div class="rp-bar"><span class="rp-n">2</span><span class="rp-l">R-0928a-1 · Claude Code · claude-opus-5-5 · medium</span><span class="rp-track"><i style="width: 48%"></i></span><span class="rp-v">38:12</span></div><div class="rp-bar"><span class="rp-n">3</span><span class="rp-l">R-0928a-2 · Codex · gpt-6-sol · medium</span><span class="rp-track"><i style="width: 55%"></i></span><span class="rp-v">44:05</span></div><div class="rp-bar"><span class="rp-n">4</span><span class="rp-l">R-0921a-2 · Grok CLI · grok-4.7 · high</span><span class="rp-track"><i style="width: 59%"></i></span><span class="rp-v">47:10</span></div><div class="rp-bar"><span class="rp-n">5</span><span class="rp-l">R-0921a-1 · Pi · qwen3.5-35b-a3b · default</span><span class="rp-track"><i style="width: 100%"></i></span><span class="rp-v">1:20:02</span></div>
+</div>
+<div class="rp-card"><h4>Highest quality</h4>
+<div class="rp-bar"><span class="rp-n">1</span><span class="rp-l">R-0925b-1 · Claude Code · claude-opus-5-5 · high</span><span class="rp-track"><i style="width: 94%"></i></span><span class="rp-v">4.70</span></div><div class="rp-bar"><span class="rp-n">2</span><span class="rp-l">R-0928a-1 · Claude Code · claude-opus-5-5 · medium</span><span class="rp-track"><i style="width: 88%"></i></span><span class="rp-v">4.40</span></div><div class="rp-bar"><span class="rp-n">3</span><span class="rp-l">R-0928a-2 · Codex · gpt-6-sol · medium</span><span class="rp-track"><i style="width: 83%"></i></span><span class="rp-v">4.15</span></div><div class="rp-bar"><span class="rp-n">4</span><span class="rp-l">R-0921a-2 · Grok CLI · grok-4.7 · high</span><span class="rp-track"><i style="width: 78%"></i></span><span class="rp-v">3.90</span></div><div class="rp-bar"><span class="rp-n">5</span><span class="rp-l">R-0921a-1 · Pi · qwen3.5-35b-a3b · default</span><span class="rp-track"><i style="width: 76%"></i></span><span class="rp-v">3.80</span></div>
+<p class="rp-note">Unrounded quality decides order; ties break by result id.</p></div>
+</div><p class="rp-note">Eligible: complete, every check passed, graded, specification ≥ 4 (M06). 3 of 8 entries in group A are not eligible; their reasons are in the tables.</p></section>
+
+<section class="rp-row2"><div><h2>Cost · time · quality</h2><svg viewBox="0 0 620 300" width="620" height="300" class="rp-svg" role="img" aria-label="Cost against elapsed time, colored by quality">
+<line x1="56" x2="604" y1="260" y2="260" class="rp-axis"/><line x1="56" x2="56" y1="14" y2="260" class="rp-axis"/><line x1="56" x2="56" y1="14" y2="260" class="rp-grid"/><text x="56" y="276" text-anchor="middle">$0.01</text><line x1="238.66666666666666" x2="238.66666666666666" y1="14" y2="260" class="rp-grid"/><text x="238.66666666666666" y="276" text-anchor="middle">$0.1</text><line x1="421.3333333333333" x2="421.3333333333333" y1="14" y2="260" class="rp-grid"/><text x="421.3333333333333" y="276" text-anchor="middle">$1</text><line x1="604" x2="604" y1="14" y2="260" class="rp-grid"/><text x="604" y="276" text-anchor="middle">$10</text><line x1="56" x2="604" y1="219" y2="219" class="rp-grid"/><text x="48" y="223" text-anchor="end">30:00</text><line x1="56" x2="604" y1="137" y2="137" class="rp-grid"/><text x="48" y="141" text-anchor="end">40:00</text><line x1="56" x2="604" y1="55" y2="55" class="rp-grid"/><text x="48" y="59" text-anchor="end">50:00</text><circle cx="546.1032589849632" cy="151.76" r="7" style="fill: color-mix(in srgb, var(--ac) 70%, var(--ln))"/><text x="557.1032589849632" y="155.76">R-0928a-1</text><circle cx="511.08873607372715" cy="103.51666666666668" r="7" style="fill: color-mix(in srgb, var(--ac) 58%, var(--ln))"/><text x="522.0887360737272" y="107.51666666666668">R-0928a-2</text><circle cx="414.71857646178813" cy="42.70000000000002" r="7" style="fill: color-mix(in srgb, var(--ac) 50%, var(--ln))"/><text x="425.71857646178813" y="46.70000000000002">R-0928a-3</text><rect x="562.59554191439" y="198.78666666666666" width="12" height="12" transform="rotate(45 568.59554191439 204.78666666666666)" style="fill: color-mix(in srgb, var(--ac) 85%, var(--ln))"/><text x="579.59554191439" y="208.78666666666666">R-0925b-1</text><circle cx="489.11506284163715" cy="175.26666666666665" r="7" style="fill: color-mix(in srgb, var(--ac) 70%, var(--ln))"/><text x="500.11506284163715" y="179.26666666666665">R-0924lab-1</text><circle cx="435.79710761136613" cy="218.31666666666666" r="7" style="fill: color-mix(in srgb, var(--ac) 35%, var(--ln))"/><text x="446.79710761136613" y="222.31666666666666">R-0924lab-3</text><circle cx="85.47655507492208" cy="239.5" r="7" style="fill: color-mix(in srgb, var(--ac) 35%, var(--ln))"/><text x="96.47655507492208" y="243.5">R-0919lab-1</text>
+<text x="338" y="296" text-anchor="middle" class="rp-al">cost, USD · logarithmic</text><text x="14" y="130" transform="rotate(-90 14 130)" text-anchor="middle" class="rp-al">elapsed</text></svg>
+<div class="rp-legend"><span><svg width="14" height="14"><circle cx="7" cy="7" r="6" style="fill: var(--ac)"/></svg> clean environment</span><span><svg width="14" height="14"><rect x="3" y="3" width="8" height="8" transform="rotate(45 7 7)" style="fill: var(--ac)"/></svg> current environment</span><span><i class="rp-ramp"></i> quality 3 → 5</span></div>
+<p class="rp-note">Left out of the logarithmic axis and listed: 4 results with unknown cost (3 local endpoints in parallel runs, whose shared energy is never divided) and R-0925b-2, whose cost covers 5 of 7 tasks. R-0919lab-1 at $0.01 is an energy estimate (CPU package + GPU, sequential run). No result here is a verified $0. Ungraded results have no quality color.</p></div>
+<div><h2>Combined ranking · judge group A</h2><div class="rp-legend"><span><i class="rp-k c"></i> cost</span><span><i class="rp-k t"></i> time</span><span><i class="rp-k q"></i> quality</span><span>weights 0.33 : 0.33 : 0.33 · the 5 statistics weigh 0, so no stack is drawn for them</span></div><div class="rp-stack"><span class="rp-l">R-0928a-2 · Codex · gpt-6-sol · medium</span><span class="rp-track rp-wide"><i class="c" style="width: 33.33333333333333%"></i><i class="t" style="width: 23.994959042218017%"></i><i class="q" style="width: 27.666666666666664%"></i></span><span class="rp-v">85.0</span></div><div class="rp-stack"><span class="rp-l">R-0925b-1 · Claude Code · claude-opus-5-5 · high</span><span class="rp-track rp-wide"><i class="c" style="width: 16.145833333333332%"></i><i class="t" style="width: 33.33333333333333%"></i><i class="q" style="width: 31.333333333333332%"></i></span><span class="rp-v">80.8</span></div><div class="rp-stack"><span class="rp-l">R-0928a-1 · Claude Code · claude-opus-5-5 · medium</span><span class="rp-track rp-wide"><i class="c" style="width: 21.43845089903181%"></i><i class="t" style="width: 27.69051774287376%"></i><i class="q" style="width: 29.333333333333332%"></i></span><span class="rp-v">78.5</span></div>
+<p class="rp-note">Not ranked:</p><ul class="rp-ul"><li><b>R-0928a-3</b> · 1 unverified</li><li><b>R-0928a-4</b> · 3 checks failed, spec 3 &lt; 4, cost unknown · local endpoint, parallel run: shared energy not divided</li><li><b>R-0925b-2</b> · failed at T5, no grades, cost partial · covers 5 of 7 tasks, time partial · covers 5 of 7 tasks</li><li><b>R-0921a-1</b> · cost unknown · local endpoint, parallel run: shared energy not divided</li><li><b>R-0921a-2</b> · cost unknown</li></ul>
+<p class="rp-note">Judge group B is ranked separately with its own judge; the two are never merged. Its original ranking is labelled “Profile defaults: original weights differ across results”: R-0919lab-1 froze 2 : 1 : 1, the others 1 : 1 : 1, so the web v1 default weights apply; each result’s own weights stay selectable.</p></div></section>
+
+<section><h2>Measured comparison · highest known cost first, unknown last</h2>
+<table class="rp-t"><thead><tr><th>Result</th><th>Trial</th><th>Configuration</th><th>Machine</th><th>Environment</th><th>Checks</th><th class="n">Elapsed</th><th class="n">Gen tok/s</th><th class="n">In tok (cached)</th><th class="n">Out tok (reasoning)</th><th class="n">Files / LOC</th><th class="n">Cost</th><th>Basis</th><th>Status</th></tr></thead><tbody>
+<tr><td>R-0925b-1</td><td>1 of 1</td><td>Claude Code · claude-opus-5-5 · high</td><td>mike-mbp-m4</td><td>current · jobs 1</td><td>30✓</td><td class="n">31:44</td><td class="n">72.1 proxy</td><td class="n">2.61M (2.20M)</td><td class="n">166k (74k)</td><td class="n">44 / 3,481</td><td class="n">$6.40</td><td>reported</td><td>✓ complete</td></tr><tr><td>R-0928a-1</td><td>1 of 1</td><td>Claude Code · claude-opus-5-5 · medium</td><td>mike-mbp-m4</td><td>clean · jobs 4</td><td>30✓</td><td class="n">38:12</td><td class="n">75.3 proxy</td><td class="n">2.84M (2.31M)</td><td class="n">141k (52k)</td><td class="n">41 / 3,206</td><td class="n">$4.82</td><td>estimate · subscription, declared by user · price table anthropic.com/pricing · 2026-09-26</td><td>✓ complete</td></tr><tr><td>R-0928a-2</td><td>1 of 1</td><td>Codex · gpt-6-sol · medium</td><td>mike-mbp-m4</td><td>clean · jobs 4</td><td>30✓</td><td class="n">44:05</td><td class="n">74.7 proxy</td><td class="n">3.42M (2.95M)</td><td class="n">158k (71k)</td><td class="n">36 / 2,688</td><td class="n">$3.10</td><td>reported</td><td>✓ complete</td></tr><tr><td>R-0924lab-1</td><td>1 of 1</td><td>Claude Code · claude-sonnet-5-5 · medium</td><td>↓ lab-linux-4090</td><td>clean · jobs 3</td><td>30✓</td><td class="n">35:20</td><td class="n">83.1 proxy</td><td class="n">2.20M (1.82M)</td><td class="n">132k (40k)</td><td class="n">39 / 3,050</td><td class="n">$2.35</td><td>reported</td><td>✓ complete</td></tr><tr><td>R-0925b-2</td><td>1 of 1</td><td>Codex · gpt-6-sol · high</td><td>mike-mbp-m4</td><td>current · jobs 1</td><td>17✓ 13○</td><td class="n">45:10</td><td class="n">▲ 74.4 proxy</td><td class="n">▲ 1.92M (1.54M)</td><td class="n">▲ 97k (53k)</td><td class="n">29 / 1,955</td><td class="n">$2.05 ▲</td><td>reported ▲ partial</td><td>✗ failed T5</td></tr><tr><td>R-0924lab-3</td><td>1 of 1</td><td>Codex · gpt-6-sol · low</td><td>↓ lab-linux-4090</td><td>clean · jobs 3</td><td>30✓</td><td class="n">30:05</td><td class="n">80.0 proxy</td><td class="n">2.95M (2.50M)</td><td class="n">120k (22k)</td><td class="n">32 / 2,301</td><td class="n">$1.20</td><td>estimate · price table openai.com/api/pricing · 2026-09-20</td><td>✓ complete</td></tr><tr><td>R-0928a-3</td><td>1 of 1</td><td>Grok CLI · grok-4.7-fast · default</td><td>mike-mbp-m4</td><td>clean · jobs 4</td><td>29✓ 1?</td><td class="n">51:30</td><td class="n">▲ 117.0 proxy</td><td class="n">3.11M (?)</td><td class="n">173k (68k)</td><td class="n">38 / 2,914</td><td class="n">$0.92</td><td>estimate · price table x.ai/api · 2026-09-15</td><td>✓ complete</td></tr><tr><td>R-0919lab-1</td><td>1 of 1</td><td>Pi · qwen3.5-35b-a3b · default</td><td>↓ lab-linux-4090</td><td>clean · jobs 1</td><td>29✓ 1✗</td><td class="n">27:30</td><td class="n">137.7 native</td><td class="n">4.21M (?)</td><td class="n">190k (85k)</td><td class="n">35 / ▲ 2,598</td><td class="n">$0.01</td><td>energy estimate · CPU package + GPU · 80.7 Wh × $0.18/kWh</td><td>✓ complete</td></tr><tr><td>R-0921a-1</td><td>1 of 1</td><td>Pi · qwen3.5-35b-a3b · default</td><td>mike-mbp-m4</td><td>clean · jobs 2</td><td>30✓</td><td class="n">1:20:02</td><td class="n">43.5 native</td><td class="n">4.62M (3.90M)</td><td class="n">205k (91k)</td><td class="n">31 / 2,236</td><td class="n">unknown</td><td>unknown · local, parallel run</td><td>✓ complete</td></tr><tr><td>R-0921a-2</td><td>1 of 1</td><td>Grok CLI · grok-4.7 · high</td><td>mike-mbp-m4</td><td>clean · jobs 2</td><td>30✓</td><td class="n">47:10</td><td class="n">— unknown</td><td class="n">unknown</td><td class="n">unknown</td><td class="n">40 / 3,018</td><td class="n">unknown</td><td>unknown · no usage reported</td><td>✓ complete</td></tr><tr><td>R-0924lab-2</td><td>1 of 1</td><td>Pi · qwen3.5-35b-a3b · default</td><td>↓ lab-linux-4090</td><td>clean · jobs 3</td><td>30✓</td><td class="n">28:40</td><td class="n">139.5 native</td><td class="n">4.40M (3.70M)</td><td class="n">198k (88k)</td><td class="n">34 / 2,530</td><td class="n">unknown</td><td>unknown · local, parallel run</td><td>✓ complete</td></tr><tr><td>R-0928a-4</td><td>1 of 1</td><td>Pi · qwen3.5-35b-a3b · default</td><td>mike-mbp-m4</td><td>clean · jobs 4</td><td>27✓ 3✗</td><td class="n">1:32:10</td><td class="n">42.3 native</td><td class="n">4.95M (4.10M)</td><td class="n">212k (96k)</td><td class="n">33 / 2,412</td><td class="n">unknown</td><td>unknown · local, parallel run</td><td>✓ complete</td></tr>
+</tbody></table><p class="rp-note">Sortable by any column; unknown sorts last, never as 0. Rows open task details and evidence. ↓ marks imported results. Gen tok/s is per-request generation throughput (paired output ÷ summed request windows, labelled with its proxy or native basis), not wall-clock speed; cached ⊂ input and reasoning ⊂ output show ? when not exposed; Files / LOC is the final snapshot size, baseline included, in physical text lines. Hardware details appear where collected (8 of 12). Estimates name their price table and its date; ▲ marks partial values, which never rank where they carry weight. Every result here is trial 1 of 1, the default; with several trials each trial is a row, followed by the configuration’s mean and min–max, and rankings use the means.</p></section>
+
+<section><h2>Quality · raw grades by judge group</h2><h3>Judge group A · Claude Code · claude-opus-5-5 · high</h3>
+<table class="rp-t"><thead><tr><th>Result</th><th>Configuration</th><th class="n">UX</th><th class="n">Visual</th><th class="n">Code</th><th class="n">Spec</th><th class="n">Robust</th><th class="n">A11y</th><th class="n">Quality</th><th>Evidence</th><th>Limitations</th></tr></thead><tbody>
+<tr><td>R-0925b-1</td><td>Claude Code · claude-opus-5-5 · high</td><td class="n">5.0</td><td class="n">4.0</td><td class="n">5.0</td><td class="n">5.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n b">4.70</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0928a-1</td><td>Claude Code · claude-opus-5-5 · medium</td><td class="n">4.0</td><td class="n">5.0</td><td class="n">4.0</td><td class="n">5.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n b">4.40</td><td>14 final-regression shots</td><td>no screen reader</td></tr><tr><td>R-0928a-2</td><td>Codex · gpt-6-sol · medium</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">5.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n b">4.15</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0928a-3</td><td>Grok CLI · grok-4.7-fast · default</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n b">4.00</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0921a-2</td><td>Grok CLI · grok-4.7 · high</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">4.0</td><td class="n b">3.90</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0921a-1</td><td>Pi · qwen3.5-35b-a3b · default</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n b">3.80</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0928a-4</td><td>Pi · qwen3.5-35b-a3b · default</td><td class="n">3.0</td><td class="n">3.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">3.0</td><td class="n">3.0</td><td class="n b">3.20</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0925b-2</td><td>Codex · gpt-6-sol · high</td><td colspan="7" class="mu">not graded · failed at T5, no grades</td><td>—</td><td>—</td></tr>
+</tbody></table><h3>Judge group B · Codex · gpt-6-astra · high</h3>
+<table class="rp-t"><thead><tr><th>Result</th><th>Configuration</th><th class="n">UX</th><th class="n">Visual</th><th class="n">Code</th><th class="n">Spec</th><th class="n">Robust</th><th class="n">A11y</th><th class="n">Quality</th><th>Evidence</th><th>Limitations</th></tr></thead><tbody>
+<tr><td>R-0924lab-1</td><td>Claude Code · claude-sonnet-5-5 · medium</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">5.0</td><td class="n">5.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n b">4.40</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0924lab-2</td><td>Pi · qwen3.5-35b-a3b · default</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n b">3.80</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0924lab-3</td><td>Codex · gpt-6-sol · low</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n b">3.70</td><td>14 final-regression shots</td><td>none</td></tr><tr><td>R-0919lab-1</td><td>Pi · qwen3.5-35b-a3b · default</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">4.0</td><td class="n">4.0</td><td class="n">3.0</td><td class="n">3.0</td><td class="n b">3.70</td><td>14 final-regression shots</td><td>none</td></tr>
+</tbody></table></section>
+
+<section class="rp-row2"><div><h2>Task detail · R-0928a-3</h2><div class="rp-tasks"><div class="rp-task"><b>T1</b><span>✓ passed</span></div><div class="rp-task"><b>T2</b><span>✓ passed</span></div><div class="rp-task"><b>T3</b><span>✓ passed</span></div><div class="rp-task"><b>T4</b><span>✓ passed</span></div><div class="rp-task"><b>T5</b><span>✓ passed</span></div><div class="rp-task"><b>T6</b><span>✓ passed</span></div><div class="rp-task on"><b>T7</b><span>1? unverified</span></div></div>
+<div class="rp-shots"><div class="rp-shot d">T5 · desktop 1440×1000</div><div class="rp-shot m">390×844</div><div class="rp-ev"><p><b>T5_persistence</b> · ? unverified — the browser was not installed; never counted as passed.</p><p class="rp-mu">Evidence: checks/T5_persistence.log · snapshot 4e7a1c9 · review excerpt shown as text.</p></div></div></div>
+<div><h2>Hardware · R-0928a-3</h2><div class="rp-spark"><i style="height: 30%"></i><i style="height: 55%"></i><i style="height: 72%"></i><i style="height: 64%"></i><i style="height: 80%"></i><i style="height: 58%"></i><i style="height: 47%"></i><i style="height: 69%"></i><i style="height: 75%"></i><i style="height: 40%"></i></div>
+<p class="rp-note">CPU utilisation · client machine mike-mbp-m4 · psutil, 1 s samples, 100% coverage. GPU and power: unavailable (insufficient permission). Cloud inference hardware is not measured. Shared experiment energy is shown once for the run, never split per configuration.</p></div></section>
+
+<footer class="rp-foot"><p>Without JavaScript both tables stay readable; charts, filters and weight controls need it. Prompts, logs, reviews and imported labels are inserted as text, so markup or scripts inside them never run.</p></footer>
+</div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":3040}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["—"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

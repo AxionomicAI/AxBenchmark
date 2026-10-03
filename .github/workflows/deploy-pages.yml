@@ -24,8 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: actions/configure-pages@v6
+      - name: Stage archive, specs and existing demo URLs
+        run: python3 legacy/scripts/stage_pages.py _site
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v5

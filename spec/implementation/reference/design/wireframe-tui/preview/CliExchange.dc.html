@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>exchange · report · 120×40</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<style>
+body{margin:0}
+.t-dark{--bg:#141414;--sf:#1f1f1f;--pn:#2b2b2b;--fg:#e6e6e6;--mu:#9b9b9b;--ln:#5c5c5c;--bs:#454545;--on:#121212;--chrome:#0c0c0c;--paper:#181818;--ink2:#c8c8c8}
+.t-light{--bg:#fafaf9;--sf:#efefed;--pn:#e1e1df;--fg:#1b1b1b;--mu:#5f5f5f;--ln:#a2a2a0;--bs:#c9c9c7;--on:#121212;--chrome:#e4e4e2;--paper:#f6f6f4;--ink2:#333}
+.ax{box-sizing:border-box;background:var(--chrome);color:var(--fg);font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-variant-ligatures:none;-webkit-font-smoothing:antialiased}
+.ax *{box-sizing:border-box}
+.ax a{color:var(--ac)}
+.t-light.ax a,.t-light .ax a{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.ax button:focus-visible,.ax a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.term{position:relative;flex-shrink:0;font-family:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;font-size:13px;line-height:16px;background:var(--bg);color:var(--fg);outline:1px solid var(--ln);font-variant-ligatures:none}
+.term .r{height:16px;white-space:pre;overflow:hidden}
+.term span,.term a,.term button{font:inherit;line-height:inherit}
+.term a,.term button{color:inherit;text-decoration:none;border:0;padding:0;margin:0;background:transparent;cursor:pointer;white-space:pre;vertical-align:top}
+.term .k:hover{text-decoration:underline}
+.term .B0{background:var(--bg)}.term .B1{background:var(--sf)}.term .B2{background:var(--pn)}.term .BS{background:var(--bs)}
+.term .BA{background:var(--ac);color:var(--on)}.term .BT{background:color-mix(in srgb,var(--ac) 24%,var(--bg))}
+.term .mu{color:var(--mu)}.term .ln{color:var(--ln)}.term .ac{color:var(--ac)}.term .on{color:var(--on)}
+.t-light .term .ac{color:color-mix(in srgb,var(--ac) 55%,#000)}
+.term .bd{font-weight:700}.term .dm{opacity:.55}.term .it{font-style:italic}.term .ul{text-decoration:underline}
+.term .rv{background:var(--fg);color:var(--bg)}
+.term .xd{opacity:.32}
+.ov{position:absolute;outline:1px dashed var(--ac);outline-offset:-1px;pointer-events:none}
+.ov span{position:absolute;left:0;top:-13px;font-size:10px;line-height:12px;white-space:nowrap;background:var(--ac);color:var(--on);padding:0 3px}
+.cap{font-size:12px;line-height:18px;color:var(--mu)}.cap b{color:var(--fg)}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:var(--mu)}
+.ctl b{color:var(--fg)}
+.kb{font:inherit;font-size:12px;min-height:28px;padding:4px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);cursor:pointer}
+.kb:hover{border-color:var(--ac)}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu)}
+.lg{font-size:12px;line-height:17px;color:var(--fg)}
+.lg h3{margin:18px 0 6px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.lg h3:first-of-type{margin-top:12px}
+.lg pre{margin:0;padding:8px 10px;font:inherit;font-size:11.5px;line-height:16px;white-space:pre;background:var(--paper);outline:1px solid var(--ln);outline-offset:-1px;overflow:hidden}
+.lg table{width:100%;border-collapse:collapse}
+.lg td{padding:3px 8px 3px 0;vertical-align:top;border-top:1px solid color-mix(in srgb,var(--ln) 45%,transparent)}
+.lg td:first-child{white-space:nowrap}
+.lg code{color:var(--ac);font:inherit}
+.t-light .lg code{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg kbd{font:inherit;font-weight:700;color:var(--ac)}
+.t-light .lg kbd{color:color-mix(in srgb,var(--ac) 50%,#000)}
+.lg .mut{color:var(--mu)}
+.lg ul,.lg ol{margin:0;padding-left:18px}.lg li{margin:2px 0}
+.lg-h{display:flex;flex-direction:column;gap:2px;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.lg-h b{font-size:15px;line-height:20px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec h2{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.sw{width:28px;height:28px;flex-shrink:0;outline:1px solid var(--ln);outline-offset:-1px}
+.node{display:flex;flex-direction:column;gap:2px;min-width:170px;padding:8px 10px;border:1px solid var(--ln);background:var(--paper);color:var(--fg);text-decoration:none;font-size:12px;line-height:16px}
+.node b{font-size:13px}
+.node:hover{border-color:var(--ac)}
+.node.ghost{border-style:dashed;color:var(--mu);background:transparent}
+.edge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:70px;font-size:11px;line-height:14px;color:var(--mu);text-align:center}
+.edge i{font-style:normal;color:var(--ln);font-size:13px}
+</style>
+</helmet>
+<div class="ax t-{{ theme }}" style="--ac: {{ accent }}; width: 1456px; height: 1200px; display: flex; align-items: flex-start; gap: 32px; padding: 24px; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0">
+<div class="cap"><b>exchange · report</b> · axbenchmark templates · results · report · 120×40 cells</div>
+<div class="term" style="width: 120ch; height: 640px">
+<div class="r"><span class="B2">                                            </span><span class="B2 mu">zsh — mike@mike-mbp-m4: ~/bench</span><span class="B2">                                             </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="ExportTemplate.dc.html">axbenchmark templates export 3f9c2e710640fa4dc37ee9e73ea2376b6deb29e142b7706aa1380bc01229ff49 --output template.zip</a><span class="B0 bd"> </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> wrote template.zip · 15 files · 14.8 KB · Inventory web app r1 · sha256 matches the library                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="ImportRejected.dc.html">axbenchmark templates import kanban-board.zip</a><span class="B0 bd">                                                                       </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ✗ rejected · computed SHA-256 does not match the declared identity · nothing was added                              </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">    declared  e0b6f2d966ccf6148c37370d04fc6602c8f5cf7310ab9226dd84eff525186357                                        </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">    computed  a9089c1309c531b09a3575c70a8b8260fbb4626e4df92f1dd36f70970337310d                                        </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">    tasks/T3-board.md differs from the package manifest · no scripts ran, nothing was installed                       </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 bd">echo $?                                                                                                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0"> 1                                                                                                                      </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="ResultImport.dc.html">axbenchmark results import lab-results.zip --template 3f9c2e710640fa4d…</a><span class="B0 bd">                                             </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> package     paths, size and format safe · payload digests match · 4 results                                        </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> template    embedded, declared and local SHA-256 all equal r1                                                      </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> references  task ids T1–T7 · evidence present for every result                                                     </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> added 1 · skipped 3 identical (already present) · imported results keep machine lab-linux-4090 and judge B         </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="ReportReady.dc.html">axbenchmark report runs/2026-09-28-a</a><span class="B0 bd">                                                                                </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> read 12 retained results of r1 · 2 judge groups · original weights · no model calls                                </span></div>
+<div class="r"><span class="B0"> </span><a class="B0 k" href="ReportPage.dc.html">  </a><a class="B0 ac k" href="ReportPage.dc.html">✓</a><a class="B0 k" href="ReportPage.dc.html"> wrote ~/.axbenchmark/reports/inventory-web-app-r1-3f9c2e71-2026-10-01.html · 1.9 MB · standalone, offline         </a><span class="B0"> </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 bd">  ▲ could not open a browser (open exited 1) · the file is complete at the path above                                 </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><a class="B0 bd k" href="ExportResult.dc.html">axbenchmark results export 2026-09-28-a --output results.zip</a><span class="B0 bd">                                                        </span><span class="B0"> </span></div>
+<div class="r"><span class="B0">   </span><span class="B0 ac">✓</span><span class="B0"> wrote results.zip · 4 results · evidence, provenance, measurements and the exact r1 template · no credentials      </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0"> </span><span class="B0 mu">$</span><span class="B0"> </span><span class="B0 rv"> </span><span class="B0">                                                                                                                    </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<div class="r"><span class="B0">                                                                                                                        </span></div>
+<sc-if value="{{ outlines }}" hint-placeholder-val="{{ false }}">
+
+</sc-if>
+</div>
+<div class="ctl"><span>focus · <b>—</b></span><button type="button" class="kb" onClick="{{ toggleOutlines }}">{{ outlineLabel }}</button></div>
+</div>
+<aside class="lg" style="width: 440px; flex-shrink: 0">
+<div class="lg-h"><b>axbenchmark templates · results · report</b><span class="mut">axbenchmark/cli.py</span></div>
+<h3>Widget tree</h3>
+<pre>templates export SHA --output
+templates import ZIP
+results import ZIP --template SHA
+results export RUN_ID --output
+report RUN_DIR</pre>
+<h3>Output contract</h3>
+<table><tr><td><code>stdout</code></td><td>results and progress, one line per event · no colour needed</td></tr><tr><td><code>stderr</code></td><td>problems, one per line, prefixed ✗</td></tr><tr><td><code>glyphs</code></td><td>✓ ✗ ▲ ● ○ ? as in the TUI, always with words</td></tr><tr><td><code>TTY</code></td><td>run never prompts; a missing choice is an error · only doctor --verify reads stdin: [y/N] on a terminal, --yes otherwise (no terminal and no --yes: exit 2)</td></tr><tr><td><code>exit</code></td><td>0 success (a completed run, even with failed tasks or a failed report) · 1 typed error · 2 usage · 3 engine unreachable or incompatible</td></tr><tr><td><code>--json</code></td><td>status RUN_ID --json is the machine-readable state; scripts read task failures there</td></tr></table>
+<h3>Arguments and exit codes</h3>
+<table><tr><td><kbd>exit 1</kbd></td><td><span class="mut">typed error: package rejected · nothing added</span></td></tr><tr><td><kbd>TEMPLATE_SHA</kbd></td><td><span class="mut">full SHA-256 or an unambiguous prefix</span></td></tr></table>
+
+<h3>States and related frames</h3>
+<div class="rel"><a href="CliHelp.dc.html">--help</a><a href="CliRun.dc.html">run --no-tui</a><a href="CliStatistics.dc.html">Statistics · weights</a><a href="CliRunReport.dc.html">Trials · report wait</a><a href="CliInvalid.dc.html">Invalid config</a><a href="CliHalted.dc.html">Halted · exit 1</a><a href="CliStatusStop.dc.html">status · stop</a><a href="CliDoctor.dc.html">doctor · refresh</a><a href="CliVerify.dc.html">doctor --verify</a><a href="CliExchange.dc.html">Exchange · report</a><a href="RunOverview.dc.html">TUI run</a></div>
+<h3>Notes</h3>
+<ul><li>Expected and received identities are shown in full on mismatch (R057, R120).</li><li>Identical re-imports are skipped, so importing is idempotent (R122).</li><li>The report path is printed even when no browser opens (R055, R134).</li><li>Implementation owner M14. API seam: M14 curated CLI over published registry; results.resolve_run before UID-only calls; engine/jobs/reports durable status. See M14.2 exact command fixtures.</li><li>Unrendered lifecycle/interaction acceptance cases are mapped in ownership-ledger.md; this static board is not a Textual runtime test.</li></ul>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light"],"default":"dark","section":"Wireframe"},"accent":{"editor":"color","default":"#e5a50a","options":["#e5a50a","#3fb6c6","#c678dd","#8fbf4f"],"section":"Wireframe"},"$preview":{"width":1456,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const names = ["—"];
+    const n = names.length;
+    const f = s.focus || 0;
+    const o = !!s.outlines;
+    const vals = {
+      theme: this.props.theme ?? 'dark',
+      accent: this.props.accent ?? '#e5a50a',
+      focusName: names[f],
+      focusStep: (f + 1) + ' of ' + n,
+      outlines: o,
+      outlineLabel: o ? 'hide widget outlines' : 'show widget outlines',
+      next: () => this.setState({ focus: (f + 1) % n, outlines: o }),
+      prev: () => this.setState({ focus: (f + n - 1) % n, outlines: o }),
+      toggleOutlines: () => this.setState({ focus: f, outlines: !o }),
+    };
+    for (let i = 0; i < n; i++) vals['fv' + i] = f === i;
+    return vals;
+  }
+}
+</script>
+</body>
+</html>
